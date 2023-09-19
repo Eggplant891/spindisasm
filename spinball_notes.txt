@@ -1,0 +1,18 @@
+---Spinball Notes---
+
+-- General Nodes --
+
+$FF0005 - Player 1 input mask. Used in: Options, In-game, Bonus Stage. Not used on Main Menu or intro videos however.
+
+---Sonic Object---
+Player movement when standing or in barrel is only moved in whole integer values.
+Speeds of player when walking/running are only ever whole integer values.
+
+-- Hud Messages --
+Probably a queue as this colour setting doesn't affect all messages when there's several in a row.
+$FF55AF - Message Colour :  0 - Invisible, 1 - Flat Green, 2 - Flat Red, 3 - Flat Cyan, 4 - Flat Yellow, 5 - Rainbow,  6 - Red/Yellow Gradient, 7 - Green Yellow Gradient
+$FF55B3 - Message Animation Mode : 1 - Flashing, 2 - Palette Cycling, 3 - Static. Anything not $03 will cause the timer to count down
+
+-- Level Select Cheat Code --
+Entirely based on input combinations, nothing to do with the options cursor itself.
+Level select code check counts up at memory address FF5750. Correct input ++count. Incorrect input resets count to 0.

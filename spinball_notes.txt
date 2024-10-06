@@ -1,9 +1,9 @@
 ---Spinball Notes---
 
--- General Nodes --
+-- General Notes --
 
 $FF0005 - Player 1 input mask. Used in: Options, In-game, Bonus Stage. Not used on Main Menu or intro videos however.
-
+$FF573D - Player input mask
 ---Sonic Object---
 Player movement when standing or in barrel is only moved in whole integer values.
 Speeds of player when walking/running are only ever whole integer values.
@@ -16,3 +16,10 @@ $FF55B3 - Message Animation Mode : 1 - Flashing, 2 - Palette Cycling, 3 - Static
 -- Level Select Cheat Code --
 Entirely based on input combinations, nothing to do with the options cursor itself.
 Level select code check counts up at memory address FF5750. Correct input ++count. Incorrect input resets count to 0.
+
+-- Options --
+#FF035E | Number of players (00 = 1p, 01 = 2p, 02 = 3p, 03 = 4p)
+#FF035F | Speed (00 = Normal, 01 = Fast)
+=> Affects #FFF8D8 (0E = Normal, 13 = Fast) - Appears to increase the force of collisions. Simulation speed is the same
+#FF0360 | Music (00 = On, 01 = Off)
+#FF0361 | Flipper (00 = A-Left, B-Right, C-All, 01 = A-Left, B-All, C-Right, 02= A-All, B-Left, C-Right)

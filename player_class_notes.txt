@@ -6,82 +6,82 @@ Array root address is expected to be $FF7758 (Not 100% confirmed but seems likel
 sizeof = 76 ($4C) bytes -    This was worked out based on the spacing of the "score" attribute on each player. Each one spaced at exactly 76 bytes between them.
                              Unfortunately does not confirm the start/end address of each instance
 
-PlayerDataInstance:     ; Offsets shown worked out relative to $FF7758 for Player 1. Add $4C bytes for Player 2 etc.
+PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Player 1. Add $4C bytes for Player 2 etc.
 
-00  ???
-01  ???
-02  ???
-03  ???
-04  ====================|
-05  Score               | unsigned long
-06                      |
-07  ====================|
-08  ???
-09  ???
-0A  ???
-0B  ???
-0C  Camera  Flags?======| unsigned byte     ; 0 Following Player Pinball, 1 - Following Player Walking, 5 - Camera is offset because player is looking up or down. Player is grabbing ledge., 6 - Inside steam launcher (Lava Powerhouse), 8 - Flicks into this when player is spindashing
-0D  Character State=====| unsigned byte     ; 0 Pinball Physics, 1 - Walking (Includes acid barrel rowing), 2 - Looking Up, 3 - Crouching, 4 - Spin Dash Charging, 5 - Braking/Sliding/Slowdown, 7 - Ledge Grabbing, 9 - Walking/Running, 10 - Pre-jump crouch/Launch Up Anim (No Horizontal controls), 12 - Balancing on Ledge, 14 - I'm Waiting, 15 - Laying Down, 17 - Got Emerald
-0E  X Pos #1            | unsigned word
-0F  ====================|
-10  X Sub Pos #1        | unsigned word
-11  ====================|
-12  Y Pos #1            | unsigned word
-13  ====================|
-14  Y Sub Pos #1        | unsigned word
-15  ====================|
-16  X Pos #2            | unsigned word
-17  ====================|
-18  X Sub Pos #2        | unsigned word
-19  ====================|
-1A  Y Pos #2            | unsigned word
-1B  ====================|
-1C  Y Sub Pos #2        | unsigned word
-1D  ====================|
-1E  X Velocity          | signed word
-1F  ====================|
-20  X Sub Velocity      | signed word
-21  ====================|
-22  Y Velocity          | signed word
-23  ====================|
-24  Y Sub Velocity      | signed word
-25  ====================|
-26  X Pos #3            | unsigned word
-27  ====================|
-28  Y Pos #3            | unsigned word
-29  ====================|
-2A  ???
-2B  Speed               | unsigned word
-2C  ====================|
-2D  Sub Speed           | unsigned word
-2E  ====================|
-2F  Direction           | unsigned word
-30  ====================|
-31  ???
-32  ???
-33  ====================|
-34  Emerald #1          | unsigned long     ; Simply filling emerald resume data in with anything > 0 seems to work i.e. $00000001.
-35  Resume Data         |                   ; Centre Emerald Toxic Caves:       $00FF852E   ; Centre Emerald The Machine:       $00FF83B8
-36  ====================|                   ; Centre Emerald Lava Powerhouse:   $00FF9386   ; Inner Right Emerald Showdown:     $00FF885E
-37  ====================|
-38  Emerald #2          | unsigned long
-39  Resume Data         |                   ; Left Emerald Toxic Caves is:      $00FF8550   ; Upper Left Emerald The Machine:   $00FF8396
-3A  ====================|                   ; Left Emerald Lava Powerhouse:     $00FF93A8   ; Outer Right Emerald Showdown:     $00FF8880
-3B  ====================|
-3C  Emerald #3          | unsigned long 
-3D  Resume Data         |                   ; Right Emerald Toxic Caves:        $00FF8572   ; Upper Right Emerald The Machine:  $00FF83B8
-3E  ====================|                   ; Right Emerald Lava Powerhouse:    $00FF93CA   ; Centre Emerald Showdown:          $00FF88E2
-3F  ====================|
-40  Emerald #4          | unsigned long     
-41  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83DA
-42  ====================|                   ;-------------------------------------------    ; Inner Left Emerald Showdown:      $00FF883C
-43  ====================|                   
-44  Emerald #5          | unsigned long     
-45  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83FC
-46  ====================|                   ;-------------------------------------------    ; Outer Left Emerald Showdown:      $00FF881A
-47  Lives===============| unsigned byte
-48  Emeralds Collected==| unsigned byte
-49  Rings Collected=====| unsigned byte
-4A  Extra Balls=========| unsigned byte
-4B  ???
-(4C) Next Player
+0xFF5758:00  ???
+0xFF5759:01  ???
+0xFF575A:02  ???
+0xFF575B:03  ???
+0xFF575C:04  ====================|
+0xFF575D:05  Score               | unsigned long
+0xFF575E:06                      |
+0xFF575F:07  ====================|
+0xFF5760:08  ???
+0xFF5761:09  ???
+0xFF5762:0A  ???
+0xFF5763:0B  ???
+0xFF5764:0C  Camera  Flags?======| unsigned byte     ; 0x00 Following Player Pinball, 0x01 - Following Player Walking, 0x05 - Camera is offset because player is looking up or down. Player is grabbing ledge., 0x06 - Inside steam launcher (Lava Powerhouse), 0x07 - Entering rowing boat (edging downwards), 0x08 - Flicks into this when player is spindashing, 0x10 - Jumping out of rowing boat (edging upwards), 0x43 - In rowing boat (camera only moves when player near edges. Seems to have sensitivity and intertia?), 0x86 - Dead camera 
+0xFF5765:0D  Character State=====| unsigned byte     ; 0x00 Pinball Physics/Rolling, 0x01 - Walking (Includes acid barrel rowing), 0x02 - Looking Up, 0x03 - Crouching, 0x04 - Spin Dash Charging, 0x05 - Braking/Sliding/Slowdown, 0x07 - Ledge Grabbing, 0x09 - Walking/Running, 0x0A - Pre-jump crouch/Launch Up Anim (No Horizontal controls), 0x0C - Balancing on Ledge, 0x0E - I'm Waiting, 0x0F - Laying Down, 0x11 - Got Emerald
+0xFF5766:0E  X Pos #1            | unsigned word
+0xFF5767:0F  ====================|
+0xFF5768:10  X Sub Pos #1        | unsigned word
+0xFF5769:11  ====================|
+0xFF576A:12  Y Pos #1            | unsigned word
+0xFF576B:13  ====================|
+0xFF576C:14  Y Sub Pos #1        | unsigned word
+0xFF576D:15  ====================|
+0xFF576E:16  X Pos #2            | unsigned word
+0xFF576F:17  ====================|
+0xFF5770:18  X Sub Pos #2        | unsigned word
+0xFF5771:19  ====================|
+0xFF5772:1A  Y Pos #2            | unsigned word
+0xFF5773:1B  ====================|
+0xFF5774:1C  Y Sub Pos #2        | unsigned word
+0xFF5775:1D  ====================|
+0xFF5776:1E  X Velocity          |
+0xFF5777:1F                      | signed integer
+0xFF5778:20                      |
+0xFF5779:21  ====================|
+0xFF577A:22                      |
+0xFF577B:23  Y Velocity          | signed integer
+0xFF577C:24                      |
+0xFF577D:25  ====================|
+0xFF577E:26  X Pos #3            | unsigned word
+0xFF577F:27  ====================|
+0xFF5780:28  Y Pos #3            | unsigned word
+0xFF5781:29  ====================|
+0xFF5782:2A  Speed               | unsigned word
+0xFF5783:2B  ====================|
+0xFF5784:2C  ???
+0xFF5785:2D  ???
+0xFF5786:2E  ???
+0xFF5787:2F  ???
+0xFF5788:30  Direction ==========| unsigned byte
+0xFF5789:31  ???
+0xFF578A:32  ???
+0xFF578B:33  ====================|
+0xFF578C:34  Emerald #1          | unsigned long     ; Simply filling emerald resume data in with anything > 0 seems to work i.e. $00000001.
+0xFF578D:35  Resume Data         |                   ; Centre Emerald Toxic Caves:       $00FF852E   ; Centre Emerald The Machine:       $00FF83B8
+0xFF578E:36  ====================|                   ; Centre Emerald Lava Powerhouse:   $00FF9386   ; Inner Right Emerald Showdown:     $00FF885E
+0xFF578F:37  ====================|
+0xFF5790:38  Emerald #2          | unsigned long
+0xFF5791:39  Resume Data         |                   ; Left Emerald Toxic Caves is:      $00FF8550   ; Upper Left Emerald The Machine:   $00FF8396
+0xFF5792:3A  ====================|                   ; Left Emerald Lava Powerhouse:     $00FF93A8   ; Outer Right Emerald Showdown:     $00FF8880
+0xFF5793:3B  ====================|
+0xFF5794:3C  Emerald #3          | unsigned long 
+0xFF5795:3D  Resume Data         |                   ; Right Emerald Toxic Caves:        $00FF8572   ; Upper Right Emerald The Machine:  $00FF83B8
+0xFF5796:3E  ====================|                   ; Right Emerald Lava Powerhouse:    $00FF93CA   ; Centre Emerald Showdown:          $00FF88E2
+0xFF5797:3F  ====================|
+0xFF5798:40  Emerald #4          | unsigned long     
+0xFF5799:41  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83DA
+0xFF579A:42  ====================|                   ;-------------------------------------------    ; Inner Left Emerald Showdown:      $00FF883C
+0xFF579B:43  ====================|                   
+0xFF579C:44  Emerald #5          | unsigned long     
+0xFF579D:45  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83FC
+0xFF579E:46  ====================|                   ;-------------------------------------------    ; Outer Left Emerald Showdown:      $00FF881A
+0xFF579F:47  Lives===============| unsigned byte
+0xFF57A0:48  Emeralds Collected==| unsigned byte
+0xFF57A1:49  Rings Collected=====| unsigned byte
+0xFF57A2:4A  Extra Balls=========| unsigned byte
+0xFF57A3:4B  ???
+0xFF57A4:(4C) Next Player

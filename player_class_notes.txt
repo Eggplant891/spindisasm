@@ -16,10 +16,10 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0xFF575D:05  Score               | unsigned long
 0xFF575E:06                      |
 0xFF575F:07  ====================|
-0xFF5760:08  ???
-0xFF5761:09  ???
-0xFF5762:0A  ???
-0xFF5763:0B  ???
+0xFF5760:08  Camera Target X     |
+0xFF5761:09  ====================|
+0xFF5762:0A  Camera Target Y     |
+0xFF5763:0B  ====================|
 0xFF5764:0C  Camera  Flags?======| unsigned byte     ; 0x00 Following Player Pinball, 0x01 - Following Player Walking, 0x05 - Camera is offset because player is looking up or down. Player is grabbing ledge., 0x06 - Inside steam launcher (Lava Powerhouse), 0x07 - Entering rowing boat (edging downwards), 0x08 - Flicks into this when player is spindashing, 0x10 - Jumping out of rowing boat (edging upwards), 0x43 - In rowing boat (camera only moves when player near edges. Seems to have sensitivity and intertia?), 0x86 - Dead camera 
 0xFF5765:0D  Character State=====| unsigned byte     ; 0x00 Pinball Physics/Rolling, 0x01 - Walking (Includes acid barrel rowing), 0x02 - Looking Up, 0x03 - Crouching, 0x04 - Spin Dash Charging, 0x05 - Braking/Sliding/Slowdown, 0x07 - Ledge Grabbing, 0x09 - Walking/Running, 0x0A - Pre-jump crouch/Launch Up Anim (No Horizontal controls), 0x0C - Balancing on Ledge, 0x0E - I'm Waiting, 0x0F - Laying Down, 0x11 - Got Emerald
 0xFF5766:0E  X Pos #1            | unsigned word

@@ -1,0 +1,44 @@
+List of all ROM addresses found by the Sonic Spinball Editor.
+ 
+Sonic Spinball ROM Editor ver 1.0 by Tony H.  t_hedstrom@yahoo.com
+ 
+Game: E:\Development\_RETRODEV\MegaDrive\Spinball\SpinballDisassembly\sbbuilt.bin
+ 
+System: Genesis/Mega Drive
+ 
+ROM addresses are in hex, values are in decimal.  ON/OFF values are in hex.
+ 
+If any ROM addresses are empty (0), that means the editor couldn't find a match.
+ 
+#1  0D43A6  Value: 1  What level you start a new game on.
+#2  0D43EF  Value: 3  How many lives you start a new game with.
+#3  0D43AE  Enable level select (ON = 0x4E71, OFF = 0x6738.
+#4  0DD73C  Value: 14392  How much gravity there is.
+#5  0DDAF6  Press Down for reverse gravity (ON = 0x91AA, OFF = D1AA).
+#6  0DDAB3  Value: 5  Ball control.
+#7  0DDAD1  Value: 5  Ball control (part 2).
+#8  0D9C19  Value: 55  Hits to destroy tail (level 1 boss).
+#9  0E53BD  Value: 5  Hits to destroy heads (level 2 boss).
+#10 0F20F7  Value: 10  Hits to break tubes (level 3 boss).
+#11 0EDA52  Value: 30  Access to level 4 boss in seconds (multiply by 50 for ROM value).
+#12 0ECFFF  Hit arms or socks to remove (level 4 boss) (ON = 0x00, OFF = 0x01).
+#13 0EC25D  Hit arms or socks to remove (level 4 boss) part 2 (ON = 0x00, OFF = 0x01).
+#14 0EA96C  Windows won't break (level 4 boss) (ON = 0x6002, OFF = 0x522A).
+#15 0FA6FD  Value: 2  How many balls in level 1 bonus game.
+#16 0FA6C7  Value: 2  How many balls in level 2 bonus game.
+#17 0FA719  Value: 2  How many balls in level 3 bonus game.
+#18 0F8DDC  Free animals with 1 hit level 1 bonus game ON = 0x5668, OFF = 5268.
+#19 0F8B6F  Value: 4  How many hits to kill chickens (level 3 bonus game).
+#20 0C151C  Value: 58  How many rings to enable level 1 multiball game.
+#21 0C151D  Value: 67  How many rings to enable level 2 multiball game.
+#22 0C151E  Value: 81  How many rings to enable level 3 multiball game.
+#23 0C151F  Value: 62  How many rings to enable level 4 multiball game.
+#24 0FA6DB  Value: 3  How many balls at once in Multi-ball games.
+#25 0F9289  Value: 47  How many times you have to hit crab in Multi-ball games.
+#26 0D3EEE  Value: 20000000  How many points for extra life.
+#27 0D3F00  Value: 20000000  How many points for extra life (part 2).
+#28 0D3EE5  Value: 9  Maximum lives from points.
+#29 0DDCAC  Open warp area in level 1 (ON = 0x6010, OFF = 0x6F10).
+ 
+End of list
+ 

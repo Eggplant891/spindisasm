@@ -8,20 +8,63 @@ sizeof = 76 ($4C) bytes -    This was worked out based on the spacing of the "sc
 
 PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Player 1. Add $4C bytes for Player 2 etc.
 
-0xFF5758:00  ???
+---PLAYER STATES---
+0x00 - Pinball Physics/Rolling - Seems to include standing still
+0x01 - Walking (Includes acid barrel rowing)
+0x02 - Looking Up
+0x03 - Crouching
+0x04 - Spin Dash Charging
+0x05 - Braking/Sliding/Slowdown
+0x06 - ???
+0x07 - Ledge Grabbing
+0x08 - ???
+0x09 - Walking/Running
+0x0A - Pre-jump crouch/Launch Up Anim (No Horizontal controls)
+0x0B - ???
+0x0C - Balancing on Ledge
+0x0D - ???
+0x0E - I'm Waiting
+0x0F - Laying Down
+0x10 - ???
+0x11 - Got Emerald
+0x12 - Dying
+-------------------
+
+---CAMERA STATES--- Could be flags based on weirdly large gaps in state values, or could be also used for animations?
+0x00 - Following Player Pinball
+0x01 - Following Player Walking
+0x02 - Intro sequence playing
+0x03 - ???
+0x04 - ???
+0x05 - Camera is offset because player is looking up or down. Player is grabbing ledge
+0x06 - Inside steam launcher (Lava Powerhouse)
+0x07 - Entering rowing boat (edging downwards)
+0x08 - Flicks into this when player is spindashing
+0x09-0x0F - ???
+0x10 - Jumping out of rowing boat (edging upwards)
+???????????????
+0x43 - In rowing boat (camera only moves when player near edges. Seems to have sensitivity and intertia?)
+0x86 - Dead camera 
+-------------------
+
+---ANIM FLAGS---
+0x8000 - Flip X
+----------------
+
+0xFF5758:00  ???                 
 0xFF5759:01  ???
 0xFF575A:02  ???
 0xFF575B:03  ???
-0xFF575C:04  ====================|
-0xFF575D:05  Score               | unsigned long
-0xFF575E:06                      |
+0xFF575C:04  Score               |
+0xFF575D:05  |                   | unsigned long
+0xFF575E:06  |                   |
 0xFF575F:07  ====================|
 0xFF5760:08  Camera Target X     |
 0xFF5761:09  ====================|
 0xFF5762:0A  Camera Target Y     |
 0xFF5763:0B  ====================|
-0xFF5764:0C  Camera  Flags?======| unsigned byte     ; 0x00 Following Player Pinball, 0x01 - Following Player Walking, 0x05 - Camera is offset because player is looking up or down. Player is grabbing ledge., 0x06 - Inside steam launcher (Lava Powerhouse), 0x07 - Entering rowing boat (edging downwards), 0x08 - Flicks into this when player is spindashing, 0x10 - Jumping out of rowing boat (edging upwards), 0x43 - In rowing boat (camera only moves when player near edges. Seems to have sensitivity and intertia?), 0x86 - Dead camera 
-0xFF5765:0D  Character State=====| unsigned byte     ; 0x00 Pinball Physics/Rolling, 0x01 - Walking (Includes acid barrel rowing), 0x02 - Looking Up, 0x03 - Crouching, 0x04 - Spin Dash Charging, 0x05 - Braking/Sliding/Slowdown, 0x07 - Ledge Grabbing, 0x09 - Walking/Running, 0x0A - Pre-jump crouch/Launch Up Anim (No Horizontal controls), 0x0C - Balancing on Ledge, 0x0E - I'm Waiting, 0x0F - Laying Down, 0x11 - Got Emerald
+0xFF5764:0C  Camera  Flags?======| unsigned byte     ; See CAMERA STATES
+0xFF5765:0D  Character State=====| unsigned byte     ; See PLAYER STATES
 0xFF5766:0E  X Pos #1            | unsigned word
 0xFF5767:0F  ====================|
 0xFF5768:10  X Sub Pos #1        | unsigned word
@@ -39,44 +82,44 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0xFF5774:1C  Y Sub Pos #2        | unsigned word
 0xFF5775:1D  ====================|
 0xFF5776:1E  X Velocity          |
-0xFF5777:1F                      | signed integer
-0xFF5778:20                      |
+0xFF5777:1F  |                   | signed integer
+0xFF5778:20  |                   |
 0xFF5779:21  ====================|
-0xFF577A:22                      |
-0xFF577B:23  Y Velocity          | signed integer
-0xFF577C:24                      |
+0xFF577A:22  Y Velocity          |
+0xFF577B:23  |                   | signed integer
+0xFF577C:24  |                   |
 0xFF577D:25  ====================|
-0xFF577E:26  X Pos #3            | unsigned word
+0xFF577E:26  X Pos #3            | unsigned word     ; Appears to only be used when stood on flat ground
 0xFF577F:27  ====================|
-0xFF5780:28  Y Pos #3            | unsigned word
+0xFF5780:28  Y Pos #3            | unsigned word     ; As above
 0xFF5781:29  ====================|
-0xFF5782:2A  Speed               | unsigned word
+0xFF5782:2A  Speed               | unsigned word     ; Often used by animated object to determine speed to play animation at.
 0xFF5783:2B  ====================|
 0xFF5784:2C  ???
 0xFF5785:2D  ???
-0xFF5786:2E  ???
-0xFF5787:2F  ???
+0xFF5786:2E  Anim Flags          | unsigned byte     ; See ANIM FLAGS
+0xFF5787:2F  ====================|
 0xFF5788:30  Direction ==========| unsigned byte
 0xFF5789:31  ???
 0xFF578A:32  ???
-0xFF578B:33  ====================|
-0xFF578C:34  Emerald #1          | unsigned long     ; Simply filling emerald resume data in with anything > 0 seems to work i.e. $00000001.
+0xFF578B:33  Emerald #1          |
+0xFF578C:34                      | unsigned long     ; Simply filling emerald resume data in with anything > 0 seems to work i.e. $00000001.
 0xFF578D:35  Resume Data         |                   ; Centre Emerald Toxic Caves:       $00FF852E   ; Centre Emerald The Machine:       $00FF83B8
 0xFF578E:36  ====================|                   ; Centre Emerald Lava Powerhouse:   $00FF9386   ; Inner Right Emerald Showdown:     $00FF885E
-0xFF578F:37  ====================|
-0xFF5790:38  Emerald #2          | unsigned long
+0xFF578F:37  Emerald #2          |
+0xFF5790:38                      | unsigned long
 0xFF5791:39  Resume Data         |                   ; Left Emerald Toxic Caves is:      $00FF8550   ; Upper Left Emerald The Machine:   $00FF8396
 0xFF5792:3A  ====================|                   ; Left Emerald Lava Powerhouse:     $00FF93A8   ; Outer Right Emerald Showdown:     $00FF8880
-0xFF5793:3B  ====================|
-0xFF5794:3C  Emerald #3          | unsigned long 
+0xFF5793:3B  Emerald #3          |
+0xFF5794:3C                      | unsigned long     ; Appears to contain data about whether to replay the intro sequence?
 0xFF5795:3D  Resume Data         |                   ; Right Emerald Toxic Caves:        $00FF8572   ; Upper Right Emerald The Machine:  $00FF83B8
 0xFF5796:3E  ====================|                   ; Right Emerald Lava Powerhouse:    $00FF93CA   ; Centre Emerald Showdown:          $00FF88E2
-0xFF5797:3F  ====================|
-0xFF5798:40  Emerald #4          | unsigned long     
+0xFF5797:3F  Emerald #4          |
+0xFF5798:40                      | unsigned long     
 0xFF5799:41  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83DA
 0xFF579A:42  ====================|                   ;-------------------------------------------    ; Inner Left Emerald Showdown:      $00FF883C
-0xFF579B:43  ====================|                   
-0xFF579C:44  Emerald #5          | unsigned long     
+0xFF579B:43  Emerald #5          |                   
+0xFF579C:44                      | unsigned long     
 0xFF579D:45  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83FC
 0xFF579E:46  ====================|                   ;-------------------------------------------    ; Outer Left Emerald Showdown:      $00FF881A
 0xFF579F:47  Lives===============| unsigned byte

@@ -1,0 +1,53 @@
+---VDP Sprite Class--
+sizeof = 44 ($2c) bytes
+
+Function at FUN_000d656e seems to update x/y position on screen, and sets flip X flag
+
+Array root = $FF10A8
+Array length = 256
+
+0xFF10A8:00 - Screen Space X Pos|
+0xFF10A9:01 - ==================|
+0xFF10AA:02 - Screen Space Y Pos|
+0xFF10AB:03 - ==================|
+0xFF10AC:04 - ???
+0xFF10AD:05 - ???
+0xFF10AE:06 - ???
+0xFF10AF:07 - Pallete Index =====| $00 - Ambient, $01 - Water, $02 - Sonic, $03 - Robotnik / Explosions/Clucks. last 2 bits encode pallete. Next 2 bits encode depth/layer. $06 renders on top of rocks when in barrel. $02 renders sonic behind rocks. Both with sonic pallette
+0xFF10B0:08 - $8000 - Flip X flag
+0xFF10B1:09 -
+0xFF10B2:0A - ???
+0xFF10B3:0B - ???
+0xFF10B4:0C - ???
+0xFF10B5:0D - ???
+0xFF10B6:0E - ???
+0xFF10B7:0F - ???
+0xFF10B8:10 - ???
+0xFF10B9:11 - ???
+0xFF10BA:12 - ???
+0xFF10BB:13 - ???
+0xFF10BC:14 - ???
+0xFF10BD:15 - ???
+0xFF10BE:16 - ???
+0xFF10BF:17 - ???
+0xFF10C0:18 - ???
+0xFF10C1:19 - ???
+0xFF10C2:1A - ???
+0xFF10C3:1B - ???
+0xFF10C4:1C - ???
+0xFF10C5:1D - ???
+0xFF10C6:1E - ???
+0xFF10C7:1F - ???
+0xFF10C8:20 - ???
+0xFF10C9:21 - ???
+0xFF10CA:22 - ???
+0xFF10CB:23 - ???
+0xFF10CC:24 - ???
+0xFF10CD:25 - ???
+0xFF10CE:26 - ???
+0xFF10CF:27 - ???
+0xFF10D0:28 - ???
+0xFF10D1:29 - ???
+0xFF10D2:2A - ???
+0xFF10D3:2B - ???
+0xFF10D4:2C - ???

@@ -1,18 +1,18 @@
 ---Animated Game Object Class--
-These are stored in an array of 256 items.
-
-Array root address is $FFAD24
 sizeof = 64 ($40) bytes
 
 Function at $000d574e => Loop that updates all game objects. Will update 256 times per frame, regardless of how many objects are actually being used.
 
-Animated Object Array pools:
-Type 0: 0 - 63
-Type 1: 64 - 127
-Type 2: 128 - 191
-Type 3: 192 - 255
+Array root = $FFAD24
+Array length = 256
 
-9490 -> Flippers
+Array pools:
+Pool 0: 0 - 63
+Pool 1: 64 - 127
+Pool 2: 128 - 191
+Pool 3: 192 - 255
+
+94 90 -> Flipper sprite indices
 
 0xFFAD24:00  ???
 0xFFAD25:01  ???
@@ -26,16 +26,16 @@ Type 3: 192 - 255
 0xFFAD2D:09  =================== |
 0xFFAD2E:0A  YPos                |
 0xFFAD2F:0B  =================== |
-0xFFAD30:0C  ??? ; Additional thing when (anim_obj_type & 0x400 == 0)
+0xFFAD30:0C  ??? ; Additional thing when (anim_obj_type & 0x400 == 0). Param_4 when emplacing new anim obj
 0xFFAD31:0D  ???
 0xFFAD32:0E  ???
 0xFFAD33:0F  ???
 0xFFAD34:10  ???
 0xFFAD35:11  ???
-0xFFAD36:12  ??? ; GUESS: XPos #2 (short)
-0xFFAD37:13  ???
-0xFFAD38:14  ??? ; GUESS: YPos #2 (short)
-0xFFAD39:15  ???
+0xFFAD36:12  XPos #2             |
+0xFFAD37:13  =================== |
+0xFFAD38:14  YPos #2             |
+0xFFAD39:15  =================== |
 0xFFAD3A:16  ???
 0xFFAD3B:17  ???
 0xFFAD3C:18  ???
@@ -54,28 +54,28 @@ Type 3: 192 - 255
 0xFFAD49:25  ???
 0xFFAD4A:26  ???
 0xFFAD4B:27  ???
-0xFFAD4C:28  ???
+0xFFAD4C:28  Initialised to anim_obj_to_initialise->x_pos
 0xFFAD4D:29  ??? ; GUESS: Next object type in array? (byte)
 0xFFAD4E:2A  Timer for anim frame| ; Counts down from "Animation Speed" to 0. Either loops or continues when reaching 0. Seems to be used to determine if an anim slot is being used i.e.if != 0 -> go to next index.
 0xFFAD4F:2B  Animation Speed ====| ; Number of frames to draw each frame. 0 = Freeze, 1 = 60fps, 2 = 30fps etc.
 0xFFAD50:2C  ???
 0xFFAD51:2D  ???
-0xFFAD52:2E  ???
-0xFFAD53:2F  ???
+0xFFAD52:2E  Animation ID| ; For player: $05 - Standing, $06 - Lookin up, $07 - Tapping foot, $08 - Laying down, $0A - Crouching to jump, $0D - Crouching to spin, $15 - Running, $16 - Changing direction
+0xFFAD53:2F  ============|
 0xFFAD54:30  ???
 0xFFAD55:31  ???
 0xFFAD56:32  ???
 0xFFAD57:33  ???
 0xFFAD58:34  ???
 0xFFAD59:35  ???
-0xFFAD5A:36  ???
-0xFFAD5B:37  ???
-0xFFAD5C:38  ???
-0xFFAD5D:39  ???
-0xFFAD5E:3A  ???    ; Possibly the next animated object to update. This could be a linked list?
-0xFFAD5F:3B  ??? ...; $00 - Do not update animation frames (will stay static, but does seem to change when sprite type changes). $10 - Updates animation frames. Does not update position on screen. All values seem to update on CPU, just not on VDP
-0xFFAD60:3C  ???
-0xFFAD61:3D  ???
+0xFFAD5A:36  Initialises to 0x20 |
+0xFFAD5B:37  ====================|
+0xFFAD5C:38  Initialises to 0x20 |
+0xFFAD5D:39  ====================|
+0xFFAD5E:3A  Sprite Array entry ptr|    ; Points to an object that is sizeof($2c)(44) @ Address 0xff10a8
+0xFFAD5F:3B                        |    ; $00 - Do not update animation frames (will stay static, but does seem to change when sprite type changes). $10 - Updates animation frames. Does not update position on screen. All values seem to update on CPU, just not on VDP
+0xFFAD60:3C                        |
+0xFFAD61:3D  ======================|
 0xFFAD62:3E  ???
 0xFFAD63:3F  ??? ; Anim object index into global anim obj array (256 objects)
 0xFFAD64:40  ???

@@ -1,0 +1,3 @@
+--- Toxic Caves Serpent Data Struct ---
+0xFF86AC - Animation state (00 - idle, 01 - underwater (0x78 frame wait), 02 - begin rising, 03 - rising, 04 - sinking)
+0xFF86B0 - Timer

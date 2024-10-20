@@ -2,7 +2,7 @@
 
 -- Per frame data array --
 sizeof = 16 $(10) bytes
-0xFF4248 - Array of some kind of per-frame data
+0xFF4238/0xFF4248 - Array of some kind of per-frame data
 0xFF4250 - Contains ptr to VDP Sprite class
 Setting first byte 1 seems to vertically flip the sprite for that frame.
 

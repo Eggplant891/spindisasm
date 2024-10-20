@@ -1,0 +1,117 @@
+--- SonicResearch.org ---
+
+Sonic's mappings
+
+Sonic's mappings start at 0x1CDE. The format is as follows:
+        2 bytes -- X offset
+        2 bytes -- Y offset
+        1 byte -- Y size of sprite
+        1 byte -- X size of sprite
+
+followed by uncompressed raw data. One byte represents two colours.
+
+ 
+
+Object editing
+
+Each object is 20 bytes long. Format for object data:
+        4 bytes -- Possibly identifier for objects (to keep track of teleporters, etc..) ?
+        2 bytes -- X co-ord
+        2 bytes -- Y co-ord
+        2 bytes -- ?
+        8 bytes -- Address to go to for displaying (i.e. type of object)
+        2 bytes -- ?
+
+The rest hasn't been worked out yet! :)
+
+ 
+
+Flipper positions
+
+This is the format for flipper positions:
+        4 bytes -- all 0x00
+        2 bytes -- X co-ord
+        2 bytes -- Y co-ord
+        1 byte -- direction: 0x00 for left flipper, 0x40 for right flipper
+        1 byte - 0x00
+
+ 
+
+Palettes
+
+Each palette is 32 bytes long. The starting address for the palettes is 0xDFC. I think the format for palette colours is 0RGB (i.e. 2 bytes), but i'm not sure.
+(e.g. the 1st palette is 32*0 bytes from 0xDFC, the 4th palette is 32*4 bytes from 0xDFC etc...)
+Here's a table of the different palettes:
+
+No.	Level	Palette
+1	LP	FG
+2	LP	BG
+3	-	Sonic (and top bar)
+4	-	?
+5	-	?
+6	-	?
+7	TC	FG
+8	TC	Fading - 1st (FG)
+9	TC	Fading - 2nd (FG)
+10	TC	Fading - 3rd (FG)
+11	TC	Fading - 4th (FG)
+12	TC	BG
+13	TC	Fading - 1st (BG)
+14	TC	Fading - 2nd (BG)
+15	TC	Fading - 3rd (BG)
+16	TC	Fading - 4th (BG)
+17	TC	Objects
+18	-	 
+19	-	 
+20	SD	FG
+21	SD	MG
+22	SD	some palette
+23	SD	Objects
+24	-	 
+25	TM	FG
+26	TM	BG
+27	TM	Objects
+28	-	 
+29	-	 
+30	-	 
+31	-	 
+32	-	 
+33	-	 
+34	-	 
+35	-	 
+36	-	 
+37	-	 
+38	-	 
+39	-	 
+40	-	 
+41	-	 
+42	-	 
+43	-	 
+44	-	 
+45	-	 
+46	-	 
+47	-	 
+48	-	 
+ 
+ 
+
+Text editing
+
+Location of HUD messages is 0xBE320. Lots of in game messages, special stage messages and credits. Have fun.
+Note: ( is left part of Robotnik face, ) is right part.
+%d means it inserts a number, e.g. (You still need ... emeralds)
+
+
+Binary map
+
+Here is a map or table of different locations in the ROM:
+
+Location	Description
+0x1CDE	Sonic's mappings
+0x9BC4A	Pointer table for graphics for intro, etc...
+0x9BDC0	as above
+0xBFCBA	Pointer table for tiles
+0xBFDCE	Pointer table to text
+0xC0998	Pointer table for flippers
+0xC3A8A	Objects for Toxic Caves
+0xD3E20 to end	Game code

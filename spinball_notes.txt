@@ -4,14 +4,16 @@
 
 $FF0005 - Player 1 input mask. Used in: Options, In-game, Bonus Stage. Not used on Main Menu or intro videos however.
 $FF573D - Player input mask
+
 ---Sonic Object---
 Player movement when standing or in barrel is only moved in whole integer values.
 Speeds of player when walking/running are only ever whole integer values.
 
--- Hud Messages --
-Probably a queue as this colour setting doesn't affect all messages when there's several in a row.
-$FF55AF - Message Colour :  0 - Invisible, 1 - Flat Green, 2 - Flat Red, 3 - Flat Cyan, 4 - Flat Yellow, 5 - Rainbow,  6 - Red/Yellow Gradient, 7 - Green Yellow Gradient
-$FF55B3 - Message Animation Mode : 1 - Flashing, 2 - Palette Cycling, 3 - Static. Anything not $03 will cause the timer to count down
+$FFF1FA (short) - (possibly general/global) Timer countdown. Observed usages for the player class
+								- Used for each "Yo move it"/"Hey anybody home" states for sonic. Continuously decrements even when sonic is in the laziest waiting state.
+								- Used for the delay between each spindash upshift in pitch
+								- Used to time the delay between pressing jump and sonic actually jumping
+$FFF20A (short) - Timer that counts up during gameplay. Possibly used for time bonus.
 
 -- Level Select Cheat Code --
 Entirely based on input combinations, nothing to do with the options cursor itself.
@@ -23,3 +25,8 @@ Level select code check counts up at memory address FF5750. Correct input ++coun
 => Affects #FFF8D8 (0E = Normal, 13 = Fast) - Appears to increase the force of collisions. Simulation speed is the same
 #FF0360 | Music (00 = On, 01 = Off)
 #FF0361 | Flipper (00 = A-Left, B-Right, C-All, 01 = A-Left, B-All, C-Right, 02= A-All, B-Left, C-Right)
+
+-- Jingles --
+0x11 - Danger
+0x12 - Success!
+0x17 - Extra Ball / Great Escape

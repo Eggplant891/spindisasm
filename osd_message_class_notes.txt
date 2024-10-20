@@ -1,0 +1,96 @@
+-- OSD Messages --
+sizeof = $48 (72) bytes
+
+$FF41C2 - Is OSD message in progress
+
+Probably a queue as this colour setting doesn't affect all messages when there's several in a row.
+$FF5490 - ??? Msg ID
+$FF5735 - Palette cycle offset for osd messages with cycling colours
+
+--OSD Msg Colour Tables--
+Format: Uses 12-bit BGR colour format
+        (0x   0   0-F   0-F   0-F)
+                 BLUE  GREEN  RED
+                 
+000c13f0 - Colour line 0
+000c1400 - Colour line 1
+000c1410 - Colour line 2
+000c1420 - Colour line 3
+
+
+-- OSD Message Instance --
+sizeof = $48 (72) bytes
+
+$FF55AC:00 - Message Colour | ; Unused
+$FF55AD:01 -                | ; Unused
+$FF55AE:02 - Message Colour | ; 
+$FF55AF:03 - ===============| ; $0000 - Invisible, $0001 - Flat Green, $0002 - Flat Red, $0003 - Flat Cyan, $0004 - Flat Yellow, $0005 - Rainbow,  $0006 - Red/Yellow Gradient, $0007 - Green Yellow Gradient
+$FF55B0:04 - ???
+$FF55B1:05 - ???
+$FF55B2:06 - ???
+$FF55B3:07 - Message Animation Mode : 1 - Flashing, 2 - Palette Cycling, 3 - Static. Anything not $03 will cause the timer to count down
+$FF55B4:08 - Text scroller mode? - param3 in QueueOsdmessage if != 4, allow setting of data. See switchD_000deac0_caseD_0
+$FF55B5:09 - ???
+$FF55B6:0A - ???
+$FF55B7:0B - ???
+$FF55B8:0C - Time remaining to display message
+$FF55B9:0D - ???
+$FF55BA:0E - param5 in QueueOsdMessage
+$FF55BB:0F - ???
+$FF55BC:10 - ???
+$FF55BD:11 - ???
+$FF55BE:12 - Current msg char* / string ptr.
+$FF55BF:13 - ???
+$FF55C0:14 - ???
+$FF55C1:15 - ???
+$FF55C2:16 - ???
+$FF55C3:17 - ???
+$FF55C4:18 - ???
+$FF55C5:19 - ???
+$FF55C6:1A - ???
+$FF55C7:1B - ???
+$FF55C8:1C - ???
+$FF55C9:1D - ???
+$FF55CA:1E - ???
+$FF55CB:1F - ???
+$FF55CC:20 - ???
+$FF55CD:21 - ???
+$FF55DE:22 - ???
+$FF55DF:23 - ???
+$FF55D0:24 - ???
+$FF55D1:25 - ???
+$FF55D2:26 - ???
+$FF55D3:27 - ???
+$FF55D4:28 - ???
+$FF55D5:29 - ???
+$FF55D6:2A - ???
+$FF55D7:2B - ???
+$FF55D8:2C - ???
+$FF55D9:2D - ???
+$FF55DA:2E - ???
+$FF55DB:2F - ???
+$FF55DC:30 - ???
+$FF55DD:31 - ???
+$FF55DE:32 - ???
+$FF55DF:33 - ???
+$FF55E0:34 - ???
+$FF55E1:35 - ???
+$FF55E2:36 - ???
+$FF55E3:37 - ???
+$FF55E4:38 - ???
+$FF55E5:39 - ???
+$FF55E6:3A - ???
+$FF55E7:3B - ???
+$FF55E8:3C - ???
+$FF55E9:3D - MSG state - 00 - Showing, 01 - Visible, 02 - Hidden
+$FF55EA:3E - ???
+$FF55EB:3F - ???
+$FF55EC:40 - ???
+$FF55ED:41 - ???
+$FF55EE:42 - ???
+$FF55EF:43 - ???
+$FF55F0:44 - ??? Gets set to - string_length/2, when 55B4 is set to 3.
+$FF55F1:45 - ???
+$FF55F2:46 - Frame counter- Used for pallet cycling, tracking flashing anim, and playing show animation for static msgs
+$FF55F3:47 - ???
+$FF55F4:48 - ???

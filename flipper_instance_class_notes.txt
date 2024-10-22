@@ -1,0 +1,25 @@
+---Flipper Instance Management Notes---
+0xFF58C5 - Number of flippers to update
+0xFF74E8 - Flipper instance array [size = 0xFF58C5]
+
+---Flipper instance struct---
+sizeof = 10 ($0A) bytes
+0xFF74E8:00 - Animated obj instance ptr |
+0xFF74E9:01 -                           |
+0xFF74EA:02 -                           |
+0xFF74EB:03 - ==========================|
+0xFF74EC:04 - XPos for collision        |
+0xFF74ED:05 - ==========================|
+0xFF74EE:06 - YPos for collision        |
+0xFF74EF:07 - ==========================|
+0xFF74F0:08 - Flags                     | ; 4000 - X-flip (affects which controls affect the flipper also
+0xFF74F1:09 - ==========================|
+
+---Quick Hack Info---
+Change 0x000DE07F (byte) to any sound bank index, to change what sound the flipper make when used.
+
+- Reverse flipper controls
+000de01e = $660c
+000de05a = $671e
+
+0x000DE046 = 672E

@@ -59,9 +59,9 @@ Pool 3: 192 - 255
 0xFFAD4E:2A  Timer for anim frame| ; Counts down from "Animation Speed" to 0. Either loops or continues when reaching 0. Seems to be used to determine if an anim slot is being used i.e.if != 0 -> go to next index.
 0xFFAD4F:2B  Animation Speed ====| ; Number of frames to draw each frame. 0 = Freeze, 1 = 60fps, 2 = 30fps etc.
 0xFFAD50:2C  ???
-0xFFAD51:2D  ???
-0xFFAD52:2E  Animation ID| ; For player: $05 - Standing, $06 - Lookin up, $07 - Tapping foot, $08 - Laying down, $0A - Crouching to jump, $0D - Crouching to spin, $15 - Running, $16 - Changing direction
-0xFFAD53:2F  ============|
+0xFFAD51:2D  State ID ===========| ; For player: $05 - Standing, $06 - Lookin up, $07 - Tapping foot, $08 - Laying down, $0A - Crouching to jump, $0D - Crouching to spin, $15 - Running, $16 - Changing direction
+0xFFAD52:2E  Target State ID ===========| ; For player: $05 - Standing, $06 - Lookin up, $07 - Tapping foot, $08 - Laying down, $0A - Crouching to jump, $0D - Crouching to spin, $15 - Running, $16 - Changing direction
+0xFFAD53:2F  Instance ID ========| ; Byte
 0xFFAD54:30  ???
 0xFFAD55:31  ???
 0xFFAD56:32  ???
@@ -72,11 +72,11 @@ Pool 3: 192 - 255
 0xFFAD5B:37  ====================|
 0xFFAD5C:38  Initialises to 0x20 |
 0xFFAD5D:39  ====================|
-0xFFAD5E:3A  Sprite Array entry ptr|    ; Points to an object that is sizeof($2c)(44) @ Address 0xff10a8
-0xFFAD5F:3B                        |    ; $00 - Do not update animation frames (will stay static, but does seem to change when sprite type changes). $10 - Updates animation frames. Does not update position on screen. All values seem to update on CPU, just not on VDP
-0xFFAD60:3C                        |
-0xFFAD61:3D  ======================|
+0xFFAD5E:3A  Sprite ptr          |    ; Points to an object that is sizeof($2c)(44) @ Address 0xff10a8
+0xFFAD5F:3B                      |    ; $00 - Do not update animation frames (will stay static, but does seem to change when sprite type changes). $10 - Updates animation frames. Does not update position on screen. All values seem to update on CPU, just not on VDP
+0xFFAD60:3C                      |
+0xFFAD61:3D  ====================|
 0xFFAD62:3E  ???
-0xFFAD63:3F  ??? ; Anim object index into global anim obj array (256 objects)
+0xFFAD63:3F  ??? ; Anim object self index in anim obj array (256 objects)
 0xFFAD64:40  ???
 0xFFAD64:(41) Next Object

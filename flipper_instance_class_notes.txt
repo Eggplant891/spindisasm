@@ -1,6 +1,6 @@
 ---Flipper Instance Management Notes---
 0xFF58C5 - Number of flippers to update
-0xFF74E8 - Flipper instance array [size = 0xFF58C5]
+0xFF74E8 - Runtime Flipper instance array [size = 0xFF58C5]
 
 ---Flipper instance struct---
 sizeof = 10 ($0A) bytes
@@ -14,6 +14,10 @@ sizeof = 10 ($0A) bytes
 0xFF74EF:07 - ==========================|
 0xFF74F0:08 - Flags                     | ; 4000 - X-flip (affects which controls affect the flipper also
 0xFF74F1:09 - ==========================|
+
+--- ROM Data for flippers ---
+0x000C08BE - List of Ptrs (long), indexed by level ID. Points to table of Flipper definitions for each level.
+
 
 ---Quick Hack Info---
 Change 0x000DE07F (byte) to any sound bank index, to change what sound the flipper make when used.

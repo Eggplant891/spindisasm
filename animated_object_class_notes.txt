@@ -48,8 +48,8 @@ Pool 3: 192 - 255
 0xFFAD43:1F  ???
 0xFFAD44:20  ??? ; Obj height?
 0xFFAD45:21  ??? ; Obj width?
-0xFFAD46:22  Flags ============= | ; 0x40 = Flip X
-0xFFAD47:23  ???
+0xFFAD46:22  Flags               | ; 0x4000 = Flip X, 0x0002 = Is visible on-screen, 0x0008 - Flag to restart animation?
+0xFFAD47:23  =================== |
 0xFFAD48:24  Is active ==========| ; 0x8000 checks if active. Could be flags, but also could just be a bool
 0xFFAD49:25  ???
 0xFFAD4A:26  ???

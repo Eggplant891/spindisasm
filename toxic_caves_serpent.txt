@@ -1,3 +1,28 @@
 --- Toxic Caves Serpent Data Struct ---
-0xFF86AC - Animation state (00 - idle, 01 - underwater (0x78 frame wait), 02 - begin rising, 03 - rising, 04 - sinking)
-0xFF86B0 - Timer
+sizeof = 34 ($22) bytes
+
+0xFF86A4 - AnimObj Ptr          |
+0xFF86A5 -                      |
+0xFF86A6 -                      |
+0xFF86A7 - =====================|
+0xFF86A8 - ???
+0xFF86A9 - ???
+0xFF86AA - ???
+0xFF86AB - ???
+0xFF86AC - Animation state =====| ; (00 - idle, 01 - underwater (0x78 frame wait), 02 - begin rising, 03 - rising, 04 - sinking)
+0xFF86AD - Horizontal Velocity =| ; Speed the serpent moves when ascending/descending from water
+0xFF86AE - ???
+0xFF86AF - ???
+0xFF86B0 - ???
+0xFF86B1 - Timer
+0xFF86B2 - Timer
+0xFF86B3 - ???
+0xFF86B4 - ???
+0xFF86B5 - ???
+0xFF86B6 - ???
+0xFF86B7 - ???
+0xFF86B8 - ???
+0xFF86B9 - ???
+0xFF86BA - ???
+0xFF86BB - ???
+0xFF86BC - Ptr to ROM (000C0FDC) -> (000C0AF4) -> (00012B0C)

@@ -1,0 +1,12 @@
+--- COMMON ---
+
+000C0B04 - PtrPtr used as parameter to initialising anim obj types
+
+0x0C1524 - Ptr array to runtime array of AnimatedGameObjects
+  0x00FF8C9E - Toxic Caves
+  0x00FF9210 - Lava Powerhouse
+  0x00FF8D04 - The Machine
+  0x00FF8FAC - Showdown
+
+--- GENERAL OBJECT LAYOUT ---
+All visible game objects begin with an AnimObj ptr at their head. The remainder then contains data sc

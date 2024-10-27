@@ -1,0 +1,15 @@
+--- Emerald / Level Object Data ---
+sizeof = 34 ($22) bytes
+
+00FF8550:00 - Animated Obj Ptr |
+00FF8551:01                    |
+00FF8552:02                    |
+00FF8553:03 - =================|
+Empty int/ptr - 0000 0000 - Could be because collected. Would point to vdp sprite or collidable obj?
+Flags? - word - 0100 0000 (on both side emeralds in toxic caves
+Some kind of ID? - word - 0662/0663
+XPos - int - 0001 0118
+YPos - int - 06AE 2020
+ROM Ptr - 000C0CF4
+ROM Ptr - 000C2FF6
+Empty byte? 0000 - Maybe used for flags

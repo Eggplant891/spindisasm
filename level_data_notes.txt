@@ -10,3 +10,8 @@
 
 --- GENERAL OBJECT LAYOUT ---
 All visible game objects begin with an AnimObj ptr at their head. The remainder then contains data sc
+
+0x00FF786E - Game object array. Things that can collide probably? Every game object allocated 34 ($22) bytes, regardless of type
+
+000C0EB0 - Toxic Cave Worm fingerprint
+- FF7B3B, FF7B58, FF7B7C - Left side worms

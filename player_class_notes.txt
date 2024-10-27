@@ -24,7 +24,7 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0x0C - Balancing on Ledge
 0x0D - ???
 0x0E - I'm Waiting
-0x0F - Laying Down
+0x0F - Laying Down - Hey anybody home?
 0x10 - ???
 0x11 - Got Emerald
 0x12 - Dying
@@ -51,10 +51,10 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0x8000 - Flip X
 ----------------
 
-0xFF5758:00  ???                 
-0xFF5759:01  ???
-0xFF575A:02  ???
-0xFF575B:03  ???
+0xFF5758:00  Animated Obj Ptr    |
+0xFF5759:01  |                   |
+0xFF575A:02  |                   |
+0xFF575B:03  ====================|
 0xFF575C:04  Score               |
 0xFF575D:05  |                   | unsigned long
 0xFF575E:06  |                   |
@@ -82,21 +82,21 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0xFF5774:1C  Y Sub Pos #2        | unsigned word
 0xFF5775:1D  ====================|
 0xFF5776:1E  X Velocity          |
-0xFF5777:1F  |                   | signed integer
-0xFF5778:20  |                   |
+0xFF5777:1F  |                   | signed long       ; Split into 2 words for pseudo fixed point arithmetic
+0xFF5778:20  |-Sub X Velocity    |
 0xFF5779:21  ====================|
 0xFF577A:22  Y Velocity          |
-0xFF577B:23  |                   | signed integer
-0xFF577C:24  |                   |
+0xFF577B:23  |                   | signed long       ; Split into 2 words for pseudo fixed point arithmetic
+0xFF577C:24  |-Sub Y Velocity    | 
 0xFF577D:25  ====================|
 0xFF577E:26  X Pos #3            | unsigned word     ; Appears to only be used when stood on flat ground
 0xFF577F:27  ====================|
 0xFF5780:28  Y Pos #3            | unsigned word     ; As above
 0xFF5781:29  ====================|
-0xFF5782:2A  Speed               | unsigned word     ; Often used by animated object to determine speed to play animation at.
+0xFF5782:2A  Speed               | signed word       ; Often used by animated object to determine speed to play animation at.
 0xFF5783:2B  ====================|
-0xFF5784:2C  ???
-0xFF5785:2D  ???
+0xFF5784:2C  Sub-speed           | word              ; Sub-integer value of movement speed
+0xFF5785:2D  ====================|
 0xFF5786:2E  Anim Flags          | unsigned byte     ; See ANIM FLAGS
 0xFF5787:2F  ====================|
 0xFF5788:30  Direction ==========| unsigned byte

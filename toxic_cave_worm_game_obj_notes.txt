@@ -1,0 +1,25 @@
+--- Toxic Caves Worm Game Obj ---
+sizeof = 34 ($22) bytes
+
+00FF8550:00 - Animated Obj Ptr |
+00FF8551:01                    |
+00FF8552:02                    |
+00FF8553:03 - =================|
+ptr - 0000 0000 - when alive
+    - 00FF CEE4  - when killed. Could be related to explosion effect, or flickie that comes out
+Flags? - word - 0001 - Seems to be when worm is active
+              - 0101 - When dead but explosion occurring. Could be a dead state or invisible state as emeralds set to 0100 when collected.
+              - 0101 also set when worms spawning. Possible that entrance animation is separate from object activity
+Hits taken - byte 01 / 02 / 03 - 03 = explode 
+Other state byte - Changes to 00FD when dying
+byte
+byte - Timer (probablyword with above byte). Actuvates wgeb jukked
+Some kind of ID? - word - 0316/0317/0318 (for left side worm baggers)
+XPos - int
+YPos - int
+ROM Ptr - 000C0EB0
+ROM Ptr - 00000000
+Empty byte? 0000 - Maybe used for flags such as flipping horizontaly (seeing 4000 flags, which often used for X flips)
+
+000C0EB0 - Toxic Cave Worm fingerprint
+- FF7B3B, FF7B58, FF7B7C - Left side worms

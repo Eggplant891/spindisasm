@@ -99,29 +99,29 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0xFF5785:2D  ====================|
 0xFF5786:2E  Anim Flags          | unsigned byte     ; See ANIM FLAGS
 0xFF5787:2F  ====================|
-0xFF5788:30  Direction ==========| unsigned byte
-0xFF5789:31  ???
-0xFF578A:32  ???
-0xFF578B:33  Emerald #1          |
-0xFF578C:34                      | unsigned long     ; Simply filling emerald resume data in with anything > 0 seems to work i.e. $00000001.
-0xFF578D:35  Resume Data         |                   ; Centre Emerald Toxic Caves:       $00FF852E   ; Centre Emerald The Machine:       $00FF83B8
-0xFF578E:36  ====================|                   ; Centre Emerald Lava Powerhouse:   $00FF9386   ; Inner Right Emerald Showdown:     $00FF885E
-0xFF578F:37  Emerald #2          |
-0xFF5790:38                      | unsigned long
-0xFF5791:39  Resume Data         |                   ; Left Emerald Toxic Caves is:      $00FF8550   ; Upper Left Emerald The Machine:   $00FF8396
-0xFF5792:3A  ====================|                   ; Left Emerald Lava Powerhouse:     $00FF93A8   ; Outer Right Emerald Showdown:     $00FF8880
-0xFF5793:3B  Emerald #3          |
-0xFF5794:3C                      | unsigned long     ; Appears to contain data about whether to replay the intro sequence?
-0xFF5795:3D  Resume Data         |                   ; Right Emerald Toxic Caves:        $00FF8572   ; Upper Right Emerald The Machine:  $00FF83B8
-0xFF5796:3E  ====================|                   ; Right Emerald Lava Powerhouse:    $00FF93CA   ; Centre Emerald Showdown:          $00FF88E2
-0xFF5797:3F  Emerald #4          |
-0xFF5798:40                      | unsigned long     
-0xFF5799:41  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83DA
-0xFF579A:42  ====================|                   ;-------------------------------------------    ; Inner Left Emerald Showdown:      $00FF883C
-0xFF579B:43  Emerald #5          |                   
-0xFF579C:44                      | unsigned long     
-0xFF579D:45  Resume Data         |                   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83FC
-0xFF579E:46  ====================|                   ;-------------------------------------------    ; Outer Left Emerald Showdown:      $00FF881A
+0xFF5788:30  Direction ==========| unsigned byte ; But unknown
+0xFF5789:31  Current Level ======|
+0xFF578A:32  EmeraldsCollected[0]| EmeraldObjPtr Array ; Filling emerald resume data in with anything != 0 seems to count towards level emeralds remaining calculation
+0xFF578B:33                      | Emerald obj ptr   ; Centre Emerald Toxic Caves:       $00FF852E   ; Centre Emerald The Machine:       $00FF83B8
+0xFF578C:34                      |                   ; Centre Emerald Lava Powerhouse:   $00FF9386   ; Inner Right Emerald Showdown:     $00FF885E
+0xFF578D:35  ====================|                   ;
+0xFF578E:36  EmeraldsCollected[1]|                   ;
+0xFF578F:37                      | Emerald obj ptr   ; Left Emerald Toxic Caves is:      $00FF8550   ; Upper Left Emerald The Machine:   $00FF8396
+0xFF5790:38                      |                   ; Left Emerald Lava Powerhouse:     $00FF93A8   ; Outer Right Emerald Showdown:     $00FF8880
+0xFF5791:39  ====================|                   ;
+0xFF5792:3A  EmeraldsCollected[2]|                   ; Appears to contain data about whether to replay the intro sequence?
+0xFF5793:3B                      | Emerald obj ptr   ; Right Emerald Toxic Caves:        $00FF8572   ; Upper Right Emerald The Machine:  $00FF83B8
+0xFF5794:3C                      |                   ; Right Emerald Lava Powerhouse:    $00FF93CA   ; Centre Emerald Showdown:          $00FF88E2
+0xFF5795:3D  ====================|                   ;
+0xFF5796:3E  EmeraldsCollected[3]|                   ;
+0xFF5797:3F                      | Emerald obj ptr   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83DA
+0xFF5798:40                      |                   ;-------------------------------------------    ; Inner Left Emerald Showdown:      $00FF883C
+0xFF5799:41  ====================|                   ;
+0xFF579A:42  EmeraldsCollected[4]|                   ;
+0xFF579B:43                      | Emerald obj ptr   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83FC
+0xFF579C:44                      |                   ;-------------------------------------------    ; Outer Left Emerald Showdown:      $00FF881A
+0xFF579D:45  ====================|                   ;
+0xFF579E:46  
 0xFF579F:47  Lives===============| unsigned byte
 0xFF57A0:48  Emeralds Collected==| unsigned byte
 0xFF57A1:49  Rings Collected=====| unsigned byte

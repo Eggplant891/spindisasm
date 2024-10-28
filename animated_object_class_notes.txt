@@ -14,10 +14,10 @@ Pool 3: 192 - 255
 
 94 90 -> Flipper sprite indices
 
-0xFFAD24:00  ???
-0xFFAD25:01  ???
-0xFFAD26:02  ??? ; Seems to use Character State value for player sprites. Seems to be some kind of sprite sheet offset?
-0xFFAD27:03  ??? ; Sprite sheet offset #2. This seems to change per frame of the player's animation
+0xFFAD24:00  ROM ptr             |    ; Sprite Asset?
+0xFFAD25:01  |                   |
+0xFFAD26:02  |                   |    ; Seems to use Character State value for player sprites. Seems to be some kind of sprite sheet offset?
+0xFFAD27:03  =================== |    ; Sprite sheet offset #2. This seems to change per frame of the player's animation
 0xFFAD28:04  ???
 0xFFAD29:05  ???
 0xFFAD2A:06  ??? ; animated object type? (byte)

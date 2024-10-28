@@ -52,16 +52,16 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 ----------------
 
 0xFF5758:00  Animated Obj Ptr    |
-0xFF5759:01  |                   |
+0xFF5759:01  |                   | Animated Obj Ptr
 0xFF575A:02  |                   |
 0xFF575B:03  ====================|
 0xFF575C:04  Score               |
 0xFF575D:05  |                   | unsigned long
 0xFF575E:06  |                   |
 0xFF575F:07  ====================|
-0xFF5760:08  Camera Target X     |
+0xFF5760:08  Camera Target X     | unsigned word
 0xFF5761:09  ====================|
-0xFF5762:0A  Camera Target Y     |
+0xFF5762:0A  Camera Target Y     | unsigned word
 0xFF5763:0B  ====================|
 0xFF5764:0C  Camera  Flags?======| unsigned byte     ; See CAMERA STATES
 0xFF5765:0D  Character State=====| unsigned byte     ; See PLAYER STATES
@@ -82,11 +82,11 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0xFF5774:1C  Y Sub Pos #2        | unsigned word
 0xFF5775:1D  ====================|
 0xFF5776:1E  X Velocity          |
-0xFF5777:1F  |                   | signed long       ; Split into 2 words for pseudo fixed point arithmetic
+0xFF5777:1F  |                   | signed long       ; Split into 2 words for pseudo floating point arithmetic
 0xFF5778:20  |-Sub X Velocity    |
 0xFF5779:21  ====================|
 0xFF577A:22  Y Velocity          |
-0xFF577B:23  |                   | signed long       ; Split into 2 words for pseudo fixed point arithmetic
+0xFF577B:23  |                   | signed long       ; Split into 2 words for pseudo floating point arithmetic
 0xFF577C:24  |-Sub Y Velocity    | 
 0xFF577D:25  ====================|
 0xFF577E:26  X Pos #3            | unsigned word     ; Appears to only be used when stood on flat ground
@@ -99,27 +99,27 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0xFF5785:2D  ====================|
 0xFF5786:2E  Anim Flags          | unsigned byte     ; See ANIM FLAGS
 0xFF5787:2F  ====================|
-0xFF5788:30  Direction ==========| unsigned byte ; But unknown
-0xFF5789:31  Current Level ======|
+0xFF5788:30  Current Level       | unsigned word
+0xFF5789:31  ====================|
 0xFF578A:32  EmeraldsCollected[0]| EmeraldObjPtr Array ; Filling emerald resume data in with anything != 0 seems to count towards level emeralds remaining calculation
-0xFF578B:33                      | Emerald obj ptr   ; Centre Emerald Toxic Caves:       $00FF852E   ; Centre Emerald The Machine:       $00FF83B8
-0xFF578C:34                      |                   ; Centre Emerald Lava Powerhouse:   $00FF9386   ; Inner Right Emerald Showdown:     $00FF885E
+0xFF578B:33  |                   | Emerald obj ptr   ; Centre Emerald Toxic Caves:       $00FF852E   ; Centre Emerald The Machine:       $00FF83B8
+0xFF578C:34  |                   |                   ; Centre Emerald Lava Powerhouse:   $00FF9386   ; Inner Right Emerald Showdown:     $00FF885E
 0xFF578D:35  ====================|                   ;
 0xFF578E:36  EmeraldsCollected[1]|                   ;
-0xFF578F:37                      | Emerald obj ptr   ; Left Emerald Toxic Caves is:      $00FF8550   ; Upper Left Emerald The Machine:   $00FF8396
-0xFF5790:38                      |                   ; Left Emerald Lava Powerhouse:     $00FF93A8   ; Outer Right Emerald Showdown:     $00FF8880
+0xFF578F:37  |                   | Emerald obj ptr   ; Left Emerald Toxic Caves is:      $00FF8550   ; Upper Left Emerald The Machine:   $00FF8396
+0xFF5790:38  |                   |                   ; Left Emerald Lava Powerhouse:     $00FF93A8   ; Outer Right Emerald Showdown:     $00FF8880
 0xFF5791:39  ====================|                   ;
 0xFF5792:3A  EmeraldsCollected[2]|                   ; Appears to contain data about whether to replay the intro sequence?
-0xFF5793:3B                      | Emerald obj ptr   ; Right Emerald Toxic Caves:        $00FF8572   ; Upper Right Emerald The Machine:  $00FF83B8
-0xFF5794:3C                      |                   ; Right Emerald Lava Powerhouse:    $00FF93CA   ; Centre Emerald Showdown:          $00FF88E2
+0xFF5793:3B  |                   | Emerald obj ptr   ; Right Emerald Toxic Caves:        $00FF8572   ; Upper Right Emerald The Machine:  $00FF83B8
+0xFF5794:3C  |                   |                   ; Right Emerald Lava Powerhouse:    $00FF93CA   ; Centre Emerald Showdown:          $00FF88E2
 0xFF5795:3D  ====================|                   ;
 0xFF5796:3E  EmeraldsCollected[3]|                   ;
-0xFF5797:3F                      | Emerald obj ptr   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83DA
-0xFF5798:40                      |                   ;-------------------------------------------    ; Inner Left Emerald Showdown:      $00FF883C
+0xFF5797:3F  |                   | Emerald obj ptr   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83DA
+0xFF5798:40  |                   |                   ;-------------------------------------------    ; Inner Left Emerald Showdown:      $00FF883C
 0xFF5799:41  ====================|                   ;
 0xFF579A:42  EmeraldsCollected[4]|                   ;
-0xFF579B:43                      | Emerald obj ptr   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83FC
-0xFF579C:44                      |                   ;-------------------------------------------    ; Outer Left Emerald Showdown:      $00FF881A
+0xFF579B:43  |                   | Emerald obj ptr   ;-------------------------------------------    ; Lower Right Emerald The Machine:  $00FF83FC
+0xFF579C:44  |                   |                   ;-------------------------------------------    ; Outer Left Emerald Showdown:      $00FF881A
 0xFF579D:45  ====================|                   ;
 0xFF579E:46  
 0xFF579F:47  Lives===============| unsigned byte

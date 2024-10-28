@@ -1,25 +1,44 @@
 --- Toxic Caves Worm Game Obj ---
 sizeof = 34 ($22) bytes
 
-00FF8550:00 - Animated Obj Ptr |
-00FF8551:01                    |
-00FF8552:02                    |
-00FF8553:03 - =================|
-ptr - 0000 0000 - when alive
-    - 00FF CEE4  - when killed. Could be related to explosion effect, or flickie that comes out
-Flags? - word - 0001 - Seems to be when worm is active
+Flags: - word - 0001 - Seems to be when worm is active
               - 0101 - When dead but explosion occurring. Could be a dead state or invisible state as emeralds set to 0100 when collected.
               - 0101 also set when worms spawning. Possible that entrance animation is separate from object activity
-Hits taken - byte 01 / 02 / 03 - 03 = explode 
-Other state byte - Changes to 00FD when dying
-byte
-byte - Timer (probablyword with above byte). Actuvates wgeb jukked
-Some kind of ID? - word - 0316/0317/0318 (for left side worm baggers)
-XPos - int
-YPos - int
-ROM Ptr - 000C0EB0
-ROM Ptr - 00000000
-Empty byte? 0000 - Maybe used for flags such as flipping horizontaly (seeing 4000 flags, which often used for X flips)
-
 000C0EB0 - Toxic Cave Worm fingerprint
-- FF7B3B, FF7B58, FF7B7C - Left side worms
+- FF7B38, FF7B5A, FF7B7C - Left side worms
+
+0xFF8550:00 - Animated Obj Ptr    |
+0xFF8551:01 - |                   |
+0xFF8552:02 - |                   |
+0xFF8553:03 - ====================|
+0xFF8554:04 - Death Obj ptr       |    ; 0000 0000 - when alive
+0xFF8555:05 - |                   |    ; 00FF CEE4 - when killed. Could reference an explosion VDP sprite, or it's the flickie that spawns (or both?)
+0xFF8556:06 - |                   |
+0xFF8557:07 - ====================|
+0xFF8558:08 - Flags               |
+0xFF8559:09 - ====================|
+0xFF855A:0A - Hits taken==========|    ; byte 01 / 02 / 03 - 03 = explode 
+0xFF855B:0B - Other state byte?===|    ; Changes to 00FD when dying
+0xFF855C:0C - Timer               |    ; Seems to activate when killed. Related to death sprite?
+0xFF855D:0D - ====================|
+0xFF855E:0E - Level Obj ID        |    ; word -  Level obj ID i.e. - 0316/0317/0318 (for left side worm baggers)
+0xFF855F:0F - ====================|
+0xFF8560:10 - XPos                |
+0xFF8561:11 -                     |
+0xFF8562:12 -                     |
+0xFF8563:13 - ====================|
+0xFF8564:14 - YPos                |
+0xFF8565:15 -                     |
+0xFF8566:16 -                     |
+0xFF8567:17 - ====================|
+0xFF8568:18 - ROM Ptr             |    ; 000C0EB0
+0xFF8569:19 -                     |
+0xFF856A:1A -                     |
+0xFF856B:1B - ====================|
+0xFF856C:1C - ROM Ptr             |    ; 00000000
+0xFF856D:1D -                     |
+0xFF856E:1E -                     |
+0xFF856F:1F - ====================|
+0xFF8570:20 - ???
+0xFF8571:21 - Flags? Seems to have 4000 in many cases
+0xFF8572:22 - Next Obj

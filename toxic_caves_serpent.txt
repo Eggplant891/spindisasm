@@ -1,28 +1,38 @@
 --- Toxic Caves Serpent Data Struct ---
 sizeof = 34 ($22) bytes
 
-0xFF86A4 - AnimObj Ptr          |
-0xFF86A5 -                      |
-0xFF86A6 -                      |
-0xFF86A7 - =====================|
-0xFF86A8 - ???
-0xFF86A9 - ???
-0xFF86AA - ???
-0xFF86AB - ???
-0xFF86AC - Animation state =====| ; (00 - idle, 01 - underwater (0x78 frame wait), 02 - begin rising, 03 - rising, 04 - sinking)
-0xFF86AD - Horizontal Velocity =| ; Speed the serpent moves when ascending/descending from water
-0xFF86AE - ???
-0xFF86AF - ???
-0xFF86B0 - ???
-0xFF86B1 - Timer
-0xFF86B2 - Timer
-0xFF86B3 - ???
-0xFF86B4 - ???
-0xFF86B5 - ???
-0xFF86B6 - ???
-0xFF86B7 - ???
-0xFF86B8 - ???
-0xFF86B9 - ???
-0xFF86BA - ???
-0xFF86BB - ???
-0xFF86BC - Ptr to ROM (000C0FDC) -> (000C0AF4) -> (00012B0C)
+0xFF86A4:00 - AnimObj Ptr          |
+0xFF86A5:01 - |                    |
+0xFF86A6:02 - |                    |
+0xFF86A7:03 - =====================|
+0xFF86A8:04 - Ptr to destruction obj
+0xFF86A9:05 - |                    |
+0xFF86AA:06 - |                    |
+0xFF86AB:07 - =====================|
+0xFF86AC:08 - Animation state =====| ; (00 - idle, 01 - underwater (0x78 frame wait), 02 - begin rising, 03 - rising, 04 - sinking, 05 - JUMP UP!, 06 - waiting to strike, 08 - Raising out of water, 09 - Player in jaws (if times out, will kill player when returning to water), 14 - eating player, 15 - lowering back into water
+0xFF86AD:09 - Horizontal Velocity =| ; Speed the serpent moves when ascending/descending from water
+0xFF86AE:0A - ???
+0xFF86AF:0B - Number of button presses by player - 4 will release from jaws
+0xFF86B0:0C - Timer                |
+0xFF86B1:0D - =====================|
+0xFF86B2:0E - ???
+0xFF86B3:0F - ???
+0xFF86B4:10 - ???
+0xFF86B5:11 - ???
+0xFF86B6:12 - ???
+0xFF86B7:13 - ???
+0xFF86B8:14 - ???
+0xFF86B9:15 - ???
+0xFF86BA:16 - ???
+0xFF86BB:17 - ???
+0xFF86BC:18 - Ptr to ROM (000C0FDC) -> (000C0AF4) -> (00012B0C)
+0xFF86BD:19 - |                    |
+0xFF86BE:1A - |                    |
+0xFF86BF:1B - |====================|
+0xFF86C0:1C - ???
+0xFF86C1:1D - ???
+0xFF86C2:1E - ???
+0xFF86C3:1F - ???
+0xFF86C4:20 - ???
+0xFF86C5:21 - ???
+0xFF86C6:22 - ???

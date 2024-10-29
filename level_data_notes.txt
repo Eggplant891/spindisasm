@@ -11,6 +11,7 @@
 --- GENERAL OBJECT LAYOUT ---
 All visible game objects begin with an AnimObj ptr at their head. The remainder then contains data sc
 
+0x00FF784C - Array root. First entry of game obj arrays often empty to act as null
 0x00FF786E - Game object array. Things that can collide probably? Every game object allocated 34 ($22) bytes, regardless of type
 
 000C0EB0 - Toxic Cave Worm fingerprint

@@ -1,15 +1,47 @@
 --- Emerald / Level Object Data ---
 sizeof = 34 ($22) bytes
 
-00FF8550:00 - Animated Obj Ptr |
-00FF8551:01                    |
-00FF8552:02                    |
-00FF8553:03 - =================|
-Empty int/ptr - 0000 0000 - Could be because collected. Would point to vdp sprite or collidable obj?
-Flags? - word - 0100 0000 (on both side emeralds in toxic caves
+
+Empty int/ptr - 0000 0000 - 
+Flags? - word - 
 Some kind of ID? - word - 0662/0663
 XPos - int - 0001 0118
 YPos - int - 06AE 2020
-ROM Ptr - 000C0CF4
-ROM Ptr - 000C2FF6
-Empty byte? 0000 - Maybe used for flags
+
+
+
+00FF8550:00 - Animated Obj Ptr    |
+00FF8551:01   |                   |
+00FF8552:02   |                   |
+00FF8553:03 - ====================|
+0xFF8554:14 - Unused ptr?         |    ; Could be because collected. Would point to vdp sprite or collidable obj?
+0xFF8555:15 - |                   |
+0xFF8556:16 - |                   |
+0xFF8557:17 - ====================|
+0xFF8558:18 - Flags               |    ; 0100 0000 (on both side emeralds in toxic caves
+0xFF8559:19 - ====================|
+0xFF855A:1A - ???
+0xFF855B:1B - ???
+0xFF855C:1C - ???
+0xFF855D:1D - ???
+0xFF855E:1E - ???
+0xFF855F:1F - ???
+0xFF8560:10 - XPos                |    ; 0001 0118 - Toxic Caves (one of the side emeralds)
+0xFF8561:11 -                     |
+0xFF8562:12 -                     |
+0xFF8563:13 - ====================|
+0xFF8564:24 - YPos                |    ; 06AE 2020 -  Toxic Caves (both side emeralds)
+0xFF8564:05 -                     |
+0xFF8565:06 -                     |
+0xFF8566:07 - ====================|
+0xFF8567:08 - ROM Ptr             |    ; 000C 0CF4 - Emerald sprite fingerprint
+0xFF8568:09 -                     |
+0xFF8569:0A -                     |
+0xFF856A:0B - ====================|
+0xFF856B:0C - ROM Ptr             |    ; 000C2FF6
+0xFF856C:0D -                     |
+0xFF856D:0E -                     |
+0xFF856E:0F - ====================|
+0xFF856F:00 - Empty byte?=========|    ; 0000 - Maybe used for flags
+0xFF8570:21 - ???
+0xFF8571:22 - Next Obj

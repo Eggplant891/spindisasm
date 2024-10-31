@@ -3,14 +3,14 @@ sizeof = 64 ($40) bytes
 
 Function at $000d574e => Loop that updates all game objects. Will update 256 times per frame, regardless of how many objects are actually being used.
 
-Array root = $FFAD24
+Array root = 0xFFAD24
 Array length = 256
 
 Array pools:
-Pool 0: 0 - 63
-Pool 1: 64 - 127
-Pool 2: 128 - 191
-Pool 3: 192 - 255
+Pool 0: 0 - 63    (0xFFAD24)
+Pool 1: 64 - 127  (0xFFBD24)
+Pool 2: 128 - 191 (0xFFCD24)
+Pool 3: 192 - 255 (0xFFDD24)    ; Toxic Caves animated drips and scenery appears here
 
 94 90 -> Flipper sprite indices
 

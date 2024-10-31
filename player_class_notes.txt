@@ -28,6 +28,8 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0x10 - ???
 0x11 - Got Emerald
 0x12 - Dying
+0x32 - Launching ball from bottom of screen
+0x33 - Player launching ball lowering into position
 -------------------
 
 ---CAMERA STATES--- Could be flags based on weirdly large gaps in state values, or could be also used for animations?

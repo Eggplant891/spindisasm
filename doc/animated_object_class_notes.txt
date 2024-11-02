@@ -7,7 +7,7 @@ Array root = 0xFFAD24
 Array length = 256
 
 Array pools:
-Pool 0: 0 - 63    (0xFFAD24)
+Pool 0: 0 - 63    (0xFFAD24)   ; FFA8F6 important location for something?
 Pool 1: 64 - 127  (0xFFBD24)
 Pool 2: 128 - 191 (0xFFCD24)
 Pool 3: 192 - 255 (0xFFDD24)    ; Toxic Caves animated drips and scenery appears here

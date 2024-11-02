@@ -7,6 +7,10 @@ $FF573D - Player input mask
 
 0xFFF2E4 - Some kind of Heap for rendering sprites and tiles
 
+0xFF85E0 - Set to 01 to enable barrel collision. Can enable whilst inside, which will instantly re-catch you when jumping
+0xFF85E2 - barrel X-offset. Doesn't get used until flag set to 00 on FF85e3, but it continuously tries to move left/right regatdless.
+0xFF85E3 - Set to 01 to set player as inside barrel
+
 ---Sonic Object---
 Player movement when standing or in barrel is only moved in whole integer values.
 Speeds of player when walking/running are only ever whole integer values.

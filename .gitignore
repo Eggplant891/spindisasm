@@ -1,11 +1,6 @@
+bin/*
 
-sbbuilt_exodus\.bin
-
-sbbuilt\.bin
-
-sbbuilt\.prev\.bin
-
-errors\.txt
+errors*\.txt
 /SSCDec.rar
 /asm68k.exe
 /spinball.lst

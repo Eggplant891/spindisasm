@@ -1,0 +1,10 @@
+---Camera Management Notes---
+
+Temp camera pos buffers?
+0xFF0082 - Camera X Pos temp      ; Only seems to get set when camera is moving left/right to offset vs the player
+0xFF0084 - Camera X Sub Pos       ;
+0xFF008A - Camera Y Pos           ;
+0xFF008A - Camera Y Sub Pos       ;
+
+0xFF9986 - unknow - Flickers 0/1, but when manually set to 02 and above, strange tiling offsetting occurs. Research more!
+0xFF9988 - Camera shift offset. Increase to make the camera move to the side, offsetting away from the player. Seems to yo-yo back and forth to avoid player leaving camera zone

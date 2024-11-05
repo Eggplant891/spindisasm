@@ -9,3 +9,5 @@ errors\.txt
 /SSCDec.rar
 /asm68k.exe
 /spinball.lst
+/\.vscode
+/ghidra_project_files

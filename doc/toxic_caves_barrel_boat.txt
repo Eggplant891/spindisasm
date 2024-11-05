@@ -1,0 +1,15 @@
+--- Barrel Boat Object Class ---
+
+sizeof = 34 ($22) bytes
+
+0xFF8594 - Left Barrel
+0xFF85D8 - Right Barrel
+
+0xFF859C | 0xFF85E0 - Set to 01 to enable barrel collision. Can enable whilst inside, which will instantly re-catch you when jumping
+0xFF85E2 - barrel X-offset. Doesn't get used until flag set to 00 on FF85e3, but it continuously tries to move left/right regatdless.
+0xFF85E3 - Set to 01 to set player as inside barrel
+
+0x00FF784C - Array root. First entry of game obj arrays often empty to act as null
+0x00FF786E - Real first object
+
+ 0xFF7850 - Horizontal

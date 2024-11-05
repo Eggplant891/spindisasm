@@ -46,6 +46,7 @@ PlayerDataInstance:     ; Offsets shown worked out relative to $FF5758 for Playe
 0x10 - Jumping out of rowing boat (edging upwards)
 ???????????????
 0x43 - In rowing boat (camera only moves when player near edges. Seems to have sensitivity and intertia?)
+0x80 - Got Emerald / Level completed?
 0x86 - Dead camera 
 -------------------
 

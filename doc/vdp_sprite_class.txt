@@ -20,7 +20,7 @@ Array length = 256
 0xFF10AB:03 - ==================|
 0xFF10AC:04 - ???
 0xFF10AD:05 - ???
-0xFF10AE:06 - ???
+0xFF10AE:06 - Sprite flags - | 4 - often done when starting an animation?
 0xFF10AF:07 - Pallete Index =====| $00 - Ambient, $01 - Water, $02 - Sonic, $03 - Robotnik / Explosions/Clucks. last 2 bits encode pallete. Next 2 bits encode depth/layer. $06 renders on top of rocks when in barrel. $02 renders sonic behind rocks. Both with sonic pallette
 0xFF10B0:08 - $8000 - Flip X flag
 0xFF10B1:09 -

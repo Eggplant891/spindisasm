@@ -1,0 +1,44 @@
+--- Collidable Object Class ---
+
+sizeof = 34 ($22) bytes
+
+0x00FF784C - Array root. First entry of game obj arrays often empty to act as null
+0x00FF786E - Real first object
+
+ 0xFF7850 - Horizontal
+ 
+(0xFF784C) 0xFF786E:00 - Animated Obj Ptr    |
+(0xFF784D) 0xFF786F:01 - |                   |
+(0xFF784E) 0xFF7870:02 - |                   |
+(0xFF784F) 0xFF7871:03 - ====================|
+(0xFF7850) 0xFF7872:04 - Death Obj ptr       |    ; 0000 0000 - when alive
+(0xFF7851) 0xFF7873:05 - |                   |    ; 00FF CEE4 - when killed. Could reference an explosion VDP sprite, or it's the flickie that spawns (or both?)
+(0xFF7852) 0xFF7874:06 - |                   |
+(0xFF7853) 0xFF7875:07 - ====================|
+(0xFF7854) 0xFF7876:08 - Flags               |
+(0xFF7855) 0xFF7877:09 - ====================|
+(0xFF7856) 0xFF7878:0A - Hits taken==========|    ; byte 01 / 02 / 03 - 03 = explode 
+(0xFF7857) 0xFF7879:0B - Other state byte?===|    ; Changes to 00FD when dying
+(0xFF7858) 0xFF787A:0C - Timer               |    ; Seems to activate when killed. Related to death sprite?
+(0xFF7859) 0xFF787B:0D - ====================|
+(0xFF785A) 0xFF787C:0E - Obj Type ID=========|    ; byte -  Level obj ID i.e. - 0316/0317/0318 (for left side worm baggers)
+(0xFF785B) 0xFF787D:0F - Instance ID=========|    ; byte
+(0xFF785C) 0xFF787E:10 - XPos                |
+(0xFF785D) 0xFF787F:11 -                     |
+(0xFF785E) 0xFF7880:12 -                     |
+(0xFF785F) 0xFF7881:13 - ====================|
+(0xFF7860) 0xFF7882:14 - YPos                |
+(0xFF7861) 0xFF7883:15 -                     |
+(0xFF7862) 0xFF7884:16 -                     |
+(0xFF7863) 0xFF7885:17 - ====================|
+(0xFF7864) 0xFF7886:18 - ROM Ptr             |    ; 000C0EB0
+(0xFF7865) 0xFF7887:19 -                     |
+(0xFF7866) 0xFF7888:1A -                     |
+(0xFF7867) 0xFF7889:1B - ====================|
+(0xFF7868) 0xFF788A:1C - ROM Ptr             |    ; 00000000
+(0xFF7869) 0xFF788B:1D -                     |
+(0xFF786A) 0xFF788C:1E -                     |
+(0xFF786B) 0xFF788D:1F - ====================|
+(0xFF786C) 0xFF788E:20 - ???
+(0xFF786D) 0xFF788F:21 - Flags? Seems to have 4000 in many cases
+(0xFF786E) 0xFF7890:22 - Next Obj

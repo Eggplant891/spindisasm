@@ -4,8 +4,26 @@ sizeof = 34 ($22) bytes
 Flags: - word - 0001 - Seems to be when worm is active
               - 0101 - When dead but explosion occurring. Could be a dead state or invisible state as emeralds set to 0100 when collected.
               - 0101 also set when worms spawning. Possible that entrance animation is separate from object activity
+              
 000C0EB0 - Toxic Cave Worm fingerprint
-- FF7B38, FF7B5A, FF7B7C - Left side worms
+
+--- Blue Flickie ---
+0007E636
+0007E638
+
+--- Red Flickie ---
+0007E642 - Wings down
+0007E644 - Wings up
+
+--- Bald Eagle ---
+0007E64A - Flickie wings up
+0007E64C - Flickie wings down
+
+--- Cucky ---
+0007E64E
+0007E650
+
+- FF7B38, FF7B5A, FF7B7C - Bottom area - Left side worm addresses
 
 (0xFF784C) 0xFF8550:00 - Animated Obj Ptr    |
 (0xFF784D) 0xFF8551:01 - |                   |
@@ -21,8 +39,8 @@ Flags: - word - 0001 - Seems to be when worm is active
 (0xFF7857) 0xFF855B:0B - Other state byte?===|    ; Changes to 00FD when dying
 (0xFF7858) 0xFF855C:0C - Timer               |    ; Seems to activate when killed. Related to death sprite?
 (0xFF7859) 0xFF855D:0D - ====================|
-(0xFF785A) 0xFF855E:0E - Level Obj ID        |    ; word -  Level obj ID i.e. - 0316/0317/0318 (for left side worm baggers)
-(0xFF785B) 0xFF855F:0F - ====================|
+(0xFF785A) 0xFF855E:0E - Obj Type ID=========|    ; byte - 03 seems to be the ID for the worms
+(0xFF785B) 0xFF855F:0F - Instance ID=========|    ; byte -  
 (0xFF785C) 0xFF8560:10 - XPos                |
 (0xFF785D) 0xFF8561:11 -                     |
 (0xFF785E) 0xFF8562:12 -                     |

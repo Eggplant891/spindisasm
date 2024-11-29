@@ -1,9 +1,32 @@
 ---Spinball Notes---
 
+-- Prototype Notes 0--
+0x1744A. 0x17644 - Unused switch sprite (diagonal, triangle)
+0x17762, 0x178DC - Unused switch sprite (horizontal, star)
+
+0x12C98, 0x12CB6, 0x12CF0, 0x12D4A, 0x12DC4 - Unused toxic bubbling sprite
+
+0xFEA6, 0xFDDC - Butterfly creep
+0xFFD0, 0x100EE - Bird Creep
+0x10224, 0x1030E - Bat Creep
+0x10408, 0x104AE - Bumble bee creep
+
+0x1744A, 0x17644 - Switch with triangle shape (Toxic Caves)
+0x17762, 0x178DC - Switch with star shape (Toxic Caves)
+0x27102, 0x2725C - Horizontal switch (Lava Powerhouse)
+0x34810, 0x34816 - Some kind of rocket ship tile?
+0x36E8C, 0x36F5E - "Fireball" sprite seems to have additional frame
+0x3AFD2 - Some kind of piston within Showdown sprites. Located next to 0x3AF08 (0x38B4E in release, which does not have it here)
+
+0x105E2, 0x109D2, 0x10E1
+
+-- Release USA Notes --
+0xA16F6 - Could be pinball fortress tile map?
+
 -- General Notes --
 
-$FF0005 - Player 1 input mask. Used in: Options, In-game, Bonus Stage. Not used on Main Menu or intro videos however.
-$FF573D - Player input mask
+0xFF0005 - Player 1 input mask. Used in: Options, In-game, Bonus Stage. Not used on Main Menu or intro videos however.
+0xFF573D - Player input mask
 
 0xFFF2E4 - Some kind of Heap for rendering sprites and tiles
 
@@ -27,6 +50,20 @@ Level select code check counts up at memory address FF5750. Correct input ++coun
 => Affects #FFF8D8 (0E = Normal, 13 = Fast) - Appears to increase the force of collisions. Simulation speed is the same
 #FF0360 | Music (00 = On, 01 = Off)
 #FF0361 | Flipper (00 = A-Left, B-Right, C-All, 01 = A-Left, B-All, C-Right, 02= A-All, B-Left, C-Right)
+
+-- Tiling System --
+Collision tiles referenced on ROM via ptr at 0xFFF1F4
+
+Collision Tiles are 128x128px
+Level tiling allows for up to 16 tiles horizontally (max width of 2048px)
+Vertical limit seems arbitarily large. Could be 20 based on memory initialisation of 320 in LevelTileInitialisation.
+
+CollisionTileData seems to be a ptr to an array of shorts.
+collision_tile
+[0] = xpos
+[1] = ypos
+[2] = some value subtracted from a vector distance calculation
+[4] = tile flags?
 
 -- Jingles --
 0x11 - Danger

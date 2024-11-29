@@ -17,6 +17,12 @@ Format: Uses 12-bit BGR colour format
 000c1410 - Colour line 2
 000c1420 - Colour line 3
 
+OSD Palette in CRAM:
+0x58 - Colour line 0
+0x5A - Colour line 1
+0x5C - Colour line 2
+0x5E - Colour line 3
+
 
 -- OSD Message Instance --
 sizeof = $48 (72) bytes

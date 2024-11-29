@@ -6,3 +6,4 @@ errors*\.txt
 /spinball.lst
 /\.vscode
 /ghidra_project_files
+*\.code-workspace

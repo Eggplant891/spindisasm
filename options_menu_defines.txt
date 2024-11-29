@@ -1,0 +1,3 @@
+; Key memory addresses in options menus
+Options_SoundTestIndex_Addr  = $FF0A00
+Options_SoundTestString_Addr = $FF0A60

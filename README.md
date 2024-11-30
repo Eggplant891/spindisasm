@@ -12,9 +12,11 @@ You assume any and all responsibility for using this content responsibly. Sonic 
 Introduction
 -----
 
-This is the Sonic Spinball disassembly by **Andlabs** converted to a `.asm` file and fixed up to produce an accurate build in asm68k.
+This is the Sonic Spinball disassembly by **Andlabs** converted to a `.asm` file and fixed up to produce an accurate build in asm68k by **[Wafer](https://github.com/Eggplant891/spindisasm/commits?author=WaferMouse)**.
 
-The diassembly still has some rough patches, where IDA has incorrectly interpreted some data as addresses or code. An example being the references in the padding at the end of the asm.
+Further research, decompilation and exploration has been done by **[Scrambled Eggman / EggPlant891](https://github.com/Eggplant891)**
+
+The disassembly still has some rough patches, where IDA has incorrectly interpreted some data as addresses or code. An example being the references in the padding at the end of the asm.
 
 Consequently there is still work to be done before the assembly code will be easy and safe to hack. There are ways to inject new code, but requires more technical precision (quick info explain further on) to do than with a proper split disassembly.
 

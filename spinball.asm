@@ -4629,7 +4629,7 @@ arg_10          =  $14
 
 loc_D5F44:                              ; CODE XREF: sub_D5F16+28↑j
                 move.w  d3,d0
-                andi.w  #$FF,d0
+                andi.w  #$FF,d0 ; VDP sprite idx limit
 
 loc_D5F4A:                              ; CODE XREF: sub_D5F16+2C↑j
                 move.l  d0,-(sp)
@@ -11465,7 +11465,7 @@ loc_D9E0A:                              ; CODE XREF: sub_D8F22+EB8↑j
                 bne.w   loc_DB222
                 clr.b   $2F(a3)
                 addq.b  #1,$A(a2)
-                cmpi.b  #3,$A(a2)
+                cmpi.b  #3,$A(a2)       ; Hits to kill worm
                 beq.s   loc_D9E2E
                 cmpa.l  #$FF7C8C,a2
                 bne.w   loc_DB222
@@ -11473,7 +11473,7 @@ loc_D9E0A:                              ; CODE XREF: sub_D8F22+EB8↑j
 loc_D9E2E:                              ; CODE XREF: sub_D8F22+F00↑j
                 pea     ($11).w
                 jsr     TriggerOSDMessage
-                pea     (2).w
+                pea     (2).w         ; Ticks per frame for worm death animation
                 pea     ($1A).w
                 move.l  a3,-(sp)
                 jsr     sub_E1ABE
@@ -20996,7 +20996,7 @@ loc_DFADA:                              ; CODE XREF: sub_DF89C+20↑j
 
 ; Attributes: bp-based frame
 
-TriggerOSDMessage:                              ; CODE XREF: sub_D8F22+52A↑p
+TriggerOSDMessage:                      ; CODE XREF: sub_D8F22+52A↑p
                                         ; sub_D8F22+612↑p ...
 
 var_58          = -$58
@@ -68915,7 +68915,7 @@ CreditsCheatCode:                       ; CODE XREF: sub_FEF2A+136↑j
                 cmpi.b  #$F,(a5)
                 bne.s   loc_FF0B2
                 pea     ($12).w
-                jsr     sub_D567E
+                jsr     sub_D567E ; Play jingle on successful code entry for Credits
                 addq.l  #4,sp
                 moveq   #1,d3
                 bra.s   loc_FF0C0

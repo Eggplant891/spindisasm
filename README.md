@@ -30,7 +30,7 @@ Prerequisites
 Building
 -----
 
-### Explorer
+### Windows Explorer
 
 Place a copy of `asm68k.exe` into the root directory, and drag `spinball.asm` file onto `build.bat`
 

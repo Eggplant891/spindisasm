@@ -1,7 +1,9 @@
 bin/*
+output/*
+/\.vscode/
+*\.code-workspace
 
 errors*\.txt
 /asm68k\.exe
-/spinball\.lst
-/\.vscode
-*\.code-workspace
+
+

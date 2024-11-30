@@ -19,8 +19,8 @@
 
 ; Segment type: Pure code
 ; segment "ROM"
-                include "Macros.asm"
-                include "global_defines.asm"
+                include "src/macros.asm"
+                include "src/global_defines.asm"
                 dc.l $1000000
 off_4:          dc.l EntryPoint         ; DATA XREF: sub_D8D0E+40↓o
                                         ; sub_D8E12+46↓o ...

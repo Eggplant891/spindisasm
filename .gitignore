@@ -1,9 +1,7 @@
 bin/*
 
 errors*\.txt
-/SSCDec.rar
 /asm68k\.exe
-/spinball.lst
+/spinball\.lst
 /\.vscode
-/ghidra_project_files
 *\.code-workspace

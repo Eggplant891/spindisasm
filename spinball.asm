@@ -66,7 +66,7 @@ off_54:         dc.l Error              ; DATA XREF: ROM:0001C244↓o
                                         ; ROM:0001C254↓o ...
 off_58:         dc.l Error              ; DATA XREF: ROM:00013FF0↓o
                                         ; ROM:00017FD8↓o ...
-off_5C:         dc.l Error              ; DATA XREF: sub_DFAE0:loc_DFD6C↓o
+off_5C:         dc.l Error              ; DATA XREF: TriggerOSDMessage:loc_DFD6C↓o
                                         ; sub_ED5D8+2FC↓o ...
 off_60:         dc.l SpuriousException  ; DATA XREF: ROM:0000156B↓o
                                         ; ROM:0000CB68↓o ...
@@ -779,7 +779,7 @@ loc_6F4:                                ; DATA XREF: ROM:0001A17C↓o
                 move    #$2500,sr
                 jmp     main
 ; ---------------------------------------------------------------------------
-                include "spinball_data.asm"
+                include "src/spinball_data.asm"
 ; ---------------------------------------------------------------------------
 ; START OF FUNCTION CHUNK FOR VBlank
 
@@ -6177,8 +6177,8 @@ loc_D6A48:                              ; CODE XREF: sub_D6A0E+26↑j
 ; void sprintf(char *outputBuffer, char *formatString, ...);
 ; A specialized version that only handles %%, %d, and %s with no special flags.
 
-sprintf:                                ; CODE XREF: sub_DFAE0+140↓p
-                                        ; sub_DFAE0+ADE↓p ...
+sprintf:                                ; CODE XREF: TriggerOSDMessage+140↓p
+                                        ; TriggerOSDMessage+ADE↓p ...
 
 sp_outputBuffer =  4
 sp_formatString =  8
@@ -10666,7 +10666,7 @@ loc_D943E:                              ; CODE XREF: sub_D8F22+4FE↑j
                 move.b  #6,8(a2)
                 clr.w   $C(a2)
                 pea     (off_30).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.w   loc_D9158
 ; ---------------------------------------------------------------------------
 
@@ -10734,7 +10734,7 @@ loc_D9526:                              ; CODE XREF: sub_D8F22+772↓j
 
 loc_D9530:                              ; CODE XREF: sub_D8F22+602↑j
                 pea     ($31).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.b  #9,8(a2)
                 clr.b   $B(a2)
                 clr.w   $C(a2)
@@ -10800,7 +10800,7 @@ loc_D95E4:                              ; DATA XREF: sub_D8F22+37A↑o
                 blt.s   loc_D962A
                 move.b  #$A,8(a2)
                 pea     ($32).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_D962A:                              ; CODE XREF: sub_D8F22+6D6↑j
@@ -10953,7 +10953,7 @@ loc_D97F8:                              ; CODE XREF: sub_D8F22+8C8↑j
                 move.b  #1,$2F(a0)
                 move.b  #5,8(a2)
                 pea     ($41).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_D9814:                              ; CODE XREF: sub_D8F22+8D4↑j
@@ -11137,7 +11137,7 @@ loc_D9A0C:                              ; CODE XREF: sub_D8F22+AD4↑j
                 tst.b   $4C(a2)
                 beq.s   loc_D9A64
                 pea     ($41).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.s   loc_D9A64
 ; ---------------------------------------------------------------------------
@@ -11350,7 +11350,7 @@ loc_D9C58:                              ; CODE XREF: sub_D8F22+D74↓j
                 cmpi.w  #5,d2
                 blt.s   loc_D9C58
                 pea     (off_44).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 movea.l #$FF896E,a5
                 clr.b   8(a5)
                 pea     (2).w
@@ -11472,7 +11472,7 @@ loc_D9E0A:                              ; CODE XREF: sub_D8F22+EB8↑j
 
 loc_D9E2E:                              ; CODE XREF: sub_D8F22+F00↑j
                 pea     ($11).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 pea     (2).w
                 pea     ($1A).w
                 move.l  a3,-(sp)
@@ -12329,7 +12329,7 @@ loc_DA7B6:                              ; CODE XREF: sub_D8F22+1878↑j
                 pea     (off_C0BA4).l
                 jsr     sub_D5F16
                 pea     ($2B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $20(sp),sp
                 pea     ($4B).w
                 bra.w   loc_DA01C
@@ -12578,7 +12578,7 @@ loc_DAAE0:                              ; CODE XREF: sub_D8F22+1B44↑j
                 pea     (off_24).w
                 jsr     sub_DB7CC
                 pea     ($2D).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_DAB18:                              ; CODE XREF: sub_D8F22+1BC4↑j
@@ -12954,7 +12954,7 @@ loc_DAF80:                              ; DATA XREF: sub_D8F22+17E6↑o
                 pea     (off_C0D90).l
                 jsr     sub_D5F16
                 pea     ($43).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 pea     ($4B).w
                 jsr     GEMSStopSong
                 lea     $1C(sp),sp
@@ -12997,7 +12997,7 @@ loc_DB004:                              ; CODE XREF: sub_D8F22+20CE↑j
                 jsr     sub_E1F5C
                 move.b  #2,9(a2)
                 pea     ($33).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $28(sp),sp
                 clr.w   ($FFF214).l
                 bra.w   loc_DB222
@@ -13263,7 +13263,7 @@ loc_DB2F8:                              ; CODE XREF: sub_DB234+B8↑j
                 cmpi.b  #2,$B(a2)
                 bgt.s   loc_DB30C
                 pea     (off_2C).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_DB30C:                              ; CODE XREF: sub_DB234+CA↑j
@@ -13298,7 +13298,7 @@ loc_DB372:                              ; CODE XREF: sub_DB234+12E↑j
                 pea     (off_24).w
                 jsr     sub_DB7CC
                 pea     ($2E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 pea     ($4B).w
                 jsr     GEMSStopSong
                 lea     $2C(sp),sp
@@ -14905,7 +14905,7 @@ loc_DC2EC:                              ; CODE XREF: sub_DC29C+4A↑j
 
 loc_DC2EE:                              ; CODE XREF: sub_DC29C+4E↑j
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  #$611,$C(a2)
                 clr.l   $1E(a2)
                 clr.l   $22(a2)
@@ -15373,7 +15373,7 @@ loc_DC710:                              ; CODE XREF: sub_DC3DE+2D8↑j
                 movea.l #word_C06BA,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
                 clr.l   -(sp)
                 move.w  $14(a2),d0
@@ -15467,7 +15467,7 @@ loc_DC7F6:                              ; CODE XREF: sub_DC3DE+40C↑j
                 movea.l #word_C06C2,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $24(sp),sp
                 addq.w  #2,($FFF1EA).l
                 cmpi.w  #1,($FF75B0).l
@@ -20996,7 +20996,7 @@ loc_DFADA:                              ; CODE XREF: sub_DF89C+20↑j
 
 ; Attributes: bp-based frame
 
-sub_DFAE0:                              ; CODE XREF: sub_D8F22+52A↑p
+TriggerOSDMessage:                              ; CODE XREF: sub_D8F22+52A↑p
                                         ; sub_D8F22+612↑p ...
 
 var_58          = -$58
@@ -21015,10 +21015,10 @@ arg_0           =  8
                 bra.s   loc_DFB0A
 ; ---------------------------------------------------------------------------
 
-loc_DFB08:                              ; CODE XREF: sub_DFAE0+22↑j
+loc_DFB08:                              ; CODE XREF: TriggerOSDMessage+22↑j
                 moveq   #1,d3
 
-loc_DFB0A:                              ; CODE XREF: sub_DFAE0+26↑j
+loc_DFB0A:                              ; CODE XREF: TriggerOSDMessage+26↑j
                 moveq   #0,d2
                 cmpi.w  #$64,d4 ; 'd'
                 blt.w   ShowOtherMessage
@@ -21036,7 +21036,7 @@ loc_DFB0A:                              ; CODE XREF: sub_DFAE0+26↑j
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-Alert_GotAnEmerald:                     ; CODE XREF: sub_DFAE0+3C↑j
+Alert_GotAnEmerald:                     ; CODE XREF: TriggerOSDMessage+3C↑j
                 pea     (aEmeraldPower).l ; "** EMERALD POWER **"
                 pea     (3).w
                 pea     (off_3C).w
@@ -21055,16 +21055,16 @@ Alert_GotAnEmerald:                     ; CODE XREF: sub_DFAE0+3C↑j
                 move.l  #off_7A120,d2
                 pea     ($E).w
 
-loc_DFB76:                              ; CODE XREF: sub_DFAE0+E8↓j
-                                        ; sub_DFAE0+306↓j ...
+loc_DFB76:                              ; CODE XREF: TriggerOSDMessage+E8↓j
+                                        ; TriggerOSDMessage+306↓j ...
                 jsr     sub_D567E
 
-loc_DFB7C:                              ; CODE XREF: sub_DFAE0+16E↓j
+loc_DFB7C:                              ; CODE XREF: TriggerOSDMessage+16E↓j
                 addq.l  #4,sp
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-Alert_AllEmeraldsNewLife:               ; CODE XREF: sub_DFAE0+42↑j
+Alert_AllEmeraldsNewLife:               ; CODE XREF: TriggerOSDMessage+42↑j
                 pea     (aAllEmeraldsCol).l ; "ALL EMERALDS COLLECTED"
                 pea     (3).w
                 pea     (off_3C).w
@@ -21082,12 +21082,12 @@ Alert_AllEmeraldsNewLife:               ; CODE XREF: sub_DFAE0+42↑j
                 lea     $30(sp),sp
                 move.l  #loc_F4240,d2
 
-loc_DFBC4:                              ; CODE XREF: sub_DFAE0+800↓j
+loc_DFBC4:                              ; CODE XREF: TriggerOSDMessage+800↓j
                 pea     ($17).w
                 bra.s   loc_DFB76
 ; ---------------------------------------------------------------------------
 
-Alert_NotEnoughEmeralds:                ; CODE XREF: sub_DFAE0+48↑j
+Alert_NotEnoughEmeralds:                ; CODE XREF: TriggerOSDMessage+48↑j
                 tst.b   d3
                 beq.s   loc_DFC3E
                 move.w  ($FF5736).l,d0
@@ -21110,10 +21110,10 @@ Alert_NotEnoughEmeralds:                ; CODE XREF: sub_DFAE0+48↑j
                 bra.s   loc_DFC12
 ; ---------------------------------------------------------------------------
 
-loc_DFC0C:                              ; CODE XREF: sub_DFAE0+122↑j
+loc_DFC0C:                              ; CODE XREF: TriggerOSDMessage+122↑j
                 pea     (a_NullString).l
 
-loc_DFC12:                              ; CODE XREF: sub_DFAE0+12A↑j
+loc_DFC12:                              ; CODE XREF: TriggerOSDMessage+12A↑j
                 move.w  d3,d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -21130,18 +21130,18 @@ loc_DFC12:                              ; CODE XREF: sub_DFAE0+12A↑j
                 jsr     (a3)
                 lea     $28(sp),sp
 
-loc_DFC3E:                              ; CODE XREF: sub_DFAE0+EC↑j
+loc_DFC3E:                              ; CODE XREF: TriggerOSDMessage+EC↑j
                 tst.w   ($FF75B0).l
                 beq.w   loc_E193E
                 pea     ($45).w
 
-loc_DFC4C:                              ; CODE XREF: sub_DFAE0+260↓j
-                                        ; sub_DFAE0+290↓j ...
+loc_DFC4C:                              ; CODE XREF: TriggerOSDMessage+260↓j
+                                        ; TriggerOSDMessage+290↓j ...
                 jsr     (a4)
                 bra.w   loc_DFB7C
 ; ---------------------------------------------------------------------------
 
-ShowOtherMessage:                       ; CODE XREF: sub_DFAE0+30↑j
+ShowOtherMessage:                       ; CODE XREF: TriggerOSDMessage+30↑j
                 move.w  ($FF75B0).l,d0
                 ext.l   d0
                 moveq   #3,d1
@@ -21151,14 +21151,14 @@ ShowOtherMessage:                       ; CODE XREF: sub_DFAE0+30↑j
                 move.w  off_DFC6C(pc,d0.l),d0
                 jmp     off_DFC6C(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DFC6C:      dc.w Messages_TC-*      ; DATA XREF: sub_DFAE0+184↑r
-                                        ; sub_DFAE0:off_DFC6C↓o ...
+off_DFC6C:      dc.w Messages_TC-*      ; DATA XREF: TriggerOSDMessage+184↑r
+                                        ; TriggerOSDMessage:off_DFC6C↓o ...
                 dc.w Messages_LP-off_DFC6C
                 dc.w Messages_TM-off_DFC6C
                 dc.w Messages_Show-off_DFC6C
 ; ---------------------------------------------------------------------------
 
-Messages_TC:                            ; DATA XREF: sub_DFAE0:off_DFC6C↑o
+Messages_TC:                            ; DATA XREF: TriggerOSDMessage:off_DFC6C↑o
                 move.w  d4,d0
                 ext.l   d0
                 subq.l  #1,d0
@@ -21169,8 +21169,8 @@ Messages_TC:                            ; DATA XREF: sub_DFAE0:off_DFC6C↑o
                 move.w  off_DFC8C(pc,d0.l),d0
                 jmp     off_DFC8C(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DFC8C:      dc.w m_CorkPoppingUp-*  ; DATA XREF: sub_DFAE0+1A4↑r
-                                        ; sub_DFAE0:off_DFC8C↓o ...
+off_DFC8C:      dc.w m_CorkPoppingUp-*  ; DATA XREF: TriggerOSDMessage+1A4↑r
+                                        ; TriggerOSDMessage:off_DFC8C↓o ...
                 dc.w loc_DFD44-off_DFC8C
                 dc.w loc_DFD74-off_DFC8C
                 dc.w loc_DFD9C-off_DFC8C
@@ -21241,7 +21241,7 @@ off_DFC8C:      dc.w m_CorkPoppingUp-*  ; DATA XREF: sub_DFAE0+1A4↑r
                 dc.w loc_E046C-off_DFC8C
 ; ---------------------------------------------------------------------------
 
-m_CorkPoppingUp:                        ; DATA XREF: sub_DFAE0:off_DFC8C↑o
+m_CorkPoppingUp:                        ; DATA XREF: TriggerOSDMessage:off_DFC8C↑o
                 bsr.w   sub_DE996
                 pea     (aCorkPoppingUp_).l ; "CORK POPPING UP..."
                 clr.l   -(sp)
@@ -21250,17 +21250,17 @@ m_CorkPoppingUp:                        ; DATA XREF: sub_DFAE0:off_DFC8C↑o
                 clr.l   -(sp)
                 pea     (2).w
 
-loc_DFD30:                              ; CODE XREF: sub_DFAE0+10DC↓j
+loc_DFD30:                              ; CODE XREF: TriggerOSDMessage+10DC↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #$61A8,d2
 
-loc_DFD3C:                              ; CODE XREF: sub_DFAE0+DF8↓j
+loc_DFD3C:                              ; CODE XREF: TriggerOSDMessage+DF8↓j
                 pea     ($75).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_DFD44:                              ; DATA XREF: sub_DFAE0+1AE↑o
+loc_DFD44:                              ; DATA XREF: TriggerOSDMessage+1AE↑o
                 tst.b   d3
                 beq.s   loc_DFD66
                 pea     (aGoSewers___).l ; "GO SEWERS..."
@@ -21269,21 +21269,21 @@ loc_DFD44:                              ; DATA XREF: sub_DFAE0+1AE↑o
                 pea     (5).w
                 pea     (2).w
 
-loc_DFD5C:                              ; CODE XREF: sub_DFAE0+354↓j
+loc_DFD5C:                              ; CODE XREF: TriggerOSDMessage+354↓j
                 pea     (7).w
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFD66:                              ; CODE XREF: sub_DFAE0+266↑j
-                                        ; sub_DFAE0+33E↓j ...
+loc_DFD66:                              ; CODE XREF: TriggerOSDMessage+266↑j
+                                        ; TriggerOSDMessage+33E↓j ...
                 move.l  #off_124F8,d2
 
-loc_DFD6C:                              ; CODE XREF: sub_DFAE0+2BA↓j
+loc_DFD6C:                              ; CODE XREF: TriggerOSDMessage+2BA↓j
                 pea     (off_5C).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_DFD74:                              ; DATA XREF: sub_DFAE0+1B0↑o
+loc_DFD74:                              ; DATA XREF: TriggerOSDMessage+1B0↑o
                 tst.b   d3
                 beq.s   loc_DFD94
                 pea     (aWastingTime?).l ; "WASTING TIME?"
@@ -21293,16 +21293,16 @@ loc_DFD74:                              ; DATA XREF: sub_DFAE0+1B0↑o
                 pea     (1).w
                 pea     (2).w
 
-loc_DFD8E:                              ; CODE XREF: sub_DFAE0+10C0↓j
+loc_DFD8E:                              ; CODE XREF: TriggerOSDMessage+10C0↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFD94:                              ; CODE XREF: sub_DFAE0+296↑j
+loc_DFD94:                              ; CODE XREF: TriggerOSDMessage+296↑j
                 move.l  #$C350,d2
                 bra.s   loc_DFD6C
 ; ---------------------------------------------------------------------------
 
-loc_DFD9C:                              ; DATA XREF: sub_DFAE0+1B2↑o
+loc_DFD9C:                              ; DATA XREF: TriggerOSDMessage+1B2↑o
                 bsr.w   sub_DE996
                 pea     (aDrainingSlime).l ; "* DRAINING SLIME *"
                 pea     (off_4).w
@@ -21319,19 +21319,19 @@ loc_DFD9C:                              ; DATA XREF: sub_DFAE0+1B2↑o
                 pea     (1).w
                 pea     (1).w
 
-loc_DFDD6:                              ; CODE XREF: sub_DFAE0+1328↓j
+loc_DFDD6:                              ; CODE XREF: TriggerOSDMessage+1328↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #off_7A120,d2
 
-loc_DFDE2:                              ; CODE XREF: sub_DFAE0+5C0↓j
-                                        ; sub_DFAE0+B96↓j ...
+loc_DFDE2:                              ; CODE XREF: TriggerOSDMessage+5C0↓j
+                                        ; TriggerOSDMessage+B96↓j ...
                 pea     ($15).w
                 bra.w   loc_DFB76
 ; ---------------------------------------------------------------------------
 
-loc_DFDEA:                              ; DATA XREF: sub_DFAE0+1B4↑o
-                                        ; sub_DFAE0+1D0↑o
+loc_DFDEA:                              ; DATA XREF: TriggerOSDMessage+1B4↑o
+                                        ; TriggerOSDMessage+1D0↑o
                 tst.b   d3
                 beq.s   loc_DFE0E
                 pea     (aSafetyLidsOpen).l ; "SAFETY LIDS OPEN"
@@ -21343,30 +21343,30 @@ loc_DFDEA:                              ; DATA XREF: sub_DFAE0+1B4↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFE0E:                              ; CODE XREF: sub_DFAE0+30C↑j
+loc_DFE0E:                              ; CODE XREF: TriggerOSDMessage+30C↑j
                 move.l  #off_124F8,d2
 
-loc_DFE14:                              ; CODE XREF: sub_DFAE0:loc_E0000↓j
-                                        ; sub_DFAE0+8B0↓j ...
+loc_DFE14:                              ; CODE XREF: TriggerOSDMessage:loc_E0000↓j
+                                        ; TriggerOSDMessage+8B0↓j ...
                 pea     ($12).w
                 bra.w   loc_DFB76
 ; ---------------------------------------------------------------------------
 
-loc_DFE1C:                              ; DATA XREF: sub_DFAE0+1B6↑o
-                                        ; sub_DFAE0+1D2↑o
+loc_DFE1C:                              ; DATA XREF: TriggerOSDMessage+1B6↑o
+                                        ; TriggerOSDMessage+1D2↑o
                 tst.b   d3
                 beq.w   loc_DFD66
                 pea     (aWayToGoSonic).l ; "WAY TO GO, SONIC!"
                 clr.l   -(sp)
                 pea     ($46).w
 
-loc_DFE2E:                              ; CODE XREF: sub_DFAE0+A8E↓j
+loc_DFE2E:                              ; CODE XREF: TriggerOSDMessage+A8E↓j
                 clr.l   -(sp)
                 pea     (1).w
                 bra.w   loc_DFD5C
 ; ---------------------------------------------------------------------------
 
-loc_DFE38:                              ; DATA XREF: sub_DFAE0+1BA↑o
+loc_DFE38:                              ; DATA XREF: TriggerOSDMessage+1BA↑o
                 pea     (aLoopDeForce).l ; "LOOP DE FORCE"
                 pea     (1).w
                 clr.l   -(sp)
@@ -21377,36 +21377,36 @@ loc_DFE38:                              ; DATA XREF: sub_DFAE0+1BA↑o
                 lea     $18(sp),sp
                 move.l  #$61A8,d2
 
-loc_DFE5A:                              ; CODE XREF: sub_DFAE0+D44↓j
-                                        ; sub_DFAE0+13FC↓j ...
+loc_DFE5A:                              ; CODE XREF: TriggerOSDMessage+D44↓j
+                                        ; TriggerOSDMessage+13FC↓j ...
                 pea     ($37).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_DFE62:                              ; DATA XREF: sub_DFAE0+1D4↑o
+loc_DFE62:                              ; DATA XREF: TriggerOSDMessage+1D4↑o
                 tst.b   d3
                 beq.s   loc_DFE84
                 pea     (aSewerWarp___).l ; "SEWER WARP..."
                 pea     (off_4).w
                 pea     ($46).w
 
-loc_DFE74:                              ; CODE XREF: sub_DFAE0+8C2↓j
+loc_DFE74:                              ; CODE XREF: TriggerOSDMessage+8C2↓j
                 pea     (3).w
                 clr.l   -(sp)
                 pea     (3).w
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFE84:                              ; CODE XREF: sub_DFAE0+384↑j
+loc_DFE84:                              ; CODE XREF: TriggerOSDMessage+384↑j
                 move.l  #off_124F8,d2
 
-loc_DFE8A:                              ; CODE XREF: sub_DFAE0:loc_E00EE↓j
-                                        ; sub_DFAE0+8E2↓j ...
+loc_DFE8A:                              ; CODE XREF: TriggerOSDMessage:loc_E00EE↓j
+                                        ; TriggerOSDMessage+8E2↓j ...
                 pea     (off_30).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_DFE92:                              ; DATA XREF: sub_DFAE0+1C0↑o
+loc_DFE92:                              ; DATA XREF: TriggerOSDMessage+1C0↑o
                 tst.b   d3
                 beq.s   loc_DFEB4
                 pea     (aExcellent).l  ; "EXCELLENT!"
@@ -21416,43 +21416,43 @@ loc_DFE92:                              ; DATA XREF: sub_DFAE0+1C0↑o
                 clr.l   -(sp)
                 pea     (off_4).w
 
-loc_DFEAE:                              ; CODE XREF: sub_DFAE0+56A↓j
-                                        ; sub_DFAE0+A26↓j
+loc_DFEAE:                              ; CODE XREF: TriggerOSDMessage+56A↓j
+                                        ; TriggerOSDMessage+A26↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFEB4:                              ; CODE XREF: sub_DFAE0+3B4↑j
-                                        ; sub_DFAE0:loc_E002C↓j ...
+loc_DFEB4:                              ; CODE XREF: TriggerOSDMessage+3B4↑j
+                                        ; TriggerOSDMessage:loc_E002C↓j ...
                 move.l  #$C350,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_DFEBE:                              ; DATA XREF: sub_DFAE0+1C4↑o
-                                        ; sub_DFAE0+1EC↑o
+loc_DFEBE:                              ; DATA XREF: TriggerOSDMessage+1C4↑o
+                                        ; TriggerOSDMessage+1EC↑o
                 tst.b   d3
                 beq.s   loc_DFEDE
                 pea     (aWatchOut).l   ; "WATCH OUT!!!"
                 clr.l   -(sp)
                 pea     (off_3C).w
 
-loc_DFECE:                              ; CODE XREF: sub_DFAE0+7B2↓j
+loc_DFECE:                              ; CODE XREF: TriggerOSDMessage+7B2↓j
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_DFED4:                              ; CODE XREF: sub_DFAE0+11DA↓j
+loc_DFED4:                              ; CODE XREF: TriggerOSDMessage+11DA↓j
                 pea     (2).w
 
-loc_DFED8:                              ; CODE XREF: sub_DFAE0+7D4↓j
+loc_DFED8:                              ; CODE XREF: TriggerOSDMessage+7D4↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFEDE:                              ; CODE XREF: sub_DFAE0+3E0↑j
-                                        ; sub_DFAE0+7A2↓j ...
+loc_DFEDE:                              ; CODE XREF: TriggerOSDMessage+3E0↑j
+                                        ; TriggerOSDMessage+7A2↓j ...
                 pea     ($11).w
                 bra.w   loc_DFB76
 ; ---------------------------------------------------------------------------
 
-loc_DFEE6:                              ; DATA XREF: sub_DFAE0+1C6↑o
+loc_DFEE6:                              ; DATA XREF: TriggerOSDMessage+1C6↑o
                 tst.b   d3
                 beq.s   loc_DFF08
                 pea     (aOoops___).l   ; "OOOPS..."
@@ -21460,21 +21460,21 @@ loc_DFEE6:                              ; DATA XREF: sub_DFAE0+1C6↑o
                 pea     (off_28).w
                 pea     (3).w
 
-loc_DFEFC:                              ; CODE XREF: sub_DFAE0+D1A↓j
+loc_DFEFC:                              ; CODE XREF: TriggerOSDMessage+D1A↓j
                 clr.l   -(sp)
                 pea     (3).w
 
-loc_DFF02:                              ; CODE XREF: sub_DFAE0+BFA↓j
+loc_DFF02:                              ; CODE XREF: TriggerOSDMessage+BFA↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFF08:                              ; CODE XREF: sub_DFAE0+408↑j
-                                        ; sub_DFAE0+D06↓j ...
+loc_DFF08:                              ; CODE XREF: TriggerOSDMessage+408↑j
+                                        ; TriggerOSDMessage+D06↓j ...
                 move.l  #$3A98,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_DFF12:                              ; DATA XREF: sub_DFAE0+1C8↑o
+loc_DFF12:                              ; DATA XREF: TriggerOSDMessage+1C8↑o
                 tst.b   d3
                 beq.s   loc_DFF32
                 pea     (aSewerTime).l  ; "SEWER TIME!!!"
@@ -21486,16 +21486,16 @@ loc_DFF12:                              ; DATA XREF: sub_DFAE0+1C8↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFF32:                              ; CODE XREF: sub_DFAE0+434↑j
+loc_DFF32:                              ; CODE XREF: TriggerOSDMessage+434↑j
                 move.l  #$61A8,d2
 
-loc_DFF38:                              ; CODE XREF: sub_DFAE0+B36↓j
-                                        ; sub_DFAE0+12C0↓j ...
+loc_DFF38:                              ; CODE XREF: TriggerOSDMessage+B36↓j
+                                        ; TriggerOSDMessage+12C0↓j ...
                 pea     ($39).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_DFF40:                              ; DATA XREF: sub_DFAE0+1CA↑o
+loc_DFF40:                              ; DATA XREF: TriggerOSDMessage+1CA↑o
                 tst.b   d3
                 beq.s   loc_DFF60
                 pea     (aHitTheTargets).l ; "HIT THE TARGETS!"
@@ -21507,13 +21507,13 @@ loc_DFF40:                              ; DATA XREF: sub_DFAE0+1CA↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFF60:                              ; CODE XREF: sub_DFAE0+462↑j
-                                        ; sub_DFAE0+E62↓j
+loc_DFF60:                              ; CODE XREF: TriggerOSDMessage+462↑j
+                                        ; TriggerOSDMessage+E62↓j
                 pea     ($3E).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_DFF68:                              ; DATA XREF: sub_DFAE0+1CC↑o
+loc_DFF68:                              ; DATA XREF: TriggerOSDMessage+1CC↑o
                 tst.b   d3
                 beq.s   loc_DFF8A
                 pea     (aWormBagged).l ; "WORM BAGGED"
@@ -21525,17 +21525,17 @@ loc_DFF68:                              ; DATA XREF: sub_DFAE0+1CC↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFF8A:                              ; CODE XREF: sub_DFAE0+48A↑j
+loc_DFF8A:                              ; CODE XREF: TriggerOSDMessage+48A↑j
                 move.l  #$61A8,d2
 
-loc_DFF90:                              ; CODE XREF: sub_DFAE0+596↓j
-                                        ; sub_DFAE0+698↓j ...
+loc_DFF90:                              ; CODE XREF: TriggerOSDMessage+596↓j
+                                        ; TriggerOSDMessage+698↓j ...
                 pea     ($6A).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_DFF98:                              ; DATA XREF: sub_DFAE0+1CE↑o
-                                        ; sub_DFAE0+1EE↑o
+loc_DFF98:                              ; DATA XREF: TriggerOSDMessage+1CE↑o
+                                        ; TriggerOSDMessage+1EE↑o
                 tst.b   d3
                 beq.s   loc_DFFBA
                 pea     (aTargetDown).l ; "TARGET DOWN!"
@@ -21545,18 +21545,18 @@ loc_DFF98:                              ; DATA XREF: sub_DFAE0+1CE↑o
                 clr.l   -(sp)
                 pea     (3).w
 
-loc_DFFB4:                              ; CODE XREF: sub_DFAE0+4FE↓j
-                                        ; sub_DFAE0+BBA↓j ...
+loc_DFFB4:                              ; CODE XREF: TriggerOSDMessage+4FE↓j
+                                        ; TriggerOSDMessage+BBA↓j ...
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_DFFBA:                              ; CODE XREF: sub_DFAE0+4BA↑j
-                                        ; sub_DFAE0+4E6↓j ...
+loc_DFFBA:                              ; CODE XREF: TriggerOSDMessage+4BA↑j
+                                        ; TriggerOSDMessage+4E6↓j ...
                 move.l  #$61A8,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_DFFC4:                              ; DATA XREF: sub_DFAE0+1D8↑o
+loc_DFFC4:                              ; DATA XREF: TriggerOSDMessage+1D8↑o
                 tst.b   d3
                 beq.s   loc_DFFBA
 
@@ -21568,12 +21568,12 @@ loc_DFFC8:                              ; DATA XREF: ROM:off_C318E↑o
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_DFFDA:                              ; CODE XREF: sub_DFAE0+139C↓j
+loc_DFFDA:                              ; CODE XREF: TriggerOSDMessage+139C↓j
                 pea     (1).w
                 bra.s   loc_DFFB4
 ; ---------------------------------------------------------------------------
 
-loc_DFFE0:                              ; DATA XREF: sub_DFAE0+1DA↑o
+loc_DFFE0:                              ; DATA XREF: TriggerOSDMessage+1DA↑o
                 pea     (aSwitchLoopBonu).l ; "SWITCH LOOP BONUS"
                 pea     (3).w
                 pea     (off_28).w
@@ -21583,8 +21583,8 @@ loc_DFFE0:                              ; DATA XREF: sub_DFAE0+1DA↑o
 loc_DFFF6:                              ; DATA XREF: ROM:00099D1C↑o
                 pea     (6).w
 
-loc_DFFFA:                              ; CODE XREF: sub_DFAE0+126E↓j
-                                        ; sub_DFAE0+1460↓j
+loc_DFFFA:                              ; CODE XREF: TriggerOSDMessage+126E↓j
+                                        ; TriggerOSDMessage+1460↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
@@ -21593,10 +21593,10 @@ loc_E0000:                              ; DATA XREF: ROM:0000FEB0↑o
                 bra.w   loc_DFE14
 ; ---------------------------------------------------------------------------
 
-loc_E0004:                              ; DATA XREF: sub_DFAE0+1DE↑o
+loc_E0004:                              ; DATA XREF: TriggerOSDMessage+1DE↑o
                 pea     (aEntranceClear).l ; "ENTRANCE CLEAR"
 
-loc_E000A:                              ; CODE XREF: sub_DFAE0+748↓j
+loc_E000A:                              ; CODE XREF: TriggerOSDMessage+748↓j
                                         ; DATA XREF: ROM:off_7EBE4↑o ...
                 pea     (6).w
 
@@ -21612,7 +21612,7 @@ loc_E000E:                              ; DATA XREF: ROM:00029FDC↑o
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_E002A:                              ; DATA XREF: sub_DFAE0+1E0↑o
+loc_E002A:                              ; DATA XREF: TriggerOSDMessage+1E0↑o
                 tst.b   d3
 
 loc_E002C:                              ; DATA XREF: ROM:off_BFD64↑o
@@ -21623,12 +21623,12 @@ loc_E002C:                              ; DATA XREF: ROM:off_BFD64↑o
                 pea     (5).w
                 pea     (2).w
 
-loc_E0046:                              ; CODE XREF: sub_DFAE0+13DA↓j
+loc_E0046:                              ; CODE XREF: TriggerOSDMessage+13DA↓j
                 pea     (6).w
                 bra.w   loc_DFEAE
 ; ---------------------------------------------------------------------------
 
-loc_E004E:                              ; DATA XREF: sub_DFAE0+1E2↑o
+loc_E004E:                              ; DATA XREF: TriggerOSDMessage+1E2↑o
                 tst.b   d3
                 beq.s   loc_E0070
                 pea     (aBarrelBustin).l ; "BARREL BUSTIN'"
@@ -21640,13 +21640,13 @@ loc_E004E:                              ; DATA XREF: sub_DFAE0+1E2↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0070:                              ; CODE XREF: sub_DFAE0+570↑j
+loc_E0070:                              ; CODE XREF: TriggerOSDMessage+570↑j
                                         ; DATA XREF: ROM:0004CFEC↑o
                 move.l  #$3A98,d2
                 bra.w   loc_DFF90
 ; ---------------------------------------------------------------------------
 
-loc_E007A:                              ; DATA XREF: sub_DFAE0+1E4↑o
+loc_E007A:                              ; DATA XREF: TriggerOSDMessage+1E4↑o
                 pea     (aCleanupComplet).l ; "CLEANUP COMPLETE"
 
 loc_E0080:                              ; DATA XREF: ROM:000C8DE4↑o
@@ -21661,7 +21661,7 @@ loc_E0080:                              ; DATA XREF: ROM:000C8DE4↑o
                 bra.w   loc_DFDE2
 ; ---------------------------------------------------------------------------
 
-loc_E00A4:                              ; DATA XREF: sub_DFAE0+1E6↑o
+loc_E00A4:                              ; DATA XREF: TriggerOSDMessage+1E6↑o
                 tst.b   d3
 
 loc_E00A6:                              ; DATA XREF: ROM:00060914↑o
@@ -21675,7 +21675,7 @@ loc_E00A6:                              ; DATA XREF: ROM:00060914↑o
                 bra.w   loc_E1938
 ; ---------------------------------------------------------------------------
 
-loc_E00C6:                              ; DATA XREF: sub_DFAE0+1E8↑o
+loc_E00C6:                              ; DATA XREF: TriggerOSDMessage+1E8↑o
                 tst.b   d3
                 beq.s   loc_E00E8
                 pea     (aWrongMove___).l ; "WRONG MOVE..."
@@ -21687,14 +21687,14 @@ loc_E00C6:                              ; DATA XREF: sub_DFAE0+1E8↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E00E8:                              ; CODE XREF: sub_DFAE0+5E8↑j
+loc_E00E8:                              ; CODE XREF: TriggerOSDMessage+5E8↑j
                 move.l  #$3A98,d2
 
 loc_E00EE:                              ; DATA XREF: ROM:0002A028↑o
                 bra.w   loc_DFE8A
 ; ---------------------------------------------------------------------------
 
-loc_E00F2:                              ; DATA XREF: sub_DFAE0+1EA↑o
+loc_E00F2:                              ; DATA XREF: TriggerOSDMessage+1EA↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aCluckAlert).l ; "CLUCK ALERT!"
@@ -21708,13 +21708,13 @@ loc_E00F2:                              ; DATA XREF: sub_DFAE0+1EA↑o
                 jsr     GEMSStopSong
                 lea     $1C(sp),sp
 
-loc_E011E:                              ; CODE XREF: sub_DFAE0+AB8↓j
-                                        ; sub_DFAE0+BE0↓j ...
+loc_E011E:                              ; CODE XREF: TriggerOSDMessage+AB8↓j
+                                        ; TriggerOSDMessage+BE0↓j ...
                 pea     ($77).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0126:                              ; DATA XREF: sub_DFAE0+1F0↑o
+loc_E0126:                              ; DATA XREF: TriggerOSDMessage+1F0↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aRockNRoll).l  ; "* ROCK N' ROLL *"
@@ -21729,7 +21729,7 @@ loc_E0126:                              ; DATA XREF: sub_DFAE0+1F0↑o
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0150:                              ; DATA XREF: sub_DFAE0+1F4↑o
+loc_E0150:                              ; DATA XREF: TriggerOSDMessage+1F4↑o
                 tst.b   d3
                 beq.s   loc_E0172
                 pea     (aRadicalDamage).l ; "RADICAL DAMAGE!!!"
@@ -21743,12 +21743,12 @@ loc_E0162:                              ; DATA XREF: ROM:0007A890↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0172:                              ; CODE XREF: sub_DFAE0+672↑j
+loc_E0172:                              ; CODE XREF: TriggerOSDMessage+672↑j
                 move.l  #dword_30D40,d2
                 bra.w   loc_DFF90
 ; ---------------------------------------------------------------------------
 
-loc_E017C:                              ; DATA XREF: sub_DFAE0+1FA↑o
+loc_E017C:                              ; DATA XREF: TriggerOSDMessage+1FA↑o
                 tst.b   d3
                 beq.s   loc_E019E
                 pea     (aGoingAnywhere?).l ; "GOING ANYWHERE?"
@@ -21758,17 +21758,17 @@ loc_E017C:                              ; DATA XREF: sub_DFAE0+1FA↑o
                 clr.l   -(sp)
                 pea     (3).w
 
-loc_E0198:                              ; CODE XREF: sub_DFAE0+1B0E↓j
+loc_E0198:                              ; CODE XREF: TriggerOSDMessage+1B0E↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E019E:                              ; CODE XREF: sub_DFAE0+69E↑j
-                                        ; sub_DFAE0+C6C↓j ...
+loc_E019E:                              ; CODE XREF: TriggerOSDMessage+69E↑j
+                                        ; TriggerOSDMessage+C6C↓j ...
                 pea     (off_40).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E01A6:                              ; DATA XREF: sub_DFAE0+1FC↑o
+loc_E01A6:                              ; DATA XREF: TriggerOSDMessage+1FC↑o
                 tst.b   d3
                 beq.s   loc_E01C8
                 pea     (aAaaaaAaaAaAAA_).l ; "AAAAA AAA AA A A  A..."
@@ -21782,13 +21782,13 @@ loc_E01BE:                              ; DATA XREF: ROM:000619E4↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E01C8:                              ; CODE XREF: sub_DFAE0+6C8↑j
-                                        ; sub_DFAE0+1486↓j
+loc_E01C8:                              ; CODE XREF: TriggerOSDMessage+6C8↑j
+                                        ; TriggerOSDMessage+1486↓j
                 pea     ($33).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E01D0:                              ; DATA XREF: sub_DFAE0+1FE↑o
+loc_E01D0:                              ; DATA XREF: TriggerOSDMessage+1FE↑o
                 tst.b   d3
                 beq.s   loc_E01F2
                 pea     (aMoveIt).l     ; "MOVE IT!"
@@ -21800,13 +21800,13 @@ loc_E01D0:                              ; DATA XREF: sub_DFAE0+1FE↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E01F2:                              ; CODE XREF: sub_DFAE0+6F2↑j
+loc_E01F2:                              ; CODE XREF: TriggerOSDMessage+6F2↑j
                 move.l  #$3A98,d2
                 pea     ($D).w
                 bra.w   loc_DFB76
 ; ---------------------------------------------------------------------------
 
-loc_E0200:                              ; DATA XREF: sub_DFAE0+200↑o
+loc_E0200:                              ; DATA XREF: TriggerOSDMessage+200↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aHangOnSonic).l ; "HANG ON, SONIC!"
@@ -21818,12 +21818,12 @@ loc_E0200:                              ; DATA XREF: sub_DFAE0+200↑o
                 bra.w   loc_E1938
 ; ---------------------------------------------------------------------------
 
-loc_E0222:                              ; DATA XREF: sub_DFAE0+202↑o
+loc_E0222:                              ; DATA XREF: TriggerOSDMessage+202↑o
                 pea     (aDetour100000).l ; "DETOUR 100,000"
                 bra.w   loc_E000A
 ; ---------------------------------------------------------------------------
 
-loc_E022C:                              ; DATA XREF: sub_DFAE0+204↑o
+loc_E022C:                              ; DATA XREF: TriggerOSDMessage+204↑o
                 tst.b   d3
                 beq.s   loc_E024C
                 pea     (aRoughRide?).l ; "ROUGH RIDE?"
@@ -21832,20 +21832,20 @@ loc_E022C:                              ; DATA XREF: sub_DFAE0+204↑o
                 clr.l   -(sp)
                 clr.l   -(sp)
 
-loc_E0242:                              ; CODE XREF: sub_DFAE0+1902↓j
+loc_E0242:                              ; CODE XREF: TriggerOSDMessage+1902↓j
                 pea     (off_4).w
 
-loc_E0246:                              ; CODE XREF: sub_DFAE0+1A96↓j
+loc_E0246:                              ; CODE XREF: TriggerOSDMessage+1A96↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E024C:                              ; CODE XREF: sub_DFAE0+74E↑j
-                                        ; sub_DFAE0+14AE↓j
+loc_E024C:                              ; CODE XREF: TriggerOSDMessage+74E↑j
+                                        ; TriggerOSDMessage+14AE↓j
                 pea     ($35).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0254:                              ; DATA XREF: sub_DFAE0+206↑o
+loc_E0254:                              ; DATA XREF: TriggerOSDMessage+206↑o
                 tst.b   d3
                 beq.s   loc_E0278
                 pea     (aHeyCutItOut).l ; "HEY, CUT IT OUT!"
@@ -21857,12 +21857,12 @@ loc_E0254:                              ; DATA XREF: sub_DFAE0+206↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0278:                              ; CODE XREF: sub_DFAE0+776↑j
+loc_E0278:                              ; CODE XREF: TriggerOSDMessage+776↑j
                 pea     ($73).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0280:                              ; DATA XREF: sub_DFAE0+20A↑o
+loc_E0280:                              ; DATA XREF: TriggerOSDMessage+20A↑o
                 tst.b   d3
                 beq.w   loc_DFEDE
                 pea     (aJumpUp___).l  ; "JUMP UP..."
@@ -21871,7 +21871,7 @@ loc_E0280:                              ; DATA XREF: sub_DFAE0+20A↑o
                 bra.w   loc_DFECE
 ; ---------------------------------------------------------------------------
 
-loc_E0296:                              ; DATA XREF: sub_DFAE0+20C↑o
+loc_E0296:                              ; DATA XREF: TriggerOSDMessage+20C↑o
                 tst.b   d3
                 beq.w   loc_DFEDE
                 pea     (aTheButtons).l ; "THE BUTTONS!!!"
@@ -21879,13 +21879,13 @@ loc_E0296:                              ; DATA XREF: sub_DFAE0+20C↑o
                 pea     ($A).w
                 pea     (3).w
 
-loc_E02AE:                              ; CODE XREF: sub_DFAE0+17DA↓j
+loc_E02AE:                              ; CODE XREF: TriggerOSDMessage+17DA↓j
                 clr.l   -(sp)
                 pea     (6).w
                 bra.w   loc_DFED8
 ; ---------------------------------------------------------------------------
 
-loc_E02B8:                              ; DATA XREF: sub_DFAE0+20E↑o
+loc_E02B8:                              ; DATA XREF: TriggerOSDMessage+20E↑o
                 tst.b   d3
                 beq.s   loc_E02DA
                 pea     (aGreatEscape).l ; "* GREAT ESCAPE *"
@@ -21901,12 +21901,12 @@ loc_E02CE:                              ; DATA XREF: ROM:00060614↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E02DA:                              ; CODE XREF: sub_DFAE0+7DA↑j
+loc_E02DA:                              ; CODE XREF: TriggerOSDMessage+7DA↑j
                 move.l  #$3A98,d2
                 bra.w   loc_DFBC4
 ; ---------------------------------------------------------------------------
 
-loc_E02E4:                              ; DATA XREF: sub_DFAE0+210↑o
+loc_E02E4:                              ; DATA XREF: TriggerOSDMessage+210↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aLaunchingUp).l ; "LAUNCHING UP"
@@ -21914,15 +21914,15 @@ loc_E02E4:                              ; DATA XREF: sub_DFAE0+210↑o
                 pea     ($1E).w
                 pea     (off_4).w
 
-loc_E02FC:                              ; CODE XREF: sub_DFAE0+1D36↓j
+loc_E02FC:                              ; CODE XREF: TriggerOSDMessage+1D36↓j
                 clr.l   -(sp)
 
-loc_E02FE:                              ; CODE XREF: sub_DFAE0+C40↓j
+loc_E02FE:                              ; CODE XREF: TriggerOSDMessage+C40↓j
                 pea     (7).w
                 bra.w   loc_E1938
 ; ---------------------------------------------------------------------------
 
-loc_E0306:                              ; DATA XREF: sub_DFAE0+212↑o
+loc_E0306:                              ; DATA XREF: TriggerOSDMessage+212↑o
                 tst.b   d3
                 beq.s   loc_E0326
                 pea     (aArghhH).l     ; "() ARGHH H ()"
@@ -21932,20 +21932,20 @@ loc_E0306:                              ; DATA XREF: sub_DFAE0+212↑o
                 pea     (1).w
                 pea     (off_4).w
 
-loc_E0320:                              ; CODE XREF: sub_DFAE0+1934↓j
+loc_E0320:                              ; CODE XREF: TriggerOSDMessage+1934↓j
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0326:                              ; CODE XREF: sub_DFAE0+828↑j
+loc_E0326:                              ; CODE XREF: TriggerOSDMessage+828↑j
                                         ; DATA XREF: ROM:0004F3F0↑o
                 move.l  #$3A98,d2
 
-loc_E032C:                              ; CODE XREF: sub_DFAE0+198A↓j
+loc_E032C:                              ; CODE XREF: TriggerOSDMessage+198A↓j
                 pea     (off_38).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0334:                              ; DATA XREF: sub_DFAE0+214↑o
+loc_E0334:                              ; DATA XREF: TriggerOSDMessage+214↑o
                 tst.b   d3
                 beq.s   loc_E0354
                 pea     (aKeepItUp).l   ; "KEEP IT UP!!!"
@@ -21957,20 +21957,20 @@ loc_E0334:                              ; DATA XREF: sub_DFAE0+214↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0354:                              ; CODE XREF: sub_DFAE0+856↑j
+loc_E0354:                              ; CODE XREF: TriggerOSDMessage+856↑j
                 move.l  #$3A98,d2
                 pea     ($2B).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0362:                              ; CODE XREF: sub_DFAE0+C00↓j
-                                        ; sub_DFAE0+C22↓j
+loc_E0362:                              ; CODE XREF: TriggerOSDMessage+C00↓j
+                                        ; TriggerOSDMessage+C22↓j
                                         ; DATA XREF: ...
                 move.l  #$1388,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_E036C:                              ; DATA XREF: sub_DFAE0+226↑o
+loc_E036C:                              ; DATA XREF: TriggerOSDMessage+226↑o
                 pea     (aBonus200000).l ; "* BONUS 200,000 *"
                 clr.l   -(sp)
                 pea     (off_28).w
@@ -21978,21 +21978,21 @@ loc_E036C:                              ; DATA XREF: sub_DFAE0+226↑o
                 pea     (2).w
                 pea     (5).w
 
-loc_E0384:                              ; CODE XREF: sub_DFAE0+930↓j
+loc_E0384:                              ; CODE XREF: TriggerOSDMessage+930↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #dword_30D40,d2
                 bra.w   loc_DFE14
 ; ---------------------------------------------------------------------------
 
-loc_E0394:                              ; DATA XREF: sub_DFAE0+228↑o
+loc_E0394:                              ; DATA XREF: TriggerOSDMessage+228↑o
                 pea     (aMovingUp___).l ; "MOVING UP..."
                 pea     (off_4).w
                 pea     (off_28).w
                 bra.w   loc_DFE74
 ; ---------------------------------------------------------------------------
 
-loc_E03A6:                              ; DATA XREF: sub_DFAE0+22A↑o
+loc_E03A6:                              ; DATA XREF: TriggerOSDMessage+22A↑o
                 pea     (aOops___Oops___).l ; "OOPS... OOPS... OOPS..."
                 pea     (1).w
                 clr.l   -(sp)
@@ -22004,18 +22004,18 @@ loc_E03A6:                              ; DATA XREF: sub_DFAE0+22A↑o
                 bra.w   loc_DFE8A
 ; ---------------------------------------------------------------------------
 
-loc_E03C6:                              ; DATA XREF: sub_DFAE0+22C↑o
+loc_E03C6:                              ; DATA XREF: TriggerOSDMessage+22C↑o
                 pea     (aQuickJumpInsid).l ; "QUICK, JUMP INSIDE!"
                 clr.l   -(sp)
                 pea     ($1E).w
                 clr.l   -(sp)
 
-loc_E03D4:                              ; CODE XREF: sub_DFAE0+106A↓j
+loc_E03D4:                              ; CODE XREF: TriggerOSDMessage+106A↓j
                 pea     (1).w
                 bra.w   loc_E1934
 ; ---------------------------------------------------------------------------
 
-loc_E03DC:                              ; DATA XREF: sub_DFAE0+22E↑o
+loc_E03DC:                              ; DATA XREF: TriggerOSDMessage+22E↑o
                 pea     (aRaisingRailBri).l ; "RAISING RAIL BRIDGE..."
                 pea     (1).w
                 clr.l   -(sp)
@@ -22033,16 +22033,16 @@ loc_E03DC:                              ; DATA XREF: sub_DFAE0+22E↑o
                 bra.w   loc_E0384
 ; ---------------------------------------------------------------------------
 
-loc_E0414:                              ; DATA XREF: sub_DFAE0+230↑o
+loc_E0414:                              ; DATA XREF: TriggerOSDMessage+230↑o
                 pea     (aPullSwitchFirs).l ; "PULL SWITCH FIRST!"
                 pea     (6).w
 
-loc_E041E:                              ; CODE XREF: sub_DFAE0+1C9A↓j
+loc_E041E:                              ; CODE XREF: TriggerOSDMessage+1C9A↓j
                 pea     (off_28).w
                 bra.w   loc_E192E
 ; ---------------------------------------------------------------------------
 
-loc_E0426:                              ; DATA XREF: sub_DFAE0+232↑o
+loc_E0426:                              ; DATA XREF: TriggerOSDMessage+232↑o
                 pea     (aTailDestroyed).l ; "TAIL DESTROYED"
                 pea     (off_4).w
                 pea     (off_3C).w
@@ -22063,20 +22063,20 @@ loc_E0426:                              ; DATA XREF: sub_DFAE0+232↑o
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E046C:                              ; DATA XREF: sub_DFAE0+234↑o
+loc_E046C:                              ; DATA XREF: TriggerOSDMessage+234↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aDestroyScorpiu).l ; "DESTROY SCORPIUS!!!"
                 pea     (6).w
                 pea     (1).w
 
-loc_E0480:                              ; CODE XREF: sub_DFAE0+19C8↓j
-                                        ; sub_DFAE0+1D70↓j
+loc_E0480:                              ; CODE XREF: TriggerOSDMessage+19C8↓j
+                                        ; TriggerOSDMessage+1D70↓j
                 clr.l   -(sp)
                 bra.w   loc_E1932
 ; ---------------------------------------------------------------------------
 
-Messages_LP:                            ; DATA XREF: sub_DFAE0+18E↑o
+Messages_LP:                            ; DATA XREF: TriggerOSDMessage+18E↑o
                 move.w  d4,d0
                 ext.l   d0
                 subq.l  #1,d0
@@ -22089,8 +22089,8 @@ loc_E0490:
                 move.w  off_E049E(pc,d0.l),d0
                 jmp     off_E049E(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_E049E:      dc.w loc_E04E8-*        ; DATA XREF: sub_DFAE0+9B6↑r
-                                        ; sub_DFAE0:off_E049E↓o ...
+off_E049E:      dc.w loc_E04E8-*        ; DATA XREF: TriggerOSDMessage+9B6↑r
+                                        ; TriggerOSDMessage:off_E049E↓o ...
                 dc.w loc_E050A-off_E049E
                 dc.w loc_E0532-off_E049E
                 dc.w loc_E055C-off_E049E
@@ -22129,7 +22129,7 @@ off_E049E:      dc.w loc_E04E8-*        ; DATA XREF: sub_DFAE0+9B6↑r
                 dc.w loc_E0972-off_E049E
 ; ---------------------------------------------------------------------------
 
-loc_E04E8:                              ; DATA XREF: sub_DFAE0:off_E049E↑o
+loc_E04E8:                              ; DATA XREF: TriggerOSDMessage:off_E049E↑o
                 tst.b   d3
                 beq.w   loc_DFEB4
                 pea     (aGotcha).l     ; "GOTCHA!"
@@ -22141,7 +22141,7 @@ loc_E04E8:                              ; DATA XREF: sub_DFAE0:off_E049E↑o
                 bra.w   loc_DFEAE
 ; ---------------------------------------------------------------------------
 
-loc_E050A:                              ; DATA XREF: sub_DFAE0+9C0↑o
+loc_E050A:                              ; DATA XREF: TriggerOSDMessage+9C0↑o
                 pea     (aTeleporting___).l ; "TELEPORTING..."
                 pea     (off_4).w
                 pea     ($5A).w
@@ -22149,36 +22149,36 @@ loc_E050A:                              ; DATA XREF: sub_DFAE0+9C0↑o
                 clr.l   -(sp)
                 pea     (7).w
 
-loc_E0522:                              ; CODE XREF: sub_DFAE0+FF6↓j
+loc_E0522:                              ; CODE XREF: TriggerOSDMessage+FF6↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #off_124F8,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_E0532:                              ; DATA XREF: sub_DFAE0+9C2↑o
+loc_E0532:                              ; DATA XREF: TriggerOSDMessage+9C2↑o
                 pea     (aClosingDrainPl).l ; "CLOSING DRAIN PLUGS!"
                 pea     (6).w
 
-loc_E053C:                              ; CODE XREF: sub_DFAE0+10A2↓j
+loc_E053C:                              ; CODE XREF: TriggerOSDMessage+10A2↓j
                 pea     (off_3C).w
                 pea     (6).w
 
-loc_E0544:                              ; CODE XREF: sub_DFAE0+12D6↓j
+loc_E0544:                              ; CODE XREF: TriggerOSDMessage+12D6↓j
                 pea     (2).w
 
-loc_E0548:                              ; CODE XREF: sub_DFAE0+12EC↓j
+loc_E0548:                              ; CODE XREF: TriggerOSDMessage+12EC↓j
                 pea     (5).w
 
-loc_E054C:                              ; CODE XREF: sub_DFAE0+1386↓j
-                                        ; sub_DFAE0+1A7C↓j
+loc_E054C:                              ; CODE XREF: TriggerOSDMessage+1386↓j
+                                        ; TriggerOSDMessage+1A7C↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #dword_186A0,d2
                 bra.w   loc_DFE14
 ; ---------------------------------------------------------------------------
 
-loc_E055C:                              ; DATA XREF: sub_DFAE0+9C4↑o
+loc_E055C:                              ; DATA XREF: TriggerOSDMessage+9C4↑o
                 tst.b   d3
                 beq.w   loc_DFD66
                 pea     (aPlugsAreClosed).l ; "PLUGS ARE CLOSED"
@@ -22187,7 +22187,7 @@ loc_E055C:                              ; DATA XREF: sub_DFAE0+9C4↑o
                 bra.w   loc_DFE2E
 ; ---------------------------------------------------------------------------
 
-loc_E0572:                              ; DATA XREF: sub_DFAE0+9C6↑o
+loc_E0572:                              ; DATA XREF: TriggerOSDMessage+9C6↑o
                 tst.b   d3
                 beq.s   loc_E0592
                 pea     (aFerronAlarm).l ; "FERRON ALARM!"
@@ -22201,23 +22201,23 @@ loc_E0584:                              ; DATA XREF: ROM:00060FD8↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0592:                              ; CODE XREF: sub_DFAE0+A94↑j
+loc_E0592:                              ; CODE XREF: TriggerOSDMessage+A94↑j
                 move.l  #$1388,d2
                 bra.w   loc_E011E
 ; ---------------------------------------------------------------------------
 
-Alert_TMMultiplier:                     ; DATA XREF: sub_DFAE0+9C8↑o
-                                        ; sub_DFAE0+A00↑o
+Alert_TMMultiplier:                     ; DATA XREF: TriggerOSDMessage+9C8↑o
+                                        ; TriggerOSDMessage+A00↑o
                 cmpi.w  #6,d4
                 bne.s   loc_E05AA
                 move.b  ($FF10A4).l,d0
                 bra.s   loc_E05B0
 ; ---------------------------------------------------------------------------
 
-loc_E05AA:                              ; CODE XREF: sub_DFAE0+AC0↑j
+loc_E05AA:                              ; CODE XREF: TriggerOSDMessage+AC0↑j
                 move.b  ($FFEDAA).l,d0
 
-loc_E05B0:                              ; CODE XREF: sub_DFAE0+AC8↑j
+loc_E05B0:                              ; CODE XREF: TriggerOSDMessage+AC8↑j
                 ext.w   d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -22233,14 +22233,14 @@ loc_E05B0:                              ; CODE XREF: sub_DFAE0+AC8↑j
                 pea     (2).w
                 pea     (5).w
 
-loc_E05DE:                              ; CODE XREF: sub_DFAE0+EF6↓j
+loc_E05DE:                              ; CODE XREF: TriggerOSDMessage+EF6↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #$C350,d2
                 bra.w   loc_DFE14
 ; ---------------------------------------------------------------------------
 
-loc_E05EE:                              ; DATA XREF: sub_DFAE0+9CA↑o
+loc_E05EE:                              ; DATA XREF: TriggerOSDMessage+9CA↑o
                 tst.b   d3
                 beq.s   loc_E0610
                 pea     (aLuckyAgain?).l ; "LUCKY AGAIN?"
@@ -22252,12 +22252,12 @@ loc_E05EE:                              ; DATA XREF: sub_DFAE0+9CA↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0610:                              ; CODE XREF: sub_DFAE0+B10↑j
+loc_E0610:                              ; CODE XREF: TriggerOSDMessage+B10↑j
                 move.l  #$3A98,d2
                 bra.w   loc_DFF38
 ; ---------------------------------------------------------------------------
 
-loc_E061A:                              ; DATA XREF: sub_DFAE0+9CC↑o
+loc_E061A:                              ; DATA XREF: TriggerOSDMessage+9CC↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aBogusMan___).l ; "BOGUS, MAN..."
@@ -22265,16 +22265,16 @@ loc_E061A:                              ; DATA XREF: sub_DFAE0+9CC↑o
                 pea     (off_3C).w
                 pea     (5).w
 
-loc_E0632:                              ; CODE XREF: sub_DFAE0+DB6↓j
-                                        ; sub_DFAE0+17AE↓j ...
+loc_E0632:                              ; CODE XREF: TriggerOSDMessage+DB6↓j
+                                        ; TriggerOSDMessage+17AE↓j ...
                 clr.l   -(sp)
 
-loc_E0634:                              ; CODE XREF: sub_DFAE0+1B24↓j
+loc_E0634:                              ; CODE XREF: TriggerOSDMessage+1B24↓j
                 pea     (off_4).w
                 bra.w   loc_E1938
 ; ---------------------------------------------------------------------------
 
-loc_E063C:                              ; DATA XREF: sub_DFAE0+9CE↑o
+loc_E063C:                              ; DATA XREF: TriggerOSDMessage+9CE↑o
                 pea     (aPressureBonus).l ; "* PRESSURE BONUS *"
                 pea     (3).w
                 pea     (off_28).w
@@ -22284,23 +22284,23 @@ loc_E063C:                              ; DATA XREF: sub_DFAE0+9CE↑o
                 bra.w   loc_E1938
 ; ---------------------------------------------------------------------------
 
-loc_E0658:                              ; DATA XREF: sub_DFAE0+9D0↑o
+loc_E0658:                              ; DATA XREF: TriggerOSDMessage+9D0↑o
                 pea     (aCoolingDownBon).l ; "** COOLING DOWN BONUS **"
                 pea     (1).w
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_E0668:                              ; CODE XREF: sub_DFAE0+119C↓j
+loc_E0668:                              ; CODE XREF: TriggerOSDMessage+119C↓j
                 pea     (2).w
                 pea     (5).w
 
-loc_E0670:                              ; CODE XREF: sub_DFAE0+1034↓j
+loc_E0670:                              ; CODE XREF: TriggerOSDMessage+1034↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 bra.w   loc_DFDE2
 ; ---------------------------------------------------------------------------
 
-loc_E067A:                              ; DATA XREF: sub_DFAE0+9D2↑o
+loc_E067A:                              ; DATA XREF: TriggerOSDMessage+9D2↑o
                 tst.b   d3
                 beq.w   loc_DFFBA
                 pea     (aSteamArena).l ; "() STEAM ARENA ()"
@@ -22312,7 +22312,7 @@ loc_E067A:                              ; DATA XREF: sub_DFAE0+9D2↑o
                 bra.w   loc_DFFB4
 ; ---------------------------------------------------------------------------
 
-loc_E069E:                              ; DATA XREF: sub_DFAE0+9D4↑o
+loc_E069E:                              ; DATA XREF: TriggerOSDMessage+9D4↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aClucksAreComin).l ; "CLUCKS ARE COMING!"
@@ -22326,7 +22326,7 @@ loc_E069E:                              ; DATA XREF: sub_DFAE0+9D4↑o
                 bra.w   loc_E011E
 ; ---------------------------------------------------------------------------
 
-loc_E06C4:                              ; DATA XREF: sub_DFAE0+9D6↑o
+loc_E06C4:                              ; DATA XREF: TriggerOSDMessage+9D6↑o
                 pea     (aBustingDoor___).l ; "BUSTING DOOR..."
                 pea     (6).w
                 pea     (1).w
@@ -22336,7 +22336,7 @@ loc_E06C4:                              ; DATA XREF: sub_DFAE0+9D6↑o
                 bra.w   loc_DFF02
 ; ---------------------------------------------------------------------------
 
-loc_E06DE:                              ; DATA XREF: sub_DFAE0+9D8↑o
+loc_E06DE:                              ; DATA XREF: TriggerOSDMessage+9D8↑o
                 tst.b   d3
                 beq.w   loc_E0362
                 pea     (aGoingDown?).l ; "() GOING DOWN? ()"
@@ -22350,7 +22350,7 @@ loc_E06DE:                              ; DATA XREF: sub_DFAE0+9D8↑o
                 bra.w   loc_E0362
 ; ---------------------------------------------------------------------------
 
-loc_E0706:                              ; DATA XREF: sub_DFAE0+9DC↑o
+loc_E0706:                              ; DATA XREF: TriggerOSDMessage+9DC↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aDestroyTheEvil).l ; "DESTROY THE EVIL ROBOILER!"
@@ -22358,31 +22358,31 @@ loc_E0706:                              ; DATA XREF: sub_DFAE0+9DC↑o
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_E071C:                              ; CODE XREF: sub_DFAE0+16E2↓j
+loc_E071C:                              ; CODE XREF: TriggerOSDMessage+16E2↓j
                 pea     (2).w
                 bra.w   loc_E02FE
 ; ---------------------------------------------------------------------------
 
-loc_E0724:                              ; DATA XREF: sub_DFAE0+9E0↑o
+loc_E0724:                              ; DATA XREF: TriggerOSDMessage+9E0↑o
                 tst.b   d3
                 beq.s   loc_E0746
                 pea     (aGettingScared?).l ; "GETTING SCARED?"
                 pea     (3).w
                 pea     (off_3C).w
 
-loc_E0736:                              ; CODE XREF: sub_DFAE0+123A↓j
+loc_E0736:                              ; CODE XREF: TriggerOSDMessage+123A↓j
                 pea     (off_4).w
                 clr.l   -(sp)
                 pea     (3).w
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0746:                              ; CODE XREF: sub_DFAE0+C46↑j
+loc_E0746:                              ; CODE XREF: TriggerOSDMessage+C46↑j
                 move.l  #$3A98,d2
                 bra.w   loc_E019E
 ; ---------------------------------------------------------------------------
 
-loc_E0750:                              ; DATA XREF: sub_DFAE0+9E2↑o
+loc_E0750:                              ; DATA XREF: TriggerOSDMessage+9E2↑o
                 tst.b   d3
                 beq.s   loc_E0772
                 pea     (aGoingDown?_0).l ; "() GOING DOWN? ()"
@@ -22394,12 +22394,12 @@ loc_E0750:                              ; DATA XREF: sub_DFAE0+9E2↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0772:                              ; CODE XREF: sub_DFAE0+C72↑j
+loc_E0772:                              ; CODE XREF: TriggerOSDMessage+C72↑j
                 move.l  #$1388,d2
                 bra.w   loc_E019E
 ; ---------------------------------------------------------------------------
 
-loc_E077C:                              ; DATA XREF: sub_DFAE0+9E4↑o
+loc_E077C:                              ; DATA XREF: TriggerOSDMessage+9E4↑o
                 pea     (aOhNoooOO___).l ; "OH, NOOO O O..."
                 pea     (5).w
                 pea     ($5A).w
@@ -22412,7 +22412,7 @@ loc_E077C:                              ; DATA XREF: sub_DFAE0+9E4↑o
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E07A2:                              ; DATA XREF: sub_DFAE0+9E6↑o
+loc_E07A2:                              ; DATA XREF: TriggerOSDMessage+9E6↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aGotHim).l     ; "GOT HIM!"
@@ -22420,13 +22420,13 @@ loc_E07A2:                              ; DATA XREF: sub_DFAE0+9E6↑o
                 pea     (off_28).w
                 pea     (off_4).w
 
-loc_E07BA:                              ; CODE XREF: sub_DFAE0+DD2↓j
+loc_E07BA:                              ; CODE XREF: TriggerOSDMessage+DD2↓j
                 clr.l   -(sp)
                 pea     (3).w
                 bra.w   loc_E1938
 ; ---------------------------------------------------------------------------
 
-loc_E07C4:                              ; DATA XREF: sub_DFAE0+9E8↑o
+loc_E07C4:                              ; DATA XREF: TriggerOSDMessage+9E8↑o
                 tst.b   d3
                 beq.w   loc_DFFBA
                 pea     (aRightOnSonic).l ; "RIGHT ON, SONIC!"
@@ -22438,19 +22438,19 @@ loc_E07C4:                              ; DATA XREF: sub_DFAE0+9E8↑o
                 bra.w   loc_DFFB4
 ; ---------------------------------------------------------------------------
 
-loc_E07E4:                              ; DATA XREF: sub_DFAE0+9EA↑o
+loc_E07E4:                              ; DATA XREF: TriggerOSDMessage+9EA↑o
                 tst.b   d3
                 beq.w   loc_DFF08
                 pea     (aTotalAction).l ; "** TOTAL ACTION **"
                 pea     (6).w
                 pea     (off_28).w
 
-loc_E07F8:                              ; CODE XREF: sub_DFAE0+1340↓j
+loc_E07F8:                              ; CODE XREF: TriggerOSDMessage+1340↓j
                 clr.l   -(sp)
                 bra.w   loc_DFEFC
 ; ---------------------------------------------------------------------------
 
-loc_E07FE:                              ; DATA XREF: sub_DFAE0+9EC↑o
+loc_E07FE:                              ; DATA XREF: TriggerOSDMessage+9EC↑o
                 tst.b   d3
                 beq.s   loc_E081E
 
@@ -22464,12 +22464,12 @@ loc_E0802:                              ; DATA XREF: ROM:00058FDC↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E081E:                              ; CODE XREF: sub_DFAE0+D20↑j
+loc_E081E:                              ; CODE XREF: TriggerOSDMessage+D20↑j
                 move.l  #$C350,d2
                 bra.w   loc_DFE5A
 ; ---------------------------------------------------------------------------
 
-loc_E0828:                              ; DATA XREF: sub_DFAE0+9EE↑o
+loc_E0828:                              ; DATA XREF: TriggerOSDMessage+9EE↑o
                 tst.b   d3
                 beq.s   loc_E0848
                 pea     (aCoolLoop).l   ; "** COOL LOOP **"
@@ -22481,16 +22481,16 @@ loc_E0828:                              ; DATA XREF: sub_DFAE0+9EE↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0848:                              ; CODE XREF: sub_DFAE0+D4A↑j
+loc_E0848:                              ; CODE XREF: TriggerOSDMessage+D4A↑j
                 move.l  #$61A8,d2
 
-loc_E084E:                              ; CODE XREF: sub_DFAE0+D9C↓j
-                                        ; sub_DFAE0+11C4↓j
+loc_E084E:                              ; CODE XREF: TriggerOSDMessage+D9C↓j
+                                        ; TriggerOSDMessage+11C4↓j
                 pea     ($4E).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0856:                              ; DATA XREF: sub_DFAE0+9F0↑o
+loc_E0856:                              ; DATA XREF: TriggerOSDMessage+9F0↑o
                 tst.b   d3
                 beq.s   loc_E0876
                 pea     (aYeaah).l      ; "YEAAH!!"
@@ -22502,24 +22502,24 @@ loc_E0856:                              ; DATA XREF: sub_DFAE0+9F0↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0876:                              ; CODE XREF: sub_DFAE0+D78↑j
+loc_E0876:                              ; CODE XREF: TriggerOSDMessage+D78↑j
                 move.l  #$C350,d2
                 bra.s   loc_E084E
 ; ---------------------------------------------------------------------------
 
-loc_E087E:                              ; DATA XREF: sub_DFAE0+9F2↑o
+loc_E087E:                              ; DATA XREF: TriggerOSDMessage+9F2↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aJumpToDropDown).l ; "JUMP TO DROP DOWN"
                 pea     (5).w
                 pea     ($5A).w
 
-loc_E0892:                              ; CODE XREF: sub_DFAE0+13AC↓j
+loc_E0892:                              ; CODE XREF: TriggerOSDMessage+13AC↓j
                 pea     (6).w
                 bra.w   loc_E0632
 ; ---------------------------------------------------------------------------
 
-loc_E089A:                              ; DATA XREF: sub_DFAE0+9F4↑o
+loc_E089A:                              ; DATA XREF: TriggerOSDMessage+9F4↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aJumpInsideRobo).l ; "JUMP INSIDE ROBOILER!"
@@ -22529,7 +22529,7 @@ loc_E089A:                              ; DATA XREF: sub_DFAE0+9F4↑o
                 bra.w   loc_E07BA
 ; ---------------------------------------------------------------------------
 
-loc_E08B6:                              ; DATA XREF: sub_DFAE0+9F8↑o
+loc_E08B6:                              ; DATA XREF: TriggerOSDMessage+9F8↑o
                 pea     (aHitItAgain___).l ; "HIT IT AGAIN..."
                 pea     (6).w
                 pea     (off_28).w
@@ -22537,14 +22537,14 @@ loc_E08B6:                              ; DATA XREF: sub_DFAE0+9F8↑o
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_E08CC:                              ; CODE XREF: sub_DFAE0+1A3A↓j
+loc_E08CC:                              ; CODE XREF: TriggerOSDMessage+1A3A↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #$1388,d2
                 bra.w   loc_DFD3C
 ; ---------------------------------------------------------------------------
 
-loc_E08DC:                              ; DATA XREF: sub_DFAE0+9FA↑o
+loc_E08DC:                              ; DATA XREF: TriggerOSDMessage+9FA↑o
                 pea     (a500000_0).l   ; "500,000"
                 pea     (6).w
                 pea     ($A).w
@@ -22564,7 +22564,7 @@ loc_E08DC:                              ; DATA XREF: sub_DFAE0+9FA↑o
                 bra.w   loc_DFE14
 ; ---------------------------------------------------------------------------
 
-loc_E091C:                              ; DATA XREF: sub_DFAE0+9FC↑o
+loc_E091C:                              ; DATA XREF: TriggerOSDMessage+9FC↑o
                 tst.b   d3
                 beq.s   loc_E093C
                 pea     (aLetSBoogie___).l ; "LET'S BOOGIE..."
@@ -22576,12 +22576,12 @@ loc_E091C:                              ; DATA XREF: sub_DFAE0+9FC↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E093C:                              ; CODE XREF: sub_DFAE0+E3E↑j
+loc_E093C:                              ; CODE XREF: TriggerOSDMessage+E3E↑j
                 move.l  #$3A98,d2
                 bra.w   loc_DFF60
 ; ---------------------------------------------------------------------------
 
-loc_E0946:                              ; DATA XREF: sub_DFAE0+9FE↑o
+loc_E0946:                              ; DATA XREF: TriggerOSDMessage+9FE↑o
                 tst.b   d3
                 beq.s   loc_E0968
                 pea     (aRoboheadDown).l ; "ROBOHEAD DOWN!"
@@ -22593,23 +22593,23 @@ loc_E0946:                              ; DATA XREF: sub_DFAE0+9FE↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E0968:                              ; CODE XREF: sub_DFAE0+E68↑j
+loc_E0968:                              ; CODE XREF: TriggerOSDMessage+E68↑j
                 move.l  #off_124F8,d2
                 bra.w   loc_DFF90
 ; ---------------------------------------------------------------------------
 
-loc_E0972:                              ; DATA XREF: sub_DFAE0+A02↑o
-                                        ; sub_DFAE0+A06↑o
+loc_E0972:                              ; DATA XREF: TriggerOSDMessage+A02↑o
+                                        ; TriggerOSDMessage+A06↑o
                 cmpi.w  #$23,d4 ; '#'
                 bne.s   loc_E0980
                 pea     (aDoor).l       ; "DOOR"
                 bra.s   loc_E0986
 ; ---------------------------------------------------------------------------
 
-loc_E0980:                              ; CODE XREF: sub_DFAE0+E96↑j
+loc_E0980:                              ; CODE XREF: TriggerOSDMessage+E96↑j
                 pea     (aCork).l       ; "CORK"
 
-loc_E0986:                              ; CODE XREF: sub_DFAE0+E9E↑j
+loc_E0986:                              ; CODE XREF: TriggerOSDMessage+E9E↑j
                 pea     (aBustSFirst___).l ; "BUST %s FIRST..."
                 move.l  a5,-(sp)
                 jsr     sprintf         ; void sprintf(char *outputBuffer, char *formatString, ...);
@@ -22622,30 +22622,30 @@ loc_E0986:                              ; CODE XREF: sub_DFAE0+E9E↑j
                 clr.l   -(sp)
                 pea     (3).w
 
-loc_E09AC:                              ; CODE XREF: sub_DFAE0+1228↓j
-                                        ; sub_DFAE0+1550↓j
+loc_E09AC:                              ; CODE XREF: TriggerOSDMessage+1228↓j
+                                        ; TriggerOSDMessage+1550↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.l  #$C350,d2
 
-loc_E09B8:                              ; CODE XREF: sub_DFAE0+1C6E↓j
+loc_E09B8:                              ; CODE XREF: TriggerOSDMessage+1C6E↓j
                 pea     (off_78).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E09C0:                              ; DATA XREF: sub_DFAE0+A04↑o
+loc_E09C0:                              ; DATA XREF: TriggerOSDMessage+A04↑o
                 pea     (aDoorOpen).l   ; "DOOR OPEN!"
                 pea     (6).w
                 pea     ($A).w
                 clr.l   -(sp)
 
-loc_E09D0:                              ; CODE XREF: sub_DFAE0+13C2↓j
+loc_E09D0:                              ; CODE XREF: TriggerOSDMessage+13C2↓j
                 clr.l   -(sp)
                 pea     (7).w
                 bra.w   loc_E05DE
 ; ---------------------------------------------------------------------------
 
-Messages_TM:                            ; DATA XREF: sub_DFAE0+190↑o
+Messages_TM:                            ; DATA XREF: TriggerOSDMessage+190↑o
                 move.w  d4,d0
                 ext.l   d0
                 subq.l  #1,d0
@@ -22656,8 +22656,8 @@ Messages_TM:                            ; DATA XREF: sub_DFAE0+190↑o
                 move.w  off_E09F2(pc,d0.l),d0
                 jmp     off_E09F2(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_E09F2:      dc.w loc_E0A58-*        ; DATA XREF: sub_DFAE0+F0A↑r
-                                        ; sub_DFAE0:off_E09F2↓o ...
+off_E09F2:      dc.w loc_E0A58-*        ; DATA XREF: TriggerOSDMessage+F0A↑r
+                                        ; TriggerOSDMessage:off_E09F2↓o ...
                 dc.w loc_E0A84-off_E09F2
                 dc.w loc_E0A98-off_E09F2
                 dc.w Alert_TMWheelStopped-off_E09F2
@@ -22710,13 +22710,13 @@ off_E09F2:      dc.w loc_E0A58-*        ; DATA XREF: sub_DFAE0+F0A↑r
                 dc.w loc_E0A98-off_E09F2
 ; ---------------------------------------------------------------------------
 
-loc_E0A58:                              ; DATA XREF: sub_DFAE0:off_E09F2↑o
+loc_E0A58:                              ; DATA XREF: TriggerOSDMessage:off_E09F2↑o
                 pea     (aEnteringLiftSh).l ; "ENTERING LIFT SHAFT"
                 pea     (off_4).w
                 pea     ($32).w
                 pea     (1).w
 
-loc_E0A6A:                              ; CODE XREF: sub_DFAE0+FB6↓j
+loc_E0A6A:                              ; CODE XREF: TriggerOSDMessage+FB6↓j
                 clr.l   -(sp)
                 pea     (3).w
                 jsr     (a3)
@@ -22726,7 +22726,7 @@ loc_E0A6A:                              ; CODE XREF: sub_DFAE0+FB6↓j
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0A84:                              ; DATA XREF: sub_DFAE0+F14↑o
+loc_E0A84:                              ; DATA XREF: TriggerOSDMessage+F14↑o
                 pea     (aFindOtherGems).l ; "FIND OTHER GEMS!"
                 pea     (off_4).w
                 pea     ($32).w
@@ -22734,18 +22734,18 @@ loc_E0A84:                              ; DATA XREF: sub_DFAE0+F14↑o
                 bra.s   loc_E0A6A
 ; ---------------------------------------------------------------------------
 
-loc_E0A98:                              ; DATA XREF: sub_DFAE0+F16↑o
-                                        ; sub_DFAE0+F76↑o
+loc_E0A98:                              ; DATA XREF: TriggerOSDMessage+F16↑o
+                                        ; TriggerOSDMessage+F76↑o
                 cmpi.w  #$33,d4 ; '3'
                 bne.s   loc_E0AA6
                 move.b  ($FF5751).l,d0
                 bra.s   loc_E0AAC
 ; ---------------------------------------------------------------------------
 
-loc_E0AA6:                              ; CODE XREF: sub_DFAE0+FBC↑j
+loc_E0AA6:                              ; CODE XREF: TriggerOSDMessage+FBC↑j
                 move.b  ($FF5752).l,d0
 
-loc_E0AAC:                              ; CODE XREF: sub_DFAE0+FC4↑j
+loc_E0AAC:                              ; CODE XREF: TriggerOSDMessage+FC4↑j
                 ext.w   d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -22763,18 +22763,18 @@ loc_E0AAC:                              ; CODE XREF: sub_DFAE0+FC4↑j
                 bra.w   loc_E0522
 ; ---------------------------------------------------------------------------
 
-Alert_TMWheelStopped:                   ; DATA XREF: sub_DFAE0+F18↑o
-                                        ; sub_DFAE0+F1E↑o
+Alert_TMWheelStopped:                   ; DATA XREF: TriggerOSDMessage+F18↑o
+                                        ; TriggerOSDMessage+F1E↑o
                 cmpi.w  #4,d4
                 bne.s   loc_E0AE8
                 pea     (aLeft).l       ; "LEFT"
                 bra.s   loc_E0AEE
 ; ---------------------------------------------------------------------------
 
-loc_E0AE8:                              ; CODE XREF: sub_DFAE0+FFE↑j
+loc_E0AE8:                              ; CODE XREF: TriggerOSDMessage+FFE↑j
                 pea     (aRight).l      ; "RIGHT"
 
-loc_E0AEE:                              ; CODE XREF: sub_DFAE0+1006↑j
+loc_E0AEE:                              ; CODE XREF: TriggerOSDMessage+1006↑j
                 pea     (aSWheelStopped).l ; "* %s WHEEL STOPPED *"
                 move.l  a5,-(sp)
                 jsr     sprintf         ; void sprintf(char *outputBuffer, char *formatString, ...);
@@ -22789,18 +22789,18 @@ loc_E0AEE:                              ; CODE XREF: sub_DFAE0+1006↑j
                 bra.w   loc_E0670
 ; ---------------------------------------------------------------------------
 
-loc_E0B18:                              ; DATA XREF: sub_DFAE0+F1A↑o
-                                        ; sub_DFAE0+F20↑o
+loc_E0B18:                              ; DATA XREF: TriggerOSDMessage+F1A↑o
+                                        ; TriggerOSDMessage+F20↑o
                 cmpi.w  #5,d4
                 bne.s   loc_E0B26
                 pea     (aLeft).l       ; "LEFT"
                 bra.s   loc_E0B2C
 ; ---------------------------------------------------------------------------
 
-loc_E0B26:                              ; CODE XREF: sub_DFAE0+103C↑j
+loc_E0B26:                              ; CODE XREF: TriggerOSDMessage+103C↑j
                 pea     (aRight).l      ; "RIGHT"
 
-loc_E0B2C:                              ; CODE XREF: sub_DFAE0+1044↑j
+loc_E0B2C:                              ; CODE XREF: TriggerOSDMessage+1044↑j
                 pea     (aSpinningSWheel).l ; "SPINNING %s WHEEL..."
                 move.l  a5,-(sp)
                 jsr     sprintf         ; void sprintf(char *outputBuffer, char *formatString, ...);
@@ -22808,30 +22808,30 @@ loc_E0B2C:                              ; CODE XREF: sub_DFAE0+1044↑j
                 lea     $C(sp),sp
                 move.l  a5,-(sp)
 
-loc_E0B40:                              ; CODE XREF: sub_DFAE0+1074↓j
+loc_E0B40:                              ; CODE XREF: TriggerOSDMessage+1074↓j
                 clr.l   -(sp)
                 pea     ($5A).w
                 pea     (3).w
                 bra.w   loc_E03D4
 ; ---------------------------------------------------------------------------
 
-loc_E0B4E:                              ; DATA XREF: sub_DFAE0+F1C↑o
+loc_E0B4E:                              ; DATA XREF: TriggerOSDMessage+F1C↑o
                 pea     (aShortCircuit).l ; "!!! SHORT CIRCUIT !!!"
                 bra.s   loc_E0B40
 ; ---------------------------------------------------------------------------
 
-loc_E0B56:                              ; DATA XREF: sub_DFAE0+F22↑o
-                                        ; sub_DFAE0+F28↑o
+loc_E0B56:                              ; DATA XREF: TriggerOSDMessage+F22↑o
+                                        ; TriggerOSDMessage+F28↑o
                 cmpi.w  #9,d4
                 bne.s   loc_E0B64
                 pea     (aLeft).l       ; "LEFT"
                 bra.s   loc_E0B6A
 ; ---------------------------------------------------------------------------
 
-loc_E0B64:                              ; CODE XREF: sub_DFAE0+107A↑j
+loc_E0B64:                              ; CODE XREF: TriggerOSDMessage+107A↑j
                 pea     (aRight).l      ; "RIGHT"
 
-loc_E0B6A:                              ; CODE XREF: sub_DFAE0+1082↑j
+loc_E0B6A:                              ; CODE XREF: TriggerOSDMessage+1082↑j
                 pea     (aSDrainPlugOn).l ; "%s DRAIN PLUG ON"
                 move.l  a5,-(sp)
                 jsr     sprintf         ; void sprintf(char *outputBuffer, char *formatString, ...);
@@ -22842,7 +22842,7 @@ loc_E0B6A:                              ; CODE XREF: sub_DFAE0+1082↑j
                 bra.w   loc_E053C
 ; ---------------------------------------------------------------------------
 
-loc_E0B86:                              ; DATA XREF: sub_DFAE0+F24↑o
+loc_E0B86:                              ; DATA XREF: TriggerOSDMessage+F24↑o
                 pea     (aRadicalShootin).l ; "RADICAL SHOOTIN'"
                 pea     (6).w
                 pea     ($32).w
@@ -22852,7 +22852,7 @@ loc_E0B86:                              ; DATA XREF: sub_DFAE0+F24↑o
                 bra.w   loc_DFD8E
 ; ---------------------------------------------------------------------------
 
-loc_E0BA4:                              ; DATA XREF: sub_DFAE0+F26↑o
+loc_E0BA4:                              ; DATA XREF: TriggerOSDMessage+F26↑o
                 pea     (aRightOnTarget).l ; "RIGHT ON TARGET!"
                 pea     (off_4).w
                 pea     ($1E).w
@@ -22862,7 +22862,7 @@ loc_E0BA4:                              ; DATA XREF: sub_DFAE0+F26↑o
                 bra.w   loc_DFD30
 ; ---------------------------------------------------------------------------
 
-loc_E0BC0:                              ; DATA XREF: sub_DFAE0+F2A↑o
+loc_E0BC0:                              ; DATA XREF: TriggerOSDMessage+F2A↑o
                 pea     (aPlugBusted).l ; "PLUG BUSTED!"
                 pea     (6).w
                 pea     (1).w
@@ -22875,12 +22875,12 @@ loc_E0BC0:                              ; DATA XREF: sub_DFAE0+F2A↑o
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0BE4:                              ; DATA XREF: sub_DFAE0+F2C↑o
+loc_E0BE4:                              ; DATA XREF: TriggerOSDMessage+F2C↑o
                 pea     (aRapidTransport).l ; "RAPID TRANSPORT..."
                 pea     (off_4).w
                 pea     (off_3C).w
 
-loc_E0BF2:                              ; CODE XREF: sub_DFAE0+116E↓j
+loc_E0BF2:                              ; CODE XREF: TriggerOSDMessage+116E↓j
                 pea     (3).w
                 clr.l   -(sp)
                 pea     (3).w
@@ -22888,14 +22888,14 @@ loc_E0BF2:                              ; CODE XREF: sub_DFAE0+116E↓j
                 lea     $18(sp),sp
                 move.l  #off_124F8,d2
 
-loc_E0C08:                              ; CODE XREF: sub_DFAE0+1296↓j
+loc_E0C08:                              ; CODE XREF: TriggerOSDMessage+1296↓j
                 pea     (off_60).w
                 jsr     (a4)
                 addq.l  #4,sp
                 bra.w   loc_DFE8A
 ; ---------------------------------------------------------------------------
 
-loc_E0C14:                              ; DATA XREF: sub_DFAE0+F2E↑o
+loc_E0C14:                              ; DATA XREF: TriggerOSDMessage+F2E↑o
                 pea     (aSorryGoingNowh).l ; "SORRY, GOING NOWHERE"
                 pea     (5).w
                 pea     (off_3C).w
@@ -22906,19 +22906,19 @@ loc_E0C14:                              ; DATA XREF: sub_DFAE0+F2E↑o
                 lea     $18(sp),sp
                 move.l  #$3A98,d2
 
-loc_E0C38:                              ; CODE XREF: sub_DFAE0+12B6↓j
+loc_E0C38:                              ; CODE XREF: TriggerOSDMessage+12B6↓j
                 pea     (off_60).w
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0C40:                              ; DATA XREF: sub_DFAE0+F30↑o
+loc_E0C40:                              ; DATA XREF: TriggerOSDMessage+F30↑o
                 pea     (aFindHiddenEmer).l ; "FIND HIDDEN EMERALD"
                 pea     (off_4).w
                 pea     ($32).w
                 bra.s   loc_E0BF2
 ; ---------------------------------------------------------------------------
 
-loc_E0C50:                              ; DATA XREF: sub_DFAE0+F32↑o
+loc_E0C50:                              ; DATA XREF: TriggerOSDMessage+F32↑o
                 move.b  ($FF10A4).l,d0
                 ext.w   d0
                 ext.l   d0
@@ -22935,7 +22935,7 @@ loc_E0C50:                              ; DATA XREF: sub_DFAE0+F32↑o
                 bra.w   loc_E0668
 ; ---------------------------------------------------------------------------
 
-loc_E0C80:                              ; DATA XREF: sub_DFAE0+F34↑o
+loc_E0C80:                              ; DATA XREF: TriggerOSDMessage+F34↑o
                 pea     (aTotalMega_looo).l ; "TOTAL MEGA_LOOO OO O P..."
                 pea     (1).w
                 clr.l   -(sp)
@@ -22948,7 +22948,7 @@ loc_E0C80:                              ; DATA XREF: sub_DFAE0+F34↑o
                 bra.w   loc_E084E
 ; ---------------------------------------------------------------------------
 
-loc_E0CA8:                              ; DATA XREF: sub_DFAE0+F36↑o
+loc_E0CA8:                              ; DATA XREF: TriggerOSDMessage+F36↑o
                 pea     (aBigMistake).l ; "() BIG MISTAKE ()"
                 pea     (6).w
                 pea     (1).w
@@ -22957,7 +22957,7 @@ loc_E0CA8:                              ; DATA XREF: sub_DFAE0+F36↑o
                 bra.w   loc_DFED4
 ; ---------------------------------------------------------------------------
 
-loc_E0CBE:                              ; DATA XREF: sub_DFAE0+F38↑o
+loc_E0CBE:                              ; DATA XREF: TriggerOSDMessage+F38↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aUltraCoolSlide).l ; "* ULTRA COOL SLIDE *"
@@ -22973,7 +22973,7 @@ loc_E0CBE:                              ; DATA XREF: sub_DFAE0+F38↑o
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E0CF0:                              ; DATA XREF: sub_DFAE0+F3A↑o
+loc_E0CF0:                              ; DATA XREF: TriggerOSDMessage+F3A↑o
                 pea     (aBusterBusted).l ; "BUSTER BUSTED!"
                 pea     (1).w
                 pea     (off_28).w
@@ -22983,14 +22983,14 @@ loc_E0CF0:                              ; DATA XREF: sub_DFAE0+F3A↑o
                 bra.w   loc_E09AC
 ; ---------------------------------------------------------------------------
 
-loc_E0D0C:                              ; DATA XREF: sub_DFAE0+F3C↑o
+loc_E0D0C:                              ; DATA XREF: TriggerOSDMessage+F3C↑o
                 pea     (aDoTheFlipperCa).l ; "DO THE FLIPPER CATCH!"
                 pea     (6).w
                 pea     ($A).w
                 bra.w   loc_E0736
 ; ---------------------------------------------------------------------------
 
-Alert_TMPistonLights:                   ; DATA XREF: sub_DFAE0+F3E↑o
+Alert_TMPistonLights:                   ; DATA XREF: TriggerOSDMessage+F3E↑o
                 move.w  ($FF5756).l,d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -23005,12 +23005,12 @@ Alert_TMPistonLights:                   ; DATA XREF: sub_DFAE0+F3E↑o
                 pea     (off_4).w
                 clr.l   -(sp)
 
-loc_E0D4A:                              ; CODE XREF: sub_DFAE0+1758↓j
+loc_E0D4A:                              ; CODE XREF: TriggerOSDMessage+1758↓j
                 pea     (5).w
                 bra.w   loc_DFFFA
 ; ---------------------------------------------------------------------------
 
-loc_E0D52:                              ; DATA XREF: sub_DFAE0+F40↑o
+loc_E0D52:                              ; DATA XREF: TriggerOSDMessage+F40↑o
                 pea     (aBadMoveBro___).l ; "BAD MOVE, BRO..."
                 pea     (1).w
                 pea     (off_28).w
@@ -23023,7 +23023,7 @@ loc_E0D52:                              ; DATA XREF: sub_DFAE0+F40↑o
                 bra.w   loc_E0C08
 ; ---------------------------------------------------------------------------
 
-loc_E0D7A:                              ; DATA XREF: sub_DFAE0+F42↑o
+loc_E0D7A:                              ; DATA XREF: TriggerOSDMessage+F42↑o
                 pea     (aFlipperUp).l  ; "FLIPPER UP!"
                 pea     (6).w
                 pea     (1).w
@@ -23035,12 +23035,12 @@ loc_E0D7A:                              ; DATA XREF: sub_DFAE0+F42↑o
                 bra.w   loc_E0C38
 ; ---------------------------------------------------------------------------
 
-loc_E0D9A:                              ; DATA XREF: sub_DFAE0+F44↑o
+loc_E0D9A:                              ; DATA XREF: TriggerOSDMessage+F44↑o
                 move.l  #$1388,d2
                 bra.w   loc_DFF38
 ; ---------------------------------------------------------------------------
 
-loc_E0DA4:                              ; DATA XREF: sub_DFAE0+F48↑o
+loc_E0DA4:                              ; DATA XREF: TriggerOSDMessage+F48↑o
                 pea     (aCellOpen).l   ; "* CELL OPEN *"
                 pea     (2).w
                 pea     (off_28).w
@@ -23048,7 +23048,7 @@ loc_E0DA4:                              ; DATA XREF: sub_DFAE0+F48↑o
                 bra.w   loc_E0544
 ; ---------------------------------------------------------------------------
 
-loc_E0DBA:                              ; DATA XREF: sub_DFAE0+F4A↑o
+loc_E0DBA:                              ; DATA XREF: TriggerOSDMessage+F4A↑o
                 pea     (aEmeraldRelease).l ; "EMERALD RELEASED"
                 pea     (6).w
                 pea     (1).w
@@ -23057,7 +23057,7 @@ loc_E0DBA:                              ; DATA XREF: sub_DFAE0+F4A↑o
                 bra.w   loc_E0548
 ; ---------------------------------------------------------------------------
 
-loc_E0DD0:                              ; DATA XREF: sub_DFAE0+F4C↑o
+loc_E0DD0:                              ; DATA XREF: TriggerOSDMessage+F4C↑o
                 pea     (aAllCellsOpen).l ; "ALL CELLS OPEN"
                 pea     (off_4).w
                 pea     (off_28).w
@@ -23078,7 +23078,7 @@ loc_E0E00:                              ; DATA XREF: ROM:0002A814↑o
                 bra.w   loc_DFDD6
 ; ---------------------------------------------------------------------------
 
-loc_E0E0C:                              ; DATA XREF: sub_DFAE0+F4E↑o
+loc_E0E0C:                              ; DATA XREF: TriggerOSDMessage+F4E↑o
                 tst.b   d3
                 beq.w   loc_DFF08
                 pea     (aUnlocking___).l ; "UNLOCKING..."
@@ -23087,7 +23087,7 @@ loc_E0E0C:                              ; DATA XREF: sub_DFAE0+F4E↑o
                 bra.w   loc_E07F8
 ; ---------------------------------------------------------------------------
 
-loc_E0E24:                              ; DATA XREF: sub_DFAE0+F54↑o
+loc_E0E24:                              ; DATA XREF: TriggerOSDMessage+F54↑o
                 pea     (aDestroyTheVeg_).l ; "DESTROY THE VEG_O MACHINE!!!"
                 pea     (1).w
                 clr.l   -(sp)
@@ -23100,7 +23100,7 @@ loc_E0E24:                              ; DATA XREF: sub_DFAE0+F54↑o
                 bra.w   loc_DFDE2
 ; ---------------------------------------------------------------------------
 
-loc_E0E4C:                              ; DATA XREF: sub_DFAE0+F56↑o
+loc_E0E4C:                              ; DATA XREF: TriggerOSDMessage+F56↑o
                 pea     (aSurgeActivated).l ; "SURGE ACTIVATED"
                 pea     (off_4).w
                 pea     ($32).w
@@ -23110,7 +23110,7 @@ loc_E0E4C:                              ; DATA XREF: sub_DFAE0+F56↑o
                 bra.w   loc_E054C
 ; ---------------------------------------------------------------------------
 
-loc_E0E6A:                              ; DATA XREF: sub_DFAE0+F58↑o
+loc_E0E6A:                              ; DATA XREF: TriggerOSDMessage+F58↑o
                 pea     (aCMonLetSDoIt).l ; "C'MON, LET'S DO IT!"
                 pea     (6).w
                 pea     (1).w
@@ -23119,14 +23119,14 @@ loc_E0E6A:                              ; DATA XREF: sub_DFAE0+F58↑o
                 bra.w   loc_DFFDA
 ; ---------------------------------------------------------------------------
 
-loc_E0E80:                              ; DATA XREF: sub_DFAE0+F5A↑o
+loc_E0E80:                              ; DATA XREF: TriggerOSDMessage+F5A↑o
                 pea     (aNeverGiveUp).l ; "NEVER GIVE UP!"
                 clr.l   -(sp)
                 pea     (off_28).w
                 bra.w   loc_E0892
 ; ---------------------------------------------------------------------------
 
-loc_E0E90:                              ; DATA XREF: sub_DFAE0+F5C↑o
+loc_E0E90:                              ; DATA XREF: TriggerOSDMessage+F5C↑o
                 pea     (aPlatformStoppe).l ; "PLATFORM STOPPED"
                 pea     (1).w
                 pea     (off_28).w
@@ -23134,7 +23134,7 @@ loc_E0E90:                              ; DATA XREF: sub_DFAE0+F5C↑o
                 bra.w   loc_E09D0
 ; ---------------------------------------------------------------------------
 
-loc_E0EA6:                              ; DATA XREF: sub_DFAE0+F5E↑o
+loc_E0EA6:                              ; DATA XREF: TriggerOSDMessage+F5E↑o
                 pea     (aPlatformStarte).l ; "PLATFORM STARTED"
                 pea     (1).w
                 pea     (off_28).w
@@ -23143,7 +23143,7 @@ loc_E0EA6:                              ; DATA XREF: sub_DFAE0+F5E↑o
                 bra.w   loc_E0046
 ; ---------------------------------------------------------------------------
 
-loc_E0EBE:                              ; DATA XREF: sub_DFAE0+F60↑o
+loc_E0EBE:                              ; DATA XREF: TriggerOSDMessage+F60↑o
                 pea     (aLoopOfDeceptio).l ; "LOOP OF DECEPTION"
                 pea     (off_4).w
                 pea     (off_28).w
@@ -23151,14 +23151,14 @@ loc_E0EBE:                              ; DATA XREF: sub_DFAE0+F60↑o
                 clr.l   -(sp)
                 pea     (2).w
 
-loc_E0ED6:                              ; CODE XREF: sub_DFAE0+1BD8↓j
+loc_E0ED6:                              ; CODE XREF: TriggerOSDMessage+1BD8↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 bra.w   loc_DFE5A
 ; ---------------------------------------------------------------------------
 
 loc_E0EE0:                              ; DATA XREF: ROM:0002A038↑o
-                                        ; sub_DFAE0+F62↑o
+                                        ; TriggerOSDMessage+F62↑o
                 pea     (aWrongWay?).l  ; "WRONG WAY?"
                 pea     (off_4).w
                 pea     ($1E).w
@@ -23170,7 +23170,7 @@ loc_E0EE0:                              ; DATA XREF: ROM:0002A038↑o
                 bra.w   loc_DFF38
 ; ---------------------------------------------------------------------------
 
-loc_E0F02:                              ; DATA XREF: sub_DFAE0+F64↑o
+loc_E0F02:                              ; DATA XREF: TriggerOSDMessage+F64↑o
                 pea     (aAnimalPrison).l ; "() ANIMAL PRISON ()"
                 pea     (5).w
                 pea     (off_3C).w
@@ -23183,7 +23183,7 @@ loc_E0F02:                              ; DATA XREF: sub_DFAE0+F64↑o
                 bra.w   loc_E011E
 ; ---------------------------------------------------------------------------
 
-loc_E0F2A:                              ; DATA XREF: sub_DFAE0+F66↑o
+loc_E0F2A:                              ; DATA XREF: TriggerOSDMessage+F66↑o
                 pea     (aYeaahSonic).l ; "YEAAH, SONIC!"
                 pea     (6).w
                 pea     (1).w
@@ -23193,7 +23193,7 @@ loc_E0F2A:                              ; DATA XREF: sub_DFAE0+F66↑o
                 bra.w   loc_DFFFA
 ; ---------------------------------------------------------------------------
 
-loc_E0F44:                              ; DATA XREF: sub_DFAE0+F68↑o
+loc_E0F44:                              ; DATA XREF: TriggerOSDMessage+F68↑o
                 pea     (aGoingDoooOOWN_).l ; "GOING DOOO O O W N..."
                 pea     (1).w
                 clr.l   -(sp)
@@ -23206,7 +23206,7 @@ loc_E0F44:                              ; DATA XREF: sub_DFAE0+F68↑o
                 bra.w   loc_E01C8
 ; ---------------------------------------------------------------------------
 
-loc_E0F6A:                              ; DATA XREF: sub_DFAE0+F6A↑o
+loc_E0F6A:                              ; DATA XREF: TriggerOSDMessage+F6A↑o
                 pea     (aSmashing).l   ; "SMASHING!!!"
                 pea     (6).w
                 pea     (1).w
@@ -23219,7 +23219,7 @@ loc_E0F6A:                              ; DATA XREF: sub_DFAE0+F6A↑o
                 bra.w   loc_E024C
 ; ---------------------------------------------------------------------------
 
-loc_E0F92:                              ; DATA XREF: sub_DFAE0+F6C↑o
+loc_E0F92:                              ; DATA XREF: TriggerOSDMessage+F6C↑o
                 pea     (aBothTubesBuste).l ; "BOTH TUBES BUSTED... ALL ANIMALS FREE!!"...
                 pea     (1).w
                 clr.l   -(sp)
@@ -23237,14 +23237,14 @@ loc_E0F92:                              ; DATA XREF: sub_DFAE0+F6C↑o
                 lea     $30(sp),sp
                 move.l  #off_7A120,d2
 
-loc_E0FCE:                              ; CODE XREF: sub_DFAE0+1536↓j
+loc_E0FCE:                              ; CODE XREF: TriggerOSDMessage+1536↓j
                 pea     ($6A).w
                 jsr     (a4)
                 addq.l  #4,sp
                 bra.w   loc_DFDE2
 ; ---------------------------------------------------------------------------
 
-loc_E0FDA:                              ; DATA XREF: sub_DFAE0+F6E↑o
+loc_E0FDA:                              ; DATA XREF: TriggerOSDMessage+F6E↑o
                 pea     (aInfluxTubeDest).l ; "INFLUX TUBE DESTROYED..."
                 pea     (1).w
                 clr.l   -(sp)
@@ -23264,7 +23264,7 @@ loc_E0FDA:                              ; DATA XREF: sub_DFAE0+F6E↑o
                 bra.s   loc_E0FCE
 ; ---------------------------------------------------------------------------
 
-loc_E1018:                              ; DATA XREF: sub_DFAE0+F70↑o
+loc_E1018:                              ; DATA XREF: TriggerOSDMessage+F70↑o
                 pea     (aBustTubesFirst).l ; "BUST TUBES FIRST!"
                 pea     (off_4).w
                 pea     (off_3C).w
@@ -23274,7 +23274,7 @@ loc_E1018:                              ; DATA XREF: sub_DFAE0+F70↑o
                 bra.w   loc_E09AC
 ; ---------------------------------------------------------------------------
 
-loc_E1034:                              ; DATA XREF: sub_DFAE0+F72↑o
+loc_E1034:                              ; DATA XREF: TriggerOSDMessage+F72↑o
                 tst.b   d3
                 beq.s   loc_E105A
                 pea     (aYeahYeahYeah).l ; "YEAH! YEAH! YEAH!"
@@ -23288,14 +23288,14 @@ loc_E1034:                              ; DATA XREF: sub_DFAE0+F72↑o
                 jsr     (a4)
                 lea     $1C(sp),sp
 
-loc_E105A:                              ; CODE XREF: sub_DFAE0+1556↑j
+loc_E105A:                              ; CODE XREF: TriggerOSDMessage+1556↑j
                 pea     (off_38).w
                 jsr     (a4)
                 addq.l  #4,sp
                 bra.w   loc_DFF08
 ; ---------------------------------------------------------------------------
 
-loc_E1066:                              ; DATA XREF: sub_DFAE0+F74↑o
+loc_E1066:                              ; DATA XREF: TriggerOSDMessage+F74↑o
                 pea     (aOverheating).l ; "! OVERHEATING !"
                 clr.l   -(sp)
                 pea     (off_3C).w
@@ -23308,7 +23308,7 @@ loc_E1066:                              ; DATA XREF: sub_DFAE0+F74↑o
                 bra.w   loc_E011E
 ; ---------------------------------------------------------------------------
 
-Messages_Show:                          ; DATA XREF: sub_DFAE0+192↑o
+Messages_Show:                          ; DATA XREF: TriggerOSDMessage+192↑o
                 move.w  d4,d0
                 ext.l   d0
                 moveq   #$63,d1 ; 'c'
@@ -23318,8 +23318,8 @@ Messages_Show:                          ; DATA XREF: sub_DFAE0+192↑o
                 move.w  off_E10A2(pc,d0.l),d0
                 jmp     off_E10A2(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_E10A2:      dc.w loc_E15F2-*        ; DATA XREF: sub_DFAE0+15BA↑r
-                                        ; sub_DFAE0:off_E10A2↓o ...
+off_E10A2:      dc.w loc_E15F2-*        ; DATA XREF: TriggerOSDMessage+15BA↑r
+                                        ; TriggerOSDMessage:off_E10A2↓o ...
                 dc.w loc_E1608-off_E10A2
                 dc.w loc_E163E-off_E10A2
                 dc.w loc_E1672-off_E10A2
@@ -23422,10 +23422,10 @@ off_E111A:      dc.w loc_E1836-off_E10A2
                 dc.w loc_E157A-off_E10A2
 ; ---------------------------------------------------------------------------
 
-loc_E116A:                              ; DATA XREF: sub_DFAE0+15D0↑o
+loc_E116A:                              ; DATA XREF: TriggerOSDMessage+15D0↑o
                 pea     (aChimney3x).l  ; "CHIMNEY 3X"
 
-loc_E1170:                              ; CODE XREF: sub_DFAE0+185C↓j
+loc_E1170:                              ; CODE XREF: TriggerOSDMessage+185C↓j
                 pea     (off_4).w
                 pea     (off_3C).w
                 clr.l   -(sp)
@@ -23441,10 +23441,10 @@ loc_E1170:                              ; CODE XREF: sub_DFAE0+185C↓j
                 move.l  #dword_186A0,d1
                 jsr     sub_FF8B8
 
-loc_E11A8:                              ; CODE XREF: sub_DFAE0+1852↓j
+loc_E11A8:                              ; CODE XREF: TriggerOSDMessage+1852↓j
                 move.l  d0,d2
 
-loc_E11AA:                              ; CODE XREF: sub_DFAE0+1832↓j
+loc_E11AA:                              ; CODE XREF: TriggerOSDMessage+1832↓j
                 move.l  d2,-(sp)
                 move.l  a5,-(sp)
                 bsr.w   sub_DE79A
@@ -23456,7 +23456,7 @@ loc_E11AA:                              ; CODE XREF: sub_DFAE0+1832↓j
                 bra.w   loc_E071C
 ; ---------------------------------------------------------------------------
 
-loc_E11C6:                              ; DATA XREF: sub_DFAE0+15D2↑o
+loc_E11C6:                              ; DATA XREF: TriggerOSDMessage+15D2↑o
                 pea     (aChimneyRamp).l ; "** CHIMNEY RAMP **"
                 clr.l   -(sp)
                 pea     ($32).w
@@ -23464,7 +23464,7 @@ loc_E11C6:                              ; DATA XREF: sub_DFAE0+15D2↑o
                 pea     (1).w
                 pea     (3).w
 
-loc_E11DC:                              ; CODE XREF: sub_DFAE0+1874↓j
+loc_E11DC:                              ; CODE XREF: TriggerOSDMessage+1874↓j
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.w  ($FF5892).l,d2
@@ -23478,12 +23478,12 @@ loc_E11DC:                              ; CODE XREF: sub_DFAE0+1874↓j
                 add.l   d2,d2
                 sub.l   d0,d2
 
-loc_E11FA:                              ; CODE XREF: sub_DFAE0+17C8↓j
+loc_E11FA:                              ; CODE XREF: TriggerOSDMessage+17C8↓j
                 lsl.l   #3,d2
                 bra.w   loc_DFF38
 ; ---------------------------------------------------------------------------
 
-loc_E1200:                              ; DATA XREF: sub_DFAE0+15D4↑o
+loc_E1200:                              ; DATA XREF: TriggerOSDMessage+15D4↑o
                 bsr.w   sub_DE996
                 addq.w  #1,($FF5892).l
                 move.w  ($FF5892).l,d0
@@ -23502,7 +23502,7 @@ loc_E1200:                              ; DATA XREF: sub_DFAE0+15D4↑o
                 bra.w   loc_E0D4A
 ; ---------------------------------------------------------------------------
 
-loc_E123C:                              ; DATA XREF: sub_DFAE0+15D6↑o
+loc_E123C:                              ; DATA XREF: TriggerOSDMessage+15D6↑o
                 pea     (aLightAllGate_0).l ; "LIGHT ALL GATES FOR EXTRA MULTIPIER"
                 pea     (1).w
                 clr.l   -(sp)
@@ -23522,19 +23522,19 @@ loc_E123C:                              ; DATA XREF: sub_DFAE0+15D6↑o
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_E127A:                              ; DATA XREF: sub_DFAE0+15D8↑o
+loc_E127A:                              ; DATA XREF: TriggerOSDMessage+15D8↑o
                 bsr.w   sub_DE996
                 pea     (aHitOtherTarget).l ; "HIT OTHER TARGETS"
                 clr.l   -(sp)
                 pea     (off_3C).w
 
-loc_E128A:                              ; CODE XREF: sub_DFAE0+1CDC↓j
-                                        ; sub_DFAE0+1CEC↓j
+loc_E128A:                              ; CODE XREF: TriggerOSDMessage+1CDC↓j
+                                        ; TriggerOSDMessage+1CEC↓j
                 pea     (3).w
                 bra.w   loc_E0632
 ; ---------------------------------------------------------------------------
 
-loc_E1292:                              ; DATA XREF: sub_DFAE0+15DC↑o
+loc_E1292:                              ; DATA XREF: TriggerOSDMessage+15DC↑o
                 move.w  ($FF5892).l,d2
                 ext.l   d2
                 move.l  d2,d0
@@ -23547,7 +23547,7 @@ loc_E1292:                              ; DATA XREF: sub_DFAE0+15DC↑o
                 bra.w   loc_E11FA
 ; ---------------------------------------------------------------------------
 
-loc_E12AC:                              ; DATA XREF: sub_DFAE0+15DE↑o
+loc_E12AC:                              ; DATA XREF: TriggerOSDMessage+15DE↑o
                 pea     (aReadyToFry?).l ; "() READY TO FRY? ()"
                 clr.l   -(sp)
                 pea     ($A).w
@@ -23555,7 +23555,7 @@ loc_E12AC:                              ; DATA XREF: sub_DFAE0+15DE↑o
                 bra.w   loc_E02AE
 ; ---------------------------------------------------------------------------
 
-loc_E12BE:                              ; DATA XREF: sub_DFAE0+15E2↑o
+loc_E12BE:                              ; DATA XREF: TriggerOSDMessage+15E2↑o
                 bsr.w   sub_DE996
                 pea     (aEruptionBonus).l ; "!! ERUPTION BONUS !!"
                 clr.l   -(sp)
@@ -23582,7 +23582,7 @@ loc_E12BE:                              ; DATA XREF: sub_DFAE0+15E2↑o
                 asr.l   #5,d0
                 beq.w   loc_E11AA
 
-loc_E1316:                              ; CODE XREF: sub_DFAE0+1826↑j
+loc_E1316:                              ; CODE XREF: TriggerOSDMessage+1826↑j
                 moveq   #0,d1
                 move.w  ($FFAB88).l,d1
                 moveq   #0,d0
@@ -23594,12 +23594,12 @@ loc_E1316:                              ; CODE XREF: sub_DFAE0+1826↑j
                 bra.w   loc_E11A8
 ; ---------------------------------------------------------------------------
 
-loc_E1336:                              ; DATA XREF: sub_DFAE0+15E8↑o
+loc_E1336:                              ; DATA XREF: TriggerOSDMessage+15E8↑o
                 pea     (aRumblingLoop4x).l ; "RUMBLING LOOP 4X"
                 bra.w   loc_E1170
 ; ---------------------------------------------------------------------------
 
-loc_E1340:                              ; DATA XREF: sub_DFAE0+15EA↑o
+loc_E1340:                              ; DATA XREF: TriggerOSDMessage+15EA↑o
                 pea     (aRumblingLoop).l ; "** RUMBLING LOOP **"
                 clr.l   -(sp)
                 pea     (off_28).w
@@ -23609,7 +23609,7 @@ loc_E1340:                              ; DATA XREF: sub_DFAE0+15EA↑o
                 bra.w   loc_E11DC
 ; ---------------------------------------------------------------------------
 
-loc_E1358:                              ; DATA XREF: sub_DFAE0+15F2↑o
+loc_E1358:                              ; DATA XREF: TriggerOSDMessage+15F2↑o
                 pea     (aDashAway).l   ; "DASH AWAY!"
                 pea     (off_4).w
                 pea     (off_3C).w
@@ -23627,7 +23627,7 @@ loc_E1358:                              ; DATA XREF: sub_DFAE0+15F2↑o
                 bra.w   loc_DFE5A
 ; ---------------------------------------------------------------------------
 
-loc_E1392:                              ; DATA XREF: sub_DFAE0+15FA↑o
+loc_E1392:                              ; DATA XREF: TriggerOSDMessage+15FA↑o
                 pea     (aKeepGoing___).l ; "  KEEP GOING..."
                 clr.l   -(sp)
                 pea     (off_14).w
@@ -23651,7 +23651,7 @@ loc_E1392:                              ; DATA XREF: sub_DFAE0+15FA↑o
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E13D0:                              ; DATA XREF: sub_DFAE0+166C↑o
+loc_E13D0:                              ; DATA XREF: TriggerOSDMessage+166C↑o
                 pea     (aAlreadyLitMan_).l ; "ALREADY LIT, MAN..."
                 clr.l   -(sp)
                 pea     (off_3C).w
@@ -23660,7 +23660,7 @@ loc_E13D0:                              ; DATA XREF: sub_DFAE0+166C↑o
                 bra.w   loc_E0242
 ; ---------------------------------------------------------------------------
 
-loc_E13E6:                              ; DATA XREF: sub_DFAE0+166E↑o
+loc_E13E6:                              ; DATA XREF: TriggerOSDMessage+166E↑o
                 pea     (aAirSurfingDude).l ; "AIR SURFING, DUDE!"
                 pea     (off_4).w
                 pea     ($1E).w
@@ -23669,7 +23669,7 @@ loc_E13E6:                              ; DATA XREF: sub_DFAE0+166E↑o
                 bra.w   loc_E1934
 ; ---------------------------------------------------------------------------
 
-loc_E13FE:                              ; DATA XREF: sub_DFAE0+1670↑o
+loc_E13FE:                              ; DATA XREF: TriggerOSDMessage+1670↑o
                 pea     (aBalloonMania).l ; "* BALLOON MANIA *"
                 pea     (6).w
                 pea     ($1E).w
@@ -23679,8 +23679,8 @@ loc_E13FE:                              ; DATA XREF: sub_DFAE0+1670↑o
                 bra.w   loc_E0320
 ; ---------------------------------------------------------------------------
 
-loc_E1418:                              ; DATA XREF: sub_DFAE0+1672↑o
-                                        ; sub_DFAE0+1674↑o ...
+loc_E1418:                              ; DATA XREF: TriggerOSDMessage+1672↑o
+                                        ; TriggerOSDMessage+1674↑o ...
                 bsr.w   sub_DE996
                 cmpi.w  #$58,d4 ; 'X'
                 bne.s   loc_E142A
@@ -23688,18 +23688,18 @@ loc_E1418:                              ; DATA XREF: sub_DFAE0+1672↑o
                 bra.s   loc_E143E
 ; ---------------------------------------------------------------------------
 
-loc_E142A:                              ; CODE XREF: sub_DFAE0+1940↑j
+loc_E142A:                              ; CODE XREF: TriggerOSDMessage+1940↑j
                 cmpi.w  #$59,d4 ; 'Y'
                 bne.s   loc_E1438
                 pea     (aDemolition).l ; "*()* DEMOLITION"
                 bra.s   loc_E143E
 ; ---------------------------------------------------------------------------
 
-loc_E1438:                              ; CODE XREF: sub_DFAE0+194E↑j
+loc_E1438:                              ; CODE XREF: TriggerOSDMessage+194E↑j
                 pea     (aRockNRoll_0).l ; "* ROCK N' ROLL *"
 
-loc_E143E:                              ; CODE XREF: sub_DFAE0+1948↑j
-                                        ; sub_DFAE0+1956↑j
+loc_E143E:                              ; CODE XREF: TriggerOSDMessage+1948↑j
+                                        ; TriggerOSDMessage+1956↑j
                 clr.l   -(sp)
                 pea     ($23).w
                 clr.l   -(sp)
@@ -23720,8 +23720,8 @@ loc_E143E:                              ; CODE XREF: sub_DFAE0+1948↑j
                 bra.w   loc_E032C
 ; ---------------------------------------------------------------------------
 
-loc_E146E:                              ; DATA XREF: sub_DFAE0+1678↑o
-                                        ; sub_DFAE0+1682↑o
+loc_E146E:                              ; DATA XREF: TriggerOSDMessage+1678↑o
+                                        ; TriggerOSDMessage+1682↑o
                 bsr.w   sub_DE996
                 cmpi.w  #$5B,d4 ; '['
                 bne.s   loc_E1482
@@ -23730,11 +23730,11 @@ loc_E146E:                              ; DATA XREF: sub_DFAE0+1678↑o
                 bra.s   loc_E148A
 ; ---------------------------------------------------------------------------
 
-loc_E1482:                              ; CODE XREF: sub_DFAE0+1996↑j
+loc_E1482:                              ; CODE XREF: TriggerOSDMessage+1996↑j
                 moveq   #0,d0
                 move.w  ($FFAB8A).l,d0
 
-loc_E148A:                              ; CODE XREF: sub_DFAE0+19A0↑j
+loc_E148A:                              ; CODE XREF: TriggerOSDMessage+19A0↑j
                 asr.l   #5,d0
                 move.l  d0,-(sp)
                 pea     (aEruptionTimerD).l ; "ERUPTION TIMER: %d"
@@ -23748,7 +23748,7 @@ loc_E148A:                              ; CODE XREF: sub_DFAE0+19A0↑j
                 bra.w   loc_E0480
 ; ---------------------------------------------------------------------------
 
-loc_E14AC:                              ; DATA XREF: sub_DFAE0+167C↑o
+loc_E14AC:                              ; DATA XREF: TriggerOSDMessage+167C↑o
                 pea     (aRockIt).l     ; "ROCK IT !!"
                 clr.l   -(sp)
                 pea     (off_14).w
@@ -23772,14 +23772,14 @@ loc_E14AC:                              ; DATA XREF: sub_DFAE0+167C↑o
                 pea     (off_4).w
                 pea     (2).w
 
-loc_E14F8:                              ; CODE XREF: sub_DFAE0+1B5A↓j
+loc_E14F8:                              ; CODE XREF: TriggerOSDMessage+1B5A↓j
                 pea     (7).w
                 jsr     (a3)
                 lea     $18(sp),sp
                 bra.w   loc_DFF90
 ; ---------------------------------------------------------------------------
 
-loc_E1506:                              ; DATA XREF: sub_DFAE0+167E↑o
+loc_E1506:                              ; DATA XREF: TriggerOSDMessage+167E↑o
                 pea     (aNailedIt).l   ; "NAILED IT !"
                 clr.l   -(sp)
                 pea     ($F).w
@@ -23789,8 +23789,8 @@ loc_E1506:                              ; DATA XREF: sub_DFAE0+167E↑o
                 bra.w   loc_E08CC
 ; ---------------------------------------------------------------------------
 
-loc_E151E:                              ; DATA XREF: sub_DFAE0+1680↑o
-                                        ; sub_DFAE0+1684↑o
+loc_E151E:                              ; DATA XREF: TriggerOSDMessage+1680↑o
+                                        ; TriggerOSDMessage+1684↑o
                 bsr.w   sub_DE996
                 cmpi.w  #$5F,d4 ; '_'
                 bne.s   loc_E1530
@@ -23798,10 +23798,10 @@ loc_E151E:                              ; DATA XREF: sub_DFAE0+1680↑o
                 bra.s   loc_E1536
 ; ---------------------------------------------------------------------------
 
-loc_E1530:                              ; CODE XREF: sub_DFAE0+1A46↑j
+loc_E1530:                              ; CODE XREF: TriggerOSDMessage+1A46↑j
                 pea     (aRight).l      ; "RIGHT"
 
-loc_E1536:                              ; CODE XREF: sub_DFAE0+1A4E↑j
+loc_E1536:                              ; CODE XREF: TriggerOSDMessage+1A4E↑j
                 pea     (aSRockWillShoot).l ; "%s ROCK WILL SHOOT"
                 move.l  a5,-(sp)
                 jsr     sprintf         ; void sprintf(char *outputBuffer, char *formatString, ...);
@@ -23816,7 +23816,7 @@ loc_E1536:                              ; CODE XREF: sub_DFAE0+1A4E↑j
                 bra.w   loc_E054C
 ; ---------------------------------------------------------------------------
 
-loc_E1560:                              ; DATA XREF: sub_DFAE0+1686↑o
+loc_E1560:                              ; DATA XREF: TriggerOSDMessage+1686↑o
                 pea     (aTargetsReset).l ; "TARGETS RESET"
                 clr.l   -(sp)
                 pea     (off_3C).w
@@ -23826,7 +23826,7 @@ loc_E1560:                              ; DATA XREF: sub_DFAE0+1686↑o
                 bra.w   loc_E0246
 ; ---------------------------------------------------------------------------
 
-loc_E157A:                              ; DATA XREF: sub_DFAE0+1688↑o
+loc_E157A:                              ; DATA XREF: TriggerOSDMessage+1688↑o
                 pea     (aNotEnoughEmera).l ; "NOT ENOUGH EMERALDS"
                 clr.l   -(sp)
                 pea     ($32).w
@@ -23865,7 +23865,7 @@ loc_E157A:                              ; DATA XREF: sub_DFAE0+1688↑o
                 bra.w   loc_E0198
 ; ---------------------------------------------------------------------------
 
-loc_E15F2:                              ; DATA XREF: sub_DFAE0:off_E10A2↑o
+loc_E15F2:                              ; DATA XREF: TriggerOSDMessage:off_E10A2↑o
                 pea     (unk_BEEBC).l
                 clr.l   -(sp)
                 pea     (off_14).w
@@ -23874,7 +23874,7 @@ loc_E15F2:                              ; DATA XREF: sub_DFAE0:off_E10A2↑o
                 bra.w   loc_E0634
 ; ---------------------------------------------------------------------------
 
-loc_E1608:                              ; DATA XREF: sub_DFAE0+15C4↑o
+loc_E1608:                              ; DATA XREF: TriggerOSDMessage+15C4↑o
                 bsr.w   sub_DE996
                 pea     (aBlockDestroyed).l ; "BLOCK DESTROYED !"
                 clr.l   -(sp)
@@ -23892,7 +23892,7 @@ loc_E1608:                              ; DATA XREF: sub_DFAE0+15C4↑o
                 bra.w   loc_E14F8
 ; ---------------------------------------------------------------------------
 
-loc_E163E:                              ; DATA XREF: sub_DFAE0+15C6↑o
+loc_E163E:                              ; DATA XREF: TriggerOSDMessage+15C6↑o
                 pea     (aRampOpen).l   ; "RAMP OPEN !!"
                 pea     (5).w
                 pea     (off_50).w
@@ -23907,7 +23907,7 @@ loc_E163E:                              ; DATA XREF: sub_DFAE0+15C6↑o
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-loc_E1672:                              ; DATA XREF: sub_DFAE0+15C8↑o
+loc_E1672:                              ; DATA XREF: TriggerOSDMessage+15C8↑o
                 movea.l #aTrigger,a0    ; "TRIGGER "
                 movea.l a5,a1
                 move.l  (a0)+,(a1)+
@@ -23934,7 +23934,7 @@ loc_E1672:                              ; DATA XREF: sub_DFAE0+15C8↑o
                 bra.w   loc_E0ED6
 ; ---------------------------------------------------------------------------
 
-loc_E16BC:                              ; DATA XREF: sub_DFAE0+15E4↑o
+loc_E16BC:                              ; DATA XREF: TriggerOSDMessage+15E4↑o
                 bsr.w   sub_DE996
                 moveq   #0,d0
                 addq.w  #1,($FFABB8).l
@@ -23962,14 +23962,14 @@ loc_E16BC:                              ; DATA XREF: sub_DFAE0+15E4↑o
                 bra.w   loc_DFC4C
 ; ---------------------------------------------------------------------------
 
-loc_E1716:                              ; DATA XREF: sub_DFAE0+15EE↑o
+loc_E1716:                              ; DATA XREF: TriggerOSDMessage+15EE↑o
                 bsr.w   sub_DE996
                 pea     (aGotHim_0).l   ; "GOT HIM !!"
                 pea     (6).w
                 pea     ($1E).w
                 clr.l   -(sp)
 
-loc_E172A:                              ; CODE XREF: sub_DFAE0+1CC8↓j
+loc_E172A:                              ; CODE XREF: TriggerOSDMessage+1CC8↓j
                 clr.l   -(sp)
                 pea     (3).w
                 jsr     (a3)
@@ -23983,8 +23983,8 @@ loc_E172A:                              ; CODE XREF: sub_DFAE0+1CC8↓j
                 bra.w   loc_E09B8
 ; ---------------------------------------------------------------------------
 
-loc_E1752:                              ; DATA XREF: sub_DFAE0+161A↑o
-                                        ; sub_DFAE0+161C↑o ...
+loc_E1752:                              ; DATA XREF: TriggerOSDMessage+161A↑o
+                                        ; TriggerOSDMessage+161C↑o ...
                 bsr.w   sub_DE996
                 cmpi.w  #$2C,d4 ; ','
                 bne.s   loc_E1764
@@ -23992,23 +23992,23 @@ loc_E1752:                              ; DATA XREF: sub_DFAE0+161A↑o
                 bra.s   loc_E1778
 ; ---------------------------------------------------------------------------
 
-loc_E1764:                              ; CODE XREF: sub_DFAE0+1C7A↑j
+loc_E1764:                              ; CODE XREF: TriggerOSDMessage+1C7A↑j
                 cmpi.w  #$2D,d4 ; '-'
                 bne.s   loc_E1772
                 pea     (asc_BEF2A).l   ; "!! * () * !!"
                 bra.s   loc_E1778
 ; ---------------------------------------------------------------------------
 
-loc_E1772:                              ; CODE XREF: sub_DFAE0+1C88↑j
+loc_E1772:                              ; CODE XREF: TriggerOSDMessage+1C88↑j
                 pea     (asc_BEF38).l   ; "()()()()()()()()()()"
 
-loc_E1778:                              ; CODE XREF: sub_DFAE0+1C82↑j
-                                        ; sub_DFAE0+1C90↑j
+loc_E1778:                              ; CODE XREF: TriggerOSDMessage+1C82↑j
+                                        ; TriggerOSDMessage+1C90↑j
                 clr.l   -(sp)
                 bra.w   loc_E041E
 ; ---------------------------------------------------------------------------
 
-loc_E177E:                              ; DATA XREF: sub_DFAE0+1620↑o
+loc_E177E:                              ; DATA XREF: TriggerOSDMessage+1620↑o
                 bsr.w   sub_DE996
                 pea     (aRobotnikSShip).l ; " ()ROBOTNIK'S SHIP()"
                 clr.l   -(sp)
@@ -24016,7 +24016,7 @@ loc_E177E:                              ; DATA XREF: sub_DFAE0+1620↑o
                 bra.w   loc_E192E
 ; ---------------------------------------------------------------------------
 
-loc_E1792:                              ; DATA XREF: sub_DFAE0+1622↑o
+loc_E1792:                              ; DATA XREF: TriggerOSDMessage+1622↑o
                 bsr.w   sub_DE996
                 pea     (aBustBlocksFirs).l ; "BUST BLOCKS FIRST!"
                 pea     (3).w
@@ -24025,7 +24025,7 @@ loc_E1792:                              ; DATA XREF: sub_DFAE0+1622↑o
                 bra.w   loc_E172A
 ; ---------------------------------------------------------------------------
 
-loc_E17AC:                              ; DATA XREF: sub_DFAE0+1626↑o
+loc_E17AC:                              ; DATA XREF: TriggerOSDMessage+1626↑o
                 bsr.w   sub_DE996
                 pea     (aSmellMySocks).l ; "SMELL MY SOCKS !!"
                 clr.l   -(sp)
@@ -24033,21 +24033,21 @@ loc_E17AC:                              ; DATA XREF: sub_DFAE0+1626↑o
                 bra.w   loc_E128A
 ; ---------------------------------------------------------------------------
 
-loc_E17C0:                              ; DATA XREF: sub_DFAE0+162A↑o
+loc_E17C0:                              ; DATA XREF: TriggerOSDMessage+162A↑o
                 pea     (aIGotYou).l    ; "I GOT YOU !!"
                 clr.l   -(sp)
                 pea     ($46).w
                 bra.w   loc_E128A
 ; ---------------------------------------------------------------------------
 
-loc_E17D0:                              ; DATA XREF: sub_DFAE0+1630↑o
+loc_E17D0:                              ; DATA XREF: TriggerOSDMessage+1630↑o
                 pea     (aNotMuchTime).l ; "NOT MUCH TIME !!"
                 clr.l   -(sp)
                 pea     (off_50).w
                 bra.w   loc_E192E
 ; ---------------------------------------------------------------------------
 
-loc_E17E0:                              ; DATA XREF: sub_DFAE0+1632↑o
+loc_E17E0:                              ; DATA XREF: TriggerOSDMessage+1632↑o
                 pea     (off_78).w
                 jsr     (a4)
                 bsr.w   sub_DE996
@@ -24066,28 +24066,28 @@ loc_E17E0:                              ; DATA XREF: sub_DFAE0+1632↑o
                 bra.w   loc_E02FC
 ; ---------------------------------------------------------------------------
 
-loc_E181A:                              ; DATA XREF: sub_DFAE0+1636↑o
+loc_E181A:                              ; DATA XREF: TriggerOSDMessage+1636↑o
                 pea     (aStrike3YerOut).l ; "STRIKE 3 YER OUT !"
 
-loc_E1820:                              ; CODE XREF: sub_DFAE0+1D54↓j
-                                        ; sub_DFAE0+1D5C↓j
+loc_E1820:                              ; CODE XREF: TriggerOSDMessage+1D54↓j
+                                        ; TriggerOSDMessage+1D5C↓j
                 pea     (off_4).w
                 pea     (off_3C).w
                 clr.l   -(sp)
                 bra.w   loc_E0632
 ; ---------------------------------------------------------------------------
 
-loc_E182E:                              ; DATA XREF: sub_DFAE0+1638↑o
+loc_E182E:                              ; DATA XREF: TriggerOSDMessage+1638↑o
                 pea     (aStrike1).l    ; "STRIKE 1 !"
                 bra.s   loc_E1820
 ; ---------------------------------------------------------------------------
 
-loc_E1836:                              ; DATA XREF: sub_DFAE0:off_E111A↑o
+loc_E1836:                              ; DATA XREF: TriggerOSDMessage:off_E111A↑o
                 pea     (aStrike2).l    ; "STRIKE 2 !"
                 bra.s   loc_E1820
 ; ---------------------------------------------------------------------------
 
-loc_E183E:                              ; DATA XREF: sub_DFAE0+1646↑o
+loc_E183E:                              ; DATA XREF: TriggerOSDMessage+1646↑o
                 tst.b   d3
                 beq.w   loc_E193E
                 pea     (aOuch).l       ; "OUCH !"
@@ -24096,7 +24096,7 @@ loc_E183E:                              ; DATA XREF: sub_DFAE0+1646↑o
                 bra.w   loc_E0480
 ; ---------------------------------------------------------------------------
 
-loc_E1854:                              ; DATA XREF: sub_DFAE0+1648↑o
+loc_E1854:                              ; DATA XREF: TriggerOSDMessage+1648↑o
                 bsr.w   sub_DE996
                 movea.l #$FFABB8,a0
                 movea.l a0,a2
@@ -24128,7 +24128,7 @@ loc_E1854:                              ; DATA XREF: sub_DFAE0+1648↑o
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E18B2:                              ; CODE XREF: sub_DFAE0+1DB8↑j
+loc_E18B2:                              ; CODE XREF: TriggerOSDMessage+1DB8↑j
                 movea.l #$FFABBA,a0
                 movea.l a0,a2
                 tst.w   (a0)
@@ -24145,7 +24145,7 @@ loc_E18B2:                              ; CODE XREF: sub_DFAE0+1DB8↑j
                 bra.s   loc_E1928
 ; ---------------------------------------------------------------------------
 
-loc_E18DA:                              ; CODE XREF: sub_DFAE0+1DDC↑j
+loc_E18DA:                              ; CODE XREF: TriggerOSDMessage+1DDC↑j
                 bsr.w   sub_DE996
                 pea     (aTotalRobotnikB).l ; "() TOTAL ROBOTNIK BONUS ADDED..."
                 clr.l   -(sp)
@@ -24172,35 +24172,35 @@ loc_E18DA:                              ; CODE XREF: sub_DFAE0+1DDC↑j
                 lea     $18(sp),sp
                 pea     (aGoodbyeRobotni).l ; "GOODBYE ROBOTNIK !"
 
-loc_E1928:                              ; CODE XREF: sub_DFAE0+1DF8↑j
+loc_E1928:                              ; CODE XREF: TriggerOSDMessage+1DF8↑j
                 clr.l   -(sp)
                 pea     ($46).w
 
-loc_E192E:                              ; CODE XREF: sub_DFAE0+942↑j
-                                        ; sub_DFAE0+1CAE↑j ...
+loc_E192E:                              ; CODE XREF: TriggerOSDMessage+942↑j
+                                        ; TriggerOSDMessage+1CAE↑j ...
                 pea     (3).w
 
-loc_E1932:                              ; CODE XREF: sub_DFAE0+9A2↑j
+loc_E1932:                              ; CODE XREF: TriggerOSDMessage+9A2↑j
                 clr.l   -(sp)
 
-loc_E1934:                              ; CODE XREF: sub_DFAE0+8F8↑j
-                                        ; sub_DFAE0+191A↑j
+loc_E1934:                              ; CODE XREF: TriggerOSDMessage+8F8↑j
+                                        ; TriggerOSDMessage+191A↑j
                 pea     (6).w
 
-loc_E1938:                              ; CODE XREF: sub_DFAE0+5E2↑j
-                                        ; sub_DFAE0+73E↑j ...
+loc_E1938:                              ; CODE XREF: TriggerOSDMessage+5E2↑j
+                                        ; TriggerOSDMessage+73E↑j ...
                 jsr     (a3)
                 lea     $18(sp),sp
 
-loc_E193E:                              ; CODE XREF: sub_DFAE0+4C↑j
-                                        ; sub_DFAE0+9E↑j ...
+loc_E193E:                              ; CODE XREF: TriggerOSDMessage+4C↑j
+                                        ; TriggerOSDMessage+9E↑j ...
                 move.l  d2,-(sp)
                 jsr     NewLife
                 move.w  d4,($FF027C).l
                 movem.l var_58(a6),d2-d4/a2-a5
                 unlk    a6
                 rts
-; End of function sub_DFAE0
+; End of function TriggerOSDMessage
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -25987,7 +25987,7 @@ loc_E2ACA:                              ; CODE XREF: sub_E206A+A1E↑j
                 jsr     sub_DB836
                 move.b  #3,8(a2)
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 movea.l 4(a2),a0
                 move.b  #1,$30(a0)
@@ -25999,7 +25999,7 @@ loc_E2B04:                              ; CODE XREF: sub_E206A+A72↑j
                 pea     (2).w
 
 loc_E2B0E:                              ; CODE XREF: sub_E206A+D9C↓j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.w   loc_E2518
 ; ---------------------------------------------------------------------------
 
@@ -26249,7 +26249,7 @@ loc_E2D2A:                              ; DATA XREF: sub_E206A+C54↑o
 loc_E2D64:                              ; CODE XREF: sub_E206A+CF0↑j
                 jsr     sub_E4A4A
                 pea     (off_10).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.s   loc_E2D7E
 ; ---------------------------------------------------------------------------
@@ -26635,7 +26635,7 @@ loc_E313A:                              ; CODE XREF: sub_E312A+A↑j
 
 loc_E313C:                              ; CODE XREF: sub_E312A+E↑j
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.l  a2,-(sp)
                 bsr.w   sub_E30F0
                 addq.l  #8,sp
@@ -26960,7 +26960,7 @@ loc_E34B0:                              ; CODE XREF: sub_E3150+322↑j
                 move.b  #$3C,9(a3) ; '<'
                 addq.b  #1,($FF10A4).l
                 pea     (6).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   d2
 
@@ -26969,7 +26969,7 @@ loc_E34DC:                              ; CODE XREF: sub_E3150+328↑j
                 tst.b   d2
                 beq.s   loc_E34EC
                 pea     (off_18).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E34EC:                              ; CODE XREF: sub_E3150+38E↑j
@@ -27034,7 +27034,7 @@ loc_E3578:                              ; CODE XREF: sub_E3150+41A↑j
                 pea     (a3,d0.l)
                 jsr     sub_E1ECA
                 pea     ($19).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
                 addq.b  #1,($FF0282).l
                 cmpi.b  #5,($FF0282).l
@@ -27043,7 +27043,7 @@ loc_E3578:                              ; CODE XREF: sub_E3150+41A↑j
                 clr.b   ($FF0282).l
                 move.b  #$3C,9(a3) ; '<'
                 pea     ($A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E35E0:                              ; CODE XREF: sub_E3150+404↑j
@@ -27107,7 +27107,7 @@ loc_E3688:                              ; CODE XREF: sub_E3150+51E↑j
                 pea     ($1A).w
 
 loc_E368C:                              ; CODE XREF: sub_E3150+536↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_E3696:                              ; CODE XREF: sub_E3150+4D6↑j
@@ -27147,7 +27147,7 @@ loc_E36D2:                              ; CODE XREF: sub_E3150+54A↑j
                 bne.s   loc_E3700
                 move.b  #1,($FF8CC8).l
                 pea     ($B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3700:                              ; CODE XREF: sub_E3150+59A↑j
@@ -27202,7 +27202,7 @@ loc_E377C:                              ; CODE XREF: sub_E3150+626↑j
 
 loc_E377E:                              ; CODE XREF: sub_E3150+62A↑j
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3788:                              ; CODE XREF: sub_E3150+610↑j
@@ -27279,7 +27279,7 @@ loc_E383A:                              ; CODE XREF: sub_E3150+6C0↑j
                 bsr.w   sub_E2FF0
                 move.b  #1,($FF8CC8).l
                 pea     ($B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_E3876:                              ; CODE XREF: sub_E3150+20E↑j
@@ -27417,7 +27417,7 @@ loc_E39D0:                              ; CODE XREF: sub_E3150+842↑j
                 move.b  #$3C,9(a3) ; '<'
                 addq.b  #1,($FFEDAA).l
                 pea     ($22).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   d2
 
@@ -27426,7 +27426,7 @@ loc_E39FE:                              ; CODE XREF: sub_E3150+848↑j
                 tst.b   d2
                 beq.s   loc_E3A0E
                 pea     (off_18).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3A0E:                              ; CODE XREF: sub_E3150+8B0↑j
@@ -27491,7 +27491,7 @@ loc_E3A9A:                              ; CODE XREF: sub_E3150+93C↑j
                 pea     (a3,d0.l)
                 jsr     sub_E1ECA
                 pea     ($19).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
                 addq.b  #1,($FF0283).l
                 cmpi.b  #5,($FF0283).l
@@ -27500,7 +27500,7 @@ loc_E3A9A:                              ; CODE XREF: sub_E3150+93C↑j
                 clr.b   ($FF0283).l
                 move.b  #$3C,9(a3) ; '<'
                 pea     ($A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3B02:                              ; CODE XREF: sub_E3150+926↑j
@@ -27564,7 +27564,7 @@ loc_E3BAA:                              ; CODE XREF: sub_E3150+A40↑j
                 pea     ($1A).w
 
 loc_E3BAE:                              ; CODE XREF: sub_E3150+A58↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_E3BB8:                              ; CODE XREF: sub_E3150+9F8↑j
@@ -27604,7 +27604,7 @@ loc_E3BF4:                              ; CODE XREF: sub_E3150+A6C↑j
                 bne.s   loc_E3C22
                 move.b  #1,($FF8CC8).l
                 pea     ($B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3C22:                              ; CODE XREF: sub_E3150+ABC↑j
@@ -27654,7 +27654,7 @@ loc_E3C8E:                              ; CODE XREF: sub_E3150+B38↑j
 
 loc_E3C90:                              ; CODE XREF: sub_E3150+B3C↑j
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3C9A:                              ; CODE XREF: sub_E3150+B22↑j
@@ -27731,7 +27731,7 @@ loc_E3D4C:                              ; CODE XREF: sub_E3150+BD2↑j
                 bsr.w   sub_E2FF0
                 move.b  #1,($FF8CC8).l
                 pea     ($B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_E3D88:                              ; CODE XREF: sub_E3150+72E↑j
@@ -27847,7 +27847,7 @@ loc_E3E94:                              ; CODE XREF: sub_E3150+D34↑j
 loc_E3EA0:                              ; CODE XREF: sub_E3150+D42↑j
                 move.w  #$3C,($FF783C).l ; '<'
                 pea     ($19).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3EB4:                              ; CODE XREF: sub_E3150+D2E↑j
@@ -27882,7 +27882,7 @@ loc_E3F20:                              ; CODE XREF: sub_E3150+DB6↑j
                 pea     ($1A).w
 
 loc_E3F24:                              ; CODE XREF: sub_E3150+DCE↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_E3F2E:                              ; CODE XREF: sub_E3150+D6E↑j
@@ -27929,7 +27929,7 @@ loc_E3F7A:                              ; CODE XREF: sub_E3150+E1E↑j
                 bne.s   loc_E3FA8
                 move.b  #1,($FF8CA6).l
                 pea     ($B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E3FA8:                              ; CODE XREF: sub_E3150+E42↑j
@@ -28097,7 +28097,7 @@ loc_E4132:                              ; CODE XREF: sub_E3150+F88↑j
                 pea     (a3,d0.l)
                 jsr     sub_E1ECA
                 pea     ($19).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
                 addq.b  #1,($FF0284).l
                 cmpi.b  #5,($FF0284).l
@@ -28106,7 +28106,7 @@ loc_E4132:                              ; CODE XREF: sub_E3150+F88↑j
                 clr.b   ($FF0284).l
                 move.b  #$3C,9(a3) ; '<'
                 pea     ($A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E41B2:                              ; CODE XREF: sub_E3150+FEC↑j
@@ -28170,7 +28170,7 @@ loc_E425A:                              ; CODE XREF: sub_E3150+10F0↑j
                 pea     ($1A).w
 
 loc_E425E:                              ; CODE XREF: sub_E3150+1108↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_E4268:                              ; CODE XREF: sub_E3150+10A8↑j
@@ -28217,7 +28217,7 @@ loc_E42B4:                              ; CODE XREF: sub_E3150+1158↑j
                 bne.s   loc_E42E2
                 move.b  #1,($FF8CA6).l
                 pea     ($B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E42E2:                              ; CODE XREF: sub_E3150+117C↑j
@@ -28312,7 +28312,7 @@ loc_E43F6:                              ; CODE XREF: sub_E3150+1286↑j
                 bne.s   loc_E4448
                 move.b  #1,($FF8CC8).l
                 pea     (off_C).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.s   loc_E4446
 ; ---------------------------------------------------------------------------
 
@@ -28478,7 +28478,7 @@ loc_E459A:                              ; CODE XREF: sub_E3150+1444↑j
 
 loc_E459C:                              ; CODE XREF: sub_E3150+1448↑j
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E45A6:                              ; CODE XREF: sub_E3150+142E↑j
@@ -28605,7 +28605,7 @@ loc_E46D4:                              ; CODE XREF: sub_E3150+155E↑j
                 jsr     sub_DBF62
                 jsr     sub_DB880
                 pea     (off_14).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
                 move.b  #2,$C(a4)
                 clr.l   $1E(a4)
@@ -28672,7 +28672,7 @@ loc_E47A0:                              ; CODE XREF: sub_E3150+1648↑j
 
 loc_E47B4:                              ; CODE XREF: sub_E3150+1654↑j
                 pea     ($E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E47C0:                              ; CODE XREF: sub_E3150+165C↑j
@@ -28708,7 +28708,7 @@ loc_E47F6:                              ; CODE XREF: sub_E3150+169E↑j
 
 loc_E480A:                              ; CODE XREF: sub_E3150+16AA↑j
                 pea     ($E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E4816:                              ; CODE XREF: sub_E3150+16B2↑j
@@ -28799,7 +28799,7 @@ loc_E4856:                              ; CODE XREF: sub_E482A+1A↑j
                 tst.w   $10(a2)
                 bne.s   loc_E490C
                 pea     (5).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 move.w  $20(a2),d0
                 andi.w  #$4000,d0
@@ -29935,7 +29935,7 @@ loc_E5332:                              ; DATA XREF: sub_E5138+168↑o
 
 loc_E53CE:                              ; CODE XREF: sub_E5138+288↑j
                 pea     ($21).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 pea     (2).w
                 pea     ($11).w
                 move.l  (a2),-(sp)
@@ -29991,7 +29991,7 @@ loc_E5456:                              ; CODE XREF: sub_E5138+292↑j
 
 loc_E5478:                              ; CODE XREF: sub_E5138+A34↓j
                                         ; sub_E5138+B76↓j ...
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.w   loc_E52D8
 ; ---------------------------------------------------------------------------
 
@@ -30822,7 +30822,7 @@ loc_E5D22:                              ; DATA XREF: sub_E5138+184↑o
                 cmpi.b  #3,9(a2)
                 beq.s   loc_E5DD2
                 pea     ($1E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 move.l  #$FFF88000,$22(a5)
                 bra.s   loc_E5DE6
@@ -30830,7 +30830,7 @@ loc_E5D22:                              ; DATA XREF: sub_E5138+184↑o
 
 loc_E5DD2:                              ; CODE XREF: sub_E5138+C82↑j
                 pea     ($1F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 move.l  #$FFFE0000,$22(a5)
 
@@ -31006,7 +31006,7 @@ loc_E5FCC:                              ; CODE XREF: sub_E5138+E70↑j
                 pea     ($15).w
 
 loc_E5FD0:                              ; CODE XREF: sub_E5138+E92↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.l  #$C350,-(sp)
                 jsr     NewLife
                 pea     ($77).w
@@ -31957,7 +31957,7 @@ loc_E6806:                              ; DATA XREF: sub_E65DA+160↑o
 
 loc_E688E:                              ; CODE XREF: sub_E65DA+33A↓j
                                         ; sub_E65DA+5DC↓j ...
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.w   loc_E67EC
 ; ---------------------------------------------------------------------------
 
@@ -32221,7 +32221,7 @@ loc_E6BBA:                              ; CODE XREF: sub_E65DA+53C↑j
                 cmp.l   d0,d1
                 bcs.s   loc_E6C18
                 pea     ($17).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.s   loc_E6C18
 ; ---------------------------------------------------------------------------
@@ -32436,7 +32436,7 @@ loc_E6DAE:                              ; CODE XREF: sub_E65DA+7BE↑j
                 tst.w   $10(a2)
                 bne.s   loc_E6E24
                 pea     ($B).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E6E24:                              ; CODE XREF: sub_E65DA+83C↑j
@@ -32655,7 +32655,7 @@ loc_E7094:                              ; CODE XREF: sub_E65DA+AB2↑j
                 pea     (off_1C).w
 
 loc_E7098:                              ; CODE XREF: sub_E65DA+AB8↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
                 clr.l   -(sp)
                 movea.l (a2),a0
@@ -33133,7 +33133,7 @@ loc_E7490:                              ; CODE XREF: sub_E738C+FC↑j
 loc_E7494:                              ; CODE XREF: sub_E738C+102↑j
                 jsr     sub_DC324
                 pea     (off_34).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $14(sp),sp
                 tst.b   $A(a2)
                 bne.s   loc_E74C4
@@ -33664,7 +33664,7 @@ loc_E7A10:                              ; CODE XREF: sub_E75B6+450↑j
                 clr.b   ($FF4019).l
                 clr.b   ($FF4018).l
                 pea     ($F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E7A28:                              ; CODE XREF: sub_E75B6+458↑j
@@ -33688,7 +33688,7 @@ loc_E7A56:                              ; CODE XREF: sub_E75B6+49A↑j
 
 loc_E7A58:                              ; CODE XREF: sub_E75B6+49E↑j
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E7A62:                              ; CODE XREF: sub_E75B6+480↑j
@@ -33743,13 +33743,13 @@ loc_E7ACC:                              ; CODE XREF: sub_E75B6+538↓j
                 tst.b   ($FF7E70).l
                 beq.s   loc_E7B04
                 pea     (6).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.s   loc_E7B1A
 ; ---------------------------------------------------------------------------
 
 loc_E7B04:                              ; CODE XREF: sub_E75B6+540↑j
                 pea     (5).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 pea     ($FF7E68).l
                 bsr.w   sub_E7548
@@ -33833,7 +33833,7 @@ loc_E7BA0:                              ; CODE XREF: sub_E75B6+5E0↑j
                 pea     (off_4).w
 
 loc_E7BE6:                              ; CODE XREF: sub_E75B6+64A↓j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.s   loc_E7C52
 ; ---------------------------------------------------------------------------
@@ -33877,7 +33877,7 @@ loc_E7C16:                              ; CODE XREF: sub_E75B6+69A↓j
                 bne.s   loc_E7C46
                 move.b  #1,$B(a2)
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E7C46:                              ; CODE XREF: sub_E75B6+664↑j
@@ -34035,7 +34035,7 @@ loc_E7E04:                              ; CODE XREF: sub_E75B6+892↓j
                 pea     (off_8).w
 
 loc_E7E18:                              ; CODE XREF: sub_E75B6+8D6↓j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.w   loc_E7EB4
 ; ---------------------------------------------------------------------------
@@ -34187,7 +34187,7 @@ loc_E7FC6:                              ; CODE XREF: sub_E75B6+9E0↑j
                 tst.w   d3
                 beq.s   loc_E8004
                 pea     (off_10).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E8004:                              ; CODE XREF: sub_E75B6+A3C↑j
@@ -34239,7 +34239,7 @@ loc_E8050:                              ; CODE XREF: sub_E75B6+A16↑j
                 tst.w   d3
                 beq.s   loc_E808E
                 pea     (off_10).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E808E:                              ; CODE XREF: sub_E75B6+AC6↑j
@@ -34327,7 +34327,7 @@ loc_E8148:                              ; CODE XREF: sub_E75B6+446↑j
                 beq.s   loc_E816E
                 clr.b   ($FF402A).l
                 pea     ($F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E816E:                              ; CODE XREF: sub_E75B6+BA4↑j
@@ -34449,7 +34449,7 @@ loc_E82CA:                              ; CODE XREF: sub_E75B6+CDC↑j
                 clr.b   ($FF02A5).l
                 addq.w  #1,($FF5756).l
                 pea     (off_18).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E82F2:                              ; CODE XREF: sub_E75B6+CE2↑j
@@ -34512,7 +34512,7 @@ loc_E83A0:                              ; CODE XREF: sub_E75B6+DE0↑j
                 clr.b   ($FF404D).l
                 jsr     sub_DB880
                 pea     ($21).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E83BE:                              ; CODE XREF: sub_E75B6+DE8↑j
@@ -34544,13 +34544,13 @@ loc_E83E0:                              ; CODE XREF: sub_E75B6+E4C↓j
                 tst.b   ($FF7EF8).l
                 beq.s   loc_E8418
                 pea     (off_14).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.s   loc_E842E
 ; ---------------------------------------------------------------------------
 
 loc_E8418:                              ; CODE XREF: sub_E75B6+E54↑j
                 pea     ($13).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 pea     ($FF7EF0).l
                 bsr.w   sub_E7548
@@ -34602,7 +34602,7 @@ loc_E849C:                              ; CODE XREF: sub_E75B6+EB6↑j
                 cmpi.b  #4,8(a3)
                 bne.s   loc_E850A
                 pea     ($15).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$12,d0
                 move.l  d0,-(sp)
@@ -34655,7 +34655,7 @@ loc_E853C:                              ; CODE XREF: sub_E75B6+F52↑j
                 cmpi.b  #4,8(a3)
                 bne.s   loc_E85CA
                 pea     ($1F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$12,d0
                 move.l  d0,-(sp)
@@ -34856,7 +34856,7 @@ loc_E87B0:                              ; CODE XREF: sub_E75B6+11D2↑j
                 tst.b   8(a4)
                 bne.s   loc_E881E
                 pea     ($1A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 moveq   #1,d0
                 move.b  d0,$A(a4)
                 move.b  d0,8(a4)
@@ -34898,7 +34898,7 @@ loc_E8826:                              ; CODE XREF: sub_E75B6+B9A↑j
                 beq.s   loc_E884C
                 clr.b   ($FF402D).l
                 pea     ($F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E884C:                              ; CODE XREF: sub_E75B6+1282↑j
@@ -35020,7 +35020,7 @@ loc_E89A8:                              ; CODE XREF: sub_E75B6+13BA↑j
                 clr.b   ($FF02A6).l
                 addq.w  #1,($FF5756).l
                 pea     (off_18).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E89D0:                              ; CODE XREF: sub_E75B6+13C0↑j
@@ -35083,7 +35083,7 @@ loc_E8A7E:                              ; CODE XREF: sub_E75B6+14BE↑j
                 clr.b   ($FF4032).l
                 jsr     sub_DB880
                 pea     ($21).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E8A9C:                              ; CODE XREF: sub_E75B6+14C6↑j
@@ -35115,13 +35115,13 @@ loc_E8ABE:                              ; CODE XREF: sub_E75B6+152A↓j
                 tst.b   ($FF7F3C).l
                 beq.s   loc_E8AF6
                 pea     (off_14).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.s   loc_E8B0C
 ; ---------------------------------------------------------------------------
 
 loc_E8AF6:                              ; CODE XREF: sub_E75B6+1532↑j
                 pea     ($13).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 pea     ($FF7F34).l
                 bsr.w   sub_E7548
@@ -35173,7 +35173,7 @@ loc_E8B7A:                              ; CODE XREF: sub_E75B6+1594↑j
                 cmpi.b  #4,8(a3)
                 bne.s   loc_E8BE8
                 pea     ($15).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$12,d0
                 move.l  d0,-(sp)
@@ -35226,7 +35226,7 @@ loc_E8C1A:                              ; CODE XREF: sub_E75B6+1630↑j
                 cmpi.b  #4,8(a3)
                 bne.s   loc_E8CA8
                 pea     ($1F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$12,d0
                 move.l  d0,-(sp)
@@ -35564,7 +35564,7 @@ loc_E90A6:                              ; CODE XREF: sub_E75B6+1C6E↓j
                 cmpi.b  #4,8(a3)
                 bne.s   loc_E9104
                 pea     ($15).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$12,d0
                 move.l  d0,-(sp)
@@ -35763,7 +35763,7 @@ loc_E9354:                              ; CODE XREF: sub_E75B6+1D96↑j
                 pea     ($F).w
 
 loc_E9358:                              ; CODE XREF: sub_E75B6+1D9C↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E9360:                              ; CODE XREF: sub_E75B6+1D82↑j
@@ -35827,13 +35827,13 @@ loc_E93FA:                              ; CODE XREF: sub_E75B6+1E66↓j
                 tst.b   ($FF7E70).l
                 beq.s   loc_E9432
                 pea     (6).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.s   loc_E9448
 ; ---------------------------------------------------------------------------
 
 loc_E9432:                              ; CODE XREF: sub_E75B6+1E6E↑j
                 pea     (5).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 pea     ($FF7E68).l
                 bsr.w   sub_E7548
@@ -35937,12 +35937,12 @@ loc_E94F6:                              ; CODE XREF: sub_E75B6+1F98↓j
                 blt.s   loc_E94F6
                 move.w  #$78,($FFF1EA).l ; 'x'
                 pea     ($23).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 tst.b   ($FF84AE).l
                 bne.s   loc_E95C0
                 pea     ($25).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.s   loc_E95C0
 ; ---------------------------------------------------------------------------
@@ -35967,7 +35967,7 @@ loc_E958E:                              ; CODE XREF: sub_E75B6+2008↓j
                 move.b  #1,$A(a2)
                 move.w  #$A,($FFF1EA).l
                 pea     ($22).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E95B4:                              ; CODE XREF: sub_E75B6+1FDC↑j
@@ -36046,7 +36046,7 @@ loc_E964E:                              ; CODE XREF: sub_E75B6+208C↑j
                 jsr     sub_E1ABE
                 clr.b   8(a3)
                 pea     (off_40).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $24(sp),sp
                 bra.s   loc_E96EA
 ; ---------------------------------------------------------------------------
@@ -36095,7 +36095,7 @@ loc_E96EA:                              ; CODE XREF: sub_E75B6+20F8↑j
                 jsr     sub_DC0D8
                 clr.b   8(a3)
                 pea     ($3F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $24(sp),sp
 
 loc_E9766:                              ; CODE XREF: sub_E75B6+214C↑j
@@ -36124,7 +36124,7 @@ loc_E97AE:                              ; CODE XREF: sub_E75B6+21C8↑j
                 cmpi.b  #4,8(a3)
                 bne.s   loc_E981C
                 pea     ($15).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$12,d0
                 move.l  d0,-(sp)
@@ -36203,7 +36203,7 @@ loc_E98A2:                              ; CODE XREF: sub_E75B6+22E2↑j
 
 loc_E98B2:                              ; CODE XREF: sub_E75B6+126C↑j
                                         ; sub_E75B6+1D64↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_E98BA:                              ; CODE XREF: sub_E75B6+5C↑j
@@ -36237,7 +36237,7 @@ arg_0           =  4
 
 loc_E98F4:                              ; CODE XREF: sub_E98C0+A↑j
                 pea     (off_20).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 movea.l (sp)+,a2
                 rts
@@ -36608,7 +36608,7 @@ sub_E9C9E:                              ; CODE XREF: sub_E75B6:loc_E816E↑p
                 tst.b   ($FF8536).l
                 bne.s   loc_E9CE2
                 pea     ($1E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 tst.b   (a2)
                 bne.s   loc_E9CE4
@@ -37510,7 +37510,7 @@ loc_EA5E4:                              ; CODE XREF: sub_EA2BA+7F0↓j
 
 loc_EA5E6:                              ; CODE XREF: sub_EA2BA+694↓j
                                         ; sub_EA2BA+944↓j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
 
 loc_EA5EC:                              ; CODE XREF: sub_EA2BA+952↓j
                 addq.l  #4,sp
@@ -37780,7 +37780,7 @@ loc_EA8C4:                              ; CODE XREF: sub_EA2BA+602↑j
                 pea     ($63).w
 
 loc_EA944:                              ; CODE XREF: sub_EA2BA+77A↓j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.l   -(sp)
                 bra.w   loc_EA5E6
@@ -37925,9 +37925,9 @@ loc_EAACC:                              ; CODE XREF: sub_EA2BA+802↑j
                 move.l  (a2),-(sp)
                 jsr     sub_E1ABE
                 pea     (off_30).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $14(sp),sp
 
 loc_EAB28:                              ; CODE XREF: sub_EA2BA+91E↓j
@@ -37958,9 +37958,9 @@ loc_EAB68:                              ; CODE XREF: sub_EA2BA+8A6↑j
                 pea     ($16).w
 
 loc_EAB6C:                              ; CODE XREF: sub_EA2BA+8AC↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 tst.l   4(a2)
                 beq.s   loc_EAB8E
                 movea.l 4(a2),a0
@@ -38022,9 +38022,9 @@ loc_EAC22:                              ; DATA XREF: sub_EA2BA+24C↑o
                 clr.b   $A(a2)
                 move.w  #1,$C(a2)
                 pea     (off_34).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 pea     (1).w
                 pea     ($23).w
@@ -38037,9 +38037,9 @@ loc_EAC54:                              ; DATA XREF: sub_EA2BA+250↑o
                 clr.b   $A(a2)
                 move.w  #1,$C(a2)
                 pea     (off_34).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 pea     (1).w
                 pea     (off_24).w
@@ -39000,7 +39000,7 @@ loc_EB656:                              ; CODE XREF: sub_EB504+11E↑j
                 pea     ($63).w
 
 loc_EB662:                              ; CODE XREF: sub_EB504+150↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.w   loc_EB5EA
 ; ---------------------------------------------------------------------------
@@ -39181,7 +39181,7 @@ loc_EB80E:                              ; CODE XREF: sub_EB764+84↑j
                 move.w  #$100B,$C(a3)
                 move.w  #$1E,($FFF1FA).l
                 pea     ($56).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_EB85A:                              ; CODE XREF: sub_EB764+B2↑j
@@ -39477,7 +39477,7 @@ loc_EBB26:                              ; CODE XREF: sub_EB764+310↑j
                 tst.w   ($FFABC4).l
                 bne.s   loc_EBB6E
                 pea     ($5D).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.s   loc_EBB7E
 ; ---------------------------------------------------------------------------
 
@@ -39896,7 +39896,7 @@ loc_EBFAA:                              ; DATA XREF: sub_EB764+7EE↑o
                 subi.l  #$1E0000,d0
                 move.l  d0,$12(a3)
                 pea     (off_1C).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
 
 loc_EBFDE:                              ; CODE XREF: sub_EB764+992↓j
                 addq.l  #4,sp
@@ -40595,9 +40595,9 @@ loc_EC6D0:                              ; DATA XREF: sub_EB764+F66↑o
                 pea     ($3B).w
 
 loc_EC722:                              ; CODE XREF: sub_EB764+1024↓j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 bra.w   loc_EC544
 ; ---------------------------------------------------------------------------
@@ -40684,9 +40684,9 @@ loc_EC80C:                              ; CODE XREF: sub_EB764+1074↑j
 
 loc_EC83C:                              ; CODE XREF: sub_EB764+10A6↑j
                 pea     ($3A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 pea     (off_4).w
                 pea     ($39).w
                 jsr     sub_DB7CC
@@ -40746,9 +40746,9 @@ off_EC8E0:      dc.w loc_EC8EC-*        ; DATA XREF: sub_EB764+1174↑r
 
 loc_EC8EC:                              ; DATA XREF: sub_EB764:off_EC8E0↑o
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 movea.l #$FF8E7A,a4
 
@@ -40774,9 +40774,9 @@ loc_EC908:                              ; CODE XREF: sub_EB764+13FE↓j
 
 loc_EC93E:                              ; DATA XREF: sub_EB764+117E↑o
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 movea.l #$FF8E9C,a4
                 bra.s   loc_EC906
@@ -40784,9 +40784,9 @@ loc_EC93E:                              ; DATA XREF: sub_EB764+117E↑o
 
 loc_EC95A:                              ; DATA XREF: sub_EB764+1180↑o
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 movea.l #$FF8EBE,a4
                 bra.s   loc_EC906
@@ -40794,9 +40794,9 @@ loc_EC95A:                              ; DATA XREF: sub_EB764+1180↑o
 
 loc_EC976:                              ; DATA XREF: sub_EB764+1182↑o
                 pea     (2).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 movea.l #$FF8EE0,a4
                 addq.w  #1,(a5)
                 movea.l (a4),a0
@@ -40866,9 +40866,9 @@ loc_ECA6A:                              ; DATA XREF: sub_EB764+1184↑o
                 pea     (off_C0DC0).l
                 jsr     sub_D5F16
                 pea     (3).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $1C(sp),sp
                 addq.w  #1,(a5)
                 bra.s   loc_ECAD4
@@ -40888,9 +40888,9 @@ loc_ECAA0:                              ; DATA XREF: sub_EB764+1186↑o
 
 loc_ECAC0:                              ; CODE XREF: sub_EB764+14A4↓j
                 pea     (3).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_ECAD4:                              ; CODE XREF: sub_EB764+116E↑j
@@ -40936,9 +40936,9 @@ off_ECB38:      dc.w loc_ECB42-*        ; DATA XREF: sub_EB764+13CC↑r
 
 loc_ECB42:                              ; DATA XREF: sub_EB764:off_ECB38↑o
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 movea.l #$FF8F24,a4
 
@@ -40949,9 +40949,9 @@ loc_ECB5C:                              ; CODE XREF: sub_EB764+141C↓j
 
 loc_ECB66:                              ; DATA XREF: sub_EB764+13D6↑o
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 movea.l #$FF8F46,a4
                 bra.s   loc_ECB5C
@@ -40959,9 +40959,9 @@ loc_ECB66:                              ; DATA XREF: sub_EB764+13D6↑o
 
 loc_ECB82:                              ; DATA XREF: sub_EB764+13D8↑o
                 pea     (2).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 movea.l #$FF8F68,a4
                 addq.w  #1,($FFABB6).l
                 movea.l (a4),a0
@@ -41399,7 +41399,7 @@ arg_C           =  $10
                 move.l  $18+arg_8(sp),d3
                 movea.l $18+arg_0(sp),a2
                 movea.l $18+arg_C(sp),a4
-                movea.l #sub_DFAE0,a5
+                movea.l #TriggerOSDMessage,a5
                 tst.b   $A(a2)
                 bne.s   loc_ED092
                 move.b  8(a2),d0
@@ -41551,7 +41551,7 @@ arg_8           =  $C
                 addq.w  #1,(a0,d0.l)
                 move.w  d3,d0
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_ED20C:                              ; CODE XREF: sub_ED1B6+1C↑j
@@ -41685,7 +41685,7 @@ loc_ED31A:                              ; CODE XREF: sub_ED2C2+26↑j
                 move.w  #1,(a4,a0.l)
                 move.w  d3,d0
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_ED352:                              ; CODE XREF: sub_ED2C2+64↑j
@@ -41781,7 +41781,7 @@ loc_ED424:                              ; CODE XREF: sub_ED358+B4↑j
                 pea     ($55).w
 
 loc_ED428:                              ; CODE XREF: sub_ED358+CA↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_ED430:                              ; CODE XREF: sub_ED358+A4↑j
@@ -41810,7 +41810,7 @@ loc_ED438:                              ; CODE XREF: sub_ED358+9E↑j
                 beq.s   loc_ED478
                 move.b  #$F,9(a2)
                 pea     (9).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_ED478:                              ; CODE XREF: sub_ED358+FC↑j
@@ -41846,7 +41846,7 @@ arg_4           =  8
                 bne.s   loc_ED4C0
                 jsr     sub_DB880
                 pea     ($E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_ED4C0:                              ; CODE XREF: sub_ED47E+1A↑j
@@ -41878,7 +41878,7 @@ arg_4           =  8
                 move.w  #$18,($FF783C).l
                 move.w  d3,d0
                 move.l  d0,-(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_ED500:                              ; CODE XREF: sub_ED4C6+1C↑j
@@ -41901,7 +41901,7 @@ arg_8           =  $C
                 move.l  $18+arg_8(sp),d2
                 move.l  $18+arg_4(sp),d3
                 movea.l $18+arg_0(sp),a2
-                movea.l #sub_DFAE0,a4
+                movea.l #TriggerOSDMessage,a4
                 movea.l #sub_E1F48,a5
                 movea.l #$FF3FFC,a0
                 lea     (a0,d3.w),a0
@@ -42010,7 +42010,7 @@ sub_ED5D8:                              ; CODE XREF: sub_D4414+9E↑p
                 pea     (off_4).w
                 jsr     sub_D562C
                 pea     ($2F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 move.w  #1,(a2)
 
@@ -42250,9 +42250,9 @@ loc_ED93E:                              ; CODE XREF: sub_ED5D8+358↑j
                 move.l  a2,-(sp)
                 jsr     sub_E1F5C
                 pea     ($43).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $24(sp),sp
                 move.w  #$3C,($FFF1EA).l ; '<'
 
@@ -42275,9 +42275,9 @@ loc_ED9E6:                              ; CODE XREF: sub_ED5D8+402↑j
                 cmpi.w  #$1F4,6(a4)
                 bne.s   loc_EDA02
                 pea     ($37).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_EDA02:                              ; CODE XREF: sub_ED5D8+3EA↑j
@@ -42325,9 +42325,9 @@ loc_EDA58:                              ; DATA XREF: sub_ED5D8+456↑o
                 jsr     sub_EAF4E
                 jsr     sub_EB01C
                 pea     ($32).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 clr.w   6(a4)
                 bra.s   loc_EDA90
@@ -42351,9 +42351,9 @@ loc_EDA90:                              ; CODE XREF: sub_ED5D8+430↑j
                 move.w  #$A,($FF783C).l
                 jsr     sub_EACA6
                 pea     ($42).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 move.w  #$A,($FFF1EA).l
 
@@ -42365,9 +42365,9 @@ loc_EDAD2:                              ; CODE XREF: sub_ED5D8+4C0↑j
                 move.w  #$A,($FF783C).l
                 jsr     sub_EACC2
                 pea     ($42).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 clr.l   -(sp)
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
                 move.w  #$A,($FFF1EA).l
 
@@ -42761,7 +42761,7 @@ loc_EDED0:                              ; DATA XREF: sub_EDDF2+DC↑o
                 jsr     sub_DB7CC
                 move.w  #$A,($FFF1EA).l
                 pea     ($31).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
                 addq.w  #1,$C(a2)
                 cmpi.w  #$32,$C(a2) ; '2'
@@ -42779,7 +42779,7 @@ loc_EDF52:                              ; CODE XREF: sub_EDDF2+144↑j
                 bne.w   loc_EF448
                 clr.b   $A(a2)
                 pea     ($32).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 jsr     sub_D69B6
                 andi.w  #1,d0
                 beq.s   loc_EDF82
@@ -43656,7 +43656,7 @@ loc_EE8C6:                              ; CODE XREF: sub_EDDF2+ACE↑j
                 pea     ($25).w
 
 loc_EE8CA:                              ; CODE XREF: sub_EDDF2+AAE↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 tst.b   $A(a2)
                 bne.s   loc_EE8E0
@@ -44026,7 +44026,7 @@ loc_EEC52:                              ; CODE XREF: sub_EDDF2+E5C↑j
                 cmpi.b  #$D,($FFF208).l
                 bne.s   loc_EECC6
                 pea     ($1E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_EECC6:                              ; CODE XREF: sub_EDDF2+EC6↑j
@@ -44051,7 +44051,7 @@ loc_EECC6:                              ; CODE XREF: sub_EDDF2+EC6↑j
                 cmpa.l  #$FF7C8C,a2
                 beq.w   loc_EEDB8
                 pea     (off_1C).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 jsr     sub_D69B6
                 andi.w  #3,d0
                 move.w  d0,d2
@@ -44118,7 +44118,7 @@ loc_EEDDC:                              ; DATA XREF: ROM:0002BD4C↑o
                 pea     ($1F).w
 
 loc_EEDE0:                              ; CODE XREF: sub_EDDF2+FE2↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_EEDE8:                              ; CODE XREF: sub_EDDF2+E50↑j
@@ -45078,7 +45078,7 @@ loc_EF7E4:                              ; CODE XREF: sub_EF590+284↓j
                 move.w  d0,($FF783E).l
                 move.w  #$18,($FF783C).l
                 pea     ($2A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.s   loc_EF816
 ; ---------------------------------------------------------------------------
@@ -45102,7 +45102,7 @@ loc_EF816:                              ; CODE XREF: sub_EF590+27A↑j
                 nop
                 clr.b   8(a4)
                 pea     ($E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_EF850:                              ; CODE XREF: sub_EF590+29A↑j
@@ -45113,7 +45113,7 @@ loc_EF850:                              ; CODE XREF: sub_EF590+29A↑j
                 nop
                 clr.b   ($FF4047).l
                 pea     (off_14).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_EF876:                              ; CODE XREF: sub_EF590+2C6↑j
@@ -45122,7 +45122,7 @@ loc_EF876:                              ; CODE XREF: sub_EF590+2C6↑j
                 clr.b   ($FF4048).l
                 jsr     sub_DB880
                 pea     ($13).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_EF896:                              ; CODE XREF: sub_EF590+2EC↑j
@@ -45146,7 +45146,7 @@ loc_EF8C0:                              ; CODE XREF: sub_EF590+326↑j
                 clr.b   ($FF404A).l
                 move.w  #$18,($FF783C).l
                 pea     ($1A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_EF8E0:                              ; CODE XREF: sub_EF590+314↑j
@@ -45194,7 +45194,7 @@ loc_EF93E:                              ; CODE XREF: sub_EF590+3A6↑j
                 pea     (9).w
 
 loc_EF95C:                              ; CODE XREF: sub_EF590+3AC↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   9(a4)
                 bra.s   loc_EF988
@@ -45318,7 +45318,7 @@ loc_EFA94:                              ; CODE XREF: sub_EF590+4C8↑j
                 pea     (2).w
 
 loc_EFACC:                              ; CODE XREF: sub_EF590+502↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.w   $C(a4)
                 move.b  #2,8(a4)
@@ -45456,7 +45456,7 @@ loc_EFC40:                              ; CODE XREF: sub_EF590+28C↑j
                 clr.l   $22(a5)
                 clr.b   8(a4)
                 pea     ($E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$10,d0
                 move.l  d0,-(sp)
@@ -45487,7 +45487,7 @@ loc_EFCC0:                              ; CODE XREF: sub_EF590+6CC↑j
                 nop
                 clr.b   8(a4)
                 pea     ($E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_EFCF0:                              ; CODE XREF: sub_EF590+73A↑j
@@ -45498,7 +45498,7 @@ loc_EFCF0:                              ; CODE XREF: sub_EF590+73A↑j
                 nop
                 clr.b   ($FF404E).l
                 pea     (off_14).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_EFD16:                              ; CODE XREF: sub_EF590+766↑j
@@ -45507,7 +45507,7 @@ loc_EFD16:                              ; CODE XREF: sub_EF590+766↑j
                 clr.b   ($FF404D).l
                 jsr     sub_DB880
                 pea     ($13).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_EFD36:                              ; CODE XREF: sub_EF590+78C↑j
@@ -45531,7 +45531,7 @@ loc_EFD60:                              ; CODE XREF: sub_EF590+7C6↑j
                 clr.b   ($FF404C).l
                 move.w  #$18,($FF783C).l
                 pea     ($1A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_EFD80:                              ; CODE XREF: sub_EF590+7B4↑j
@@ -45589,7 +45589,7 @@ loc_EFDE6:                              ; CODE XREF: sub_EF590+84E↑j
                 pea     (off_C).w
 
 loc_EFE04:                              ; CODE XREF: sub_EF590+854↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   9(a4)
                 bra.s   loc_EFE30
@@ -45627,7 +45627,7 @@ loc_EFE30:                              ; CODE XREF: sub_EF590+880↑j
                 beq.s   loc_EFEBA
                 clr.b   8(a4)
                 pea     ($E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$10,d0
                 move.l  d0,-(sp)
@@ -45654,7 +45654,7 @@ loc_EFEBA:                              ; CODE XREF: sub_EF590+8CA↑j
                 movea.l 4(a4),a0
                 move.b  #1,$30(a0)
                 pea     ($F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 bra.s   loc_EFF3C
 ; ---------------------------------------------------------------------------
@@ -45734,7 +45734,7 @@ loc_EFF80:                              ; CODE XREF: sub_EF590+9DC↑j
                 move.l  (a2),-(sp)
                 jsr     sub_E1ABE
                 pea     (1).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $1C(sp),sp
                 clr.w   $C(a4)
                 move.b  #2,8(a4)
@@ -45828,7 +45828,7 @@ loc_F00CE:                              ; CODE XREF: sub_EF590+6B8↑j
                 beq.s   loc_F00F4
                 clr.b   ($FF405C).l
                 pea     ($29).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F00F4:                              ; CODE XREF: sub_EF590+B50↑j
@@ -45841,7 +45841,7 @@ loc_F00FC:                              ; DATA XREF: ROM:00035F64↑o
                 pea     (off_28).w
 
 loc_F0106:                              ; DATA XREF: ROM:00062380↑o
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F010E:                              ; CODE XREF: sub_EF590+B6A↑j
@@ -45871,7 +45871,7 @@ loc_F0134:                              ; CODE XREF: sub_EF590+BDC↓j
                 jsr     sub_E1ECA
                 move.b  #1,8(a2)
                 pea     ($16).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_F0160:                              ; CODE XREF: sub_EF590+BA6↑j
@@ -45921,7 +45921,7 @@ loc_F01AA:                              ; CODE XREF: sub_EF590+BE2↑j
                 move.b  #$3C,9(a4) ; '<'
                 addq.w  #1,($FF5756).l
                 pea     ($17).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F01D4:                              ; CODE XREF: sub_EF590+BE8↑j
@@ -45942,7 +45942,7 @@ loc_F01D4:                              ; CODE XREF: sub_EF590+BE8↑j
 loc_F0206:                              ; CODE XREF: sub_EF590+C68↑j
                 clr.b   8(a4)
                 pea     (off_10).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 move.w  $14(a2),d0
                 addi.w  #-$10,d0
                 move.l  d0,-(sp)
@@ -45966,7 +45966,7 @@ loc_F024E:                              ; CODE XREF: sub_EF590+C6E↑j
                 movea.l 4(a4),a0
                 move.b  #1,$30(a0)
                 pea     ($F).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F0270:                              ; CODE XREF: sub_EF590+C62↑j
@@ -45998,7 +45998,7 @@ loc_F02AA:                              ; CODE XREF: sub_EF590+CF0↑j
                 jsr     sub_F0AF6(pc)
                 nop
                 pea     (off_18).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_F02CE:                              ; CODE XREF: sub_EF590+D20↑j
@@ -46021,7 +46021,7 @@ loc_F02CE:                              ; CODE XREF: sub_EF590+D20↑j
                 pea     ($19).w
 
 loc_F030C:                              ; DATA XREF: ROM:0004CF24↑o
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_F0314:                              ; CODE XREF: sub_EF590+D5E↑j
@@ -46114,7 +46114,7 @@ loc_F0404:                              ; CODE XREF: sub_EF590+E6A↑j
                 clr.b   ($FF4060).l
                 clr.b   ($FF4061).l
                 pea     (off_2C).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F041C:                              ; CODE XREF: sub_EF590+E72↑j
@@ -46133,7 +46133,7 @@ loc_F0448:                              ; CODE XREF: sub_EF590+EB0↑j
                 pea     ($29).w
 
 loc_F044C:                              ; CODE XREF: sub_EF590+EB6↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F0454:                              ; CODE XREF: sub_EF590+E92↑j
@@ -46162,7 +46162,7 @@ loc_F047A:                              ; CODE XREF: sub_EF590+F22↓j
                 jsr     sub_E1ECA
                 move.b  #1,8(a2)
                 pea     ($16).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 lea     $C(sp),sp
 
 loc_F04A6:                              ; CODE XREF: sub_EF590+EEC↑j
@@ -46213,7 +46213,7 @@ loc_F04F0:                              ; CODE XREF: sub_EF590+F28↑j
                 move.b  #$3C,9(a4) ; '<'
                 addq.w  #1,($FF5756).l
                 pea     ($17).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F051A:                              ; CODE XREF: sub_EF590:loc_F04BE↑j
@@ -46227,7 +46227,7 @@ loc_F051A:                              ; CODE XREF: sub_EF590:loc_F04BE↑j
                 jsr     sub_F0AF6(pc)
                 nop
                 pea     (off_18).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_F054A:                              ; CODE XREF: sub_EF590+F9C↑j
@@ -46245,7 +46245,7 @@ loc_F054A:                              ; CODE XREF: sub_EF590+F9C↑j
                 nop
                 clr.b   8(a4)
                 pea     ($19).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #8,sp
 
 loc_F0588:                              ; CODE XREF: sub_EF590+FD2↑j
@@ -46321,7 +46321,7 @@ loc_F0648:                              ; CODE XREF: sub_EF590+1090↑j
                 pea     ($22).w
 
 loc_F0668:                              ; CODE XREF: sub_EF590+10B6↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.w   $C(a4)
                 move.b  #2,8(a4)
@@ -46409,7 +46409,7 @@ loc_F0754:                              ; CODE XREF: sub_EF590+119C↑j
                 pea     ($22).w
 
 loc_F0774:                              ; CODE XREF: sub_EF590+11C2↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.w   $C(a4)
                 move.b  #2,8(a4)
@@ -46479,7 +46479,7 @@ loc_F0822:                              ; CODE XREF: sub_EF590+12B4↓j
                 blt.s   loc_F0822
                 move.b  #1,8(a2)
                 pea     ($23).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   9(a4)
                 bra.s   loc_F087C
@@ -46521,7 +46521,7 @@ loc_F08A6:                              ; CODE XREF: sub_EF590+130C↑j
                 clr.b   ($FF406A).l
                 move.w  #$18,($FF783C).l
                 pea     ($1A).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 bra.s   loc_F08D8
 ; ---------------------------------------------------------------------------
 
@@ -46755,7 +46755,7 @@ loc_F0ADA:                              ; CODE XREF: sub_F0A10+C0↑j
                 pea     ($E).w
 
 loc_F0AE8:                              ; CODE XREF: sub_F0A10+8E↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F0AF0:                              ; CODE XREF: sub_F0A10+38↑j
@@ -46934,7 +46934,7 @@ loc_F0CA0:                              ; CODE XREF: sub_F0BD2+A6↑j
                 cmpi.b  #3,(a4)
                 beq.s   loc_F0CB4
                 pea     ($12).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F0CB4:                              ; CODE XREF: sub_F0BD2+20↑j
@@ -46973,7 +46973,7 @@ loc_F0CF0:                              ; CODE XREF: sub_F0BD2+E6↑j
                 clr.b   (a4)
                 addq.b  #1,($FF10A4).l
                 pea     ($11).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F0D10:                              ; CODE XREF: sub_F0BD2+EC↑j
@@ -48006,7 +48006,7 @@ loc_F1684:                              ; CODE XREF: sub_F145E+21E↑j
 
 loc_F1738:                              ; CODE XREF: sub_F145E+680↓j
                                         ; sub_F145E+744↓j ...
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
 
 loc_F173E:                              ; CODE XREF: sub_F145E+2F6↓j
                                         ; sub_F145E+85C↓j
@@ -48381,7 +48381,7 @@ loc_F1B78:                              ; CODE XREF: sub_F145E+6DA↑j
 
 loc_F1B7C:                              ; CODE XREF: sub_F145E+6D2↑j
                                         ; sub_F145E+718↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   ($FF5752).l
                 bra.w   loc_F1C74
@@ -48461,7 +48461,7 @@ loc_F1C62:                              ; CODE XREF: sub_F145E+7C4↑j
 
 loc_F1C66:                              ; CODE XREF: sub_F145E+7BC↑j
                                         ; sub_F145E+802↑j
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   ($FF5751).l
 
@@ -48873,7 +48873,7 @@ loc_F20F0:                              ; CODE XREF: sub_F145E+C84↑j
                 cmpi.b  #$A,9(a3)
                 bge.w   loc_F2178
                 pea     ($2D).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 tst.w   d2
                 beq.s   loc_F2134
@@ -48964,7 +48964,7 @@ loc_F21E2:                              ; CODE XREF: sub_F145E+D72↑j
 
 loc_F21EA:                              ; CODE XREF: sub_F145E+D7A↑j
                 pea     ($2E).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 move.b  #1,($FF817F).l
                 bra.w   loc_F165E
@@ -49078,7 +49078,7 @@ loc_F2326:                              ; CODE XREF: sub_F145E+EB6↑j
                 cmpi.b  #3,($FFEDAB).l
                 bne.s   loc_F2376
                 pea     (off_30).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
                 clr.b   ($FFEDAB).l
                 bra.w   loc_F165E
@@ -49152,7 +49152,7 @@ loc_F2404:                              ; CODE XREF: sub_F145E+F90↑j
 
 loc_F2462:                              ; CODE XREF: sub_F145E+FF4↑j
                 pea     ($15).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
                 addq.l  #4,sp
 
 loc_F246E:                              ; CODE XREF: sub_F145E+FEE↑j
@@ -49208,7 +49208,7 @@ loc_F2506:                              ; CODE XREF: sub_F145E+105C↑j
 
 loc_F2512:                              ; CODE XREF: sub_F145E+1032↑j
                 pea     ($15).w
-                jsr     sub_DFAE0
+                jsr     TriggerOSDMessage
 
 loc_F251C:                              ; CODE XREF: sub_F145E+10B2↑j
                 addq.l  #4,sp
@@ -52450,7 +52450,7 @@ loc_F4230:                              ; CODE XREF: sub_F41FE+2A↑j
                 move.b  1(a1),$C(a2)
                 move.w  6(a1),$E(a2)
 
-loc_F4240:                              ; DATA XREF: sub_DFAE0+DE↑o
+loc_F4240:                              ; DATA XREF: TriggerOSDMessage+DE↑o
                 move.w  $1C(a6),d0
                 andi.w  #$F8F8,d0
                 eor.b   d0,$E(a2)

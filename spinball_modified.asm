@@ -1461,7 +1461,8 @@ loc_D41D4:                              ; CODE XREF: sub_D3FAC+22E↓j
                 nop
                 addq.l  #8,sp
                 jsr     WaitForFF0000
-                clr.w   ($FF0000).l
+                clr.w   ($FF0000).l ;jmp bosshack
+bosshackreturn:
                 clr.w   ($FFF1FA).l
                 clr.w   ($FFF20A).l
                 movem.l (sp)+,d2/a2-a4
@@ -24243,10 +24244,10 @@ ls_messageBuffer= -$3C
                 pea     (off_28).w
                 pea     (5).w
                 pea     (2).w
-                pea     (7).w
-                jsr     (a3)
-                move.w  ($FF5736).l,d0
-                move.w  d0,d1
+                jmp     DoCustomIntro;pea     (7).w ;
+				dcb.b   2,$FF ;jsr     (a3) ;
+				dcb.b   4,$FF; move.w  ($FF5736).l,d0 ;
+CustIntroRtn:   move.w  d0,d1
                 lsl.w   #2,d1
                 add.w   d1,d0
                 lsl.w   #4,d0
@@ -68777,7 +68778,7 @@ loc_FEF0E:                              ; CODE XREF: sub_FED7E+180↑j
                 addq.l  #1,a2
                 addq.w  #1,d2
                 cmpi.w  #6,d2
-                blt.s   loc_FEEA4
+                blt.w   loc_FEEA4
                 clr.l   -(sp)
                 jsr     sub_FF834(pc)
                 nop

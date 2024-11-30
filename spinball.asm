@@ -15514,7 +15514,7 @@ loc_DC8D6:                              ; CODE XREF: sub_DC3DE+414↑j
 loc_DC8EA:                              ; CODE XREF: sub_DC3DE+4FE↑j
                                         ; sub_DC3DE+504↑j
                 pea     (unk_71C).w
-                dc.l $4878F8E4 ;FIXME ;pea     ($FFF8E4).w
+                pea     ($FFFFF8E4).w
                 jsr     sub_D69E4
                 addq.l  #8,sp
                 add.w   d0,$2E(a3)
@@ -17765,7 +17765,7 @@ loc_DDE0C:                              ; CODE XREF: sub_DDCC4+120↑j
                 cmp.l   d0,d1
                 bcc.s   loc_DDE62
                 pea     (off_64).w
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 pea     (off_A0).w
                 bsr.w   sub_DC0D8
                 lea     $C(sp),sp
@@ -44328,7 +44328,7 @@ loc_EF018:                              ; DATA XREF: sub_EDDF2:off_EF010↑o
                 subi.l  #$5C,d1 ; '\'
                 cmp.l   d1,d0
                 ble.w   loc_EF448
-                dc.l $4878FFFE ;FIXME ;pea     ($FFFFFE).w
+                pea     ($FFFFFFFE).w
                 move.l  a2,-(sp)
                 jsr     sub_EF45E(pc)
                 nop
@@ -44360,7 +44360,7 @@ loc_EF078:                              ; CODE XREF: sub_EDDF2+12BC↓j
 ; ---------------------------------------------------------------------------
 
 loc_EF082:                              ; CODE XREF: sub_EDDF2+1258↑j
-                dc.l $4878FFFE ;FIXME ;pea     ($FFFFFE).w
+                pea     ($FFFFFFFE).w
                 move.l  a2,-(sp)
                 jsr     sub_EF45E(pc)
                 nop
@@ -44398,7 +44398,7 @@ loc_EF0DA:                              ; CODE XREF: sub_EDDF2+1520↓j
 ; ---------------------------------------------------------------------------
 
 loc_EF0E4:                              ; CODE XREF: sub_EDDF2+12C6↑j
-                dc.l $4878FFFE ;FIXME ;pea     ($FFFFFE).w
+                pea     ($FFFFFFFE).w
                 move.l  a2,-(sp)
                 jsr     sub_EF45E(pc)
                 nop
@@ -44439,7 +44439,7 @@ loc_EF144:                              ; CODE XREF: sub_EDDF2+1388↓j
 ; ---------------------------------------------------------------------------
 
 loc_EF14E:                              ; CODE XREF: sub_EDDF2+1324↑j
-                dc.l $4878FFFE ;FIXME ;pea     ($FFFFFE).w
+                pea     ($FFFFFFFE).w
                 move.l  a2,-(sp)
                 jsr     sub_EF45E(pc)
                 nop
@@ -48291,7 +48291,7 @@ loc_F19E2:                              ; CODE XREF: sub_F145E+56E↑j
                 move.l  a4,-(sp)
                 jsr     sub_DBD1E
                 pea     (unk_71C).w
-                dc.l $4878F8E4 ;FIXME ;pea     ($FFF8E4).w
+                pea     ($FFFFF8E4).w
                 jsr     sub_D69E4
                 add.w   d0,$2E(a4)
                 cmpi.w  #1,$10(a3)
@@ -49256,7 +49256,7 @@ var_4           = -4
                 link    a6,#-4
                 move.l  d2,-(sp)
                 move.l  (dword_FFAB4).l,var_4(a6)
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     sub_F31EA
                 jsr     WaitForVBlank
                 jsr     InitVDPForGame
@@ -49291,7 +49291,7 @@ var_4           = -4
                 pea     (off_993FA).l
                 clr.l   -(sp)
                 jsr     sub_F3200
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     ForceUnholdButton
                 pea     ($F0).w
                 pea     (unk_9B0DA).l
@@ -49340,7 +49340,7 @@ arg_3           =  $B
                 lea     var_4(a6),a3
                 move.l  (dword_FFAB8).l,var_4(a6)
                 movea.l #$FF58D4,a2
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     sub_F31EA
                 jsr     WaitForVBlank
                 jsr     InitVDPForGame
@@ -49562,7 +49562,7 @@ loc_F28D6:                              ; CODE XREF: sub_F2808+AA↑j
 
 loc_F28DA:                              ; CODE XREF: sub_F2808+A4↑j
                 pea     (1).w
-                dc.l $4878FFFE ;FIXME ;pea     ($FFFFFE).w
+                pea     ($FFFFFFFE).w
                 jsr     sub_D69E4
                 ext.l   d0
                 bge.s   loc_F28EE
@@ -49746,7 +49746,7 @@ loc_F2AA6:                              ; CODE XREF: sub_F2946+216↓j
                 move.l  d0,-(sp)
                 jsr     (a5)
                 pea     (1).w
-                dc.l $4878FFFD ;FIXME ;pea     ($FFFFFD).w
+                pea     ($FFFFFFFD).w
                 jsr     sub_D69E4
                 lea     $20(sp),sp
                 move.w  d0,d5
@@ -49953,7 +49953,7 @@ var_4           = -4
                 link    a6,#-4
                 move.l  d2,-(sp)
                 move.l  (dword_FFABC).l,var_4(a6)
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     sub_F31EA
                 jsr     WaitForVBlank
                 jsr     InitVDPForGame
@@ -50015,7 +50015,7 @@ var_4           = -4
                 jsr     GEMSStartSong
                 lea     $30(sp),sp
                 jsr     TurnDisplayOn
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     ForceUnholdButton
                 jsr     sub_F2E12(pc)
                 nop
@@ -50081,7 +50081,7 @@ arg_0           =  8
                 movea.l #sub_F4538,a2
                 move.l  (dword_FFAC0).l,var_4(a6)
                 move.l  (dword_FFAC4).l,var_8(a6)
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     sub_F31EA
                 jsr     WaitForVBlank
                 jsr     InitVDPForGame
@@ -50127,7 +50127,7 @@ arg_0           =  8
                 jsr     TurnDisplayOn
                 tst.l   arg_0(a6)
                 bne.s   loc_F2F24
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     ForceUnholdButton
                 pea     ($F0).w
                 pea     (unk_99906).l
@@ -54590,7 +54590,7 @@ loc_F5614:                              ; CODE XREF: sub_F5522+15A↓j
                 move.l  d0,-(sp)
                 pea     (dword_AA0).w
                 pea     (off_64).w
-                dc.l $4878FF9C ;FIXME ;pea     ($FFFF9C).w
+                pea     ($FFFFFF9C).w
                 jsr     sub_D69E4
                 addq.l  #8,sp
                 ext.l   d0
@@ -54702,7 +54702,7 @@ loc_F572E:                              ; CODE XREF: sub_F56D0+1D8↓j
                 move.w  #6,4(a2)
                 move.w  #$C000,6(a2)
                 pea     (5).w
-                dc.l $4878FFFB ;FIXME ;pea     ($FFFFFB).w
+                pea     ($FFFFFFFB).w
                 jsr     sub_D69E4
                 ext.l   d0
                 move.l  d0,d3
@@ -54851,7 +54851,7 @@ loc_F58B0:                              ; CODE XREF: sub_F56D0+294↓j
                 move.l  d0,-(sp)
                 pea     (dword_AA0).w
                 pea     (off_64).w
-                dc.l $4878FF9C ;FIXME ;pea     ($FFFF9C).w
+                pea     ($FFFFFF9C).w
                 jsr     sub_D69E4
                 addq.l  #8,sp
                 ext.l   d0
@@ -55160,7 +55160,7 @@ var_4           = -4
                 move.l  d2,-(sp)
                 move.l  (dword_FFAC8).l,var_4(a6)
                 move.l  (dword_FFACC).l,var_8(a6)
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     sub_F31EA
                 jsr     WaitForVBlank
                 jsr     InitVDPForGame
@@ -55182,7 +55182,7 @@ var_4           = -4
                 pea     var_8(a6)
                 jsr     sub_F3F1A
                 jsr     TurnDisplayOn
-                dc.l $4878FFFF ;FIXME ;pea     ($FFFFFF).w
+                pea     ($FFFFFFFF).w
                 jsr     ForceUnholdButton
                 lea     $28(sp),sp
                 jsr     sub_F5C66(pc)

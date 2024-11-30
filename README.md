@@ -74,7 +74,7 @@ Credits
 
 **shobiz** for help on how to do negative `(pc,d#.w)` offset jumps.
 
-**Andlabs** for the original diassembly effort
+**Andlabs** for the original disassembly effort
 
 Previous notes
 -----

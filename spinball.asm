@@ -233,7 +233,7 @@ loc_232:                                ; DATA XREF: ROM:00003913↓o
 
 loc_234:                                ; DATA XREF: ROM:00003160↓o
                                         ; ROM:000063B7↓o ...
-                dc.w $4E66 ;FIXME ;move    a6,usp
+                move.l  a6,usp
 
 loc_236:                                ; DATA XREF: ROM:000C2DF0↓o
                 moveq   #$17,d1
@@ -31853,13 +31853,22 @@ off_E6738:      dc.w loc_E6756-*        ; DATA XREF: sub_E65DA+156↑r
                 dc.w loc_E6BE8-off_E6738
                 dc.w loc_E67F4-off_E6738
 ; ---------------------------------------------------------------------------
-
+; Ghidra seems to strongly disagree with IDA Pro on where this jump table ends, and where the function begins. Ghidra believes the loc_E6756 is the entry point
+; Going with Ghidra's assessment as the andi.b #A,a6 assembly doesn't seem to compile consistently
 loc_E674C:                              ; DATA XREF: sub_E65DA+142↑o
-                dc.l $0206090A ;FIXME ;andi.b  #$A,d6
-                move.b  (a5),d2
-                move.b  (sp)+,d6
-                move.l  -(a6),-(a2)
-
+                                        ; XREF[2]:     FUN_000e65da:000e671c(*), 
+                                        ; FUN_000e65da:000e6724(R) 
+                dc.b $02
+loc_E674D:                              ; XREF[1]:     FUN_000e65da:000e6724(R)  
+                dc.b $06
+                dc.b $09
+                dc.b $0a
+                dc.b $14
+                dc.b $15
+                dc.b $1c
+                dc.b $1f
+                dc.b $25
+                dc.b $26
 loc_E6756:                              ; DATA XREF: sub_E65DA:off_E6738↑o
                 tst.b   8(a2)
                 beq.w   loc_E6C18

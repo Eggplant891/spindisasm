@@ -10,3 +10,7 @@ align:	macro
 	dcb.b \1-(*%\1),\2
 	endc
 	endm
+  
+ pad_to_nearest_mbit: macro
+  dcb.b ($200000-($100000-*))-(*), $FF
+  endm

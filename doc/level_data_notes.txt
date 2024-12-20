@@ -1,5 +1,51 @@
 --- COMMON ---
 
+--- TILES---
+000BFBE0 - Foreground Tileset (SSC Compressed)
+000BFBF0 - Background Tileset (SSC Compressed)
+
+000BFC00 - BG Tile Layout Data Ptr Array 1
+000BFC10 - BG Tile Layout Data Ptr Array 2
+000BFC20 - FG Tile Layout Data Ptr Array 2
+
+--Toxic Caves--
+0003DBB2 - BG Tileset (SSC Compressed)
+000394AA - FG Tileset (SSC Compressed)
+
+00049EA0 - BG 1 - Layout Data?
+0004B2A0 - BG 2 - Layout Data?
+0003E800 - FG   - Layout Data?
+
+--Lava Powerhouse-
+00067672 - BG Tileset (SSC Compressed)
+00064BB6 - FG Tileset (SSC Compressed)
+
+0007646A - BG 1  - Layout Data?
+00077C6A - BG 2  - Layout Data?
+0006828A - FG    - Layout Data?
+
+--The Machine--
+00081EB6 - BG Tileset (SSC Compressed)
+0007F29C - FG Tileset (SSC Compressed)
+
+00091956 - BG 1  - Layout Data?
+00093056 - BG 2  - Layout Data?
+000829B6 - FG    - Layout Data?
+
+--Showdown--
+00053214 - BG Tileset (SSC Compressed)
+0004FEE4 - FG Tileset (SSC Compressed)
+
+0005CDEA - BG 1  - Layout Data?
+0005E9EA - BG 2  - Layout Data?
+0005B20A - FG    - Layout Data?
+
+-- OTHER TILE DATA --
+
+
+
+--- OBJECT DATA ---
+
 000C0B04 - PtrPtr used as parameter to initialising anim obj types
 
 0x0C1524 - Ptr array to runtime array of AnimatedGameObjects

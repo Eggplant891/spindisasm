@@ -16335,7 +16335,7 @@ loc_DCF86:                              ; CODE XREF: sub_DCE84+24↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DCF8C:                              ; CODE XREF: sub_DCFC0+1E4↓p
+sub_DCF8C:                              ; CODE XREF: sub_DCFC0+1E4↓p ; PlayerBeginJumping
                                         ; sub_DCFC0+5B6↓p ...
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -16349,7 +16349,7 @@ sub_DCF8C:                              ; CODE XREF: sub_DCFC0+1E4↓p
                 pea     ($A).w
                 bsr.w   sub_DB7CC
                 addq.l  #8,sp
-                move.w  #6,($FFF1FA).l
+                move.w  #1,($FFF1FA).l  ; Reduce from 6 to 1, to make jumping essentially instantaneous
                 rts
 ; End of function sub_DCF8C
 
@@ -16561,13 +16561,16 @@ loc_DD1AC:                              ; CODE XREF: sub_DCFC0+1E2↑j
                 bra.w   loc_DD6D8
 ; ---------------------------------------------------------------------------
 
-loc_DD1F6:                              ; DATA XREF: sub_DCFC0+112↑o
+loc_DD1F6:                              ; DATA XREF: sub_DCFC0+112↑o ; PLAYER_STATE_BEGIN_JUMP
                 tst.w   (a5)
                 bgt.w   loc_DD6E0
                 bsr.w   sub_DB836
-                pea     (unk_4000).w
-                pea     (off_50).w
-                bsr.w   sub_DBFC8
+                jmp     new_jump_physics
+                dc.w    $FFFF
+                ; pea     (unk_4000).w
+                ; pea     (off_50).w
+new_jump_physics_return:
+                bsr.w   sub_DBFC8       ; LaunchPlayerVertically(x_speed, y_speed)
 
 loc_DD20C:                              ; CODE XREF: sub_DCFC0+67A↓j
                 addq.l  #8,sp
@@ -70370,6 +70373,21 @@ bosshack:
                 nop
                 clr.b   ($FF7848).l
                 jmp bosshackreturn
+
+new_jump_physics:
+                ; pea     (unk_4000).w
+                ; pea     (off_50).w
+                move.l  D7,-8(sp)            ; Defensively maintaining register states since this is a hack
+                clr.l   D7
+                move.w  ($FF5776),D7         ; Get player X velocity (major unit only atm)
+                lsl.w   #8, D7
+                lsl.w   #3, D7               ; << 11 bits to move over 3 bytes i.e. 000D -> D000, then divide by 2
+                neg.w   D7                   ; X Velocities are flipped when calling Launch function
+                addi.w  #$4000,D7            ; $4000 is the neutral X velocity value for launches
+                move.l  D7,-(sp)             ; Push new launch X velocity value
+                move.l  -4(sp),D7            ; Rescue original D7 register value
+                move.l  #$50,-(sp)           ; Original value of $50
+                jmp new_jump_physics_return
 
 ; end of 'ROM'
 

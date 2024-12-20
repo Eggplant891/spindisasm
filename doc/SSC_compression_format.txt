@@ -1,0 +1,42 @@
+---SSC Compression Format---
+
+--- Header ---
+unsigned short - Number of tiles (seems to only be needed for loading to VDP)
+
+--- Data block ---
+(Up to any number of these can be defined)
+
+byte - Bit field of which data in the following block is raw or represents instructions to "blit" a value multiple times.
+      (this gets left-shifted 1 bit each iteration, then the bit_flag is used to determine how to read the next set of data)
+
+[Up to x8 of the following per data block]
+if (bit_flag == 1)
+  Write the data to the target location, as-is, read from the source data.
+else
+  Read a previously written byte, and print it multiple times. This information is packed into 2 bytes.
+  Example:
+    Byte 1 - $18  - Will copy data from offset $18 from the start of the already decompressed data. If indices larger than the array usually assumed to be initialised to 0.
+    Byte 2 - $1C  - Split into 2 parts:
+                    - First 4 bits used as additional offset data for byte 1 i.e. ($1 << 4) | %18 => $118
+                    - Second 4 bits represents the number of times to copy the read byte value (n + 1)  times.
+                
+The indices used to reference the previously written values must be sanitised using a bitwise AND (0x0FFF) as the upper 4 bits may contain stale data in the register.
+
+
+Stored in blocks of 8 - ?
+
+Pairs of bytes sequenced to compress data.
+If byte ends in 1, this signals the start of a new sequence of data.
+The value is right-shifted by 1 (divide by 2).
+Supports max of 0xFFF tiles.
+
+01 23 45 67 89 AB
+^
+         ^
+            ^
+            
+fragment_header = 02; fragment_header >> 1; (LSR >> 1 will raise flag if the smallest bit is 1 due to underflow, this is checked by BCC)
+tile_index_offset = $8 $67
+num_tiles_to_create = $A ($09 + 1)
+
+

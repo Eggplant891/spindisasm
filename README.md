@@ -23,7 +23,7 @@ Consequently there is still work to be done before the assembly code will be eas
 Prerequisites
 -----
 ### Required
-- `asm68k.exe` to compile the `.asm` source code
+- `asm68k.exe` or `axm68k.exe` to compile the `.asm` source code. (axm68k.exe can be found at https://github.com/cvghivebrain/axm68k)
 
 ### Optional
 - IDA (Interactive Disassembler) 5.5 needed to use the `.idb` data.
@@ -34,7 +34,7 @@ Building
 
 ### Windows Explorer
 
-Place a copy of `asm68k.exe` into the root directory, and drag `spinball.asm` file onto `build.bat`
+Place a copy of `asm68k.exe` / `axm68k.exe` into the root directory, and drag `spinball.asm` file onto `build.bat`
 
 ### Command Line
 

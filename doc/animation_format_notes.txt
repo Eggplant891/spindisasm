@@ -1,0 +1,13 @@
+--- ANIMATION FRAME DATA FORMAT ---
+
+0x00FF - anim_data_1 => Current Frame data
+0x00FF - anim_data_3 => Next Frame data
+  - 0x007F - Target sprite index (looked up at 0xFFAD52 or 0xFFAD12 for the player.
+  - Anything less than 0x40 seems to be reading from => 0xFFAB78 + (2 * current_anim_id). This seems to be a pool of IDs or commands?
+  - When it is > 0x40, there is still a check to see if var-0x40 is < 6. If not, there is then an attempt to do var-0x46 and check if that's < 6. Seems like a special case for the player, but unclear on the second check
+0x6000 - anim_data_2
+  - if anim_data_2 == 0x2000 => return value of frame sprite index.
+  - if not, progress anim frame ptr 1 frame (+2 since frames are shorts). This is then stored and the frame ptr jumps 2 again (presumably as there is 2 more bytes of data to follow)
+  
+  0x4000 - Command flag
+  0x2000 - Frame jump flag

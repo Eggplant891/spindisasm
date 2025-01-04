@@ -2087,9 +2087,8 @@ loc_D47F2:                              ; CODE XREF: sub_D47DE+A↑j
 
 loc_D480A:                              ; CODE XREF: sub_D47DE+22↑j
                 bsr.w  StartGame
-                ;jmp     BeginBonusStage  ;
                 bra.s   loc_D482C
-				;dcb.b   2,$FF
+                ;jmp     BeginBonusModeFromTitleScreen
 ; ---------------------------------------------------------------------------
 
 loc_D4810:                              ; CODE XREF: sub_D47DE+2A↑j
@@ -2588,7 +2587,8 @@ loc_D4D6C:                              ; DATA XREF: sub_D48E2+86↑o
 loc_D4DB6:                              ; DATA XREF: sub_D48E2+88↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
-                jsr     sub_D86CA
+                jmp     Custom_RespawnPlayer
+                ;jsr     sub_D86CA
                 jsr     sub_D56C8(pc)
                 nop
                 tst.b   d3
@@ -2720,6 +2720,7 @@ loc_D4EE4:                              ; CODE XREF: sub_D48E2+5F0↑j
                 beq.s   loc_D4EF4
                 jsr     sub_D6C2A
 
+Custom_Respawn_ContinueLevel:
 loc_D4EF4:                              ; CODE XREF: sub_D48E2+536↑j
                                         ; sub_D48E2+55A↑j ...
                 movem.l var_44(a6),d2-d4/a2-a5
@@ -64962,6 +64963,10 @@ loc_FC42A:                              ; CODE XREF: sub_FA588+AD2↑j
                 move.w  #$140,($FF41A8).l
                 move.w  #$50,($FF41AA).l ; 'P'
                 move.l  #$FF4180,($FF41A4).l
+                ;jmp     bonus_stage_fade_up
+                ;dc.b $FF
+                ;dc.b $FF
+actually_start_bonus:
                 jsr     GEMSStopAll
                 pea     (9).w
                 jsr     sub_D562C
@@ -68851,6 +68856,7 @@ PollForPlayMusicBtn:
                 move.w  (a3),d0 ; (a3)/d0 -> Joystick state
                 andi.w  #aJoystickButtonMask_C,d0
                 beq.s   SoundTest_PlayNotPressed ; Branch if C button not pressed
+                ;jmp     BeginBonusModeFromOptionsScreen
                 jmp     PlaySoundTestMusic ; Now can play music
 SoundTest_PlayNotPressed:
                 move.w  (a3),d0
@@ -70359,11 +70365,49 @@ PrintSoundTest:
                 movem.l (sp)+,d0-d7/a0-a7
                 rts
 
-BeginBonusStage:
-                jsr     StartGame
-                move.l  #0,-(sp)
-                jsr     GoToBonusStage
+EndBonusMode:
                 jmp     sub_D47DE
+
+BeginBonusModeFromTitleScreen:
+                move.l  #1,($FFE000)
+                bra.b   BeginBonusLevelFromTitle
+
+BeginBonusModeFromOptionsScreen:
+                move.l  d4,($FFE000)
+                bra.b   BeginBonusLevel
+
+BeginNextBonusLevel:
+                add.l   #1,($FFE000)
+BeginBonusLevel:
+                ;jsr    StartGame
+                jsr     sub_D86CA
+BeginBonusLevelFromTitle:
+                jsr     GEMSStopAll
+                jsr     sub_D856A
+                bra.b   BeginBonus
+GoNextBonus:
+                ; Did we just beat multiball level?
+                cmpi.l  #0,($FFE000)
+                beq.b   EndBonusMode
+                ; Did we just beat final normal level?
+                cmpi.l  #3,($FFE000)
+                bne.b   BeginNextBonusLevel
+StartMultiballLevel:    ; OK we will just start multiball now
+                move.l  #0,($FFE000)
+
+BeginBonus:
+                move.l  ($FFE000),-(sp)
+                jsr     GoToBonusStage
+                tst.b   d0
+                bne.b   GoNextBonus
+                bra.b   EndBonusMode
+                ;jsr     sub_FED7E
+                ;jmp     sub_FEF2A
+
+bonus_stage_fade_up:
+                move.l  #$FF4180,($FF41A4).l
+                ;jsr     sub_d8698
+                jmp     actually_start_bonus
 
 bosshack:
                 clr.w   ($FF0000).l
@@ -70388,6 +70432,41 @@ new_jump_physics:
                 move.l  -4(sp),D7            ; Rescue original D7 register value
                 move.l  #$50,-(sp)           ; Original value of $50
                 jmp new_jump_physics_return
+
+Custom_RespawnPlayer:
+                ;move.w  ($FF55AA),($FF0008) ; Set Camera pos X
+                ;move.w  ($FF5754),($FF000A) ; Set camera pos Y
+                jsr     sub_D4500   ; RunLevelIntro
+                move.w  #0,($FF55A0)
+                move.w  ($C06F4),-(SP) ; Move toxic caves start pos to
+                move.w  ($C06F2),-(SP) ; Move toxic caves start pos to 
+                ;move.l  #0,-(SP)
+                jsr     sub_DBF62 ; Set Player Position
+                pea     (0x64).w
+                move.w  ($C06F4),-(SP)
+                move.w  ($C06F2),-(SP)
+                jsr     sub_DC0D8 ; MoveCameraAtSpeed
+
+                move.l  #1,-(SP) ; Set current_game_state to intro
+                jsr     sub_D54CE
+
+                jmp     Custom_Respawn_ContinueLevel
+
+
+aBonusStageNames:
+                dc.l aBonusMultiball
+                dc.l aBonusTrappedAlive
+                dc.l aBonusRoboSmile
+                dc.l aBonusTheMarch
+
+aBonusMultiball:
+                dc.b '  BONUS   MULTIBALL    ',0
+aBonusTrappedAlive: 
+                dc.b '  BONUS   TRAPPED ALIVE',0
+aBonusRoboSmile:
+                dc.b '  BONUS   ROBO SMILE   ',0
+aBonusTheMarch:
+                dc.b '  BONUS   THE MARCH    ',0
 
 ; end of 'ROM'
 

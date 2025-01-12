@@ -1337,6 +1337,7 @@ loc_D4092:                              ; CODE XREF: sub_D3FAC+DC↑j
 
 loc_D4094:                              ; CODE XREF: sub_D3FAC+E4↑j
                 move.w  d0,($FFF214).l
+                ;jmp     Custom_RespawnPlayer
                 jsr     sub_FE460
                 jsr     sub_DB744
                 jsr     sub_DDE6C
@@ -1388,6 +1389,7 @@ loc_D4126:                              ; DATA XREF: sub_D3FAC+160↑o
 
 loc_D412C:                              ; CODE XREF: sub_D3FAC+14E↑j
                                         ; sub_D3FAC+168↑j ...
+Custom_ContinueStartWithoutInit:
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -2175,7 +2177,7 @@ var_1D          = -$1D
                 link    a6,#-$28
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF55A0,a5
-                jsr     sub_DDF9E
+                jsr     sub_DDCC4
                 jsr     sub_D574E
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -2249,8 +2251,11 @@ loc_D499A:                              ; CODE XREF: sub_D48E2+D2↓j
 loc_D49A0:                              ; CODE XREF: sub_D48E2+9A↑j
                 clr.l   ($FF000E).l
                 move.w  #1,(a5)
-                pea     ($21).w
-                jsr     PlaySong(pc)
+                ;pea     ($21).w
+                ;jsr     PlaySong(pc)
+                dc.w    $FFFF
+                jmp     CustomDeath_ZoomCameraHome
+CustomDeathReturn:
                 nop
                 bra.s   loc_D499A
 ; ---------------------------------------------------------------------------
@@ -2564,7 +2569,9 @@ loc_D4D22:                              ; DATA XREF: sub_D48E2+84↑o
 loc_D4D6C:                              ; DATA XREF: sub_D48E2+86↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
-                movea.l #aP1Total,a0    ; "P1 TOTAL   "
+                ;movea.l #aP1Total,a0    ; "P1 TOTAL   "
+                jmp     Custom_RespawnPlayer_MoveCamera
+Custom_RespawnPlayer_MoveCameraReturn:
                 lea     var_28(a6),a1
                 move.l  (a0)+,(a1)+
                 move.l  (a0)+,(a1)+
@@ -2589,6 +2596,7 @@ loc_D4DB6:                              ; DATA XREF: sub_D48E2+88↑o
                 bne.w   loc_D4ED0
                 jmp     Custom_RespawnPlayer
                 ;jsr     sub_D86CA
+Custom_RespawnPlayer_EndLevel:
                 jsr     sub_D56C8(pc)
                 nop
                 tst.b   d3
@@ -70433,24 +70441,74 @@ new_jump_physics:
                 move.l  #$50,-(sp)           ; Original value of $50
                 jmp new_jump_physics_return
 
+Custom_RespawnPlayer_MoveCamera:
+                movem.l D0-D7/A0-A6,-(sp)
+
+                movea.l #$FF5758,A3
+                tst.b   $46(A3)
+                beq.w   Custom_RespawnPlayer_SkipCameraTransition
+
+                ; Reset level xmin pos
+                clr.l   D3
+                move.w  ($FF75B0),D3 ; Current Level
+                lsl.w   #2,D3
+                tst.w   ($FF75B0) ; Is TOXIC_CAVES?
+                bne.b   dont_reset_camera_min_x
+                move.w  #$A8,($FFF214) ; Set the camera_min_x for TOXIC_CAVES
+
+dont_reset_camera_min_x:
+                cmpi.w      #3,($FF75B0)  ; Is SHOWDOWN?
+                bne.b       dont_reset_rock_it
+                move.w      #1,($FFABB2)   ; Reset persistent vars so ROCK IT works
+                move.w      #1,($FFABC4)   ; Reset persistent vars so ROCK IT works
+dont_reset_rock_it:
+                movea.l     #$BFC82,A3
+                lea         (A3,D3),A3
+                clr.l       D1
+                move.w      (A3),D1
+                move.l      D1,-(sp)
+;
+                movea.l     #$BFC80,A3
+                lea         (A3,D3),A3
+                clr.l       D1
+                move.w      (A3),D1
+                move.l      D1,-(sp)
+
+                jsr         sub_DBF62 ; SetPlayerPosition
+                lea         $8(sp),sp
+
+                move.l      #$80,-(sp) ;$1003DE ; Param 1 (Camera transition time)
+                move.l      #$0,-(sp)
+                move.l      #$0,-(sp)
+
+                jsr     sub_DC0D8 ; MoveCameraToLocationAtSpeed(short camera_target_x_pos,short camera_target_y_pos,ushort camera_x_offset)
+                lea     $C(sp),sp
+Custom_RespawnPlayer_SkipCameraTransition:
+                movem.l (sp)+,D0-D7/A0-A6
+
+                movea.l #aP1Total,a0    ; "P1 TOTAL   "
+                jmp     Custom_RespawnPlayer_MoveCameraReturn
+
 Custom_RespawnPlayer:
-                ;move.w  ($FF55AA),($FF0008) ; Set Camera pos X
-                ;move.w  ($FF5754),($FF000A) ; Set camera pos Y
-                jsr     sub_D4500   ; RunLevelIntro
-                move.w  #0,($FF55A0)
-                move.w  ($C06F4),-(SP) ; Move toxic caves start pos to
-                move.w  ($C06F2),-(SP) ; Move toxic caves start pos to 
-                ;move.l  #0,-(SP)
-                jsr     sub_DBF62 ; Set Player Position
-                pea     (0x64).w
-                move.w  ($C06F4),-(SP)
-                move.w  ($C06F2),-(SP)
-                jsr     sub_DC0D8 ; MoveCameraAtSpeed
+                movea.l #$FF5758,A3
+                tst.b   $46(A3)
+                bne.b   CustomRespawnPlayer_ActuallyRespawn
+                ; Game Over
+                jsr     sub_D86CA ; Fade-to-black call pulled in from original source
+                jmp     Custom_RespawnPlayer_EndLevel
 
-                move.l  #1,-(SP) ; Set current_game_state to intro
+CustomRespawnPlayer_ActuallyRespawn:
+                jsr     sub_DB744 ; Reset player
+
+                move.w  #1,($FF55A0) ; Set level intro state to 0
+                move.l  #1,-(sp) ; Set current_game_state to intro
                 jsr     sub_D54CE
-
+                lea     $4(sp),sp
+                jsr     sub_D4500   ; RunLevelIntro
                 jmp     Custom_Respawn_ContinueLevel
+
+CustomDeath_ZoomCameraHome:                
+                jmp     CustomDeathReturn
 
 
 aBonusStageNames:

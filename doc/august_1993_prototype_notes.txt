@@ -1,0 +1,2 @@
+- When walking slowly towards an edge, the prototype will actually play the balancing animation and prevent you from falling off of the edge.
+- The prototype wall pushing animation functions correctly

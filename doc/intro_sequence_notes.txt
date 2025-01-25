@@ -1,0 +1,6 @@
+- 0xFFF2E4 - Appears to be location that ROM sprite tile ptrs are kept, with X/Y offsets as shorts
+
+Struct:
+0x00 - Ptr to asset on ROM
+0x04 - X offset
+0x06 - Y offset

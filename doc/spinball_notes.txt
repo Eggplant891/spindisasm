@@ -1,5 +1,9 @@
 ---Spinball Notes---
 
+-- Physics Notes --
+
+- When spindashing, the game attempts to raycast immediately to the nearest walkable platform below the player
+
 -- Prototype Notes 0--
 0x1744A. 0x17644 - Unused switch sprite (diagonal, triangle)
 0x17762, 0x178DC - Unused switch sprite (horizontal, star)

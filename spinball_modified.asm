@@ -8793,7 +8793,7 @@ loc_D8392:                              ; CODE XREF: sub_D835A+42↓j
                 moveq   #$2C,d0 ; ','
                 adda.l  d0,a2
                 addq.w  #1,d3
-                cmpi.w  #$100,d3 ; VDP sprite count
+                cmpi.w  #$100,d3 ; Active sprite array update count
                 bcs.s   loc_D8374
                 move.w  d4,(a4)
                 movem.l (sp)+,d2-d4/a2-a4
@@ -21059,21 +21059,25 @@ Alert_GotAnEmerald:                     ; CODE XREF: TriggerOSDMessage+3C↑j
                 pea     (2).w
                 pea     (5).w
                 jsr     (a3)
-                pea     (a500000).l     ; "500,000"
-                pea     (6).w
-                pea     (off_3C).w
-                pea     (off_4).w
-                pea     (2).w
-                pea     (7).w
-                jsr     (a3)
-                lea     $30(sp),sp
-                move.l  #off_7A120,d2
-                pea     ($E).w
+                jmp     EmeraldPitch_PitchUpEmerald
+                ;pea     (a500000).l     ; "500,000"
+                ;pea     (6).w
+                ;pea     (off_3C).w
+                ;pea     (off_4).w
+                ;pea     (2).w
+                ;pea     (7).w
+                ;jsr     (a3)
+                dcb.b   22,$FF
+                dcb.b   14,$FF
+                ;lea     $18(sp),sp
+                ;move.l  #off_7A120,d2
+                ;pea     ($E).w
 
 loc_DFB76:                              ; CODE XREF: TriggerOSDMessage+E8↓j
                                         ; TriggerOSDMessage+306↓j ...
                 jsr     sub_D567E
 
+EmeraldPitch_PitchUpEmerald_Return:
 loc_DFB7C:                              ; CODE XREF: TriggerOSDMessage+16E↓j
                 addq.l  #4,sp
                 bra.w   loc_E193E
@@ -29078,7 +29082,7 @@ loc_E4B26:                              ; CODE XREF: sub_E4AC6+46↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2
+                cmpi.w  #$100,d2        ; Num Animations to tick LavaPowerhouseCompleteLevel
                 blt.s   loc_E4B0A
                 move.w  #$110,$28(a3)
                 pea     (off_C8).w
@@ -36401,7 +36405,7 @@ loc_E9A26:                              ; CODE XREF: sub_E99D2+3A↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2
+                cmpi.w  #$100,d2        ; Num Animations to tick ToxicCavesCompleteLevel
                 blt.s   loc_E99F0
                 pea     (off_C8).w
                 pea     (off_B8).w
@@ -42435,7 +42439,7 @@ loc_EDB6E:                              ; CODE XREF: sub_EDB1A+3A↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2
+                cmpi.w  #$100,d2        ; Num Animations to tick ShowdownCompleteLevel
                 blt.s   loc_EDB38
                 movea.l #$FF88A2,a2
                 clr.w   d2
@@ -47112,7 +47116,7 @@ loc_F0E2A:                              ; CODE XREF: sub_F0DD6+3A↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2
+                cmpi.w  #$100,d2        ; Num Animations to tick TheMachineCompleteLevel
                 blt.s   loc_F0DF4
                 pea     (off_C8).w
                 pea     (off_B8).w
@@ -70234,7 +70238,7 @@ DoCustomIntro:  pea     (7).w
 
                 pea     (aOptimisedBy).l
                 pea     (3).w
-                pea     (90).l
+                pea     (30).l
                 pea     (3).w
                 pea     (4).l
                 pea     (6).w
@@ -70244,13 +70248,15 @@ DoCustomIntro:  pea     (7).w
 
                 pea     (aScrambEgg).l
                 pea     (6).w
-                pea     (120).l
+                pea     (60).l
                 pea     (3).w
                 pea     (2).l
                 pea     (6).w
                 jsr     (a3)
                 lea     $18(sp),sp
                 move.w  ($FF5736).l,d0
+
+                jmp CustIntroRtn
 
                 pea     (aGreets).l
                 pea     (1).w
@@ -70509,6 +70515,87 @@ CustomRespawnPlayer_ActuallyRespawn:
 
 CustomDeath_ZoomCameraHome:                
                 jmp     CustomDeathReturn
+
+TargetBank      =  $07
+
+EmeraldPitch_PitchUpEmerald:
+                lea     $18(sp),sp
+                move.l  #off_7A120,d2
+
+                movem.l d0-d2/a0,-(sp)
+                ; Calculate how many emeralds collected to pitch up audio
+                move.w  ($FF5736).l,d0 ; Player index
+                move.w  d0,d1
+                lsl.w   #2,d1
+                add.w   d1,d0
+                lsl.w   #4,d0
+                sub.w   d1,d0
+                movea.l #$FF579F,a0 ; Player 1 offset
+                move.b  (a0,d0.w),d0 ; Current player offset
+                ext.w   d0
+                move.w  ($FF75B0).l,d1  ; Emeralds collected offset
+                movea.l #nTotalEmeralds,a0 ; Level emeralds count
+                move.b  (a0,d1.w),d2
+                ext.w   d2
+                sub.w   d0,d2
+                ; d0 => Num emeralds collected
+                ; d2 => Num emeralds remaining
+                ; d1 => Pitch to set
+                move.l  #$100,d1
+                subi.w  #1,d0
+                mulu.w  d0,d1
+
+                ; Play Emerald Collected Audio
+                pea     ($E).w
+                jsr     sub_D567E
+
+                ; Pitch up the first 3 channels (only uses 3 afaik)                
+                move.l  d1,-(sp)
+                move.l  #0,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                move.l  d1,-(sp)
+                move.l  #1,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                move.l  d1,-(sp)
+                move.l  #2,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                move.l  d1,-(sp)
+                move.l  #3,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                move.l  d1,-(sp)
+                move.l  #4,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                move.l  d1,-(sp)
+                move.l  #5,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                move.l  d1,-(sp)
+                move.l  #6,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                movem.l (sp)+,d0-d2/a0
+
+                ; Return to main code
+                jmp     EmeraldPitch_PitchUpEmerald_Return
 
 
 aBonusStageNames:

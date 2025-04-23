@@ -31664,7 +31664,7 @@ loc_E6566:                              ; CODE XREF: sub_E6240+34A↓j
                 lea     $C(sp),sp
                 addq.w  #1,d2
                 addq.l  #6,a2
-                cmpi.w  #$3A,d2 ; ':'
+                cmpi.w  #$3A,d2         ; Number of Rings to create (Original: $3A)
                 blt.s   loc_E6566
                 movea.l #dword_C37E8,a2
                 clr.w   d2
@@ -31687,7 +31687,7 @@ loc_E6594:                              ; CODE XREF: sub_E6240+392↓j
                 move.w  #$18,$38(a3)
                 addq.w  #1,d2
                 addq.l  #4,a2
-                cmpi.w  #$1B,d2
+                cmpi.w  #$1B,d2         ; Number of Cave "drip" animations to create (Original: $1B)
                 blt.s   loc_E6594
                 movem.l (sp)+,d2-d3/a2-a5
                 rts
@@ -70588,6 +70588,12 @@ EmeraldPitch_PitchUpEmerald:
 
                 move.l  d1,-(sp)
                 move.l  #6,-(sp)
+                pea     (TargetBank).w 
+                jsr     sub_F628C
+                lea     $A(sp),sp
+
+                move.l  d1,-(sp)
+                move.l  #7,-(sp)
                 pea     (TargetBank).w 
                 jsr     sub_F628C
                 lea     $A(sp),sp

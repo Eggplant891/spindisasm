@@ -5916,19 +5916,19 @@ arg_10          =  $14
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D6912:                              ; CODE XREF: RunUpdate_ToxicCaves+1AD4↓p
+cos:                              ; CODE XREF: RunUpdate_ToxicCaves+1AD4↓p
                                         ; RunUpdate_ToxicCaves+1E8A↓p ...
 
 arg_2           =  6
 
                 addi.w  #$4000,arg_2(sp)
-; End of function sub_D6912
+; End of function cos
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D6918:                              ; CODE XREF: RunUpdate_ToxicCaves+1AF8↓p
+sin:                              ; CODE XREF: RunUpdate_ToxicCaves+1AF8↓p
                                         ; RunUpdate_ToxicCaves+1EAE↓p ...
 
 arg_2           =  6
@@ -5944,19 +5944,19 @@ arg_2           =  6
                 bra.s   loc_D6940
 ; ---------------------------------------------------------------------------
 
-loc_D6934:                              ; CODE XREF: sub_D6918+14↑j
+loc_D6934:                              ; CODE XREF: sin+14↑j
                 btst    #$E,d1
                 bne.s   loc_D6940
                 addi.w  #-$8000,d0
                 bra.s   loc_D6942
 ; ---------------------------------------------------------------------------
 
-loc_D6940:                              ; CODE XREF: sub_D6918+1A↑j
-                                        ; sub_D6918+20↑j
+loc_D6940:                              ; CODE XREF: sin+1A↑j
+                                        ; sin+20↑j
                 neg.w   d0
 
-loc_D6942:                              ; CODE XREF: sub_D6918+12↑j
-                                        ; sub_D6918+26↑j
+loc_D6942:                              ; CODE XREF: sin+12↑j
+                                        ; sin+26↑j
                 swap    d1
                 move.w  d0,d1
                 lsr.w   #6,d0
@@ -5973,10 +5973,10 @@ loc_D6942:                              ; CODE XREF: sub_D6918+12↑j
                 bpl.s   loc_D6962
                 neg.w   d0
 
-loc_D6962:                              ; CODE XREF: sub_D6918+46↑j
+loc_D6962:                              ; CODE XREF: sin+46↑j
                 move.l  (sp)+,d2
                 rts
-; End of function sub_D6918
+; End of function sin
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -7903,7 +7903,7 @@ sub_D7AB8:                              ; CODE XREF: sub_D3FAC+140↑p
 ; =============== S U B R O U T I N E =======================================
 
 
- VDPSprite_ConnectLinkedListEntries:                              ; CODE XREF: sub_D7B60+3A↓p
+ GameSprite_ConnectLinkedListEntries:                              ; CODE XREF: sub_D7B60+3A↓p
                                         ; VDPSpriteArray_InitialiseEntry+26↓p
 
 arg_0           =  4
@@ -7924,7 +7924,7 @@ arg_4           =  8
                 move.b  d1,(a0,d0.w)
                 move.l  (sp)+,d2
                 rts
-; End of function  VDPSprite_ConnectLinkedListEntries
+; End of function  GameSprite_ConnectLinkedListEntries
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -7948,7 +7948,7 @@ sub_D7B60:                              ; CODE XREF: GameSprite_Update+36A↓p
                 move.l  d0,-(sp)
                 move.b  ($FF5684).l,d0
                 move.l  d0,-(sp)
-                bsr.w    VDPSprite_ConnectLinkedListEntries
+                bsr.w    GameSprite_ConnectLinkedListEntries
                 addq.l  #8,sp
                 move.b  d2,($FF5684).l
 
@@ -7979,7 +7979,7 @@ arg_0           =  4
                 move.l  d0,-(sp)
                 move.b  1(a2),d0
                 move.l  d0,-(sp)
-                bsr.w    VDPSprite_ConnectLinkedListEntries
+                bsr.w    GameSprite_ConnectLinkedListEntries
                 addq.l  #8,sp
                 tst.b   5(a2)
                 bne.s   loc_D7BE8
@@ -12522,7 +12522,7 @@ loc_DA9EE:                              ; CODE XREF: RunUpdate_ToxicCaves+1A2E�
                                         ; RunUpdate_ToxicCaves+1A38↑j ...
                 move.w  ($FF0072).l,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6912
+                jsr     cos
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.l  ($FF006E).l,-(sp)
@@ -12530,7 +12530,7 @@ loc_DA9EE:                              ; CODE XREF: RunUpdate_ToxicCaves+1A2E�
                 move.l  d0,($FF0066).l
                 move.w  ($FF0072).l,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6918
+                jsr     sin
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.l  ($FF006E).l,-(sp)
@@ -12822,7 +12822,7 @@ loc_DAD7E:                              ; CODE XREF: RunUpdate_ToxicCaves+1E3E�
                 jsr     sub_DBF62
                 move.w  ($FF0072).l,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6912
+                jsr     cos
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.l  ($FF006E).l,-(sp)
@@ -12830,7 +12830,7 @@ loc_DAD7E:                              ; CODE XREF: RunUpdate_ToxicCaves+1E3E�
                 move.l  d0,($FF0066).l
                 move.w  ($FF0072).l,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6918
+                jsr     sin
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.l  ($FF006E).l,-(sp)
@@ -14500,11 +14500,11 @@ loc_DBEC6:                              ; CODE XREF: sub_DBD1E+17A↑j
 loc_DBECC:                              ; CODE XREF: sub_DBD1E+1A6↑j
                 move.w  d4,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6918
+                jsr     sin
                 move.w  d0,d3
                 move.w  d4,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6912
+                jsr     cos
                 move.w  d0,d6
                 move.l  $1E(a2),d5
                 move.l  $22(a2),d2
@@ -14631,11 +14631,11 @@ arg_4           =  8
                 move.l  d0,d5
                 move.w  d6,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6918
+                jsr     sin
                 move.w  d0,d3
                 move.w  d6,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6912
+                jsr     cos
                 move.w  d0,d2
                 move.w  d3,d0
                 move.l  d0,-(sp)
@@ -14985,7 +14985,7 @@ loc_DC374:                              ; CODE XREF: ApplyFlipperForceToPlayer+4
 loc_DC38C:                              ; CODE XREF: ApplyFlipperForceToPlayer+5E↑j
                 move.w  $2E(a2),d0
                 move.l  d0,-(sp)
-                jsr     sub_D6912
+                jsr     cos
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.w  d2,d0
@@ -14995,7 +14995,7 @@ loc_DC38C:                              ; CODE XREF: ApplyFlipperForceToPlayer+5
                 move.l  d0,$1E(a2)
                 move.w  $2E(a2),d0
                 move.l  d0,-(sp)
-                jsr     sub_D6918
+                jsr     sin
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.w  d2,d0
@@ -17889,7 +17889,7 @@ loc_DDF4C:                              ; CODE XREF: sub_DDE6C+80↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DDF5A:                              ; CODE XREF: RunFlippersUpdate+8C↓p
+TriggerFlipperAnimation:                              ; CODE XREF: RunFlippersUpdate+8C↓p
                                         ; RunFlippersUpdate+C4↓p
 
 arg_0           =  4
@@ -17916,7 +17916,7 @@ arg_4           =  8
                 ori.w   #$80,$22(a2)
                 movea.l (sp)+,a2
                 rts
-; End of function sub_DDF5A
+; End of function TriggerFlipperAnimation
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -17978,7 +17978,7 @@ loc_DE006:                              ; CODE XREF: RunFlippersUpdate+5C↑j
                 bne.s   loc_DE03E
                 pea     (1).w
                 move.l  a2,-(sp)
-                bsr.w   sub_DDF5A
+                bsr.w   TriggerFlipperAnimation
                 addq.l  #8,sp
                 movea.l (a2),a0
                 move.w  $22(a0),d0
@@ -18003,7 +18003,7 @@ loc_DE03E:                              ; CODE XREF: RunFlippersUpdate+66↑j
 loc_DE05C:                              ; CODE XREF: RunFlippersUpdate+AC↑j
                 pea     (3).w
                 move.l  a2,-(sp)
-                bsr.w   sub_DDF5A
+                bsr.w   TriggerFlipperAnimation
                 addq.l  #8,sp
 
 loc_DE068:                              ; CODE XREF: RunFlippersUpdate+A8↑j
@@ -18391,11 +18391,11 @@ loc_DE42A:                              ; CODE XREF: RunFlipperCollision+398↑j
                 add.w   d2,d2
                 move.w  d2,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6918
+                jsr     sin
                 move.w  d0,d3
                 move.w  d2,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6912
+                jsr     cos
                 move.w  d0,d5
                 move.l  $1E(a4),d7
                 move.l  $22(a4),d6
@@ -18454,7 +18454,7 @@ loc_DE4C6:                              ; CODE XREF: RunFlipperCollision+42E↑j
 loc_DE4E2:                              ; CODE XREF: RunFlipperCollision+436↑j
                 move.w  d4,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6912
+                jsr     cos
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.l  d2,-(sp)
@@ -18462,7 +18462,7 @@ loc_DE4E2:                              ; CODE XREF: RunFlipperCollision+436↑j
                 add.l   d0,$1E(a4)
                 move.w  d4,d0
                 move.l  d0,-(sp)
-                jsr     sub_D6918
+                jsr     sin
                 addq.l  #4,sp
                 move.l  d0,-(sp)
                 move.l  d2,-(sp)

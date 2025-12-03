@@ -51,7 +51,7 @@ off_34:         dc.l Error              ; DATA XREF: ROM:0000B190↓o
 off_38:         dc.l ReservedException1 ; DATA XREF: ROM:000570F8↓o
                                         ; ROM:00057358↓o ...
 off_3C:         dc.l ReservedException2 ; DATA XREF: NewLife+BC↓o
-                                        ; sub_D4500+36↓o ...
+                                        ; RunLevelIntro+36↓o ...
 off_40:         dc.l Error              ; DATA XREF: ROM:off_A980↓o
                                         ; ROM:00017D10↓o ...
 off_44:         dc.l Error              ; DATA XREF: ROM:00013A78↓o
@@ -777,7 +777,7 @@ loc_6EE:                                ; DATA XREF: ROM:0001F3D4↓o
 
 loc_6F4:                                ; DATA XREF: ROM:0001A17C↓o
                 move    #$2500,sr
-                jmp     main
+                jmp     RunMain
 ; ---------------------------------------------------------------------------
                 include "src/spinball_data.asm"
 ; ---------------------------------------------------------------------------
@@ -1225,7 +1225,7 @@ loc_D3F58:                              ; CODE XREF: NewLife+A↑j
 
 
 GoToBonusStage:                         ; CODE XREF: sub_D48E2+500↓p
-                                        ; main+140↓p
+                                        ; RunMain+140↓p
 
 arg_0           =  4
 
@@ -1250,7 +1250,7 @@ arg_0           =  4
                 moveq   #1,d3
 
 loc_D3F96:                              ; CODE XREF: GoToBonusStage+18↑j
-                jsr     sub_D56C8(pc)
+                jsr     Z80_MuteAllSounds(pc)
                 nop
                 move.l  d2,-(sp)
                 bsr.w   NewLife
@@ -1269,7 +1269,7 @@ sub_D3FAC:                              ; CODE XREF: StartGame+7C↓p
                 movem.l d2/a2-a4,-(sp)
                 movea.l #$FF75B0,a3
                 movea.l #$FF559E,a4
-                jsr     sub_D56C8(pc)
+                jsr     Z80_MuteAllSounds(pc)
                 nop
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -1475,8 +1475,8 @@ bosshackreturn:
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D4228:                              ; CODE XREF: main+14A↓p
-                                        ; main:loc_D53B6↓p
+sub_D4228:                              ; CODE XREF: RunMain+14A↓p
+                                        ; RunMain:loc_D53B6↓p
                 movem.l d2/a2-a3,-(sp)
                 movea.l #$FF75B0,a2
                 movea.l #$FF559E,a3
@@ -1571,7 +1571,7 @@ loc_D4322:                              ; CODE XREF: sub_D4228+100↓j
                 movea.l #$FF577A,a0
                 clr.l   (a0,d0.w)
                 jsr     RunAnimatedObjectsUpdate
-                jsr     sub_D56C8(pc)
+                jsr     Z80_MuteAllSounds(pc)
                 nop
                 jsr     sub_D8698
                 move.w  (a2),d0
@@ -1735,7 +1735,7 @@ loc_D44B8:                              ; CODE XREF: RunCurrentLevelUpdate+24↑
 ; =============== S U B R O U T I N E =======================================
 
 
-RunUpdate:                              ; CODE XREF: sub_D4500:loc_D46F4↓p
+RunUpdate:                              ; CODE XREF: RunLevelIntro:loc_D46F4↓p
                                         ; sub_D46FE+A8↓p ...
                 jsr     RunPlayerUpdate
                 jsr     RunFlippersUpdate
@@ -1760,12 +1760,12 @@ locret_D44FE:                           ; CODE XREF: RunUpdate+2E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D4500:                              ; CODE XREF: sub_D46FE+5E↓p
-                                        ; main:loc_D52D8↓p
+RunLevelIntro:                          ; CODE XREF: sub_D46FE+5E↓p
+                                        ; RunMain:loc_D52D8↓p
                 movem.l a2-a5,-(sp)
                 movea.l #$FF55A0,a3
                 movea.l #$FFF1FA,a4
-                movea.l #sub_DB7CC,a5
+                movea.l #SetPlayerAnimation,a5
                 tst.w   (a3)
                 bge.s   loc_D4568
                 move.w  (a3),d0
@@ -1779,7 +1779,7 @@ sub_D4500:                              ; CODE XREF: sub_D46FE+5E↓p
                 bra.s   loc_D455E
 ; ---------------------------------------------------------------------------
 
-loc_D452C:                              ; CODE XREF: sub_D4500+22↑j
+loc_D452C:                              ; CODE XREF: RunLevelIntro+22↑j
                 pea     (aLaunchingExtra).l ; "LAUNCHING EXTRA BALL"
                 pea     (2).w
                 pea     (off_3C).w
@@ -1793,18 +1793,18 @@ loc_D452C:                              ; CODE XREF: sub_D4500+22↑j
                 bra.s   loc_D455E
 ; ---------------------------------------------------------------------------
 
-loc_D4558:                              ; CODE XREF: sub_D4500+28↑j
+loc_D4558:                              ; CODE XREF: RunLevelIntro+28↑j
                 tst.w   (a4)
                 bgt.s   loc_D455E
                 clr.w   (a3)
 
-loc_D455E:                              ; CODE XREF: sub_D4500+2A↑j
-                                        ; sub_D4500+56↑j ...
+loc_D455E:                              ; CODE XREF: RunLevelIntro+2A↑j
+                                        ; RunLevelIntro+56↑j ...
                 jsr     RunOSDAnimationUpdate
                 bra.w   loc_D46F8
 ; ---------------------------------------------------------------------------
 
-loc_D4568:                              ; CODE XREF: sub_D4500+18↑j
+loc_D4568:                              ; CODE XREF: RunLevelIntro+18↑j
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -1825,14 +1825,14 @@ loc_D4568:                              ; CODE XREF: sub_D4500+18↑j
                 move.w  off_D45AC(pc,d0.l),d0
                 jmp     off_D45AC(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D45AC:      dc.w loc_D45B4-*        ; DATA XREF: sub_D4500+A4↑r
-                                        ; sub_D4500:off_D45AC↓o ...
+off_D45AC:      dc.w loc_D45B4-*        ; DATA XREF: RunLevelIntro+A4↑r
+                                        ; RunLevelIntro:off_D45AC↓o ...
                 dc.w loc_D4646-off_D45AC
                 dc.w loc_D4646-off_D45AC
                 dc.w loc_D4646-off_D45AC
 ; ---------------------------------------------------------------------------
 
-loc_D45B4:                              ; DATA XREF: sub_D4500:off_D45AC↑o
+loc_D45B4:                              ; DATA XREF: RunLevelIntro:off_D45AC↑o
                 move.w  (a3),d0
                 ext.l   d0
                 tst.w   d0
@@ -1846,7 +1846,7 @@ loc_D45B4:                              ; DATA XREF: sub_D4500:off_D45AC↑o
                 bra.w   loc_D46F4
 ; ---------------------------------------------------------------------------
 
-loc_D45CC:                              ; CODE XREF: sub_D4500+BA↑j
+loc_D45CC:                              ; CODE XREF: RunLevelIntro+BA↑j
                 cmpi.w  #$7D8,$12(a2)
                 bge.w   loc_D46F4
                 move.b  #4,$C(a2)
@@ -1862,7 +1862,7 @@ loc_D45CC:                              ; CODE XREF: sub_D4500+BA↑j
                 bra.w   loc_D46F4
 ; ---------------------------------------------------------------------------
 
-loc_D4600:                              ; CODE XREF: sub_D4500+C0↑j
+loc_D4600:                              ; CODE XREF: RunLevelIntro+C0↑j
                 tst.l   8(a2)
                 beq.w   loc_D46F4
                 pea     (6).w
@@ -1874,13 +1874,13 @@ loc_D4600:                              ; CODE XREF: sub_D4500+C0↑j
                 clr.l   $22(a2)
                 jsr     LevelStart
 
-loc_D4628:                              ; CODE XREF: sub_D4500+172↓j
-                                        ; sub_D4500+1A8↓j ...
+loc_D4628:                              ; CODE XREF: RunLevelIntro+172↓j
+                                        ; RunLevelIntro+1A8↓j ...
                 addq.w  #1,(a3)
                 bra.w   loc_D46F4
 ; ---------------------------------------------------------------------------
 
-loc_D462E:                              ; CODE XREF: sub_D4500+C6↑j
+loc_D462E:                              ; CODE XREF: RunLevelIntro+C6↑j
                 clr.l   $22(a2)
                 movea.l (a2),a0
                 tst.b   $2E(a0)
@@ -1889,8 +1889,8 @@ loc_D462E:                              ; CODE XREF: sub_D4500+C6↑j
                 bra.w   loc_D46EC
 ; ---------------------------------------------------------------------------
 
-loc_D4646:                              ; DATA XREF: sub_D4500+AE↑o
-                                        ; sub_D4500+B0↑o ...
+loc_D4646:                              ; DATA XREF: RunLevelIntro+AE↑o
+                                        ; RunLevelIntro+B0↑o ...
                 move.w  (a3),d0
                 ext.l   d0
                 moveq   #3,d1
@@ -1900,21 +1900,21 @@ loc_D4646:                              ; DATA XREF: sub_D4500+AE↑o
                 move.w  off_D465C(pc,d0.l),d0
                 jmp     off_D465C(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D465C:      dc.w loc_D4664-*        ; DATA XREF: sub_D4500+154↑r
-                                        ; sub_D4500:off_D465C↓o ...
+off_D465C:      dc.w loc_D4664-*        ; DATA XREF: RunLevelIntro+154↑r
+                                        ; RunLevelIntro:off_D465C↓o ...
                 dc.w loc_D4674-off_D465C
                 dc.w loc_D46AC-off_D465C
                 dc.w loc_D46CE-off_D465C
 ; ---------------------------------------------------------------------------
 
-loc_D4664:                              ; DATA XREF: sub_D4500:off_D465C↑o
+loc_D4664:                              ; DATA XREF: RunLevelIntro:off_D465C↑o
                 jsr     LevelStart
                 clr.l   $22(a2)
                 move.w  #$50,(a4) ; 'P'
                 bra.s   loc_D4628
 ; ---------------------------------------------------------------------------
 
-loc_D4674:                              ; DATA XREF: sub_D4500+15E↑o
+loc_D4674:                              ; DATA XREF: RunLevelIntro+15E↑o
                 clr.l   $22(a2)
                 tst.w   (a4)
                 bgt.s   loc_D46F4
@@ -1932,7 +1932,7 @@ loc_D4674:                              ; DATA XREF: sub_D4500+15E↑o
                 bra.w   loc_D4628
 ; ---------------------------------------------------------------------------
 
-loc_D46AC:                              ; DATA XREF: sub_D4500+160↑o
+loc_D46AC:                              ; DATA XREF: RunLevelIntro+160↑o
                 tst.l   $22(a2)
                 blt.s   loc_D46F4
                 pea     (3).w
@@ -1945,7 +1945,7 @@ loc_D46AC:                              ; DATA XREF: sub_D4500+160↑o
                 bra.w   loc_D4628
 ; ---------------------------------------------------------------------------
 
-loc_D46CE:                              ; DATA XREF: sub_D4500+162↑o
+loc_D46CE:                              ; DATA XREF: RunLevelIntro+162↑o
                 move.w  ($FF75B0).l,d0
                 lsl.w   #2,d0
                 movea.l #unk_C06F4,a0
@@ -1954,18 +1954,18 @@ loc_D46CE:                              ; DATA XREF: sub_D4500+162↑o
                 bgt.s   loc_D46F4
                 jsr     sub_DB836
 
-loc_D46EC:                              ; CODE XREF: sub_D4500+142↑j
+loc_D46EC:                              ; CODE XREF: RunLevelIntro+142↑j
                 moveq   #2,d0
                 move.l  d0,($FF3CB4).l
 
-loc_D46F4:                              ; CODE XREF: sub_D4500+9E↑j
-                                        ; sub_D4500+C8↑j ...
+loc_D46F4:                              ; CODE XREF: RunLevelIntro+9E↑j
+                                        ; RunLevelIntro+C8↑j ...
                 bsr.w   RunUpdate
 
-loc_D46F8:                              ; CODE XREF: sub_D4500+64↑j
+loc_D46F8:                              ; CODE XREF: RunLevelIntro+64↑j
                 movem.l (sp)+,a2-a5
                 rts
-; End of function sub_D4500
+; End of function RunLevelIntro
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -2001,7 +2001,7 @@ loc_D4752:                              ; CODE XREF: sub_D46FE+42↑j
                 moveq   #1,d0
                 cmp.l   ($FF3CB4).l,d0
                 bne.s   loc_D4762
-                bsr.w   sub_D4500
+                bsr.w   RunLevelIntro
                 bra.s   loc_D47AA
 ; ---------------------------------------------------------------------------
 
@@ -2049,7 +2049,7 @@ loc_D47BC:                              ; CODE XREF: sub_D46FE+4E↑j
                                         ; sub_D46FE+52↑j ...
                 clr.l   ($FF3CB4).l
                 jsr     sub_D86CA
-                jsr     sub_D56C8(pc)
+                jsr     Z80_MuteAllSounds(pc)
                 nop
                 move.w  d6,(a4)
                 clr.b   ($FF0006).l
@@ -2062,7 +2062,7 @@ loc_D47BC:                              ; CODE XREF: sub_D46FE+4E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D47DE:                              ; CODE XREF: main:loc_D52D0↓p
+sub_D47DE:                              ; CODE XREF: RunMain:loc_D52D0↓p
                 move.l  d2,-(sp)
                 jsr     sub_F2554
                 move.l  d0,d2
@@ -2139,7 +2139,7 @@ sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
                 movea.l #$FFAD24,a0
                 adda.l  d0,a0
                 move.l  a0,(a2)
-                jsr     sub_D56C8(pc)
+                jsr     Z80_MuteAllSounds(pc)
                 nop
                 pea     (off_10).w
                 jsr     sub_D567E(pc)
@@ -2149,7 +2149,7 @@ sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
                 andi.w  #$BFFF,$22(a0)
                 pea     (2).w
                 pea     (off_30).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $20(sp),sp
                 move.l  #unk_18000,$1E(a2)
                 move.l  #$FFFCA000,$22(a2)
@@ -2167,7 +2167,7 @@ sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
 
 ; Attributes: bp-based frame
 
-sub_D48E2:                              ; CODE XREF: main:loc_D54AC↓p
+sub_D48E2:                              ; CODE XREF: RunMain:loc_D54AC↓p
 
 var_44          = -$44
 var_28          = -$28
@@ -2597,7 +2597,7 @@ loc_D4DB6:                              ; DATA XREF: sub_D48E2+88↑o
                 jmp     Custom_RespawnPlayer
                 ;jsr     sub_D86CA
 Custom_RespawnPlayer_EndLevel:
-                jsr     sub_D56C8(pc)
+                jsr     Z80_MuteAllSounds(pc)
                 nop
                 tst.b   d3
                 bne.s   loc_D4E2A
@@ -3065,7 +3065,7 @@ loc_D5226:                              ; CODE XREF: VDP_UpdateVisibleTileData+2
 ; =============== S U B R O U T I N E =======================================
 
 
-main:                                   ; CODE XREF: ROM:000006F8↑j
+RunMain:                                   ; CODE XREF: ROM:000006F8↑j
                 movem.l d2/a2-a5,-(sp)
                 movea.l #$FF573C,a2
                 movea.l #RunOSDAnimationUpdate,a3
@@ -3077,13 +3077,13 @@ main:                                   ; CODE XREF: ROM:000006F8↑j
                 move.b  #1,($FFF8D6).l
                 jsr     sub_FED1C
 
-loc_D5270:                              ; CODE XREF: main+26↑j
+loc_D5270:                              ; CODE XREF: RunMain+26↑j
                 clr.l   -(sp)
                 jsr     sub_D54CE(pc)
                 nop
                 addq.l  #4,sp
 
-MainLoop:                               ; CODE XREF: main+294↓j
+MainLoop:                               ; CODE XREF: RunMain+294↓j
                 move.w  (a2),($FF74DC).l
                 moveq   #0,d0
                 move.b  ($FF0005).l,d0
@@ -3102,8 +3102,8 @@ MainLoop:                               ; CODE XREF: main+294↓j
                 move.w  GameModes(pc,d0.l),d0
                 jmp     GameModes(pc,d0.w)
 ; ---------------------------------------------------------------------------
-GameModes:      dc.w loc_D52D0-*        ; DATA XREF: main+8A↑r
-                                        ; main:GameModes↓o ...
+GameModes:      dc.w loc_D52D0-*        ; DATA XREF: RunMain+8A↑r
+                                        ; RunMain:GameModes↓o ...
                 dc.w loc_D52D8-GameModes
                 dc.w loc_D52E0-GameModes
                 dc.w loc_D5356-GameModes
@@ -3112,17 +3112,17 @@ GameModes:      dc.w loc_D52D0-*        ; DATA XREF: main+8A↑r
                 dc.w loc_D54AC-GameModes
 ; ---------------------------------------------------------------------------
 
-loc_D52D0:                              ; DATA XREF: main:GameModes↑o
+loc_D52D0:                              ; DATA XREF: RunMain:GameModes↑o
                 bsr.w   sub_D47DE
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D52D8:                              ; DATA XREF: main+94↑o
-                bsr.w   sub_D4500
+loc_D52D8:                              ; DATA XREF: RunMain+94↑o
+                bsr.w   RunLevelIntro
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D52E0:                              ; DATA XREF: main+96↑o
+loc_D52E0:                              ; DATA XREF: RunMain+96↑o
                 move.w  (a2),d0
                 andi.w  #$8000,d0
                 beq.s   loc_D5348
@@ -3143,7 +3143,7 @@ loc_D52E0:                              ; DATA XREF: main+96↑o
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D5318:                              ; CODE XREF: main+DA↑j
+loc_D5318:                              ; CODE XREF: RunMain+DA↑j
                 move.b  #1,(a5)
                 jsr     GEMSPauseAll
                 jsr     sub_DE996
@@ -3156,20 +3156,20 @@ loc_D5318:                              ; CODE XREF: main+DA↑j
                 jsr     (a4)
                 lea     $18(sp),sp
 
-loc_D5342:                              ; CODE XREF: main+238↓j
+loc_D5342:                              ; CODE XREF: RunMain+238↓j
                 jsr     (a3)
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D5348:                              ; CODE XREF: main+B6↑j
-                                        ; main+D6↑j
+loc_D5348:                              ; CODE XREF: RunMain+B6↑j
+                                        ; RunMain+D6↑j
                 tst.b   (a5)
                 bne.w   WaitForNextMode
                 bsr.w   RunUpdate
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D5356:                              ; DATA XREF: main+98↑o
+loc_D5356:                              ; DATA XREF: RunMain+98↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D5406
                 jsr     sub_D86CA
@@ -3198,7 +3198,7 @@ loc_D5356:                              ; DATA XREF: main+98↑o
                 bra.s   loc_D53D2
 ; ---------------------------------------------------------------------------
 
-loc_D53B6:                              ; CODE XREF: main+148↑j
+loc_D53B6:                              ; CODE XREF: RunMain+148↑j
                 bsr.w   sub_D4228
                 pea     (aWelcomeBack).l ; "WELCOME BACK!"
                 pea     (6).w
@@ -3207,7 +3207,7 @@ loc_D53B6:                              ; CODE XREF: main+148↑j
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_D53D2:                              ; CODE XREF: main+184↑j
+loc_D53D2:                              ; CODE XREF: RunMain+184↑j
                 jsr     (a4)
                 lea     $18(sp),sp
                 clr.w   ($FF55A8).l
@@ -3223,7 +3223,7 @@ loc_D53D2:                              ; CODE XREF: main+184↑j
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D5406:                              ; CODE XREF: main+12C↑j
+loc_D5406:                              ; CODE XREF: RunMain+12C↑j
                 jsr     RunCameraUpdate
                 jsr     RunAnimatedObjectsUpdate
                 jsr     (a3)
@@ -3231,7 +3231,7 @@ loc_D5406:                              ; CODE XREF: main+12C↑j
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D541E:                              ; DATA XREF: main+9A↑o
+loc_D541E:                              ; DATA XREF: RunMain+9A↑o
                 move.w  ($FF75B0).l,d0
                 ext.l   d0
                 moveq   #3,d1
@@ -3241,42 +3241,42 @@ loc_D541E:                              ; DATA XREF: main+9A↑o
                 move.w  off_D5436(pc,d0.l),d0
                 jmp     off_D5436(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D5436:      dc.w loc_D543E-*        ; DATA XREF: main+1FE↑r
-                                        ; main:off_D5436↓o ...
+off_D5436:      dc.w loc_D543E-*        ; DATA XREF: RunMain+1FE↑r
+                                        ; RunMain:off_D5436↓o ...
                 dc.w loc_D5446-off_D5436
                 dc.w loc_D544E-off_D5436
                 dc.w loc_D5456-off_D5436
 ; ---------------------------------------------------------------------------
 
-loc_D543E:                              ; DATA XREF: main:off_D5436↑o
+loc_D543E:                              ; DATA XREF: RunMain:off_D5436↑o
                 jsr     sub_E9A56
                 bra.s   loc_D545C
 ; ---------------------------------------------------------------------------
 
-loc_D5446:                              ; DATA XREF: main+208↑o
+loc_D5446:                              ; DATA XREF: RunMain+208↑o
                 jsr     sub_E4B64
                 bra.s   loc_D545C
 ; ---------------------------------------------------------------------------
 
-loc_D544E:                              ; DATA XREF: main+20A↑o
+loc_D544E:                              ; DATA XREF: RunMain+20A↑o
                 jsr     sub_F0E5A
                 bra.s   loc_D545C
 ; ---------------------------------------------------------------------------
 
-loc_D5456:                              ; DATA XREF: main+20C↑o
+loc_D5456:                              ; DATA XREF: RunMain+20C↑o
                 jsr     sub_EDBBC
 
-loc_D545C:                              ; CODE XREF: main+1FA↑j
-                                        ; main+214↑j ...
+loc_D545C:                              ; CODE XREF: RunMain+1FA↑j
+                                        ; RunMain+214↑j ...
                 jsr     RunCameraUpdate
 
-loc_D5462:                              ; CODE XREF: main+266↓j
-                                        ; main+27A↓j
+loc_D5462:                              ; CODE XREF: RunMain+266↓j
+                                        ; RunMain+27A↓j
                 jsr     RunAnimatedObjectsUpdate
                 bra.w   loc_D5342
 ; ---------------------------------------------------------------------------
 
-loc_D546C:                              ; DATA XREF: main+9C↑o
+loc_D546C:                              ; DATA XREF: RunMain+9C↑o
                 jsr     RunPlayerUpdate
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -3297,22 +3297,22 @@ loc_D546C:                              ; DATA XREF: main+9C↑o
                 bra.s   loc_D5462
 ; ---------------------------------------------------------------------------
 
-loc_D54AC:                              ; DATA XREF: main+9E↑o
+loc_D54AC:                              ; DATA XREF: RunMain+9E↑o
                 bsr.w   sub_D48E2
 
-WaitForNextMode:                        ; CODE XREF: main+84↑j
-                                        ; main+A4↑j ...
+WaitForNextMode:                        ; CODE XREF: RunMain+84↑j
+                                        ; RunMain+A4↑j ...
                 addq.w  #1,($FFF20A).l
                 move.w  ($FF0012).l,d2
 
-loc_D54BC:                              ; CODE XREF: main+292↓j
+loc_D54BC:                              ; CODE XREF: RunMain+292↓j
                 cmp.w   ($FF0000).l,d2
                 beq.s   loc_D54BC
                 bra.w   MainLoop
 ; ---------------------------------------------------------------------------
-                movem.l (sp)+,d2/a2-a5  ; produced by the C compiler - after all, main() is a function (and only takes special meaning in the compiler/linker's internal startup/takedown routines)
+                movem.l (sp)+,d2/a2-a5  ; produced by the C compiler - after all, RunMain() is a function (and only takes special meaning in the compiler/linker's internal startup/takedown routines)
                 rts
-; End of function main
+; End of function RunMain
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3408,7 +3408,7 @@ loc_D5586:                              ; DATA XREF: sub_D54CE+9E↑o
 
 loc_D558C:                              ; CODE XREF: sub_D54CE+8C↑j
                                         ; sub_D54CE+A6↑j ...
-                jsr     sub_D56C8(pc)
+                jsr     Z80_MuteAllSounds(pc)
                 nop
                 cmpi.w  #3,(a3)
                 bne.s   loc_D55BC
@@ -3465,7 +3465,7 @@ loc_D5604:                              ; CODE XREF: sub_D54CE+1E↑j
 
 
 PlaySong:                               ; CODE XREF: NewLife+DE↑p
-                                        ; sub_D4500+19E↑p ...
+                                        ; RunLevelIntro+19E↑p ...
 
 arg_0           =  4
 
@@ -3582,13 +3582,13 @@ loc_D56C4:                              ; CODE XREF: sub_D56A8+A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D56C8:                              ; CODE XREF: GoToBonusStage:loc_D3F96↑p
+Z80_MuteAllSounds:                              ; CODE XREF: GoToBonusStage:loc_D3F96↑p
                                         ; sub_D3FAC+10↑p ...
                 jsr     GEMSStopAll
                 move.w  #$FFFF,($FF548E).l
                 move.w  #$FFFF,($FF548C).l
                 rts
-; End of function sub_D56C8
+; End of function Z80_MuteAllSounds
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3660,7 +3660,8 @@ RunAnimatedObjectsUpdate:                              ; CODE XREF: sub_D4228+13
                 nop
 
 loc_D5760:                              ; CODE XREF: RunAnimatedObjectsUpdate+A↑j
-                move.w  ($FF55AA).l,d0
+                ; move.w  ($FF55AA).l,d0
+                jmp RunOptimisedAnimationsUpdate
                 addi.w  #-$1A,d0
                 move.w  d0,($FF998A).l
                 move.w  ($FF55AA).l,d0
@@ -3680,9 +3681,11 @@ loc_D57A8:                              ; CODE XREF: RunAnimatedObjectsUpdate+13
                 andi.w  #$8000,d0
                 beq.w   loc_D5882
                 andi.w  #$FFF7,$22(a2)
-                movea.l $3A(a2),a3
-                move.w  (a3),d4
-                move.w  2(a3),d3
+
+                movea.l $3A(a2),a3      ; game_sprite ptr
+                move.w  (a3),d4         ; cached screen_xpos
+                move.w  2(a3),d3        ; cached screen_ypos
+
                 tst.b   $2B(a2)
                 beq.s   loc_D57F6
                 move.l  a2,-(sp)
@@ -3777,15 +3780,20 @@ loc_D5882:                              ; CODE XREF: RunAnimatedObjectsUpdate+62
                 adda.l  d0,a2
                 cmpi.w  #$100,d2 ; Number of animated objs to update
                 bcs.w   loc_D57A8
+ReturnFrom_RunOptimisedAnimationsUpdate:
                 tst.b   ($FF3F3A).l
                 bne.s   loc_D589E
                 jsr     RunUpdate_Rings
 
 loc_D589E:                              ; CODE XREF: RunAnimatedObjectsUpdate+148↑j
-                jsr     RunPaletteAnimationUpdate
+                ;jsr     RunPaletteAnimationUpdate
                 jsr     sub_D845C
                 movem.l (sp)+,d2-d4/a2-a3
                 rts
+
+                nop ;jsr     RunPaletteAnimationUpdate
+                nop
+                nop
 ; End of function RunAnimatedObjectsUpdate
 
 
@@ -4614,7 +4622,7 @@ loc_D5F10:                              ; CODE XREF: AnimObj_DecodeCurrentAnimFr
 ; =============== S U B R O U T I N E =======================================
 
 
-AnimObj_InitialiseInstance:                              ; CODE XREF: sub_D4500+F2↑p
+AnimObj_InitialiseInstance:                              ; CODE XREF: RunLevelIntro+F2↑p
                                         ; sub_D4830+44↑p ...
 
 arg_0           =  4
@@ -9268,7 +9276,7 @@ loc_D8712:                              ; CODE XREF: sub_D8702+18↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D871E:                              ; CODE XREF: main+268↑p
+sub_D871E:                              ; CODE XREF: RunMain+268↑p
                 move.w  #8,($FF005C).l
                 moveq   #8,d0
                 move.l  d0,($FF0058).l
@@ -10494,7 +10502,7 @@ loc_D91F8:                              ; DATA XREF: RunUpdate_ToxicCaves+AE↑o
                 bne.s   loc_D9268
                 pea     (2).w
                 pea     ($17).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 clr.l   $1E(a4)
                 clr.l   $22(a4)
                 ori.b   #2,$C(a4)
@@ -10756,7 +10764,7 @@ loc_D9530:                              ; CODE XREF: RunUpdate_ToxicCaves+602↑
                 jsr     AnimObj_PlayAnimation
                 pea     (6).w
                 pea     ($27).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 clr.l   $1E(a4)
                 clr.l   $22(a4)
                 ori.b   #6,$C(a4)
@@ -10839,7 +10847,7 @@ loc_D9654:                              ; DATA XREF: RunUpdate_ToxicCaves+37C↑
                 ori.b   #2,$C(a4)
                 pea     (off_14).w
                 pea     (off_C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     (unk_4000).w
                 pea     ($BE).w
                 jsr     sub_DBFC8
@@ -10851,7 +10859,7 @@ loc_D9654:                              ; DATA XREF: RunUpdate_ToxicCaves+37C↑
 loc_D9698:                              ; DATA XREF: RunUpdate_ToxicCaves+386↑o
                 pea     (2).w
                 pea     ($17).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 move.b  #$14,8(a2)
                 movea.l (a2),a0
@@ -11916,7 +11924,7 @@ loc_DA2B2:                              ; CODE XREF: RunUpdate_ToxicCaves+1384�
                 move.w  #$100A,$C(a4)
                 pea     (off_14).w
                 pea     (off_C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $14(sp),sp
                 move.w  #$1E,($FFF1FA).l
                 clr.l   $1E(a4)
@@ -11939,7 +11947,7 @@ loc_DA31E:                              ; DATA XREF: RunUpdate_ToxicCaves+1342�
                 move.w  #$100A,$C(a4)
                 pea     (off_14).w
                 pea     (off_C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $14(sp),sp
                 move.w  #$1E,($FFF1FA).l
                 clr.l   $1E(a4)
@@ -11958,7 +11966,7 @@ loc_DA37A:                              ; CODE XREF: RunUpdate_ToxicCaves+1406�
                 ori.w   #$4080,$22(a0)
                 pea     (off_C).w
                 pea     ($26).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 move.b  #2,9(a2)
                 clr.w   $10(a2)
@@ -11979,7 +11987,7 @@ loc_DA3BA:                              ; CODE XREF: RunUpdate_ToxicCaves+1462�
                 ori.w   #$80,$22(a0)
                 pea     (off_C).w
                 pea     ($26).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 move.b  #3,9(a2)
                 move.w  #1,$10(a2)
@@ -11991,7 +11999,7 @@ loc_DA408:                              ; CODE XREF: RunUpdate_ToxicCaves+14A2�
                 beq.s   loc_DA420
                 pea     (2).w
                 pea     ($25).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
 
 loc_DA420:                              ; CODE XREF: RunUpdate_ToxicCaves+14EC↑j
@@ -12328,7 +12336,7 @@ loc_DA7B6:                              ; CODE XREF: RunUpdate_ToxicCaves+1878�
                 move.b  #$22,$C(a4) ; '"'
                 pea     (off_4).w
                 pea     ($2B).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 clr.l   -(sp)
                 clr.l   -(sp)
                 movea.l (a2),a0
@@ -12509,7 +12517,7 @@ loc_DA994:                              ; CODE XREF: RunUpdate_ToxicCaves+1A5A�
                 jsr     AnimObj_PlayAnimation
                 pea     (2).w
                 pea     (off_18).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $1C(sp),sp
                 movea.l $3A(a3),a0
                 andi.w  #$FFFB,6(a0)
@@ -12588,7 +12596,7 @@ loc_DAAE0:                              ; CODE XREF: RunUpdate_ToxicCaves+1B44�
                 beq.s   loc_DAB18
                 pea     (off_4).w
                 pea     (off_24).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     ($2D).w
                 jsr     TriggerOSDMessage
                 lea     $C(sp),sp
@@ -12657,7 +12665,7 @@ loc_DABAA:                              ; CODE XREF: RunUpdate_ToxicCaves+1C72�
 loc_DABB6:                              ; DATA XREF: RunUpdate_ToxicCaves+17D6↑o
                 pea     (2).w
                 pea     ($17).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     (2).w
                 pea     ($1B).w
                 move.l  a3,-(sp)
@@ -12695,7 +12703,7 @@ loc_DAC2C:                              ; DATA XREF: RunUpdate_ToxicCaves+17D8�
                 move.b  #2,$C(a4)
                 pea     (2).w
                 pea     (off_18).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     (2).w
                 pea     (off_8).w
                 move.l  a3,-(sp)
@@ -12929,7 +12937,7 @@ loc_DAF24:                              ; CODE XREF: RunUpdate_ToxicCaves+205C�
                 lea     $C(sp),sp
                 pea     (2).w
                 pea     ($19).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 bra.w   loc_DA058
 ; ---------------------------------------------------------------------------
 
@@ -12996,7 +13004,7 @@ loc_DB004:                              ; CODE XREF: RunUpdate_ToxicCaves+20CE�
                 bne.w   loc_DB222
                 pea     (2).w
                 pea     ($2D).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 clr.l   -(sp)
                 pea     (off_48).w
                 pea     (off_48).w
@@ -13025,7 +13033,7 @@ loc_DB05E:                              ; CODE XREF: RunUpdate_ToxicCaves+20D4�
                 move.b  #$10,$C(a4)
                 pea     (off_14).w
                 pea     (off_C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     (unk_4000).w
                 cmpa.l  #$FF896E,a2
                 bne.s   loc_DB0A0
@@ -13097,7 +13105,7 @@ loc_DB134:                              ; CODE XREF: RunUpdate_ToxicCaves+2206�
                 jsr     AnimObj_PlayAnimation
                 pea     (2).w
                 pea     ($17).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $14(sp),sp
                 bra.w   loc_D9022
 ; ---------------------------------------------------------------------------
@@ -13308,7 +13316,7 @@ loc_DB30C:                              ; CODE XREF: sub_DB234+CA↑j
 loc_DB372:                              ; CODE XREF: sub_DB234+12E↑j
                 pea     (off_4).w
                 pea     (off_24).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     ($2E).w
                 jsr     TriggerOSDMessage
                 pea     ($4B).w
@@ -13355,7 +13363,7 @@ loc_DB3D2:                              ; CODE XREF: sub_DB234+188↑j
                 move.b  (a3),d0
                 addi.b  #$17,d0
                 move.l  d0,-(sp)
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $14(sp),sp
                 move.w  8(a3),($FF0072).l
                 move.b  1(a3),d0
@@ -13463,7 +13471,7 @@ loc_DB4F2:                              ; CODE XREF: sub_DB4A0+3C↑j
                 move.b  (a2),d0
                 addi.b  #$17,d0
                 move.l  d0,-(sp)
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $14(sp),sp
                 move.w  8(a2),($FF0072).l
                 move.b  1(a2),d0
@@ -13730,7 +13738,7 @@ sub_DB744:                              ; CODE XREF: sub_D3FAC+F4↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DB7CC:                              ; CODE XREF: sub_D4830+7C↑p
+SetPlayerAnimation:                              ; CODE XREF: sub_D4830+7C↑p
                                         ; RunUpdate_ToxicCaves+30C↑p ...
 
 arg_0           =  4
@@ -13766,16 +13774,16 @@ arg_7           =  $B
                 ori.w   #$8000,(a0,d0.l)
                 clr.b   $30(a1)
 
-loc_DB832:                              ; CODE XREF: sub_DB7CC+4C↑j
+loc_DB832:                              ; CODE XREF: SetPlayerAnimation+4C↑j
                 move.l  (sp)+,d2
                 rts
-; End of function sub_DB7CC
+; End of function SetPlayerAnimation
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DB836:                              ; CODE XREF: sub_D4500+1E6↑p
+sub_DB836:                              ; CODE XREF: RunLevelIntro+1E6↑p
                                         ; sub_D54CE+6C↑p ...
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -13803,7 +13811,7 @@ loc_DB86E:                              ; CODE XREF: sub_DB836+24↑j
                 clr.w   $C(a1)
                 pea     (off_8).w
                 clr.l   -(sp)
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 rts
 ; End of function sub_DB836
@@ -13830,7 +13838,7 @@ sub_DB880:                              ; CODE XREF: sub_E3150+61A↓p
                 clr.l   $1E(a2)
                 pea     (off_4).w
                 pea     (off_28).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.b  #$10,$C(a2)
                 move.w  #$3C,($FFF1FA).l ; '<'
@@ -13844,7 +13852,7 @@ loc_DB8C8:                              ; CODE XREF: sub_DB880+26↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DB8CC:                              ; CODE XREF: sub_D4500+13C↑p
+sub_DB8CC:                              ; CODE XREF: RunLevelIntro+13C↑p
                                         ; RunPlayerUpdate:loc_DD280↓p ...
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -13856,7 +13864,7 @@ sub_DB8CC:                              ; CODE XREF: sub_D4500+13C↑p
                 move.w  #$101,(a0,d0.w)
                 pea     (6).w
                 pea     (5).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.w  #$78,($FFF1FA).l ; 'x'
                 rts
@@ -14845,7 +14853,7 @@ loc_DC210:                              ; CODE XREF: LoseLife+2A↑j
                 bsr.w   MoveCameraToLocationAtSpeed
                 pea     (1).w
                 pea     (3).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 movea.l (a2),a0
                 movea.l $3A(a0),a0
                 ori.w   #4,6(a0)
@@ -15758,7 +15766,7 @@ loc_DCAF2:                              ; DATA XREF: RunPlayerPinballPhysics+6D8
                 move.w  #$507,$C(a3)
                 pea     (off_4).w
                 pea     ($13).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 cmpi.w  #7,var_1A(a6)
                 bne.s   loc_DCB1E
                 movea.l (a3),a0
@@ -16233,7 +16241,7 @@ arg_0           =  4
 
                 movem.l d2-d3/a2-a4,-(sp)
                 movea.l $14+arg_0(sp),a2
-                movea.l #sub_DB7CC,a3
+                movea.l #SetPlayerAnimation,a3
                 movea.l #abs,a4         ; int abs(int n);
                                         ; Returns the absolute value of n.
                 pea     ($FF0080).l
@@ -16356,7 +16364,7 @@ sub_DCF8C:                              ; CODE XREF: RunPlayerUpdate+1E4↓p ; P
                 move.b  #$A,(a0,d0.w)
                 pea     ($A).w
                 pea     ($A).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.w  #1,($FFF1FA).l  ; Reduce from 6 to 1, to make jumping essentially instantaneous
                 rts
@@ -16367,7 +16375,7 @@ sub_DCF8C:                              ; CODE XREF: RunPlayerUpdate+1E4↓p ; P
 
 
 RunPlayerUpdate:                              ; CODE XREF: RunUpdate↑p
-                                        ; main:loc_D546C↑p
+                                        ; RunMain:loc_D546C↑p
                 movem.l d2-d6/a2-a5,-(sp)
                 movea.l #$FF573C,a4
                 movea.l #$FFF1FA,a5
@@ -16491,7 +16499,7 @@ loc_DD0FA:                              ; CODE XREF: RunPlayerUpdate+12C↑j
                 clr.b   $31(a3)
                 pea     ($A).w
                 pea     ($16).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 clr.w   $2E(a2)
                 bra.w   loc_DD6D8
@@ -16505,7 +16513,7 @@ loc_DD11C:                              ; CODE XREF: RunPlayerUpdate+138↑j
                 beq.s   loc_DD144
                 pea     (6).w
                 pea     ($15).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.b  #9,$D(a2)
                 clr.w   (a5)
@@ -16519,7 +16527,7 @@ loc_DD144:                              ; CODE XREF: RunPlayerUpdate+162↑j
                 beq.s   loc_DD16E
                 pea     (6).w
                 pea     (6).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.w  #$502,$C(a2)
                 move.w  ($FF55AA).l,($FF007A).l
@@ -16532,7 +16540,7 @@ loc_DD16E:                              ; CODE XREF: RunPlayerUpdate+18A↑j
                 beq.s   loc_DD19C
                 pea     (6).w
                 pea     ($D).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.b  #3,$D(a2)
                 move.w  ($FF55AA).l,($FF007A).l
@@ -16564,7 +16572,7 @@ loc_DD1AC:                              ; CODE XREF: RunPlayerUpdate+1E2↑j
                 move.b  #$E,$D(a2)
                 pea     (6).w
                 pea     (7).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 lea     $20(sp),sp
                 move.w  #$F0,(a5)
                 bra.w   loc_DD6D8
@@ -16594,7 +16602,7 @@ loc_DD212:                              ; DATA XREF: RunPlayerUpdate+104↑o
                 beq.s   loc_DD276
                 pea     ($A).w
                 pea     ($E).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 moveq   #0,d0
                 move.w  $22(a3),d0
                 move.l  d0,-(sp)
@@ -16796,7 +16804,7 @@ loc_DD44E:                              ; DATA XREF: RunPlayerUpdate+108↑o
                 move.b  #1,$D(a2)
                 pea     (off_4).w
                 pea     ($11).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.w  #$78,(a5) ; 'x'
 
@@ -16988,7 +16996,7 @@ loc_DD600:                              ; DATA XREF: RunPlayerUpdate+11A↑o
                 move.b  #$F,$D(a2)
                 pea     (6).w
                 pea     (off_8).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 bra.w   loc_DD20C
 ; ---------------------------------------------------------------------------
 
@@ -17014,7 +17022,7 @@ loc_DD65A:                              ; DATA XREF: RunPlayerUpdate+11C↑o
                 bsr.w   UpdatePlayerAnimObjFacing
                 pea     (6).w
                 pea     (9).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 lea     $C(sp),sp
                 move.b  #1,$D(a2)
                 move.w  #$78,(a5) ; 'x'
@@ -17255,7 +17263,7 @@ loc_DD8B8:                              ; CODE XREF: RunPlayerUpdate+8EE↑j
                 move.b  #$10,$D(a2)
                 pea     (2).w
                 pea     ($B).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 bra.s   loc_DD8F8
 ; ---------------------------------------------------------------------------
@@ -17269,7 +17277,7 @@ loc_DD8E0:                              ; CODE XREF: RunPlayerUpdate+8FC↑j
                 move.b  #5,$D(a2)
                 pea     (2).w
                 pea     (off_10).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 clr.l   $22(a2)
 
@@ -17292,7 +17300,7 @@ loc_DD8FC:                              ; CODE XREF: RunPlayerUpdate+872↑j
                 beq.s   loc_DD930
                 pea     (off_8).w
                 pea     (off_4).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
 
 loc_DD930:                              ; CODE XREF: RunPlayerUpdate+960↑j
@@ -17324,7 +17332,7 @@ loc_DD956:                              ; CODE XREF: RunPlayerUpdate+948↑j
                 move.w  #$180A,$C(a2)
                 pea     (off_14).w
                 pea     (off_C).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 pea     (unk_4000).w
                 movea.l 8(a2),a0
                 move.w  8(a0),d0
@@ -17518,7 +17526,7 @@ loc_DDB6C:                              ; DATA XREF: RunPlayerUpdate+B8E↑o
                 andi.w  #$BFFF,$22(a3)
                 pea     (2).w
                 pea     (off_2C).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.w  #5,(a5)
                 bra.s   loc_DDB62
@@ -17531,7 +17539,7 @@ loc_DDB86:                              ; DATA XREF: RunPlayerUpdate+B90↑o
                 jsr     sub_D8702
                 pea     (2).w
                 pea     ($31).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 move.l  #dword_24000,$1E(a2)
                 move.l  #$FFFB8000,$22(a2)
@@ -17561,7 +17569,7 @@ loc_DDBEA:                              ; DATA XREF: RunPlayerUpdate+B96↑o
                 ble.s   loc_DDC46
                 pea     (2).w
                 pea     (off_2C).w
-                bsr.w   sub_DB7CC
+                bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
                 movea.l $3A(a3),a0
                 andi.w  #$FFFB,6(a0)
@@ -17632,7 +17640,7 @@ loc_DDCBE:                              ; CODE XREF: RunPlayerUpdate+A0↑j
 ; Attributes: bp-based frame
 
 RunCameraUpdate:                              ; CODE XREF: RunUpdate+10↑p
-                                        ; main:loc_D5406↑p ...
+                                        ; RunMain:loc_D5406↑p ...
 
 var_18          = -$18
 var_4           = -4
@@ -19059,7 +19067,7 @@ loc_DE9C2:                              ; CODE XREF: sub_DE996+38↓j
 ; Attributes: bp-based frame
 
 QueueOSDMessage:                              ; CODE XREF: NewLife+CA↑p
-                                        ; sub_D4500+46↑p ...
+                                        ; RunLevelIntro+46↑p ...
 
 var_28          = -$28
 arg_0           =  8
@@ -20029,7 +20037,7 @@ loc_DF228:                              ; CODE XREF: OSD_ProcessAnimationForMsg+
 ; Attributes: bp-based frame
 
 RunOSDAnimationUpdate:                              ; CODE XREF: RunUpdate+1C↑p
-                                        ; sub_D4500:loc_D455E↑p ...
+                                        ; RunLevelIntro:loc_D455E↑p ...
 
 var_20          = -$20
 var_8           = -8
@@ -24226,8 +24234,8 @@ loc_E193E:                              ; CODE XREF: TriggerOSDMessage+4C↑j
 
 ; Attributes: bp-based frame
 
-LevelStart:                             ; CODE XREF: sub_D4500+122↑p
-                                        ; sub_D4500:loc_D4664↑p
+LevelStart:                             ; CODE XREF: RunLevelIntro+122↑p
+                                        ; RunLevelIntro:loc_D4664↑p
 
 var_48          = -$48
 ls_messageBuffer= -$3C
@@ -24467,7 +24475,7 @@ loc_E1B52:                              ; CODE XREF: RunPlayerCollisionForCurren
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E1B5A:                              ; CODE XREF: main+138↑p
+sub_E1B5A:                              ; CODE XREF: RunMain+138↑p
                                         ; GetRing+7A↓p
 
 arg_0           =  4
@@ -25697,7 +25705,7 @@ off_E270C:      dc.w loc_E271C-*        ; DATA XREF: sub_E206A+69A↑r
 loc_E271C:                              ; DATA XREF: sub_E206A:off_E270C↑o
                 pea     (1).w
                 pea     ($35).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.b  #2,8(a2)
                 clr.l   -(sp)
                 pea     (off_10).w
@@ -25801,7 +25809,7 @@ loc_E286E:                              ; DATA XREF: sub_E206A+6AA↑o
                 beq.s   loc_E28A2
                 pea     (1).w
                 pea     ($37).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 pea     (1).w
                 pea     ($23).w
@@ -25811,7 +25819,7 @@ loc_E286E:                              ; DATA XREF: sub_E206A+6AA↑o
 loc_E28A2:                              ; CODE XREF: sub_E206A+81C↑j
                 pea     (1).w
                 pea     ($36).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 pea     (1).w
                 pea     ($22).w
@@ -25988,7 +25996,7 @@ loc_E2A8E:                              ; CODE XREF: sub_E206A+A18↑j
                 jsr     AnimObj_PlayAnimation
                 pea     (2).w
                 pea     ($17).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $14(sp),sp
 
 loc_E2AC0:                              ; CODE XREF: sub_E206A+B6C↓j
@@ -28660,7 +28668,7 @@ loc_E4768:                              ; CODE XREF: sub_E3150+15FC↑j
                 pea     ($17).w
 
 loc_E4770:                              ; CODE XREF: sub_E3150+160E↑j
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
 
 loc_E4778:                              ; CODE XREF: sub_E3150+15DE↑j
@@ -29101,7 +29109,7 @@ loc_E4B26:                              ; CODE XREF: sub_E4AC6+46↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E4B64:                              ; CODE XREF: main:loc_D5446↑p
+sub_E4B64:                              ; CODE XREF: RunMain:loc_D5446↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #sub_D69E4,a4
                 movea.l #$FF559E,a5
@@ -29640,7 +29648,7 @@ arg_0           =  4
                 move.w  #$180A,$C(a2)
                 pea     (off_14).w
                 pea     (off_C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.w  #$1E,($FFF1FA).l
                 clr.l   $1E(a2)
                 move.l  #$FFF48000,$22(a2)
@@ -29910,7 +29918,7 @@ loc_E52F8:                              ; DATA XREF: sub_E5138+166↑o
                 pea     ($17).w
 
 loc_E5328:                              ; CODE XREF: sub_E5138+7D6↓j
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 bra.s   loc_E52DA
 ; ---------------------------------------------------------------------------
@@ -31264,7 +31272,7 @@ loc_E61D0:                              ; CODE XREF: sub_E603E+17C↑j
                 move.w  #$180A,$C(a5)
                 pea     (off_14).w
                 pea     (off_C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 move.w  #$1E,($FFF1FA).l
                 clr.l   $1E(a5)
@@ -31687,7 +31695,7 @@ loc_E6594:                              ; CODE XREF: sub_E6240+392↓j
                 move.w  #$18,$38(a3)
                 addq.w  #1,d2
                 addq.l  #4,a2
-                cmpi.w  #$1B,d2         ; Number of Cave "drip" animations to create (Original: $1B)
+                cmpi.w  #$1,d2         ; Number of Cave "drip" animations to create (Original: $1B)
                 blt.s   loc_E6594
                 movem.l (sp)+,d2-d3/a2-a5
                 rts
@@ -31875,10 +31883,10 @@ off_E6738:      dc.w loc_E6756-*        ; DATA XREF: RunPlayerCollision_ToxicCav
 ; Ghidra seems to strongly disagree with IDA Pro on where this jump table ends, and where the function begins. Ghidra believes the loc_E6756 is the entry point
 ; Going with Ghidra's assessment as the andi.b #A,a6 assembly doesn't seem to compile consistently
 loc_E674C:                              ; DATA XREF: RunPlayerCollision_ToxicCaves+142↑o
-                                        ; XREF[2]:     FUN_000e65da:000e671c(*), 
-                                        ; FUN_000e65da:000e6724(R) 
+                                        ; XREF[2]:     FUN_000e65da:000e671c(*),
+                                        ; FUN_000e65da:000e6724(R)
                 dc.b $02
-loc_E674D:                              ; XREF[1]:     FUN_000e65da:000e6724(R)  
+loc_E674D:                              ; XREF[1]:     FUN_000e65da:000e6724(R)
                 dc.b $06
                 dc.b $09
                 dc.b $0a
@@ -32007,7 +32015,7 @@ loc_E6898:                              ; DATA XREF: RunPlayerCollision_ToxicCav
                 clr.b   $2F(a0)
                 pea     (2).w
                 pea     (5).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.w  $14(a2),d0
                 addi.w  #-$20,d0
                 move.l  d0,-(sp)
@@ -32074,7 +32082,7 @@ loc_E6994:                              ; CODE XREF: RunPlayerCollision_ToxicCav
                 move.b  #6,$C(a4)
                 pea     (2).w
                 pea     ($17).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 bra.w   loc_E67EE
 ; ---------------------------------------------------------------------------
@@ -32211,7 +32219,7 @@ loc_E6B44:                              ; CODE XREF: RunPlayerCollision_ToxicCav
                 jsr     AnimObj_PlayAnimation
                 pea     (off_28).w
                 pea     ($2A).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.b  #$16,$C(a4)
                 move.w  #$78,($FFF1FA).l ; 'x'
                 clr.l   $1E(a4)
@@ -32637,7 +32645,7 @@ loc_E6FEA:                              ; CODE XREF: RunPlayerCollision_ToxicCav
                 ori.w   #4,6(a0)
                 pea     (2).w
                 pea     ($25).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     (2).w
                 pea     ($32).w
                 move.l  (a2),-(sp)
@@ -36356,7 +36364,7 @@ loc_E999E:                              ; DATA XREF: ROM:0002A13C↑o
                 move.w  #$100A,$C(a3)
                 pea     (off_14).w
                 pea     (off_C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 pea     (unk_4000).w
                 pea     ($1E0).w
                 jsr     sub_DBFC8
@@ -36421,7 +36429,7 @@ loc_E9A26:                              ; CODE XREF: sub_E99D2+3A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E9A56:                              ; CODE XREF: main:loc_D543E↑p
+sub_E9A56:                              ; CODE XREF: RunMain:loc_D543E↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF559E,a4
                 movea.l #SetVRAMWriteAddr,a5
@@ -37497,7 +37505,7 @@ loc_EA55A:                              ; DATA XREF: sub_EA2BA+202↑o
                 beq.s   loc_EA582
                 pea     ($1E).w
                 pea     (off_4).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
 
 loc_EA582:                              ; CODE XREF: sub_EA2BA+2B6↑j
@@ -38997,7 +39005,7 @@ loc_EB604:                              ; CODE XREF: sub_EB504+1AA↓j
 loc_EB60C:                              ; DATA XREF: sub_EB504+C0↑o
                 pea     (2).w
                 pea     (off_38).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 bra.s   loc_EB5E4
 ; ---------------------------------------------------------------------------
@@ -39048,7 +39056,7 @@ loc_EB66E:                              ; DATA XREF: sub_EB504+D0↑o
                 addq.b  #1,9(a2)
                 pea     (2).w
                 clr.l   -(sp)
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 bra.s   loc_EB6BC
 ; ---------------------------------------------------------------------------
@@ -39205,7 +39213,7 @@ loc_EB80E:                              ; CODE XREF: sub_EB764+84↑j
                 bls.s   loc_EB860
                 pea     (3).w
                 pea     ($39).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.w  #$100B,$C(a3)
                 move.w  #$1E,($FFF1FA).l
                 pea     ($56).w
@@ -39534,7 +39542,7 @@ loc_EBB9E:                              ; CODE XREF: sub_EB764+3E0↑j
                 beq.s   loc_EBBC6
                 pea     ($A).w
                 pea     (off_4).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
 
 loc_EBBC6:                              ; CODE XREF: sub_EB764+450↑j
@@ -40149,7 +40157,7 @@ loc_EC206:                              ; DATA XREF: sub_EB764+A40↑o
                                         ; sub_EB764+B38↓o
                 pea     (2).w
                 pea     (off_38).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 bra.s   loc_EC1DE
 ; ---------------------------------------------------------------------------
@@ -40176,7 +40184,7 @@ loc_EC228:                              ; DATA XREF: sub_EB764+A56↑o
                 move.l  #$FFF72000,$22(a3)
                 pea     (2).w
                 clr.l   -(sp)
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 bra.s   loc_EC1FE
 ; ---------------------------------------------------------------------------
@@ -40266,7 +40274,7 @@ loc_EC2F4:                              ; DATA XREF: sub_EB764+B48↑o
                 addq.b  #1,9(a2)
                 pea     (2).w
                 clr.l   -(sp)
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 clr.b   $A(a2)
                 bra.w   loc_ED018
@@ -40717,7 +40725,7 @@ loc_EC83C:                              ; CODE XREF: sub_EB764+10A6↑j
                 jsr     TriggerOSDMessage
                 pea     (off_4).w
                 pea     ($39).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.w  #$100B,$C(a3)
                 move.w  #$5A,($FFF1FA).l ; 'Z'
                 pea     ($3A).w
@@ -42466,7 +42474,7 @@ loc_EDB82:                              ; CODE XREF: sub_EDB1A+7C↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_EDBBC:                              ; CODE XREF: main:loc_D5456↑p
+sub_EDBBC:                              ; CODE XREF: RunMain:loc_D5456↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF559E,a4
                 movea.l #SetVRAMWriteAddr,a5
@@ -42786,7 +42794,7 @@ loc_EDED0:                              ; DATA XREF: sub_EDDF2+DC↑o
                 beq.w   loc_EF448
                 pea     (2).w
                 pea     ($2F).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.w  #$A,($FFF1EA).l
                 pea     ($31).w
                 jsr     TriggerOSDMessage
@@ -44731,7 +44739,7 @@ loc_EF3DE:                              ; CODE XREF: sub_EDDF2+15E2↑j
                 jsr     AnimObj_PlayAnimation
                 pea     (2).w
                 pea     ($17).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $14(sp),sp
                 bra.w   loc_EE3E8
 ; ---------------------------------------------------------------------------
@@ -47132,7 +47140,7 @@ loc_F0E2A:                              ; CODE XREF: sub_F0DD6+3A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F0E5A:                              ; CODE XREF: main:loc_D544E↑p
+sub_F0E5A:                              ; CODE XREF: RunMain:loc_D544E↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF559E,a4
                 movea.l #$FF783A,a5
@@ -48283,7 +48291,7 @@ loc_F19BE:                              ; CODE XREF: sub_F145E+172↑j
                 pea     (off_2C).w
 
 loc_F19D6:                              ; CODE XREF: sub_F145E+83C↓j
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 bra.w   loc_F165E
 ; ---------------------------------------------------------------------------
@@ -48340,7 +48348,7 @@ loc_F1A88:                              ; CODE XREF: sub_F145E+624↑j
                 jsr     ApplyFlipperForceToPlayer
                 pea     (off_4).w
                 pea     (off_2C).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 lea     $20(sp),sp
                 tst.b   $A(a3)
                 bne.w   loc_F165E
@@ -48522,7 +48530,7 @@ loc_F1C9E:                              ; CODE XREF: sub_F145E+182↑j
 loc_F1CBE:                              ; CODE XREF: sub_F145E+1E8↑j
                 pea     (2).w
                 pea     ($2E).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 addq.l  #8,sp
                 move.w  #$1E,($FFF1EA).l
 
@@ -48695,7 +48703,7 @@ loc_F1E0A:                              ; CODE XREF: sub_F145E+A6E↓j
                 move.w  #$507,$C(a4)
                 pea     (off_4).w
                 pea     ($13).w
-                jsr     sub_DB7CC
+                jsr     SetPlayerAnimation
                 move.w  ($FF02C0).l,d0
                 andi.w  #7,d0
                 beq.s   loc_F1E90
@@ -55878,7 +55886,7 @@ sub_F617C:
 ; =============== S U B R O U T I N E =======================================
 
 
-GEMSPauseAll:                           ; CODE XREF: main+EC↑p
+GEMSPauseAll:                           ; CODE XREF: RunMain+EC↑p
                                         ; sub_FA588+20F0↓p
                 jsr     GEMS_stdstartup(pc)
                 moveq   #12,d0
@@ -55890,7 +55898,7 @@ GEMSPauseAll:                           ; CODE XREF: main+EC↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-GEMSResumeAll:                          ; CODE XREF: main+DE↑p
+GEMSResumeAll:                          ; CODE XREF: RunMain+DE↑p
                                         ; sub_FA588+21F2↓p
                 jsr     GEMS_stdstartup(pc)
                 moveq   #13,d0
@@ -55902,7 +55910,7 @@ GEMSResumeAll:                          ; CODE XREF: main+DE↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-GEMSStopAll:                            ; CODE XREF: sub_D56C8↑p
+GEMSStopAll:                            ; CODE XREF: Z80_MuteAllSounds↑p
                                         ; sub_F2554+CA↑p ...
                 jsr     GEMS_stdstartup(pc)
                 moveq   #22,d0
@@ -68083,7 +68091,7 @@ loc_FE7BA:                              ; CODE XREF: RunUpdate_Rings+16↑j
                 bra.w   loc_FEA62
 ; ---------------------------------------------------------------------------
 
-loc_FE7FE:                              ; CODE XREF: RunUpdate_Rings+2E4↓j
+RunUpdate_Rings_Loop:                              ; CODE XREF: RunUpdate_Rings+2E4↓j
                 tst.b   6(a2)
                 bne.w   loc_FE942
                 moveq   #0,d0
@@ -68287,7 +68295,7 @@ loc_FEA5E:                              ; CODE XREF: RunUpdate_Rings+19E↑j
 
 loc_FEA62:                              ; CODE XREF: RunUpdate_Rings+76↑j
                 cmp.b   ($FF9984).l,d2
-                bcs.w   loc_FE7FE
+                bcs.w   RunUpdate_Rings_Loop
                 movem.l var_24(a6),d2-d5/a2-a5
                 unlk    a6
                 rts
@@ -68619,7 +68627,7 @@ loc_FED16:                              ; CODE XREF: VDP_UpdateSpriteData+E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FED1C:                              ; CODE XREF: main+3A↑p
+sub_FED1C:                              ; CODE XREF: RunMain+3A↑p
                 movem.l d2-d3/a2-a3,-(sp)
                 move.b  #1,($FFF8D4).l
                 move.b  #1,($FFF8D5).l
@@ -68660,7 +68668,7 @@ loc_FED64:                              ; CODE XREF: sub_FED1C+5A↓j
 sub_FED7E:                              ; CODE XREF: sub_FEF2A+1E↓p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF035E,a5
-                jsr     sub_D56C8
+                jsr     Z80_MuteAllSounds
                 movea.l #$C00004,a2
                 clr.w   ($FF559E).l
                 jsr     sub_D856A
@@ -68924,7 +68932,7 @@ loc_FF014:                              ; CODE XREF: sub_FEF2A+BA↑j
                 addq.l  #8,sp
                 bra.s   CheckCheatCode
 PlaySoundTestMusic:
-                jsr     sub_D56C8
+                jsr     Z80_MuteAllSounds
                 nop
                 move.b  $FF0A00,d4
                 ext.w   d4
@@ -69024,7 +69032,7 @@ QueueOptionMsg_2:
                 jsr     sub_FF834(pc)
                 nop
                 lea     $24(sp),sp
-                jsr     sub_D56C8
+                jsr     Z80_MuteAllSounds
                 move.b  ($FF035E).l,d0
                 addq.b  #1,d0
                 move.b  d0,($FFF8D4).l
@@ -69064,7 +69072,7 @@ loc_FF168:                              ; CODE XREF: sub_FEF2A+236↑j
 
 sub_FF174:                              ; CODE XREF: sub_FF1F0+12↓p
                 move.l  a2,-(sp)
-                jsr     sub_D56C8
+                jsr     Z80_MuteAllSounds
                 movea.l #$C00004,a2
                 clr.w   ($FF559E).l
                 jsr     sub_D856A
@@ -69168,7 +69176,7 @@ loc_FF288:                              ; CODE XREF: sub_FF1F0+5E↑j
                 jsr     sub_FF834(pc)
                 nop
                 addq.l  #4,sp
-                jsr     sub_D56C8
+                jsr     Z80_MuteAllSounds
                 clr.b   ($FF3F3A).l
                 movem.l (sp)+,d2-d4/a2
                 rts
@@ -69183,7 +69191,7 @@ sub_FF2A6:                              ; CODE XREF: sub_D47DE+44↑p
                 movem.l d2/a2-a3,-(sp)
                 movea.l #$FF573C,a3
                 move.b  #1,($FF3F3A).l
-                jsr     sub_D56C8
+                jsr     Z80_MuteAllSounds
                 movea.l #$C00004,a2
                 clr.w   ($FF559E).l
                 jsr     sub_D856A
@@ -69236,7 +69244,7 @@ loc_FF368:                              ; CODE XREF: sub_FF2A6+B2↑j
                 jsr     sub_FF834(pc)
                 nop
                 lea     $28(sp),sp
-                jsr     sub_D56C8
+                jsr     Z80_MuteAllSounds
                 clr.b   ($FF3F3A).l
                 move.w  (a3),d0
                 andi.w  #$80,d0
@@ -70244,7 +70252,7 @@ DoCustomIntro:  pea     (7).w
                 pea     (6).w
                 jsr     (a3)
                 lea     $18(sp),sp
-                move.w  ($FF5736).l,d0                
+                move.w  ($FF5736).l,d0
 
                 pea     (aScrambEgg).l
                 pea     (6).w
@@ -70319,9 +70327,9 @@ DoCustomIntro:  pea     (7).w
                 move.w  ($FF5736).l,d0
 
                 jmp CustIntroRtn
-                
+
                 align $2
-str_SoundTest:  dc.b 'SOUND TEST  %s%s',0	
+str_SoundTest:  dc.b 'SOUND TEST  %s%s',0
                 align $2
 str_hex_strings:dc.b '0',0
                 dc.b '1',0
@@ -70340,42 +70348,42 @@ str_hex_strings:dc.b '0',0
                 dc.b 'E',0
                 dc.b 'F',0
 
-PrintSoundTest: 
+PrintSoundTest:
                 movem.l d0-d7/a0-a7,-(sp)
                 clr.l d1
                 move.b ($FF0A00), d1
                 andi.b #$F0, d1
                 asr.b #$04, d1
                 asl.b #$01, d1
-                
+
                 clr.l d2
                 move.b ($FF0A00), d2
                 andi.b #$0F, d2
                 asl.b #$01, d2
-                
+
                 lea str_hex_strings, a2
                 move.l a2, d4
                 ext.w d2
                 ext.l d2
                 add d2, d4
                 movea.l d4, a2
-                
+
                 lea str_hex_strings, a1
                 move.l a1, d3
                 ext.w d1
                 ext.l d1
                 add d1, d3
                 movea.l d3, a1
-                
+
                 movea.l #$FF0A60, a5
-                
+
                 move.l  a2,-(sp)
                 move.l  a1,-(sp)
                 pea     (str_SoundTest).l
                 move.l  a5,-(sp)
                 jsr     sprintf
                 lea     ($10, sp),sp
-                
+
                 movem.l (sp)+,d0-d7/a0-a7
                 rts
 
@@ -70510,10 +70518,10 @@ CustomRespawnPlayer_ActuallyRespawn:
                 move.l  #1,-(sp) ; Set current_game_state to intro
                 jsr     sub_D54CE
                 lea     $4(sp),sp
-                jsr     sub_D4500   ; RunLevelIntro
+                jsr     RunLevelIntro   ; RunLevelIntro
                 jmp     Custom_Respawn_ContinueLevel
 
-CustomDeath_ZoomCameraHome:                
+CustomDeath_ZoomCameraHome:
                 jmp     CustomDeathReturn
 
 TargetBank      =  $07
@@ -70549,52 +70557,52 @@ EmeraldPitch_PitchUpEmerald:
                 pea     ($E).w
                 jsr     sub_D567E
 
-                ; Pitch up the first 3 channels (only uses 3 afaik)                
+                ; Pitch up the first 3 channels (only uses 3 afaik)
                 move.l  d1,-(sp)
                 move.l  #0,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
                 move.l  d1,-(sp)
                 move.l  #1,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
                 move.l  d1,-(sp)
                 move.l  #2,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
                 move.l  d1,-(sp)
                 move.l  #3,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
                 move.l  d1,-(sp)
                 move.l  #4,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
                 move.l  d1,-(sp)
                 move.l  #5,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
                 move.l  d1,-(sp)
                 move.l  #6,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
                 move.l  d1,-(sp)
                 move.l  #7,-(sp)
-                pea     (TargetBank).w 
+                pea     (TargetBank).w
                 jsr     sub_F628C
                 lea     $A(sp),sp
 
@@ -70612,12 +70620,315 @@ aBonusStageNames:
 
 aBonusMultiball:
                 dc.b '  BONUS   MULTIBALL    ',0
-aBonusTrappedAlive: 
+aBonusTrappedAlive:
                 dc.b '  BONUS   TRAPPED ALIVE',0
 aBonusRoboSmile:
                 dc.b '  BONUS   ROBO SMILE   ',0
 aBonusTheMarch:
                 dc.b '  BONUS   THE MARCH    ',0
+
+s_camera_x_pos = $FF5754 ; $FF5754 + 2
+s_camera_y_pos = $FF55AA ; $FF55AA + 2
+
+ROAU_sub_D65B0:
+                movea.l a2,a1
+                btst    #2,$22(a1)
+                beq.s   ROAU_loc_D65BE
+
+                ; inline of sub_D656E:
+                moveq   #0,d0
+                move.b  6(a1),d0
+                move.l  d0,d1
+                movea.l #$FFAD24,a0
+                asl.w   #6,d0
+                adda.w  d0,a0
+                btst    #7,$22(a0)
+                beq.s   ROAU_loc_D6590_for_sub_D65B0
+                ori.w   #$8000,$22(a1)
+                bra.w   ROAU_loc_D65BE
+ROAU_loc_D6590_for_sub_D65B0:
+                move.w  8(a0),d0
+                add.w   $12(a1),d0
+                move.w  d0,8(a1)
+                move.w  $A(a0),d0
+                add.w   $14(a1),d0
+                move.w  d0,$A(a1)
+                 ; END inline of sub_D656E:
+
+ROAU_loc_D65BE:
+                movea.l $3A(a1),a0
+                move.w  $A(a1),d0
+                add.w   $20(a1),d0
+                sub.w   ($FF55AA).l,d0
+                move.w  d0,2(a0)
+                move.w  8(a1),d0
+                sub.w   ($FF5754).l,d0
+                move.w  $1E(a1),d1
+                btst    #6,$22(a1)
+                beq.s   ROAU_loc_D65EC
+                neg.w   d1
+
+ROAU_loc_D65EC:
+                add.w   d1,d0
+                move.w  d0,(a0)
+                move.w  $22(a1),d0
+                andi.w  #$FFFE,d0
+                move.w  d0,d1
+                andi.w  #2,d0
+                lsr.w   #1,d0
+                or.w    d0,d1
+                move.w  d1,$22(a1)
+                move.w  $36(a1),d0
+                lsr.w   #1,d0
+                move.w  (a0),d1
+                sub.w   d0,d1
+                cmpi.w  #$140,d1
+                bge.s   ROAU_loc_D6634
+                add.w   d0,d1
+                add.w   d0,d1
+                blt.s   ROAU_loc_D6634
+                move.w  2(a0),d0
+                blt.s   ROAU_loc_D6634
+                sub.w   $38(a1),d0
+                cmpi.w  #$DF,d0
+                bge.s   ROAU_loc_D6634
+                ori.w   #2,$22(a1)
+                rts
+; ---------------------------------------------------------------------------
+
+ROAU_loc_D6634:
+                andi.w  #$FFFD,$22(a1)
+                rts
+; End of function ROAU_sub_D65B0
+
+ROAU_AnimObj_UpdateFlags_ShouldRender:
+                move.w  $22(a2),d0
+                andi.w  #$FFFE,d0
+                move.w  d0,d1
+                andi.w  #2,d0
+                lsr.w   #1,d0
+                or.w    d0,d1
+                move.w  d1,$22(a2)
+                btst    #$A,d1
+                beq.s   ROAU_loc_D6660
+ROAU_sub_D656E: ; inline of sub_D656E:
+                moveq   #0,d0
+                move.b  6(a2),d0
+                move.l  d0,d1
+                movea.l #$FFAD24,a0
+                asl.w   #6,d0
+                adda.w  d0,a0
+                btst    #7,$22(a0)
+                beq.s   ROAU_loc_D6590
+                ori.w   #$8000,$22(a2)
+                bra.w   ROAU_loc_D6660
+ROAU_loc_D6590:
+                move.w  8(a0),d0
+                add.w   $12(a2),d0
+                move.w  d0,8(a2)
+                move.w  $A(a0),d0
+                add.w   $14(a2),d0
+                move.w  d0,$A(a2)
+                 ; END inline of sub_D656E:
+ROAU_loc_D6660:                              ; CODE XREF: AnimObj_UpdateFlags_ShouldRender+1E↑j
+                movea.l $3A(a2),a0
+                move.w  $A(a2),d0
+                sub.w   a5,d0
+                move.w  d0,2(a0)
+                blt.s   ROAU_loc_D66A6
+                sub.w   $38(a2),d0
+                cmpi.w  #$DF,d0
+                bge.s   ROAU_loc_D66A6
+                move.w  8(a2),d1
+                sub.w   a4,d1
+                move.w  d1,(a0)
+                move.w  $36(a2),d0
+                lsr.w   #1,d0
+                sub.w   d0,d1
+                cmpi.w  #$140,d1
+                bge.s   ROAU_loc_D66A6
+                add.w   d0,d1
+                add.w   d0,d1
+                blt.s   ROAU_loc_D66A6
+                ori.w   #2,$22(a2)
+                rts
+; ---------------------------------------------------------------------------
+
+ROAU_loc_D66A6:                              ; CODE XREF: AnimObj_UpdateFlags_ShouldRender+36↑j
+                                        ; AnimObj_UpdateFlags_ShouldRender+40↑j ...
+                andi.w  #$FFFD,$22(a2)
+                rts
+; End of function AnimObj_UpdateFlags_ShouldRender
+
+s_camera_activation_bound_top = $FF998A
+s_camera_activation_bound_bottom = $FF74E4
+s_camera_activation_bound_left = $FFEDB4
+s_camera_activation_bound_right = $FFEDA8
+
+ROAU_IsObjectInsideCameraActivationBorder:
+                ; Top Camera Bounds
+                move.l  8(a2),d1           ; Load position details: x_pos (upper word) y_pos (lower word) - Seems to be bottom of bbox
+                cmp.w   d4,d1               ; if y_pos above screen top <= due to y-positive being downwards
+                blt.s   ROAU_ReturnFalse
+
+                move.l  $36(a2),d0          ; Load bbox details : bbox_width (upper word) bbox_height (lower word)
+
+                ; Bottom Camera Bounds
+                sub.w   d0,d1               ; bbox_height
+                cmp.w   d5,d1
+                bge.s   ROAU_ReturnFalse
+
+                swap    d0                  ; swap to get bbox_width
+                swap    d1                  ; swap to get x_pos
+
+                lsr.w   #1,d0               ; x_pos is middle, so need half bbox_width
+                sub.w   d0,d1               ; Get left side of bbox (subtract half the bbox width)
+
+                ; Right Camera Bounds
+                cmp.w   d7,d1
+                ble.s   ROAU_ReturnTrue
+
+                ; Left Camera Bounds
+                add.w   d0,d1               ; move up 2 halves to get right-side of bbox
+                add.w   d0,d1               ;
+                cmp.w   d6,d1
+                ;blt.s   ROAU_ReturnFalse
+
+ROAU_ReturnFalse:
+                moveq   #0,d0               ; Set return to False
+                rts
+
+
+ROAU_ReturnTrue:
+                moveq   #1,d0               ; Set return to True
+                rts
+
+RunOptimisedAnimationsUpdate:
+                movem.l d2-d7/a2-a6,-(sp) ; Store registers
+
+ROAU_Initialisation:
+                move.w  ($FF55AA).l,d0
+                addi.w  #-$1A,d0
+                move.w  d0,($FF998A).l
+                move.w  ($FF55AA).l,d0
+                addi.w  #$112,d0
+                move.w  d0,($FF74E4).l
+                move.w  ($FF5754).l,d0
+                addi.w  #-$32,d0
+                move.w  d0,($FFEDB4).l
+                move.w  ($FF5754).l,d0
+                addi.w  #$172,d0
+                move.w  d0,($FFEDA8).l
+                movea.l #$FFAD24,a2
+                clr.w   d2
+
+                move.w (s_camera_activation_bound_top).l,d4
+                move.w (s_camera_activation_bound_bottom).l,d5
+                move.w (s_camera_activation_bound_left).l,d6
+                move.w (s_camera_activation_bound_right).l,d7
+
+                move.w (s_camera_x_pos).l,a4
+                move.w (s_camera_y_pos).l,a5
+
+ROAU_LoopBegin:
+                move.w  $24(a2),d0
+                andi.w  #$8000,d0
+                beq.w   ROAU_loc_D5882
+                andi.w  #$FFF7,$22(a2)
+
+                movea.l $3A(a2),a3      ; game_sprite ptr
+                ;move.w  (a3),d4         ; cached screen xpos|ypos
+                move.l  (a3),d3
+                tst.b   $2B(a2)
+                beq.s   ROAU_loc_D57F6
+                bsr.w   ROAU_IsObjectInsideCameraActivationBorder
+                tst.b   d0
+                bne.s   ROAU_loc_D57E2
+                move.w  $22(a2),d0
+                andi.w  #$80,d0
+                beq.s   ROAU_loc_D57EC
+
+ROAU_loc_D57E2:
+                bsr.w    ROAU_sub_D65B0
+
+ROAU_loc_D57EC:
+                move.l  a2,-(sp)
+                jsr     AnimObj_UpdateTemporaries
+                nop
+                addq.l  #4,sp
+                bra.s   ROAU_loc_D581A
+; ---------------------------------------------------------------------------
+
+ROAU_loc_D57F6:
+                movea.l $3A(a2),a0
+                cmpi.w  #$3FFF,8(a0)
+                beq.s   ROAU_loc_D581A
+                bsr.w   ROAU_IsObjectInsideCameraActivationBorder
+                tst.b   d0
+                beq.s   ROAU_loc_D581A
+                bsr.w   ROAU_AnimObj_UpdateFlags_ShouldRender
+
+ROAU_loc_D581A:
+                andi.w  #$FFBF,$22(a2)
+                move.w  $22(a2),d0
+                andi.w  #$80,d0
+                beq.s   ROAU_loc_D5834
+                move.l  a2,-(sp)
+                jsr     AnimObj_UpdateGameSprite
+                nop
+                addq.l  #4,sp
+
+ROAU_loc_D5834:
+                move.w  $22(a2),d0
+                andi.w  #$8000,d0
+                bne.s   ROAU_loc_D5878
+                cmp.l   (a3),d3
+                bne.s   ROAU_loc_D5848
+                bra.s   ROAU_loc_D5882
+
+ROAU_loc_D5848:
+                move.w  $22(a2),d0
+                andi.w  #8,d0
+                bne.s   ROAU_loc_D5882
+                move.w  $22(a2),d0
+                andi.w  #3,d0
+                beq.s   ROAU_loc_D586E
+                move.w  8(a3),d0
+                move.l  d0,-(sp)
+                move.l  a3,-(sp)
+                jsr     GameSprite_Update
+                addq.l  #8,sp
+                bra.s   ROAU_loc_D5882
+; ---------------------------------------------------------------------------
+
+ROAU_loc_D586E:
+                move.l  a3,-(sp)
+                jsr     GameSprite_RefreshVDPSpriteData
+                bra.s   ROAU_loc_D5880
+; ---------------------------------------------------------------------------
+
+ROAU_loc_D5878:
+                move.l  a2,-(sp)
+                jsr     AnimObj_Reset
+                nop
+
+ROAU_loc_D5880:
+                addq.l  #4,sp
+
+ROAU_loc_D5882:
+                addq.w  #1,d2
+                moveq   #$40,d0     ; Add sizeof(AnimatedGameObj) => 0x40 bytes
+                adda.l  d0,a2       ;
+                cmpi.w  #$100,d2    ; Number of animated objs to update
+                bcs.w   ROAU_LoopBegin
+                tst.b   ($FF3F3A).l
+                bne.s   ROAU_BranchException
+                movem.l (sp)+,d2-d7/a2-a6        ; Restore registers
+                jmp     ReturnFrom_RunOptimisedAnimationsUpdate
+ROAU_BranchException:
+                movem.l (sp)+,d2-d7/a2-a6        ; Restore registers
+                jmp     loc_D589E
+; End of function RunAnimatedObjectsUpdate
 
 ; end of 'ROM'
 

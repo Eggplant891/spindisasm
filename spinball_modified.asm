@@ -30,8 +30,8 @@ off_C:          dc.l AddressError       ; DATA XREF: RunUpdate_ToxicCaves+74E↓
                                         ; RunUpdate_ToxicCaves+13D6↓o ...
 off_10:         dc.l IllegalInstruction ; DATA XREF: sub_D4830+5C↓o
                                         ; RunUpdate_ToxicCaves+10D4↓o ...
-off_14:         dc.l ZeroDivide         ; DATA XREF: sub_D48E2+24A↓o
-                                        ; sub_D48E2+328↓o ...
+off_14:         dc.l ZeroDivide         ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+24A↓o
+                                        ; RunUpdate_TallyScoreAndEndLevel+328↓o ...
 off_18:         dc.l CHKException       ; DATA XREF: RunUpdate_ToxicCaves:loc_DA09C↓o
                                         ; RunUpdate_ToxicCaves+1AA2↓o ...
 off_1C:         dc.l TRAPVException     ; DATA XREF: RunPlayerCollision_ToxicCaves:loc_E7094↓o
@@ -83,7 +83,7 @@ off_74:         dc.l IRQ5               ; DATA XREF: ROM:0005D2D4↓o
 off_78:         dc.l VBlank             ; DATA XREF: ROM:00024CE8↓o
                                         ; ROM:0002509C↓o ...
 off_7C:         dc.l IRQ7               ; DATA XREF: ROM:0002651C↓o
-                                        ; sub_D48E2+1AE↓o ...
+                                        ; RunUpdate_TallyScoreAndEndLevel+1AE↓o ...
 off_80:         dc.l Trap               ; DATA XREF: ROM:0009B65C↓o
                                         ; ROM:0009B670↓o ...
 off_84:         dc.l Trap               ; DATA XREF: ROM:00056ACC↓o
@@ -1139,7 +1139,7 @@ InfiniteLoop:                           ; CODE XREF: InfiniteLoop↓j
 
 
 NewLife:                                ; CODE XREF: GoToBonusStage+40↓p
-                                        ; sub_D48E2+EE↓p ...
+                                        ; RunUpdate_TallyScoreAndEndLevel+EE↓p ...
 
 arg_0           =  4
 
@@ -1224,7 +1224,7 @@ loc_D3F58:                              ; CODE XREF: NewLife+A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-GoToBonusStage:                         ; CODE XREF: sub_D48E2+500↓p
+GoToBonusStage:                         ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+500↓p
                                         ; RunMain+140↓p
 
 arg_0           =  4
@@ -1250,7 +1250,7 @@ arg_0           =  4
                 moveq   #1,d3
 
 loc_D3F96:                              ; CODE XREF: GoToBonusStage+18↑j
-                jsr     Z80_MuteAllSounds(pc)
+                jsr     GEMS_MuteAllSounds(pc)
                 nop
                 move.l  d2,-(sp)
                 bsr.w   NewLife
@@ -1265,11 +1265,11 @@ loc_D3F96:                              ; CODE XREF: GoToBonusStage+18↑j
 
 
 sub_D3FAC:                              ; CODE XREF: StartGame+7C↓p
-                                        ; sub_D48E2:loc_D4E14↓p ...
+                                        ; RunUpdate_TallyScoreAndEndLevel:loc_D4E14↓p ...
                 movem.l d2/a2-a4,-(sp)
                 movea.l #$FF75B0,a3
                 movea.l #$FF559E,a4
-                jsr     Z80_MuteAllSounds(pc)
+                jsr     GEMS_MuteAllSounds(pc)
                 nop
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -1417,7 +1417,7 @@ loc_D415A:                              ; CODE XREF: sub_D3FAC+19E↑j
                 move.w  d0,($FF000A).l
                 clr.w   ($FF9988).l
                 clr.w   ($FFEDA4).l
-                jsr     RunPaletteAnimationUpdate
+                jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
                 jsr     sub_D845C
                 ori.w   #9,(a4)
                 clr.l   -(sp)
@@ -1522,7 +1522,7 @@ loc_D42B0:                              ; CODE XREF: sub_D4228+82↑j
                 jsr     sub_D7AB8
                 jsr     sub_D56FA
                 jsr     sub_D835A
-                jsr     RunPaletteAnimationUpdate
+                jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
                 jsr     sub_D845C
                 ori.w   #9,(a3)
                 clr.l   -(sp)
@@ -1571,7 +1571,7 @@ loc_D4322:                              ; CODE XREF: sub_D4228+100↓j
                 movea.l #$FF577A,a0
                 clr.l   (a0,d0.w)
                 jsr     RunAnimatedObjectsUpdate
-                jsr     Z80_MuteAllSounds(pc)
+                jsr     GEMS_MuteAllSounds(pc)
                 nop
                 jsr     sub_D8698
                 move.w  (a2),d0
@@ -2048,8 +2048,8 @@ loc_D47B0:                              ; CODE XREF: sub_D46FE+B8↓j
 loc_D47BC:                              ; CODE XREF: sub_D46FE+4E↑j
                                         ; sub_D46FE+52↑j ...
                 clr.l   ($FF3CB4).l
-                jsr     sub_D86CA
-                jsr     Z80_MuteAllSounds(pc)
+                jsr     ScreenTransition_ToBlack
+                jsr     GEMS_MuteAllSounds(pc)
                 nop
                 move.w  d6,(a4)
                 clr.b   ($FF0006).l
@@ -2139,7 +2139,7 @@ sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
                 movea.l #$FFAD24,a0
                 adda.l  d0,a0
                 move.l  a0,(a2)
-                jsr     Z80_MuteAllSounds(pc)
+                jsr     GEMS_MuteAllSounds(pc)
                 nop
                 pea     (off_10).w
                 jsr     sub_D567E(pc)
@@ -2167,7 +2167,7 @@ sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
 
 ; Attributes: bp-based frame
 
-sub_D48E2:                              ; CODE XREF: RunMain:loc_D54AC↓p
+RunUpdate_TallyScoreAndEndLevel:                              ; CODE XREF: RunMain:loc_D54AC↓p
 
 var_44          = -$44
 var_28          = -$28
@@ -2177,7 +2177,7 @@ var_1D          = -$1D
                 link    a6,#-$28
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF55A0,a5
-                jsr     RunCameraUpdate
+                jsr     RunFlippersUpdate
                 jsr     RunAnimatedObjectsUpdate
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -2195,7 +2195,7 @@ var_1D          = -$1D
                 lea     var_1D(a6),a4
                 lea     var_27(a6),a3
 
-loc_D4932:                              ; CODE XREF: sub_D48E2+5FE↓j
+loc_D4932:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5FE↓j
                 move.w  (a5),d0
                 ext.l   d0
                 moveq   #$11,d1
@@ -2205,8 +2205,8 @@ loc_D4932:                              ; CODE XREF: sub_D48E2+5FE↓j
                 move.w  off_D4948(pc,d0.l),d0
                 jmp     off_D4948(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D4948:      dc.w loc_D496C-*        ; DATA XREF: sub_D48E2+5E↑r
-                                        ; sub_D48E2:off_D4948↓o ...
+off_D4948:      dc.w loc_D496C-*        ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+5E↑r
+                                        ; RunUpdate_TallyScoreAndEndLevel:off_D4948↓o ...
                 dc.w loc_D49B6-off_D4948
                 dc.w loc_D4A42-off_D4948
                 dc.w loc_D4A66-off_D4948
@@ -2226,14 +2226,14 @@ off_D4948:      dc.w loc_D496C-*        ; DATA XREF: sub_D48E2+5E↑r
                 dc.w loc_D4DB6-off_D4948
 ; ---------------------------------------------------------------------------
 
-loc_D496C:                              ; DATA XREF: sub_D48E2:off_D4948↑o
+loc_D496C:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel:off_D4948↑o
                 jsr     sub_DE996
                 tst.b   d3
                 bne.s   loc_D497E
                 tst.w   ($FF000C).l
                 bne.s   loc_D49A0
 
-loc_D497E:                              ; CODE XREF: sub_D48E2+92↑j
+loc_D497E:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+92↑j
                 move.w  #2,(a5)
                 tst.b   d3
                 beq.w   loc_D4ED0
@@ -2243,12 +2243,12 @@ loc_D497E:                              ; CODE XREF: sub_D48E2+92↑j
                 jsr     sub_D567E(pc)
                 nop
 
-loc_D499A:                              ; CODE XREF: sub_D48E2+D2↓j
+loc_D499A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+D2↓j
                 addq.l  #4,sp
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
 
-loc_D49A0:                              ; CODE XREF: sub_D48E2+9A↑j
+loc_D49A0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+9A↑j
                 clr.l   ($FF000E).l
                 move.w  #1,(a5)
                 ;pea     ($21).w
@@ -2260,36 +2260,36 @@ CustomDeathReturn:
                 bra.s   loc_D499A
 ; ---------------------------------------------------------------------------
 
-loc_D49B6:                              ; DATA XREF: sub_D48E2+68↑o
+loc_D49B6:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+68↑o
                 subq.w  #1,($FF000C).l
                 bmi.s   loc_D49CA
                 cmpi.l  #$989680,($FF000E).l
                 bne.s   loc_D49E8
 
-loc_D49CA:                              ; CODE XREF: sub_D48E2+DA↑j
+loc_D49CA:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+DA↑j
                 move.l  ($FF000E).l,-(sp)
                 bsr.w   NewLife
                 addq.l  #4,sp
                 pea     ($21).w
                 jsr     GEMSStopSong
 
-loc_D49E0:                              ; CODE XREF: sub_D48E2+19E↓j
+loc_D49E0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+19E↓j
                 addq.l  #4,sp
 
-loc_D49E2:                              ; CODE XREF: sub_D48E2+180↓j
-                                        ; sub_D48E2+232↓j ...
+loc_D49E2:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+180↓j
+                                        ; RunUpdate_TallyScoreAndEndLevel+232↓j ...
                 addq.w  #1,(a5)
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
 
-loc_D49E8:                              ; CODE XREF: sub_D48E2+E6↑j
+loc_D49E8:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+E6↑j
                 addi.l  #$9C40,($FF000E).l
                 tst.w   d2
                 bne.w   loc_D4ED0
                 movea.l #aTimeBonus,a0  ; "TIME BONUS"
                 lea     var_28(a6),a1
 
-loc_D4A02:                              ; CODE XREF: sub_D48E2+122↓j
+loc_D4A02:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+122↓j
                 move.b  (a0)+,(a1)+
                 bne.s   loc_D4A02
                 pea     (1).w
@@ -2308,7 +2308,7 @@ loc_D4A02:                              ; CODE XREF: sub_D48E2+122↓j
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
 
-loc_D4A42:                              ; DATA XREF: sub_D48E2+6A↑o
+loc_D4A42:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+6A↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 clr.w   ($FFF1FA).l
@@ -2319,20 +2319,20 @@ loc_D4A42:                              ; DATA XREF: sub_D48E2+6A↑o
                 bra.w   loc_D49E2
 ; ---------------------------------------------------------------------------
 
-loc_D4A66:                              ; DATA XREF: sub_D48E2+6C↑o
+loc_D4A66:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+6C↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D4ED0
                 subq.b  #1,$48(a2)
                 bpl.s   loc_D4A84
 
-loc_D4A76:                              ; CODE XREF: sub_D48E2+298↓j
-                                        ; sub_D48E2+34C↓j
+loc_D4A76:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+298↓j
+                                        ; RunUpdate_TallyScoreAndEndLevel+34C↓j
                 move.l  ($FF000E).l,-(sp)
                 bsr.w   NewLife
                 bra.w   loc_D49E0
 ; ---------------------------------------------------------------------------
 
-loc_D4A84:                              ; CODE XREF: sub_D48E2+192↑j
+loc_D4A84:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+192↑j
                 move.b  $48(a2),d0
                 ext.w   d0
                 andi.w  #3,d0
@@ -2342,7 +2342,7 @@ loc_D4A84:                              ; CODE XREF: sub_D48E2+192↑j
                 nop
                 addq.l  #4,sp
 
-loc_D4A9C:                              ; CODE XREF: sub_D48E2+1AC↑j
+loc_D4A9C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+1AC↑j
                 addi.l  #$30D4,($FF000E).l
                 tst.w   d2
                 bne.w   loc_D4ED0
@@ -2368,7 +2368,7 @@ loc_D4A9C:                              ; CODE XREF: sub_D48E2+1AC↑j
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
 
-loc_D4B00:                              ; DATA XREF: sub_D48E2+6E↑o
+loc_D4B00:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+6E↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 tst.w   ($FF5756).l
@@ -2380,28 +2380,28 @@ loc_D4B00:                              ; DATA XREF: sub_D48E2+6E↑o
                 movea.l #off_BFCF4,a0
                 move.l  (a0,d0.w),-(sp)
 
-loc_D4B2A:                              ; CODE XREF: sub_D48E2+3B4↓j
+loc_D4B2A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+3B4↓j
                 clr.l   -(sp)
                 pea     (off_14).w
                 pea     (5).w
                 pea     (2).w
                 pea     (7).w
 
-loc_D4B3C:                              ; CODE XREF: sub_D48E2+338↓j
-                                        ; sub_D48E2+4D0↓j
+loc_D4B3C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+338↓j
+                                        ; RunUpdate_TallyScoreAndEndLevel+4D0↓j
                 jsr     QueueOSDMessage
                 lea     $18(sp),sp
                 bra.w   loc_D49E2
 ; ---------------------------------------------------------------------------
 
-loc_D4B4A:                              ; CODE XREF: sub_D48E2+22E↑j
-                                        ; sub_D48E2+30A↓j ...
+loc_D4B4A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+22E↑j
+                                        ; RunUpdate_TallyScoreAndEndLevel+30A↓j ...
                 addq.w  #3,(a5)
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
 
-loc_D4B50:                              ; DATA XREF: sub_D48E2+70↑o
-                                        ; sub_D48E2+76↑o ...
+loc_D4B50:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+70↑o
+                                        ; RunUpdate_TallyScoreAndEndLevel+76↑o ...
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 clr.w   ($FFF1FA).l
@@ -2409,7 +2409,7 @@ loc_D4B50:                              ; DATA XREF: sub_D48E2+70↑o
                 bra.w   loc_D49E2
 ; ---------------------------------------------------------------------------
 
-loc_D4B6A:                              ; DATA XREF: sub_D48E2+72↑o
+loc_D4B6A:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+72↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D4ED0
                 subq.w  #1,($FF5756).l
@@ -2429,12 +2429,12 @@ loc_D4B6A:                              ; DATA XREF: sub_D48E2+72↑o
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_D4BBA:                              ; CODE XREF: sub_D48E2+38C↓j
+loc_D4BBA:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+38C↓j
                 jsr     QueueOSDMessage
                 lea     $18(sp),sp
                 pea     ($2F).w
 
-loc_D4BC8:                              ; CODE XREF: sub_D48E2+420↓j
+loc_D4BC8:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+420↓j
                 jsr     PlaySong(pc)
                 nop
                 addq.l  #4,sp
@@ -2442,7 +2442,7 @@ loc_D4BC8:                              ; CODE XREF: sub_D48E2+420↓j
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
 
-loc_D4BDC:                              ; DATA XREF: sub_D48E2+74↑o
+loc_D4BDC:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+74↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 tst.w   ($FFF1FC).l
@@ -2454,7 +2454,7 @@ loc_D4BDC:                              ; DATA XREF: sub_D48E2+74↑o
                 movea.l #off_BFD04,a0
                 move.l  (a0,d0.w),-(sp)
 
-loc_D4C08:                              ; CODE XREF: sub_D48E2+43C↓j
+loc_D4C08:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+43C↓j
                 clr.l   -(sp)
                 pea     (off_14).w
                 pea     (5).w
@@ -2463,7 +2463,7 @@ loc_D4C08:                              ; CODE XREF: sub_D48E2+43C↓j
                 bra.w   loc_D4B3C
 ; ---------------------------------------------------------------------------
 
-loc_D4C1E:                              ; DATA XREF: sub_D48E2+78↑o
+loc_D4C1E:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+78↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D4ED0
                 subq.w  #1,($FFF1FC).l
@@ -2485,7 +2485,7 @@ loc_D4C1E:                              ; DATA XREF: sub_D48E2+78↑o
                 bra.w   loc_D4BBA
 ; ---------------------------------------------------------------------------
 
-loc_D4C72:                              ; DATA XREF: sub_D48E2+7A↑o
+loc_D4C72:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+7A↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 tst.b   d3
@@ -2498,25 +2498,25 @@ loc_D4C72:                              ; DATA XREF: sub_D48E2+7A↑o
                 bra.w   loc_D4B2A
 ; ---------------------------------------------------------------------------
 
-loc_D4C9A:                              ; CODE XREF: sub_D48E2+39C↑j
-                                        ; sub_D48E2+3A4↑j
+loc_D4C9A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+39C↑j
+                                        ; RunUpdate_TallyScoreAndEndLevel+3A4↑j
                 addq.w  #6,(a5)
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
 
-loc_D4CA0:                              ; DATA XREF: sub_D48E2+7E↑o
+loc_D4CA0:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+7E↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D4ED0
                 subq.b  #1,$4A(a2)
                 bpl.s   loc_D4CBE
 
-loc_D4CB0:                              ; CODE XREF: sub_D48E2+44E↓j
+loc_D4CB0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+44E↓j
                 move.l  ($FF000E).l,d0
                 add.l   d0,4(a2)
                 bra.w   loc_D49E2
 ; ---------------------------------------------------------------------------
 
-loc_D4CBE:                              ; CODE XREF: sub_D48E2+3CC↑j
+loc_D4CBE:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+3CC↑j
                 addi.l  #$989680,($FF000E).l
                 move.l  ($FF000E).l,-(sp)
                 pea     var_28(a6)
@@ -2530,14 +2530,14 @@ loc_D4CBE:                              ; CODE XREF: sub_D48E2+3CC↑j
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_D4CF4:                              ; CODE XREF: sub_D48E2+488↓j
+loc_D4CF4:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+488↓j
                 jsr     QueueOSDMessage
                 lea     $18(sp),sp
                 pea     (off_28).w
                 bra.w   loc_D4BC8
 ; ---------------------------------------------------------------------------
 
-loc_D4D06:                              ; DATA XREF: sub_D48E2+80↑o
+loc_D4D06:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+80↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 tst.b   $46(a2)
@@ -2546,7 +2546,7 @@ loc_D4D06:                              ; DATA XREF: sub_D48E2+80↑o
                 bra.w   loc_D4C08
 ; ---------------------------------------------------------------------------
 
-loc_D4D22:                              ; DATA XREF: sub_D48E2+84↑o
+loc_D4D22:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+84↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D4ED0
                 subq.b  #1,$46(a2)
@@ -2566,7 +2566,7 @@ loc_D4D22:                              ; DATA XREF: sub_D48E2+84↑o
                 bra.s   loc_D4CF4
 ; ---------------------------------------------------------------------------
 
-loc_D4D6C:                              ; DATA XREF: sub_D48E2+86↑o
+loc_D4D6C:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+86↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 ;movea.l #aP1Total,a0    ; "P1 TOTAL   "
@@ -2591,13 +2591,13 @@ Custom_RespawnPlayer_MoveCameraReturn:
                 bra.w   loc_D4B3C
 ; ---------------------------------------------------------------------------
 
-loc_D4DB6:                              ; DATA XREF: sub_D48E2+88↑o
+loc_D4DB6:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+88↑o
                 tst.b   ($FF41C2).l
                 bne.w   loc_D4ED0
                 jmp     Custom_RespawnPlayer
-                ;jsr     sub_D86CA
+                ;jsr     ScreenTransition_ToBlack
 Custom_RespawnPlayer_EndLevel:
-                jsr     Z80_MuteAllSounds(pc)
+                jsr     GEMS_MuteAllSounds(pc)
                 nop
                 tst.b   d3
                 bne.s   loc_D4E2A
@@ -2614,7 +2614,7 @@ Custom_RespawnPlayer_EndLevel:
                 jsr     sub_F2652
                 addq.l  #4,sp
 
-loc_D4DFC:                              ; CODE XREF: sub_D48E2+50C↑j
+loc_D4DFC:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+50C↑j
                 clr.b   $47(a2)
                 pea     ($A).w
                 move.l  a2,d0
@@ -2625,17 +2625,17 @@ loc_D4DFC:                              ; CODE XREF: sub_D48E2+50C↑j
                                         ; Clears (sets to 0) n bytes of RAM starting at addr.
                 addq.l  #8,sp
 
-loc_D4E14:                              ; CODE XREF: sub_D48E2+598↓j
+loc_D4E14:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+598↓j
                 bsr.w   sub_D3FAC
                 bra.w   loc_D4EF4
 ; ---------------------------------------------------------------------------
 
-loc_D4E1C:                              ; CODE XREF: sub_D48E2+4F8↑j
+loc_D4E1C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+4F8↑j
                 jsr     sub_F5B9E
                 clr.b   $46(a2)
                 clr.b   $49(a2)
 
-loc_D4E2A:                              ; CODE XREF: sub_D48E2+4EC↑j
+loc_D4E2A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+4EC↑j
                 tst.b   $49(a2)
                 beq.s   loc_D4E40
                 subq.b  #1,$49(a2)
@@ -2644,19 +2644,19 @@ loc_D4E2A:                              ; CODE XREF: sub_D48E2+4EC↑j
                 bra.w   loc_D4EF4
 ; ---------------------------------------------------------------------------
 
-loc_D4E40:                              ; CODE XREF: sub_D48E2+54C↑j
+loc_D4E40:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+54C↑j
                 move.w  ($FF5736).l,d2
                 move.b  ($FFF8D4).l,d3
                 move.w  ($FF5736).l,d4
 
-loc_D4E52:                              ; CODE XREF: sub_D48E2+59C↓j
+loc_D4E52:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+59C↓j
                 addq.w  #1,d2
                 move.l  d2,d0
                 cmp.b   d3,d0
                 bne.s   loc_D4E5C
                 clr.w   d2
 
-loc_D4E5C:                              ; CODE XREF: sub_D48E2+576↑j
+loc_D4E5C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+576↑j
                 move.w  d2,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -2670,7 +2670,7 @@ loc_D4E5C:                              ; CODE XREF: sub_D48E2+576↑j
                 bra.s   loc_D4E14
 ; ---------------------------------------------------------------------------
 
-loc_D4E7C:                              ; CODE XREF: sub_D48E2+590↑j
+loc_D4E7C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+590↑j
                 cmp.w   d4,d2
                 bne.s   loc_D4E52
                 movea.l #$FF5758,a2
@@ -2679,7 +2679,7 @@ loc_D4E7C:                              ; CODE XREF: sub_D48E2+590↑j
                 bra.s   loc_D4EA8
 ; ---------------------------------------------------------------------------
 
-loc_D4E8C:                              ; CODE XREF: sub_D48E2+5D0↓j
+loc_D4E8C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5D0↓j
                 move.l  a2,-(sp)
                 jsr     sub_FF396
                 addq.l  #4,sp
@@ -2688,12 +2688,12 @@ loc_D4E8C:                              ; CODE XREF: sub_D48E2+5D0↓j
                 bne.s   loc_D4EA2
                 moveq   #1,d3
 
-loc_D4EA2:                              ; CODE XREF: sub_D48E2+5BC↑j
+loc_D4EA2:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5BC↑j
                 addq.w  #1,d2
                 moveq   #$4C,d0 ; 'L'
                 adda.l  d0,a2
 
-loc_D4EA8:                              ; CODE XREF: sub_D48E2+5A8↑j
+loc_D4EA8:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5A8↑j
                 move.b  ($FFF8D4).l,d0
                 ext.w   d0
                 cmp.w   d2,d0
@@ -2703,7 +2703,7 @@ loc_D4EA8:                              ; CODE XREF: sub_D48E2+5A8↑j
                 beq.s   loc_D4EC4
                 jsr     sub_FF1F0
 
-loc_D4EC4:                              ; CODE XREF: sub_D48E2+5DA↑j
+loc_D4EC4:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5DA↑j
                 clr.l   -(sp)
                 jsr     sub_D54CE(pc)
                 nop
@@ -2711,8 +2711,8 @@ loc_D4EC4:                              ; CODE XREF: sub_D48E2+5DA↑j
                 bra.s   loc_D4EF4
 ; ---------------------------------------------------------------------------
 
-loc_D4ED0:                              ; CODE XREF: sub_D48E2+58↑j
-                                        ; sub_D48E2+A2↑j ...
+loc_D4ED0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+58↑j
+                                        ; RunUpdate_TallyScoreAndEndLevel+A2↑j ...
                 tst.w   d2
                 beq.s   loc_D4EE4
                 cmpi.w  #$A,(a5)
@@ -2721,20 +2721,20 @@ loc_D4ED0:                              ; CODE XREF: sub_D48E2+58↑j
                 bra.w   loc_D4932
 ; ---------------------------------------------------------------------------
 
-loc_D4EE4:                              ; CODE XREF: sub_D48E2+5F0↑j
-                                        ; sub_D48E2+5F6↑j
+loc_D4EE4:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5F0↑j
+                                        ; RunUpdate_TallyScoreAndEndLevel+5F6↑j
                 jsr     RunOSDAnimationUpdate
                 tst.b   d3
                 beq.s   loc_D4EF4
                 jsr     RunUpdate_PaletteAnimations
 
 Custom_Respawn_ContinueLevel:
-loc_D4EF4:                              ; CODE XREF: sub_D48E2+536↑j
-                                        ; sub_D48E2+55A↑j ...
+loc_D4EF4:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+536↑j
+                                        ; RunUpdate_TallyScoreAndEndLevel+55A↑j ...
                 movem.l var_44(a6),d2-d4/a2-a5
                 unlk    a6
                 rts
-; End of function sub_D48E2
+; End of function RunUpdate_TallyScoreAndEndLevel
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3172,7 +3172,7 @@ loc_D5348:                              ; CODE XREF: RunMain+B6↑j
 loc_D5356:                              ; DATA XREF: RunMain+98↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D5406
-                jsr     sub_D86CA
+                jsr     ScreenTransition_ToBlack
                 clr.l   -(sp)
                 jsr     sub_E1B5A
                 clr.l   -(sp)
@@ -3298,7 +3298,7 @@ loc_D546C:                              ; DATA XREF: RunMain+9C↑o
 ; ---------------------------------------------------------------------------
 
 loc_D54AC:                              ; DATA XREF: RunMain+9E↑o
-                bsr.w   sub_D48E2
+                bsr.w   RunUpdate_TallyScoreAndEndLevel
 
 WaitForNextMode:                        ; CODE XREF: RunMain+84↑j
                                         ; RunMain+A4↑j ...
@@ -3320,7 +3320,7 @@ loc_D54BC:                              ; CODE XREF: RunMain+292↓j
 ; Attributes: bp-based frame
 
 sub_D54CE:                              ; CODE XREF: sub_D3FAC+256↑p
-                                        ; sub_D48E2+5E4↑p ...
+                                        ; RunUpdate_TallyScoreAndEndLevel+5E4↑p ...
 
 var_8           = -8
 arg_0           =  8
@@ -3408,7 +3408,7 @@ loc_D5586:                              ; DATA XREF: sub_D54CE+9E↑o
 
 loc_D558C:                              ; CODE XREF: sub_D54CE+8C↑j
                                         ; sub_D54CE+A6↑j ...
-                jsr     Z80_MuteAllSounds(pc)
+                jsr     GEMS_MuteAllSounds(pc)
                 nop
                 cmpi.w  #3,(a3)
                 bne.s   loc_D55BC
@@ -3582,13 +3582,13 @@ loc_D56C4:                              ; CODE XREF: sub_D56A8+A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-Z80_MuteAllSounds:                              ; CODE XREF: GoToBonusStage:loc_D3F96↑p
+GEMS_MuteAllSounds:                              ; CODE XREF: GoToBonusStage:loc_D3F96↑p
                                         ; sub_D3FAC+10↑p ...
                 jsr     GEMSStopAll
                 move.w  #$FFFF,($FF548E).l
                 move.w  #$FFFF,($FF548C).l
                 rts
-; End of function Z80_MuteAllSounds
+; End of function GEMS_MuteAllSounds
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3660,8 +3660,8 @@ RunAnimatedObjectsUpdate:                              ; CODE XREF: sub_D4228+13
                 nop
 
 loc_D5760:                              ; CODE XREF: RunAnimatedObjectsUpdate+A↑j
-                ; move.w  ($FF55AA).l,d0
-                jmp RunOptimisedAnimationsUpdate
+                move.w  ($FF55AA).l,d0
+                ;jmp RunOptimisedAnimationsUpdate
                 addi.w  #-$1A,d0
                 move.w  d0,($FF998A).l
                 move.w  ($FF55AA).l,d0
@@ -3704,7 +3704,7 @@ loc_D57E2:                              ; CODE XREF: RunAnimatedObjectsUpdate+88
 
 loc_D57EC:                              ; CODE XREF: RunAnimatedObjectsUpdate+92↑j
                 move.l  a2,-(sp)
-                jsr     AnimObj_UpdateTemporaries(pc)
+                jsr     AnimObj_UpdateTimedAnimations(pc)
                 nop
                 bra.s   loc_D5818
 ; ---------------------------------------------------------------------------
@@ -3786,15 +3786,12 @@ ReturnFrom_RunOptimisedAnimationsUpdate:
                 jsr     ROAU_RunUpdate_Rings
 
 loc_D589E:                              ; CODE XREF: RunAnimatedObjectsUpdate+148↑j
-                ;jsr     RunPaletteAnimationUpdate
+                jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
                 jsr     sub_D845C
                 movem.l (sp)+,d2-d4/a2-a3
                 rts
 
 ; End of function RunAnimatedObjectsUpdate
-                nop
-                nop
-                nop
 
 ; =============== S U B R O U T I N E =======================================
 
@@ -3969,7 +3966,7 @@ loc_D5A00:                              ; CODE XREF: AnimObj_UpdateStateMachine+
 ; =============== S U B R O U T I N E =======================================
 
 
-AnimObj_UpdateTemporaries:                              ; CODE XREF: RunAnimatedObjectsUpdate+A0↑p
+AnimObj_UpdateTimedAnimations:                              ; CODE XREF: RunAnimatedObjectsUpdate+A0↑p
                                         ; AnimObj_UpdateActivationStates+2C4↓p
 
 arg_0           =  4
@@ -3977,7 +3974,7 @@ arg_0           =  4
                 movem.l d2/a2-a3,-(sp)
                 movea.l $C+arg_0(sp),a3
 
-loc_D5A0E:                              ; CODE XREF: AnimObj_UpdateTemporaries+11E↓j
+loc_D5A0E:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+11E↓j
                 move.w  $22(a3),d0
                 andi.w  #$870,d0
                 beq.s   loc_D5A8C
@@ -3987,7 +3984,7 @@ loc_D5A0E:                              ; CODE XREF: AnimObj_UpdateTemporaries+1
                 jsr     InfiniteLoop
 ; ---------------------------------------------------------------------------
 
-loc_D5A28:                              ; CODE XREF: AnimObj_UpdateTemporaries+1A↑j
+loc_D5A28:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+1A↑j
                 move.w  $22(a3),d0
                 andi.w  #$20,d0 ; ' '
                 beq.s   loc_D5A3E
@@ -3995,7 +3992,7 @@ loc_D5A28:                              ; CODE XREF: AnimObj_UpdateTemporaries+1
                 andi.w  #2,d0
                 beq.w   loc_D5B28
 
-loc_D5A3E:                              ; CODE XREF: AnimObj_UpdateTemporaries+2A↑j
+loc_D5A3E:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+2A↑j
                 move.w  $22(a3),d0
                 andi.w  #$10,d0
                 beq.s   loc_D5A64
@@ -4009,7 +4006,7 @@ loc_D5A3E:                              ; CODE XREF: AnimObj_UpdateTemporaries+2
                 beq.w   loc_D5B28
                 andi.w  #$FFEF,$22(a3)
 
-loc_D5A64:                              ; CODE XREF: AnimObj_UpdateTemporaries+40↑j
+loc_D5A64:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+40↑j
                 move.w  $22(a3),d0
                 andi.w  #$40,d0 ; '@'
                 beq.s   loc_D5A8C
@@ -4021,8 +4018,8 @@ loc_D5A64:                              ; CODE XREF: AnimObj_UpdateTemporaries+4
                 andi.l  #1,d0
                 beq.w   loc_D5B28
 
-loc_D5A8C:                              ; CODE XREF: AnimObj_UpdateTemporaries+10↑j
-                                        ; AnimObj_UpdateTemporaries+66↑j
+loc_D5A8C:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+10↑j
+                                        ; AnimObj_UpdateTimedAnimations+66↑j
                 move.b  $2A(a3),d0
                 subq.b  #1,$2A(a3)
                 tst.b   d0
@@ -4033,7 +4030,7 @@ loc_D5A8C:                              ; CODE XREF: AnimObj_UpdateTemporaries+1
                 bra.s   loc_D5AB6
 ; ---------------------------------------------------------------------------
 
-loc_D5AA6:                              ; CODE XREF: AnimObj_UpdateTemporaries+BA↓j
+loc_D5AA6:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+BA↓j
                 clr.l   -(sp)
                 move.l  a3,-(sp)
                 jsr     AnimObj_UpdateAnimation(pc)
@@ -4042,14 +4039,14 @@ loc_D5AA6:                              ; CODE XREF: AnimObj_UpdateTemporaries+B
                 move.l  d0,d2
                 bne.s   loc_D5AC2
 
-loc_D5AB6:                              ; CODE XREF: AnimObj_UpdateTemporaries+9E↑j
+loc_D5AB6:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+9E↑j
                 addq.l  #2,(a3)
                 movea.l (a3),a0
                 move.w  (a0),d0
                 andi.w  #$8000,d0
                 bne.s   loc_D5AA6
 
-loc_D5AC2:                              ; CODE XREF: AnimObj_UpdateTemporaries+AE↑j
+loc_D5AC2:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+AE↑j
                 moveq   #2,d0
                 cmp.l   d2,d0
                 beq.s   loc_D5B28
@@ -4062,7 +4059,7 @@ loc_D5AC2:                              ; CODE XREF: AnimObj_UpdateTemporaries+A
                 tst.b   7(a3)
                 beq.s   loc_D5B28
 
-loc_D5AE2:                              ; CODE XREF: AnimObj_UpdateTemporaries+110↓j
+loc_D5AE2:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+110↓j
                 moveq   #0,d0
                 move.b  7(a3),d0
                 lsl.w   #6,d0
@@ -4080,18 +4077,18 @@ loc_D5AE2:                              ; CODE XREF: AnimObj_UpdateTemporaries+1
                 bra.s   loc_D5AE2
 ; ---------------------------------------------------------------------------
 
-loc_D5B18:                              ; CODE XREF: AnimObj_UpdateTemporaries+F8↑j
+loc_D5B18:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+F8↑j
                 ori.w   #8,$24(a2)
                 clr.b   $2A(a2)
                 movea.l a2,a3
                 bra.w   loc_D5A0E
 ; ---------------------------------------------------------------------------
 
-loc_D5B28:                              ; CODE XREF: AnimObj_UpdateTemporaries+34↑j
-                                        ; AnimObj_UpdateTemporaries+54↑j ...
+loc_D5B28:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+34↑j
+                                        ; AnimObj_UpdateTimedAnimations+54↑j ...
                 movem.l (sp)+,d2/a2-a3
                 rts
-; End of function AnimObj_UpdateTemporaries
+; End of function AnimObj_UpdateTimedAnimations
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -5253,7 +5250,7 @@ loc_D64A2:                              ; CODE XREF: AnimObj_UpdateActivationSta
 
 loc_D64AC:                              ; CODE XREF: AnimObj_UpdateActivationStates+2B6↑j
                 move.l  a2,-(sp)
-                bsr.w   AnimObj_UpdateTemporaries
+                bsr.w   AnimObj_UpdateTimedAnimations
                 bra.s   loc_D64D6
 ; ---------------------------------------------------------------------------
 
@@ -5992,7 +5989,7 @@ loc_D6962:                              ; CODE XREF: sin+46↑j
 ; Clears (sets to 0) n bytes of RAM starting at addr.
 
 ClearRAMBlock:                          ; CODE XREF: StartGame+10↑p
-                                        ; sub_D48E2+52A↑p ...
+                                        ; RunUpdate_TallyScoreAndEndLevel+52A↑p ...
 
 crb_addr        =  4
 crb_n           =  $A
@@ -6502,7 +6499,7 @@ loc_D6C24:                              ; CODE XREF: LoadSSCCompressedTiles+72�
 
 
 RunUpdate_PaletteAnimations:                              ; CODE XREF: RunUpdate+22↑p
-                                        ; sub_D48E2+60C↑p ...
+                                        ; RunUpdate_TallyScoreAndEndLevel+60C↑p ...
                 movem.l d2/a2-a5,-(sp)
                 move.w  ($FF75B0).l,d0
                 ext.l   d0
@@ -9225,18 +9222,18 @@ loc_D86C0:                              ; CODE XREF: sub_D8698+2C↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D86CA:                              ; CODE XREF: sub_D46FE+C4↑p
-                                        ; sub_D48E2+4DE↑p ...
+ScreenTransition_ToBlack:                              ; CODE XREF: sub_D46FE+C4↑p
+                                        ; RunUpdate_TallyScoreAndEndLevel+4DE↑p ...
                 move.w  #8,($FF005C).l
                 moveq   #5,d0
                 move.l  d0,($FF0058).l
 
-loc_D86DA:                              ; CODE XREF: sub_D86CA+18↓j
+loc_D86DA:                              ; CODE XREF: ScreenTransition_ToBlack+18↓j
                 moveq   #5,d0
                 cmp.l   ($FF0058).l,d0
                 beq.s   loc_D86DA
                 rts
-; End of function sub_D86CA
+; End of function ScreenTransition_ToBlack
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -17930,7 +17927,7 @@ arg_4           =  8
 
 
 RunFlippersUpdate:                              ; CODE XREF: RunUpdate+6↑p
-                                        ; sub_D48E2+E↑p
+                                        ; RunUpdate_TallyScoreAndEndLevel+E↑p
                 movem.l d2-d6/a2-a4,-(sp)
                 clr.b   d6
                 move.w  ($FF5736).l,d0
@@ -18775,8 +18772,8 @@ loc_DE790:                              ; CODE XREF: strlen_runtime+8↑j
 
 ; Attributes: bp-based frame
 
-sub_DE79A:                              ; CODE XREF: sub_D48E2+2B6↑p
-                                        ; sub_D48E2+36A↑p ...
+sub_DE79A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+2B6↑p
+                                        ; RunUpdate_TallyScoreAndEndLevel+36A↑p ...
 
 var_28          = -$28
 var_14          = -$14
@@ -18857,8 +18854,8 @@ loc_DE80C:                              ; CODE XREF: sub_DE79A+3E↑j
 
 ; Attributes: bp-based frame
 
-sub_DE816:                              ; CODE XREF: sub_D48E2+132↑p
-                                        ; sub_D48E2+1E8↑p ...
+sub_DE816:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+132↑p
+                                        ; RunUpdate_TallyScoreAndEndLevel+1E8↑p ...
 
 var_1C          = -$1C
 var_10          = -$10
@@ -19033,8 +19030,8 @@ loc_DE984:                              ; CODE XREF: OSD_UpdateTilesInRAM+8E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DE996:                              ; CODE XREF: sub_D48E2:loc_D496C↑p
-                                        ; sub_D48E2+138↑p ...
+sub_DE996:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel:loc_D496C↑p
+                                        ; RunUpdate_TallyScoreAndEndLevel+138↑p ...
                 move.l  d2,-(sp)
                 clr.b   ($FF009A).l
                 clr.b   ($FF41C2).l
@@ -49363,7 +49360,7 @@ loc_F264C:                              ; CODE XREF: sub_F2554+F4↑j
 
 ; Attributes: bp-based frame
 
-sub_F2652:                              ; CODE XREF: sub_D48E2+512↑p
+sub_F2652:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+512↑p
                                         ; sub_F5B9E+9E↓p
 
 var_10          = -$10
@@ -55185,7 +55182,7 @@ loc_F5B7A:                              ; CODE XREF: DoLoadCompressed2Tiles+F8�
 
 ; Attributes: bp-based frame
 
-sub_F5B9E:                              ; CODE XREF: sub_D48E2:loc_D4E1C↑p
+sub_F5B9E:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel:loc_D4E1C↑p
 
 var_C           = -$C
 var_8           = -8
@@ -55864,7 +55861,7 @@ loc_F6164:                              ; CODE XREF: GEMSStopSong+6↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-GEMSStopSong:                           ; CODE XREF: sub_D48E2+F8↑p
+GEMSStopSong:                           ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+F8↑p
                                         ; sub_D565E+10↑p ...
                 jsr     GEMS_stdstartup(pc)
                 moveq   #18,d0
@@ -55909,7 +55906,7 @@ GEMSResumeAll:                          ; CODE XREF: RunMain+DE↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-GEMSStopAll:                            ; CODE XREF: Z80_MuteAllSounds↑p
+GEMSStopAll:                            ; CODE XREF: GEMS_MuteAllSounds↑p
                                         ; sub_F2554+CA↑p ...
                 jsr     GEMS_stdstartup(pc)
                 moveq   #22,d0
@@ -67634,7 +67631,7 @@ loc_FE328:                              ; CODE XREF: sub_FA588+3D5E↑j
                 beq.s   loc_FE2E8
 
 loc_FE338:                              ; CODE XREF: sub_FA588+3DA2↑j
-                jsr     sub_D86CA
+                jsr     ScreenTransition_ToBlack
                 movea.l #$C00004,a0
                 move.l  a0,var_58(a6)
                 move.w  #$9203,(a0)
@@ -67656,7 +67653,7 @@ loc_FE360:                              ; CODE XREF: sub_FA588+3DD0↑j
 
 ; Attributes: bp-based frame
 
-RunPaletteAnimationUpdate:                              ; CODE XREF: sub_D3FAC+1D6↑p
+RunPaletteAnimsAndUpdateSpriteRenderOrder:                              ; CODE XREF: sub_D3FAC+1D6↑p
                                         ; sub_D4228+A6↑p ...
 
 var_168         = -$168
@@ -67670,7 +67667,7 @@ var_140         = -$140
                 moveq   #0,d3
                 moveq   #$4F,d0 ; 'O'
 
-loc_FE38E:                              ; CODE XREF: RunPaletteAnimationUpdate+2C↓j
+loc_FE38E:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+2C↓j
                 tst.b   (a3)
                 beq.s   loc_FE39E
                 move.b  d3,(a2)
@@ -67678,7 +67675,7 @@ loc_FE38E:                              ; CODE XREF: RunPaletteAnimationUpdate+2
                 addq.w  #1,d5
                 addq.l  #4,a2
 
-loc_FE39E:                              ; CODE XREF: RunPaletteAnimationUpdate+1A↑j
+loc_FE39E:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+1A↑j
                 addq.l  #8,a3
                 addq.w  #1,d3
                 dbf     d0,loc_FE38E
@@ -67690,13 +67687,13 @@ loc_FE39E:                              ; CODE XREF: RunPaletteAnimationUpdate+1
                 moveq   #1,d6
                 lea     var_140(a6),a0
 
-loc_FE3BC:                              ; CODE XREF: RunPaletteAnimationUpdate+9C↓j
+loc_FE3BC:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+9C↓j
                 move.w  (a3)+,d4
                 move.w  d4,d3
                 bra.s   loc_FE40C
 ; ---------------------------------------------------------------------------
 
-loc_FE3C2:                              ; CODE XREF: RunPaletteAnimationUpdate+98↓j
+loc_FE3C2:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+98↓j
                 move.w  d3,d0
                 add.w   d0,d0
                 add.w   d0,d0
@@ -67714,7 +67711,7 @@ loc_FE3C2:                              ; CODE XREF: RunPaletteAnimationUpdate+9
                 bra.s   loc_FE3F4
 ; ---------------------------------------------------------------------------
 
-loc_FE3E6:                              ; CODE XREF: RunPaletteAnimationUpdate+88↓j
+loc_FE3E6:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+88↓j
                 move.l  (a2),(a4)
                 move.w  d4,d0
                 add.w   d0,d0
@@ -67723,27 +67720,27 @@ loc_FE3E6:                              ; CODE XREF: RunPaletteAnimationUpdate+8
                 suba.w  d0,a2
                 sub.w   d4,d2
 
-loc_FE3F4:                              ; CODE XREF: RunPaletteAnimationUpdate+6E↑j
+loc_FE3F4:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+6E↑j
                 cmp.w   d4,d2
                 blt.s   loc_FE400
                 move.w  2(a2),d0
                 cmp.w   d1,d0
                 blt.s   loc_FE3E6
 
-loc_FE400:                              ; CODE XREF: RunPaletteAnimationUpdate+80↑j
+loc_FE400:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+80↑j
                 move.w  d2,d0
                 add.w   d0,d0
                 add.w   d0,d0
                 move.l  d1,(a0,d0.w)
                 addq.w  #1,d3
 
-loc_FE40C:                              ; CODE XREF: RunPaletteAnimationUpdate+4A↑j
+loc_FE40C:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+4A↑j
                 cmp.w   d5,d3
                 blt.s   loc_FE3C2
                 cmp.w   d4,d6
                 blt.w   loc_FE3BC
 
-loc_FE416:                              ; CODE XREF: RunPaletteAnimationUpdate+34↑j
+loc_FE416:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+34↑j
                 moveq   #0,d6
                 moveq   #1,d2
                 move.w  d2,d4
@@ -67753,7 +67750,7 @@ loc_FE416:                              ; CODE XREF: RunPaletteAnimationUpdate+3
                 bra.s   loc_FE442
 ; ---------------------------------------------------------------------------
 
-loc_FE42A:                              ; CODE XREF: RunPaletteAnimationUpdate:loc_FE442↓j
+loc_FE42A:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder:loc_FE442↓j
                 move.w  d2,d0
                 lsl.w   #3,d0
                 move.b  (a2),d6
@@ -67765,7 +67762,7 @@ loc_FE42A:                              ; CODE XREF: RunPaletteAnimationUpdate:l
                 addq.l  #4,a2
                 addq.w  #1,d3
 
-loc_FE442:                              ; CODE XREF: RunPaletteAnimationUpdate+B2↑j
+loc_FE442:                              ; CODE XREF: RunPaletteAnimsAndUpdateSpriteRenderOrder+B2↑j
                 dbf     d5,loc_FE42A
                 move.b  d2,($FF5684).l
                 lsl.w   #3,d2
@@ -67774,7 +67771,7 @@ loc_FE442:                              ; CODE XREF: RunPaletteAnimationUpdate+B
                 movem.l var_168(a6),d1-d6/a2-a4
                 unlk    a6
                 rts
-; End of function RunPaletteAnimationUpdate
+; End of function RunPaletteAnimsAndUpdateSpriteRenderOrder
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -68667,7 +68664,7 @@ loc_FED64:                              ; CODE XREF: sub_FED1C+5A↓j
 sub_FED7E:                              ; CODE XREF: sub_FEF2A+1E↓p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF035E,a5
-                jsr     Z80_MuteAllSounds
+                jsr     GEMS_MuteAllSounds
                 movea.l #$C00004,a2
                 clr.w   ($FF559E).l
                 jsr     sub_D856A
@@ -68931,7 +68928,7 @@ loc_FF014:                              ; CODE XREF: sub_FEF2A+BA↑j
                 addq.l  #8,sp
                 bra.s   CheckCheatCode
 PlaySoundTestMusic:
-                jsr     Z80_MuteAllSounds
+                jsr     GEMS_MuteAllSounds
                 nop
                 move.b  $FF0A00,d4
                 ext.w   d4
@@ -69031,7 +69028,7 @@ QueueOptionMsg_2:
                 jsr     sub_FF834(pc)
                 nop
                 lea     $24(sp),sp
-                jsr     Z80_MuteAllSounds
+                jsr     GEMS_MuteAllSounds
                 move.b  ($FF035E).l,d0
                 addq.b  #1,d0
                 move.b  d0,($FFF8D4).l
@@ -69071,7 +69068,7 @@ loc_FF168:                              ; CODE XREF: sub_FEF2A+236↑j
 
 sub_FF174:                              ; CODE XREF: sub_FF1F0+12↓p
                 move.l  a2,-(sp)
-                jsr     Z80_MuteAllSounds
+                jsr     GEMS_MuteAllSounds
                 movea.l #$C00004,a2
                 clr.w   ($FF559E).l
                 jsr     sub_D856A
@@ -69105,7 +69102,7 @@ sub_FF174:                              ; CODE XREF: sub_FF1F0+12↓p
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FF1F0:                              ; CODE XREF: sub_D48E2+5DC↑p
+sub_FF1F0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5DC↑p
                                         ; sub_FEF2A+238↑p
                 movem.l d2-d4/a2,-(sp)
                 movea.l #$FF573C,a2
@@ -69175,7 +69172,7 @@ loc_FF288:                              ; CODE XREF: sub_FF1F0+5E↑j
                 jsr     sub_FF834(pc)
                 nop
                 addq.l  #4,sp
-                jsr     Z80_MuteAllSounds
+                jsr     GEMS_MuteAllSounds
                 clr.b   ($FF3F3A).l
                 movem.l (sp)+,d2-d4/a2
                 rts
@@ -69186,11 +69183,11 @@ loc_FF288:                              ; CODE XREF: sub_FF1F0+5E↑j
 
 
 sub_FF2A6:                              ; CODE XREF: sub_D47DE+44↑p
-                                        ; sub_D48E2+5D2↑p
+                                        ; RunUpdate_TallyScoreAndEndLevel+5D2↑p
                 movem.l d2/a2-a3,-(sp)
                 movea.l #$FF573C,a3
                 move.b  #1,($FF3F3A).l
-                jsr     Z80_MuteAllSounds
+                jsr     GEMS_MuteAllSounds
                 movea.l #$C00004,a2
                 clr.w   ($FF559E).l
                 jsr     sub_D856A
@@ -69243,7 +69240,7 @@ loc_FF368:                              ; CODE XREF: sub_FF2A6+B2↑j
                 jsr     sub_FF834(pc)
                 nop
                 lea     $28(sp),sp
-                jsr     Z80_MuteAllSounds
+                jsr     GEMS_MuteAllSounds
                 clr.b   ($FF3F3A).l
                 move.w  (a3),d0
                 andi.w  #$80,d0
@@ -69264,7 +69261,7 @@ loc_FF390:                              ; CODE XREF: sub_FF2A6+E6↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FF396:                              ; CODE XREF: sub_D48E2+5AC↑p
+sub_FF396:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5AC↑p
 
 arg_0           =  4
 
@@ -69700,7 +69697,7 @@ arg_0           =  4
                 pea     ($1E).w
                 jsr     sub_DF7A6
                 bsr.w   sub_FF446
-                jsr     RunPaletteAnimationUpdate
+                jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
                 jsr     sub_D845C
                 ori.w   #9,($FF559E).l
                 clr.l   -(sp)
@@ -69834,7 +69831,7 @@ loc_FF894:                              ; CODE XREF: sub_FF834+68↓j
                 pea     (2).w
                 jsr     SetPaletteUploadRequestFlag
                 addq.l  #4,sp
-                jsr     sub_D86CA
+                jsr     ScreenTransition_ToBlack
 
 loc_FF8B0:                              ; CODE XREF: sub_FF834+4C↑j
                 movem.l (sp)+,d2/a2
@@ -70401,7 +70398,7 @@ BeginNextBonusLevel:
                 add.l   #1,($FFE000)
 BeginBonusLevel:
                 ;jsr    StartGame
-                jsr     sub_D86CA
+                jsr     ScreenTransition_ToBlack
 BeginBonusLevelFromTitle:
                 jsr     GEMSStopAll
                 jsr     sub_D856A
@@ -70507,7 +70504,7 @@ Custom_RespawnPlayer:
                 tst.b   $46(A3)
                 bne.b   CustomRespawnPlayer_ActuallyRespawn
                 ; Game Over
-                jsr     sub_D86CA ; Fade-to-black call pulled in from original source
+                jsr     ScreenTransition_ToBlack ; Fade-to-black call pulled in from original source
                 jmp     Custom_RespawnPlayer_EndLevel
 
 CustomRespawnPlayer_ActuallyRespawn:
@@ -70852,7 +70849,7 @@ ROAU_loc_D57E2:
 
 ROAU_loc_D57EC:
                 move.l  a2,-(sp)
-                jsr     AnimObj_UpdateTemporaries
+                jsr     AnimObj_UpdateTimedAnimations
                 nop
                 addq.l  #4,sp
                 bra.s   ROAU_loc_D581A

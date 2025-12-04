@@ -3783,7 +3783,7 @@ loc_D5882:                              ; CODE XREF: RunAnimatedObjectsUpdate+62
 ReturnFrom_RunOptimisedAnimationsUpdate:
                 tst.b   ($FF3F3A).l
                 bne.s   loc_D589E
-                jsr     RunUpdate_Rings
+                jsr     ROAU_RunUpdate_Rings
 
 loc_D589E:                              ; CODE XREF: RunAnimatedObjectsUpdate+148↑j
                 ;jsr     RunPaletteAnimationUpdate
@@ -3791,11 +3791,10 @@ loc_D589E:                              ; CODE XREF: RunAnimatedObjectsUpdate+14
                 movem.l (sp)+,d2-d4/a2-a3
                 rts
 
-                nop ;jsr     RunPaletteAnimationUpdate
-                nop
-                nop
 ; End of function RunAnimatedObjectsUpdate
-
+                nop
+                nop
+                nop
 
 ; =============== S U B R O U T I N E =======================================
 
@@ -70929,6 +70928,259 @@ ROAU_BranchException:
                 movem.l (sp)+,d2-d7/a2-a6        ; Restore registers
                 jmp     loc_D589E
 ; End of function RunAnimatedObjectsUpdate
+
+; =============== S U B R O U T I N E =======================================
+
+; Attributes: bp-based frame
+
+ROAU_RunUpdate_Rings:
+
+var_24          = -$24
+var_4           = -4
+
+                link    a6,#-4
+                movem.l d2-d5/a2-a5,-(sp)
+                move.w  #$8F02,($C00004).l
+                subq.b  #1,($FF547E).l
+                bne.s   ROAU_loc_FE7BA
+                move.b  #4,($FF547E).l
+                addq.b  #1,($FFF200).l
+                cmpi.b  #3,($FFF200).l
+                bls.s   ROAU_loc_FE7BA
+                clr.b   ($FFF200).l
+
+ROAU_loc_FE7BA:
+                moveq   #0,d0
+                move.b  ($FFF200).l,d0
+                movea.l #off_D3B2A,a0
+                move.b  (a0,d0.l),d0
+                andi.l  #$FF,d0
+                add.w   d0,d0
+                movea.l #$FFEE74,a0
+                move.w  (a0,d0.w),d5
+                moveq   #0,d0
+                move.b  ($FFF200).l,d0
+                add.w   d0,d0
+                movea.l #dword_D3B44,a0
+                move.w  (a0,d0.w),d3
+                movea.l #$FFEE80,a2
+                clr.b   d2
+                bra.w   ROAU_loc_FEA62
+; ---------------------------------------------------------------------------
+
+ROAU_RunUpdate_Rings_Loop:
+                tst.b   6(a2)
+                bne.w   ROAU_loc_FE942
+                moveq   #0,d0
+                move.b  (a2),d0
+                move.l  d0,d1
+                lsl.l   #2,d1
+                add.l   d1,d0
+                lsl.l   #3,d0
+                add.l   d1,d0
+                movea.l #$FF10A8,a0
+                adda.l  d0,a0
+                movea.l a0,a3
+                movea.l a3,a5
+                moveq   #$E,d0
+                adda.l  d0,a5
+                ; Check if ring is within camera bounds
+                move.l  2(a2),d0 ; Pack x-pos | y-pos together
+
+                ; Check y-pos bounds first
+                cmp.w   ($FF998A).l,d0
+                ble.w   ROAU_loc_FE926
+
+                cmp.w   ($FF74E4).l,d0
+                bge.w   ROAU_loc_FE926
+
+                swap    d0 ; swap x-pos word for y-pos word
+
+                cmp.w   ($FFEDA8).l,d0
+                bge.w   ROAU_loc_FE926
+
+                cmp.w   ($FFEDB4).l,d0
+                ble.w   ROAU_loc_FE926
+
+                cmpi.b  #$FF,(a5)
+                bne.s   ROAU_loc_FE86A
+                jsr     sub_D7B60
+                move.b  d0,(a5)
+
+ROAU_loc_FE86A:
+                moveq   #0,d0
+                move.b  (a5),d0
+                lsl.w   #3,d0
+                movea.l #$FFA8F4,a0
+                lea     (a0,d0.w),a0
+                move.l  a0,var_4(a6)
+                move.w  2(a2),d0
+                sub.w   ($FF5754).l,d0
+                move.w  d0,(a3)
+                move.w  4(a2),d0
+                sub.w   ($FF55AA).l,d0
+                move.w  d0,2(a3)
+                movea.l var_4(a6),a0
+                move.b  #5,4(a0)
+                tst.w   ($FF9986).l
+                beq.s   ROAU_loc_FE8C8
+                move.w  ($FF5888).l,d0
+                addq.w  #1,($FF5888).l
+                move.w  d0,d1
+                add.w   d1,d1
+                add.w   d1,d0
+                lsl.w   #3,d0
+                sub.w   d1,d0
+                movea.l #$FF0370,a0
+                bra.s   ROAU_loc_FE8E4
+; ---------------------------------------------------------------------------
+
+ROAU_loc_FE8C8:
+                move.w  ($FF588A).l,d0
+                addq.w  #1,($FF588A).l
+                move.w  d0,d1
+                add.w   d1,d1
+                add.w   d1,d0
+                lsl.w   #3,d0
+                sub.w   d1,d0
+                movea.l #$FF998C,a0
+
+ROAU_loc_FE8E4:
+                lea     (a0,d0.w),a0
+                movea.l a0,a4
+                moveq   #1,d0
+                move.l  d0,(a4)
+                moveq   #0,d0
+                move.b  (a5),d0
+                lsl.w   #3,d0
+                addi.w  #-$800,d0
+                move.w  d0,$C(a4)
+                move.w  2(a3),d0
+                addi.w  #$70,d0 ; 'p'
+                move.w  d0,$E(a4)
+                move.w  (a3),d0
+                add.w   d3,d0
+                addi.w  #$78,d0 ; 'x'
+                move.w  d0,$14(a4)
+                move.w  d5,$12(a4)
+                movea.l var_4(a6),a0
+                move.w  4(a3),2(a0)
+                bra.w   ROAU_loc_FEA5E
+; ---------------------------------------------------------------------------
+
+ROAU_loc_FE926:
+                cmpi.b  #$FF,(a5)
+                beq.w   ROAU_loc_FEA5E
+                move.b  (a5),d0
+                move.l  d0,-(sp)
+                jsr     VDPSpriteArray_InitialiseEntry
+                addq.l  #4,sp
+                move.b  #$FF,(a5)
+                bra.w   ROAU_loc_FEA5E
+; ---------------------------------------------------------------------------
+
+ROAU_loc_FE942:
+                tst.b   7(a2)
+                beq.w   ROAU_loc_FEA5E
+                moveq   #0,d0
+                move.b  (a2),d0
+                move.l  d0,d1
+                lsl.l   #2,d1
+                add.l   d1,d0
+                lsl.l   #3,d0
+                add.l   d1,d0
+                movea.l #$FF10A8,a0
+                adda.l  d0,a0
+                movea.l a0,a3
+                movea.l a3,a5
+                moveq   #$E,d0
+                adda.l  d0,a5
+                moveq   #0,d0
+                move.b  (a5),d0
+                lsl.w   #3,d0
+                movea.l #$FFA8F4,a0
+                lea     (a0,d0.w),a0
+                move.l  a0,var_4(a6)
+                moveq   #0,d0
+                move.b  7(a2),d0
+                movea.l #off_D3B2E,a0
+                move.b  (a0,d0.w),d0
+                andi.l  #$FF,d0
+                add.w   d0,d0
+                movea.l #$FF3CC0,a0
+                move.w  (a0,d0.w),d4
+                move.w  2(a2),d0
+                sub.w   ($FF5754).l,d0
+                move.w  d0,(a3)
+                move.w  4(a2),d0
+                sub.w   ($FF55AA).l,d0
+                move.w  d0,2(a3)
+                movea.l var_4(a6),a0
+                move.b  #5,4(a0)
+                tst.w   ($FF9986).l
+                beq.s   ROAU_loc_FE9E8
+                move.w  ($FF5888).l,d0
+                addq.w  #1,($FF5888).l
+                move.w  d0,d1
+                add.w   d1,d1
+                add.w   d1,d0
+                lsl.w   #3,d0
+                sub.w   d1,d0
+                movea.l #$FF0370,a0
+                bra.s   ROAU_loc_FEA04
+; ---------------------------------------------------------------------------
+
+ROAU_loc_FE9E8:
+                move.w  ($FF588A).l,d0
+                addq.w  #1,($FF588A).l
+                move.w  d0,d1
+                add.w   d1,d1
+                add.w   d1,d0
+                lsl.w   #3,d0
+                sub.w   d1,d0
+                movea.l #$FF998C,a0
+
+ROAU_loc_FEA04:
+                lea     (a0,d0.w),a0
+                movea.l a0,a4
+                moveq   #1,d0
+                move.l  d0,(a4)
+                moveq   #0,d0
+                move.b  (a5),d0
+                lsl.w   #3,d0
+                addi.w  #-$800,d0
+                move.w  d0,$C(a4)
+                move.w  2(a3),d0
+                addi.w  #$70,d0 ; 'p'
+                move.w  d0,$E(a4)
+                move.w  (a3),d0
+                add.w   d3,d0
+                addi.w  #$78,d0 ; 'x'
+                move.w  d0,$14(a4)
+                move.w  d4,$12(a4)
+                movea.l var_4(a6),a0
+                move.w  4(a3),2(a0)
+                subq.b  #1,7(a2)
+                bne.s   ROAU_loc_FEA5E
+                clr.b   (a2)
+                move.b  (a5),d0
+                move.l  d0,-(sp)
+                jsr     VDPSpriteArray_InitialiseEntry
+                addq.l  #4,sp
+                clr.l   $A(a3)
+                clr.b   7(a2)
+
+ROAU_loc_FEA5E:
+                addq.l  #8,a2
+                addq.b  #1,d2
+
+ROAU_loc_FEA62:
+                cmp.b   ($FF9984).l,d2
+                bcs.w   ROAU_RunUpdate_Rings_Loop
+                movem.l var_24(a6),d2-d5/a2-a5
+                unlk    a6
+                rts
+; End of function RunUpdate_Rings
 
 ; end of 'ROM'
 

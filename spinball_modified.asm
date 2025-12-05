@@ -2174,8 +2174,10 @@ var_1D          = -$1D
                 link    a6,#-$28
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF55A0,a5
-                jsr     RunFlippersUpdate
+                jsr     Custom_RaspawnPlayer_PostDeathUpdate
+                ;jsr     RunFlippersUpdate
                 jsr     RunAnimatedObjectsUpdate
+
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -70460,6 +70462,11 @@ new_jump_physics:
                 move.l  -4(sp),D7            ; Rescue original D7 register value
                 move.l  #$50,-(sp)           ; Original value of $50
                 jmp new_jump_physics_return
+
+Custom_RaspawnPlayer_PostDeathUpdate:
+                jsr     RunCameraUpdate ; Run camera update here to allow custom respawning effect to work
+                jsr     RunFlippersUpdate
+                rts
 
 Custom_RespawnPlayer_MoveCamera:
                 movem.l D0-D7/A0-A6,-(sp)

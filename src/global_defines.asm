@@ -34,4 +34,4 @@ aJoystickButtonMask_AAndStart  = $C000  ;1100 0000 0000 0000
 aJoystickButtonMask_BAndStart  = $9000  ;1001 0000 0000 0000
 aJoystickButtonMask_CAndStart  = $A000  ;1010 0000 0000 0000
 
-NUM_OSD_MSGS = $A
+NUM_OSD_MSGS = $3

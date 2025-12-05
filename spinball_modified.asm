@@ -782,7 +782,6 @@ loc_6F4:                                ; DATA XREF: ROM:0001A17C↓o
                 include "src/spinball_data.asm"
 ; ---------------------------------------------------------------------------
 ; START OF FUNCTION CHUNK FOR VBlank
-
 loc_D3D46:                              ; CODE XREF: VBlank+6↓j
                 jmp     loc_F62B8
 ; END OF FUNCTION CHUNK FOR VBlank
@@ -1128,7 +1127,7 @@ ZeroDivide:                             ; CODE XREF: ZeroDivide↓j
 ; Attributes: noreturn
 
 InfiniteLoop:                           ; CODE XREF: InfiniteLoop↓j
-                                        ; AnimObj_UpdateAnimation+1C↓p ...
+                                        ; AnimObj_UpdateTimedAnimations+1C↓p ...
                 bra.s   InfiniteLoop
 ; End of function InfiniteLoop
 
@@ -1337,7 +1336,6 @@ loc_D4092:                              ; CODE XREF: sub_D3FAC+DC↑j
 
 loc_D4094:                              ; CODE XREF: sub_D3FAC+E4↑j
                 move.w  d0,($FFF214).l
-                ;jmp     Custom_RespawnPlayer
                 jsr     sub_FE460
                 jsr     sub_DB744
                 jsr     sub_DDE6C
@@ -1756,7 +1754,6 @@ locret_D44FE:                           ; CODE XREF: RunUpdate+2E↑j
                 rts
 ; End of function RunUpdate
 
-
 ; =============== S U B R O U T I N E =======================================
 
 
@@ -2088,7 +2085,7 @@ loc_D47F2:                              ; CODE XREF: sub_D47DE+A↑j
 ; ---------------------------------------------------------------------------
 
 loc_D480A:                              ; CODE XREF: sub_D47DE+22↑j
-                bsr.w  StartGame
+                bsr.w   StartGame
                 bra.s   loc_D482C
                 ;jmp     BeginBonusModeFromTitleScreen
 ; ---------------------------------------------------------------------------
@@ -3660,8 +3657,8 @@ RunAnimatedObjectsUpdate:                              ; CODE XREF: sub_D4228+13
                 nop
 
 loc_D5760:                              ; CODE XREF: RunAnimatedObjectsUpdate+A↑j
-                move.w  ($FF55AA).l,d0
-                ;jmp RunOptimisedAnimationsUpdate
+                ;move.w  ($FF55AA).l,d0
+                jmp RunOptimisedAnimationsUpdate
                 addi.w  #-$1A,d0
                 move.w  d0,($FF998A).l
                 move.w  ($FF55AA).l,d0
@@ -3782,22 +3779,30 @@ loc_D5882:                              ; CODE XREF: RunAnimatedObjectsUpdate+62
                 bcs.w   loc_D57A8
 ReturnFrom_RunOptimisedAnimationsUpdate:
                 tst.b   ($FF3F3A).l
-                bne.s   loc_D589E
-                jsr     ROAU_RunUpdate_Rings
+                ;bne.s   loc_D589E
+                ;jsr     ROAU_RunUpdate_Rings	; jsr     RunUpdate_Rings
 
 loc_D589E:                              ; CODE XREF: RunAnimatedObjectsUpdate+148↑j
-                jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
+                ;jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
                 jsr     sub_D845C
                 movem.l (sp)+,d2-d4/a2-a3
                 rts
-
 ; End of function RunAnimatedObjectsUpdate
+				nop
+				nop
+				nop
+				
+				nop
+				nop
+				nop
+				
+				nop
 
 ; =============== S U B R O U T I N E =======================================
 
 
 AnimObj_UpdateGameSprite:               ; CODE XREF: RunAnimatedObjectsUpdate+DE↑p
-                                        ; AnimObj_UpdateAnimation+C4↓p ...
+                                        ; AnimObj_UpdateTimedAnimations+C4↓p ...
 
 arg_0           =  4
 
@@ -3832,25 +3837,25 @@ arg_0           =  4
                 bra.s   loc_D5912
 ; ---------------------------------------------------------------------------
 
-loc_D5904:                              ; CODE XREF: AnimObj_UpdateStateFlags+3C↑j
+loc_D5904:                              ; CODE XREF: AnimObj_UpdateGameSprite+3C↑j
                 move.l  a3,-(sp)
                 jsr     GameSprite_RefreshVDPSpriteData
                 addq.l  #4,sp
                 move.w  d2,8(a3)
 
-loc_D5912:                              ; CODE XREF: AnimObj_UpdateStateFlags+52↑j
+loc_D5912:                              ; CODE XREF: AnimObj_UpdateGameSprite+52↑j
                 ori.w   #8,$22(a2)
 
-loc_D5918:                              ; CODE XREF: AnimObj_UpdateStateFlags+42↑j
+loc_D5918:                              ; CODE XREF: AnimObj_UpdateGameSprite+42↑j
                 movem.l (sp)+,d2/a2-a3
                 rts
-; End of function AnimObj_UpdateStateFlags
+; End of function AnimObj_UpdateGameSprite
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-AnimObj_UpdateStateMachine:                              ; CODE XREF: AnimObj_UpdateStateFlags+10↑p
+AnimObj_UpdateStateMachine:             ; CODE XREF: AnimObj_UpdateGameSprite+10↑p
                                         ; AnimObj_InitialiseInstance+18A↓p
 
 arg_0           =  4
@@ -4094,7 +4099,7 @@ loc_D5B28:                              ; CODE XREF: AnimObj_UpdateTimedAnimatio
 ; =============== S U B R O U T I N E =======================================
 
 
-AnimObj_UpdateAnimation:                              ; CODE XREF: AnimObj_UpdateAnimation+A4↑p
+AnimObj_UpdateAnimation:                ; CODE XREF: AnimObj_UpdateTimedAnimations+A4↑p
                                         ; AnimObj_InitialiseInstance+166↓p
 
 arg_0           =  4
@@ -7907,7 +7912,7 @@ sub_D7AB8:                              ; CODE XREF: sub_D3FAC+140↑p
 ; =============== S U B R O U T I N E =======================================
 
 
- GameSprite_ConnectLinkedListEntries:                              ; CODE XREF: sub_D7B60+3A↓p
+GameSprite_ConnectLinkedListEntries:    ; CODE XREF: sub_D7B60+3A↓p
                                         ; VDPSpriteArray_InitialiseEntry+26↓p
 
 arg_0           =  4
@@ -7928,7 +7933,7 @@ arg_4           =  8
                 move.b  d1,(a0,d0.w)
                 move.l  (sp)+,d2
                 rts
-; End of function  GameSprite_ConnectLinkedListEntries
+; End of function GameSprite_ConnectLinkedListEntries
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -7952,7 +7957,7 @@ sub_D7B60:                              ; CODE XREF: GameSprite_Update+36A↓p
                 move.l  d0,-(sp)
                 move.b  ($FF5684).l,d0
                 move.l  d0,-(sp)
-                bsr.w    GameSprite_ConnectLinkedListEntries
+                bsr.w   GameSprite_ConnectLinkedListEntries
                 addq.l  #8,sp
                 move.b  d2,($FF5684).l
 
@@ -7983,7 +7988,7 @@ arg_0           =  4
                 move.l  d0,-(sp)
                 move.b  1(a2),d0
                 move.l  d0,-(sp)
-                bsr.w    GameSprite_ConnectLinkedListEntries
+                bsr.w   GameSprite_ConnectLinkedListEntries
                 addq.l  #8,sp
                 tst.b   5(a2)
                 bne.s   loc_D7BE8
@@ -8036,8 +8041,8 @@ loc_D7C2A:                              ; CODE XREF: VDPSpriteArray_InitialiseEn
 ; =============== S U B R O U T I N E =======================================
 
 
-GameSprite_RefreshVDPSpriteData:                              ; CODE XREF: RunAnimatedObjectsUpdate+122↑p
-                                        ; AnimObj_UpdateStateFlags+56↑p ...
+GameSprite_RefreshVDPSpriteData:        ; CODE XREF: RunAnimatedObjectsUpdate+122↑p
+                                        ; AnimObj_UpdateGameSprite+56↑p ...
 
 arg_0           =  4
 
@@ -8797,7 +8802,7 @@ loc_D8392:                              ; CODE XREF: sub_D835A+42↓j
                 moveq   #$2C,d0 ; ','
                 adda.l  d0,a2
                 addq.w  #1,d3
-                cmpi.w  #$100,d3 ; Active sprite array update count
+                cmpi.w  #$100,d3 ; Sprite array update count
                 bcs.s   loc_D8374
                 move.w  d4,(a4)
                 movem.l (sp)+,d2-d4/a2-a4
@@ -16348,7 +16353,7 @@ loc_DCF86:                              ; CODE XREF: RunPlayerSurfaceCollisions+
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DCF8C:                              ; CODE XREF: RunPlayerUpdate+1E4↓p ; PlayerBeginJumping
+sub_DCF8C:                              ; CODE XREF: RunPlayerUpdate+1E4↓p
                                         ; RunPlayerUpdate+5B6↓p ...
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -16362,7 +16367,7 @@ sub_DCF8C:                              ; CODE XREF: RunPlayerUpdate+1E4↓p ; P
                 pea     ($A).w
                 bsr.w   SetPlayerAnimation
                 addq.l  #8,sp
-                move.w  #1,($FFF1FA).l  ; Reduce from 6 to 1, to make jumping essentially instantaneous
+                move.w  #1,($FFF1FA).l  ; Reduce from 6 to 1, to make jumping essentially instantaneous (Original: #6)
                 rts
 ; End of function sub_DCF8C
 
@@ -19042,7 +19047,7 @@ sub_DE996:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 lsl.w   #3,d0
                 add.w   d1,d0
                 lsl.w   #3,d0
-                movea.l #$FF9CC0,a0
+                movea.l #$FF55AC,a0
                 lea     (a0,d0.w),a0
                 movea.l a0,a1
 
@@ -19105,7 +19110,7 @@ loc_DEA0E:                              ; CODE XREF: QueueOSDMessage+1D0↓j
                 lsl.w   #3,d0
                 add.w   d1,d0
                 lsl.w   #3,d0
-                movea.l #$FF9CC0,a0
+                movea.l #$FF55AC,a0
                 lea     (a0,d0.w),a0
                 movea.l a0,a2
                 moveq   #4,d5
@@ -19309,7 +19314,7 @@ arg_0           =  4
                 lsl.w   #3,d0
                 add.w   d1,d0
                 lsl.w   #3,d0
-                movea.l #$FF9CC0,a0
+                movea.l #$FF55AC,a0
                 lea     (a0,d0.w),a0
                 movea.l a0,a2
 
@@ -19397,7 +19402,7 @@ loc_DEC9C:                              ; CODE XREF: sub_DEC6C+2C↑j
                 lsl.w   #3,d0
                 add.w   d1,d0
                 lsl.w   #3,d0
-                movea.l #$FF9CC0,a0
+                movea.l #$FF55AC,a0
                 lea     (a0,d0.w),a0
                 movea.l a0,a2
                 tst.l   (a2)
@@ -20052,7 +20057,7 @@ var_4           = -4
                 lsl.w   #3,d0
                 add.w   d1,d0
                 lsl.w   #3,d0
-                movea.l #$FF9CC0,a0
+                movea.l #$FF55AC,a0
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
                 move.l  $3A(a3),d0
@@ -20408,7 +20413,7 @@ loc_DF52E:                              ; CODE XREF: RunOSDAnimationUpdate+20↑
                 lsl.w   #3,d0
                 add.w   d1,d0
                 lsl.w   #3,d0
-                movea.l #$FF9CC0,a0
+                movea.l #$FF55AC,a0
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
                 movea.l #$FF4204,a2
@@ -24264,9 +24269,14 @@ ls_messageBuffer= -$3C
                 pea     (off_28).w
                 pea     (5).w
                 pea     (2).w
-                jmp     DoCustomIntro;pea     (7).w ;
-				dcb.b   2,$FF ;jsr     (a3) ;
-				dcb.b   4,$FF; move.w  ($FF5736).l,d0 ;
+                
+                pea     (7).w ;
+                jsr     (a3)
+                move.w  ($FF5736).l,d0
+                ;jmp     DoCustomIntro
+				;dcb.b   2,$FF
+				;dcb.b   4,$FF
+				
 CustIntroRtn:   move.w  d0,d1
                 lsl.w   #2,d1
                 add.w   d1,d0
@@ -29086,7 +29096,7 @@ loc_E4B26:                              ; CODE XREF: sub_E4AC6+46↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2        ; Num Animations to tick LavaPowerhouseCompleteLevel
+                cmpi.w  #$100,d2        ; Num Animations to tick in LavaPowerhouse_LevelCompleted
                 blt.s   loc_E4B0A
                 move.w  #$110,$28(a3)
                 pea     (off_C8).w
@@ -31879,10 +31889,10 @@ off_E6738:      dc.w loc_E6756-*        ; DATA XREF: RunPlayerCollision_ToxicCav
 ; Ghidra seems to strongly disagree with IDA Pro on where this jump table ends, and where the function begins. Ghidra believes the loc_E6756 is the entry point
 ; Going with Ghidra's assessment as the andi.b #A,a6 assembly doesn't seem to compile consistently
 loc_E674C:                              ; DATA XREF: RunPlayerCollision_ToxicCaves+142↑o
-                                        ; XREF[2]:     FUN_000e65da:000e671c(*),
-                                        ; FUN_000e65da:000e6724(R)
+                                        ; XREF[2]:     FUN_000e65da:000e671c(*), 
+                                        ; FUN_000e65da:000e6724(R) 
                 dc.b $02
-loc_E674D:                              ; XREF[1]:     FUN_000e65da:000e6724(R)
+loc_E674D:                              ; XREF[1]:     FUN_000e65da:000e6724(R)  
                 dc.b $06
                 dc.b $09
                 dc.b $0a
@@ -36409,7 +36419,7 @@ loc_E9A26:                              ; CODE XREF: sub_E99D2+3A↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2        ; Num Animations to tick ToxicCavesCompleteLevel
+                cmpi.w  #$100,d2        ; Num Animations to tick in ToxicCaves_LevelCompleted
                 blt.s   loc_E99F0
                 pea     (off_C8).w
                 pea     (off_B8).w
@@ -42443,7 +42453,7 @@ loc_EDB6E:                              ; CODE XREF: sub_EDB1A+3A↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2        ; Num Animations to tick ShowdownCompleteLevel
+                cmpi.w  #$100,d2        ; Num Animations to tick Showdown_LevelCompleted
                 blt.s   loc_EDB38
                 movea.l #$FF88A2,a2
                 clr.w   d2
@@ -47120,7 +47130,7 @@ loc_F0E2A:                              ; CODE XREF: sub_F0DD6+3A↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
-                cmpi.w  #$100,d2        ; Num Animations to tick TheMachineCompleteLevel
+                cmpi.w  #$100,d2        ; Num Animations to tick TheMachine_LevelCompleted
                 blt.s   loc_F0DF4
                 pea     (off_C8).w
                 pea     (off_B8).w
@@ -68887,7 +68897,7 @@ SoundTest_PlayNotPressed:
 				move.b  #$7F,d4 ; Value is negative so should wrap first before executing print
                 move.b  d4,$FF0A00
 no_sountest_loop:
-				subq.b  #1,(a4,a0.w)
+                subq.b  #1,(a4,a0.w)
                 bpl.s   loc_FF014
                 movea.l #OptionsCounts,a0
                 move.b  (a0,d2.w),d0
@@ -68909,17 +68919,17 @@ loc_FF000:                              ; DATA XREF: ROM:00010EAC↑o
 				bls.s   dont_loop_soundtest
 				clr.b   d4
 dont_loop_soundtest:
-				addq.b  #1,(a0)
+                addq.b  #1,(a0)
                 move.b  (a0),d0
                 movea.l #OptionsCounts,a0
                 cmp.b   (a0,d2.w),d0
                 blt.s   loc_FF014
-				clr.b   (a2)
+                clr.b   (a2)
 
 loc_FF014:                              ; CODE XREF: sub_FEF2A+BA↑j
                                         ; sub_FEF2A+D0↑j ...
                 move.b  d4,$FF0A00
-				move.w  d2,d0
+                move.w  d2,d0
                 move.l  d0,-(sp)
                 jsr     sub_FF4B4(pc)
                 nop
@@ -69781,7 +69791,7 @@ arg_0           =  4
                 lsl.l   #3,d0
                 add.l   d1,d0
                 lsl.l   #3,d0
-                movea.l #$FF9CC0,a0
+                movea.l #$FF55AC,a0
                 adda.l  d0,a0
                 movea.l a0,a2
                 bra.s   loc_FF864

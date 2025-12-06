@@ -1174,7 +1174,7 @@ loc_D3EC6:                              ; CODE XREF: NewLife+44↑j
                 move.w  d2,d1
                 ext.l   d1
                 move.l  d3,d0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d3
 
 loc_D3EDA:                              ; CODE XREF: NewLife+32↑j
@@ -1234,7 +1234,7 @@ arg_0           =  4
                 move.w  d2,d0
                 ext.l   d0
                 move.l  d0,-(sp)
-                jsr     sub_FA588
+                jsr     RunUpdate_BonusStage
                 move.l  d0,d2
                 bpl.s   loc_D3F96
                 neg.l   d2
@@ -1447,7 +1447,7 @@ loc_D41D4:                              ; CODE XREF: sub_D3FAC+22E↓j
                 move.w  (a4),d0
                 andi.w  #$A,d0
                 bne.s   loc_D41D4
-                jsr     sub_D8698
+                jsr     ScreenTransition_FromBlack
                 move.w  (a3),d0
                 add.w   d0,d0
                 movea.l #off_BFC90,a0
@@ -1571,7 +1571,7 @@ loc_D4322:                              ; CODE XREF: sub_D4228+100↓j
                 jsr     RunAnimatedObjectsUpdate
                 jsr     GEMS_MuteAllSounds(pc)
                 nop
-                jsr     sub_D8698
+                jsr     ScreenTransition_FromBlack
                 move.w  (a2),d0
                 add.w   d0,d0
                 movea.l #off_BFC90,a0
@@ -2085,9 +2085,9 @@ loc_D47F2:                              ; CODE XREF: sub_D47DE+A↑j
 ; ---------------------------------------------------------------------------
 
 loc_D480A:                              ; CODE XREF: sub_D47DE+22↑j
-                bsr.w   StartGame
-                bra.s   loc_D482C
-                ;jmp     BeginBonusModeFromTitleScreen
+                ;bsr.w   StartGame
+                ;bra.s   loc_D482C
+                jmp     BeginBonusModeFromTitleScreen
 ; ---------------------------------------------------------------------------
 
 loc_D4810:                              ; CODE XREF: sub_D47DE+2A↑j
@@ -9203,7 +9203,7 @@ arg_2           =  6
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D8698:                              ; CODE XREF: sub_D3FAC+230↑p
+ScreenTransition_FromBlack:                              ; CODE XREF: sub_D3FAC+230↑p
                                         ; sub_D4228+142↑p ...
                 move.l  a2,-(sp)
                 movea.l #$FF0058,a2
@@ -9217,13 +9217,13 @@ sub_D8698:                              ; CODE XREF: sub_D3FAC+230↑p
                 moveq   #4,d0
                 move.l  d0,(a2)
 
-loc_D86C0:                              ; CODE XREF: sub_D8698+2C↓j
+loc_D86C0:                              ; CODE XREF: ScreenTransition_FromBlack+2C↓j
                 moveq   #4,d0
                 cmp.l   (a2),d0
                 beq.s   loc_D86C0
                 movea.l (sp)+,a2
                 rts
-; End of function sub_D8698
+; End of function ScreenTransition_FromBlack
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -13926,13 +13926,13 @@ arg_8           =  $10
                 ext.l   d0
                 move.w  6(a2),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  2(a2),d0
                 ext.l   d0
                 move.w  4(a2),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 sub.l   (sp)+,d0
                 move.l  d0,var_10(a6)
                 move.l  d0,-(sp)
@@ -13940,13 +13940,13 @@ arg_8           =  $10
                 ext.l   d0
                 move.w  d5,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  $26(a3),d0
                 ext.l   d0
                 move.w  d4,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 add.l   (sp)+,d0
                 move.l  (sp)+,d1
@@ -14011,7 +14011,7 @@ arg_8           =  $10
                 ext.l   d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d6,d1
                 jsr     Divide
                 move.w  d0,d3
@@ -14021,7 +14021,7 @@ arg_8           =  $10
                 ext.l   d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d6,d1
                 jsr     Divide
                 move.w  d0,d2
@@ -14099,13 +14099,13 @@ loc_DBB22:                              ; CODE XREF: sub_DB900+21C↑j
                 ext.l   d0
                 move.w  d5,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  var_14(a6),d0
                 ext.l   d0
                 move.w  d4,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 add.l   var_10(a6),d0
                 moveq   #0,d1
@@ -14126,26 +14126,26 @@ loc_DBB8C:                              ; CODE XREF: sub_DB900+1CA↑j
                 ext.l   d0
                 move.w  2(a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  var_C(a6),d0
                 ext.l   d0
                 move.w  var_C(a6),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 move.w  6(a5),d0
                 ext.l   d0
                 move.w  6(a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  4(a5),d0
                 ext.l   d0
                 move.w  4(a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d3
                 cmpi.l  #$90,d2
@@ -23469,7 +23469,7 @@ loc_E1170:                              ; CODE XREF: TriggerOSDMessage+185C↓j
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #dword_186A0,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
 
 loc_E11A8:                              ; CODE XREF: TriggerOSDMessage+1852↓j
                 move.l  d0,d2
@@ -23547,7 +23547,7 @@ loc_E123C:                              ; DATA XREF: TriggerOSDMessage+15D6↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
@@ -23601,7 +23601,7 @@ loc_E12BE:                              ; DATA XREF: TriggerOSDMessage+15E2↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$61A8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 moveq   #0,d0
                 move.w  ($FFAB88).l,d0
@@ -23620,7 +23620,7 @@ loc_E1316:                              ; CODE XREF: TriggerOSDMessage+1826↑j
                 add.l   d0,d1
                 asr.l   #5,d1
                 move.l  d2,d0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 bra.w   loc_E11A8
 ; ---------------------------------------------------------------------------
 
@@ -23652,7 +23652,7 @@ loc_E1358:                              ; DATA XREF: TriggerOSDMessage+15F2↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 bra.w   loc_DFE5A
 ; ---------------------------------------------------------------------------
@@ -23790,7 +23790,7 @@ loc_E14AC:                              ; DATA XREF: TriggerOSDMessage+167C↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 move.l  d2,-(sp)
                 move.l  a5,-(sp)
@@ -23947,7 +23947,7 @@ loc_E1672:                              ; DATA XREF: TriggerOSDMessage+15C8↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 move.l  d2,-(sp)
                 move.l  a5,d0
@@ -23986,7 +23986,7 @@ loc_E16BC:                              ; DATA XREF: TriggerOSDMessage+15E4↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 pea     ($58).w
                 bra.w   loc_DFC4C
@@ -24008,7 +24008,7 @@ loc_E172A:                              ; CODE XREF: TriggerOSDMessage+1CC8↓j
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 bra.w   loc_E09B8
 ; ---------------------------------------------------------------------------
@@ -24135,7 +24135,7 @@ loc_E1854:                              ; DATA XREF: TriggerOSDMessage+1648↑o
                 andi.l  #$FFFF,d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 add.l   d2,d2
                 move.l  d2,-(sp)
@@ -50552,7 +50552,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  1(a2),d1
@@ -50571,7 +50571,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 moveq   #0,d1
@@ -50589,7 +50589,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  (a2),d1
@@ -50671,7 +50671,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 ext.l   d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50687,7 +50687,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 andi.l  #$F,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50704,7 +50704,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 ext.l   d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50791,7 +50791,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50810,7 +50810,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50830,7 +50830,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -53460,7 +53460,7 @@ loc_F4A18:                              ; CODE XREF: sub_F49B8+F4↓j
                 addq.l  #8,sp
                 ext.l   d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 lsl.l   #4,d0
                 move.w  ($FF0328).l,d1
                 ext.l   d1
@@ -53574,7 +53574,7 @@ loc_F4B32:                              ; CODE XREF: sub_F4AE4+144↓j
                 addq.l  #8,sp
                 ext.l   d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 lsl.l   #4,d0
                 move.w  ($FF0328).l,d1
                 ext.l   d1
@@ -54435,7 +54435,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  1(a2),d1
@@ -54455,7 +54455,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 moveq   #0,d1
@@ -54474,7 +54474,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  (a2),d1
@@ -54955,7 +54955,7 @@ loc_F5982:                              ; CODE XREF: sub_F56D0+2FE↓j
                 move.l  d1,d0
                 move.w  (a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F59A6
                 moveq   #$1F,d1
@@ -55008,7 +55008,7 @@ loc_F5A04:                              ; CODE XREF: sub_F56D0+37A↓j
                 move.l  d1,d0
                 move.w  (a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F5A28
                 moveq   #$1F,d1
@@ -55042,8 +55042,8 @@ loc_F5A54:                              ; CODE XREF: sub_F56D0+29E↑j
 
 ; Attributes: bp-based frame
 
-LoadCompressed2Tiles:                   ; CODE XREF: sub_FA588+220↓p
-                                        ; sub_FA588+23A↓p ...
+LoadCompressed2Tiles:                   ; CODE XREF: RunUpdate_BonusStage+220↓p
+                                        ; RunUpdate_BonusStage+23A↓p ...
 
 arg_0           =  8
 arg_4           =  $C
@@ -55508,7 +55508,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 ext.l   d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 asr.l   #5,d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
@@ -55522,7 +55522,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 andi.l  #$F,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 asr.l   #5,d0
                 moveq   #0,d1
                 move.b  1(a2),d1
@@ -55537,7 +55537,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 ext.l   d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 asr.l   #5,d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
@@ -55895,7 +55895,7 @@ sub_F617C:
 
 
 GEMSPauseAll:                           ; CODE XREF: RunMain+EC↑p
-                                        ; sub_FA588+20F0↓p
+                                        ; RunUpdate_BonusStage+20F0↓p
                 jsr     GEMS_stdstartup(pc)
                 moveq   #12,d0
                 jsr     GEMS_stdcmdwrite(pc)
@@ -55907,7 +55907,7 @@ GEMSPauseAll:                           ; CODE XREF: RunMain+EC↑p
 
 
 GEMSResumeAll:                          ; CODE XREF: RunMain+DE↑p
-                                        ; sub_FA588+21F2↓p
+                                        ; RunUpdate_BonusStage+21F2↓p
                 jsr     GEMS_stdstartup(pc)
                 moveq   #13,d0
                 jsr     GEMS_stdcmdwrite(pc)
@@ -56135,7 +56135,7 @@ loc_F62E0:                              ; CODE XREF: VBlank+22582↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F62F4:                              ; CODE XREF: sub_FA588+2374↓p
+sub_F62F4:                              ; CODE XREF: RunUpdate_BonusStage+2374↓p
                 movem.l a2-a4,-(sp)
                 movea.l #$FF40C0,a3
                 movea.l a3,a4
@@ -56198,7 +56198,7 @@ loc_F637C:                              ; CODE XREF: sub_F62F4+6A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F6382:                              ; CODE XREF: sub_FA588+3308↓p
+sub_F6382:                              ; CODE XREF: RunUpdate_BonusStage+3308↓p
                 movem.l d2-d3/a2-a5,-(sp)
                 movea.l #$FF5898,a3
                 movea.l #$FF3CB2,a4
@@ -56448,8 +56448,8 @@ loc_F659C:                              ; CODE XREF: sub_F64EC+A0↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-PrintBonusStageMsg:                     ; CODE XREF: sub_F6BF6+19A↓p
-                                        ; sub_F6BF6+B90↓p ...
+BonusStage_DisplayOSDMessage:                     ; CODE XREF: BonusStage_EventHandler+19A↓p
+                                        ; BonusStage_EventHandler+B90↓p ...
 
 pbsm_MessageNo  =  4
 
@@ -56461,7 +56461,7 @@ pbsm_MessageNo  =  4
                 tst.w   ($FF547C).l
                 bne.w   loc_F6A08
 
-loc_F65C0:                              ; CODE XREF: PrintBonusStageMsg+12↑j
+loc_F65C0:                              ; CODE XREF: BonusStage_DisplayOSDMessage+12↑j
                 cmpi.w  #$12,($FFEE7A).l
                 beq.w   loc_F6A08
                 move.w  d2,($FFEE7A).l
@@ -56479,8 +56479,8 @@ loc_F65C0:                              ; CODE XREF: PrintBonusStageMsg+12↑j
                 move.w  off_F65FC(pc,d0.l),d0
                 jmp     off_F65FC(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_F65FC:      dc.w loc_F6662-*        ; DATA XREF: PrintBonusStageMsg+52↑r
-                                        ; PrintBonusStageMsg:off_F65FC↓o ...
+off_F65FC:      dc.w loc_F6662-*        ; DATA XREF: BonusStage_DisplayOSDMessage+52↑r
+                                        ; BonusStage_DisplayOSDMessage:off_F65FC↓o ...
                 dc.w loc_F667E-off_F65FC
                 dc.w loc_F6696-off_F65FC
                 dc.w loc_F66B2-off_F65FC
@@ -56533,22 +56533,22 @@ off_F65FC:      dc.w loc_F6662-*        ; DATA XREF: PrintBonusStageMsg+52↑r
                 dc.w loc_F69E8-off_F65FC
 ; ---------------------------------------------------------------------------
 
-loc_F6662:                              ; DATA XREF: PrintBonusStageMsg:off_F65FC↑o
+loc_F6662:                              ; DATA XREF: BonusStage_DisplayOSDMessage:off_F65FC↑o
                 pea     (aArrggg___).l  ; "  ARRGGG. . .                     "
                 pea     (6).w
                 pea     (off_78).w
                 pea     (off_4).w
 
-loc_F6674:                              ; CODE XREF: PrintBonusStageMsg+29C↓j
+loc_F6674:                              ; CODE XREF: BonusStage_DisplayOSDMessage+29C↓j
                 clr.l   -(sp)
 
-loc_F6676:                              ; CODE XREF: PrintBonusStageMsg+1EA↓j
-                                        ; PrintBonusStageMsg+352↓j
+loc_F6676:                              ; CODE XREF: BonusStage_DisplayOSDMessage+1EA↓j
+                                        ; BonusStage_DisplayOSDMessage+352↓j
                 pea     (2).w
                 bra.w   loc_F6A02
 ; ---------------------------------------------------------------------------
 
-loc_F667E:                              ; DATA XREF: PrintBonusStageMsg+5C↑o
+loc_F667E:                              ; DATA XREF: BonusStage_DisplayOSDMessage+5C↑o
                 pea     (aSonicJammin).l ; "     SONIC          JAMMIN'    "
                 pea     (1).w
                 pea     (off_78).w
@@ -56557,64 +56557,64 @@ loc_F667E:                              ; DATA XREF: PrintBonusStageMsg+5C↑o
                 bra.w   loc_F69FE
 ; ---------------------------------------------------------------------------
 
-loc_F6696:                              ; DATA XREF: PrintBonusStageMsg+5E↑o
+loc_F6696:                              ; DATA XREF: BonusStage_DisplayOSDMessage+5E↑o
                 pea     (aPumpItUp).l   ; "  PUMP IT UP                     "
                 pea     (3).w
                 pea     (off_78).w
                 pea     (off_4).w
                 clr.l   -(sp)
 
-loc_F66AA:                              ; CODE XREF: PrintBonusStageMsg+204↓j
-                                        ; PrintBonusStageMsg+260↓j ...
+loc_F66AA:                              ; CODE XREF: BonusStage_DisplayOSDMessage+204↓j
+                                        ; BonusStage_DisplayOSDMessage+260↓j ...
                 pea     (1).w
                 bra.w   loc_F6A02
 ; ---------------------------------------------------------------------------
 
-loc_F66B2:                              ; DATA XREF: PrintBonusStageMsg+60↑o
+loc_F66B2:                              ; DATA XREF: BonusStage_DisplayOSDMessage+60↑o
                 pea     (aJackpot).l    ; "   JACKPOT                       "
                 pea     (off_4).w
                 pea     (off_78).w
                 pea     (3).w
 
-loc_F66C4:                              ; CODE XREF: PrintBonusStageMsg+232↓j
+loc_F66C4:                              ; CODE XREF: BonusStage_DisplayOSDMessage+232↓j
                 pea     (2).w
 
-loc_F66C8:                              ; CODE XREF: PrintBonusStageMsg+17A↓j
+loc_F66C8:                              ; CODE XREF: BonusStage_DisplayOSDMessage+17A↓j
                 pea     (7).w
                 bra.w   loc_F6A02
 ; ---------------------------------------------------------------------------
 
-loc_F66D0:                              ; DATA XREF: PrintBonusStageMsg+62↑o
+loc_F66D0:                              ; DATA XREF: BonusStage_DisplayOSDMessage+62↑o
                 pea     (aSlamminShot).l ; "   SLAMMIN'         SHOT      "
                 pea     (6).w
                 pea     (off_78).w
                 clr.l   -(sp)
                 pea     (1).w
 
-loc_F66E4:                              ; CODE XREF: PrintBonusStageMsg+190↓j
+loc_F66E4:                              ; CODE XREF: BonusStage_DisplayOSDMessage+190↓j
                 pea     (5).w
                 bra.w   loc_F6A02
 ; ---------------------------------------------------------------------------
 
-loc_F66EC:                              ; DATA XREF: PrintBonusStageMsg+64↑o
+loc_F66EC:                              ; DATA XREF: BonusStage_DisplayOSDMessage+64↑o
                 pea     (aWayCoolMove).l ; "  WAY COOL         MOVE      "
                 pea     (2).w
 
-loc_F66F6:                              ; CODE XREF: PrintBonusStageMsg+3BA↓j
+loc_F66F6:                              ; CODE XREF: BonusStage_DisplayOSDMessage+3BA↓j
                 pea     (off_78).w
                 clr.l   -(sp)
                 clr.l   -(sp)
 
-loc_F66FE:                              ; CODE XREF: PrintBonusStageMsg+1A6↓j
-                                        ; PrintBonusStageMsg+21E↓j ...
+loc_F66FE:                              ; CODE XREF: BonusStage_DisplayOSDMessage+1A6↓j
+                                        ; BonusStage_DisplayOSDMessage+21E↓j ...
                 pea     (3).w
                 bra.w   loc_F6A02
 ; ---------------------------------------------------------------------------
 
-loc_F6706:                              ; DATA XREF: PrintBonusStageMsg+66↑o
+loc_F6706:                              ; DATA XREF: BonusStage_DisplayOSDMessage+66↑o
                 pea     (aHipHopBounce).l ; "    HIP HOP        BOUNCE    "
 
-loc_F670C:                              ; CODE XREF: PrintBonusStageMsg+3C4↓j
+loc_F670C:                              ; CODE XREF: BonusStage_DisplayOSDMessage+3C4↓j
                 pea     (6).w
                 pea     (off_78).w
                 pea     (6).w
@@ -56622,63 +56622,63 @@ loc_F670C:                              ; CODE XREF: PrintBonusStageMsg+3C4↓j
                 bra.s   loc_F66C8
 ; ---------------------------------------------------------------------------
 
-loc_F671E:                              ; DATA XREF: PrintBonusStageMsg+68↑o
+loc_F671E:                              ; DATA XREF: BonusStage_DisplayOSDMessage+68↑o
                 pea     (aInYourFace).l ; "    IN YOUR          FACE      "
 
-loc_F6724:                              ; CODE XREF: PrintBonusStageMsg+3CE↓j
+loc_F6724:                              ; CODE XREF: BonusStage_DisplayOSDMessage+3CE↓j
                 pea     (off_4).w
                 pea     (off_78).w
                 pea     (6).w
 
-loc_F6730:                              ; CODE XREF: PrintBonusStageMsg+40E↓j
+loc_F6730:                              ; CODE XREF: BonusStage_DisplayOSDMessage+40E↓j
                 clr.l   -(sp)
                 bra.s   loc_F66E4
 ; ---------------------------------------------------------------------------
 
-loc_F6734:                              ; DATA XREF: PrintBonusStageMsg+6A↑o
+loc_F6734:                              ; DATA XREF: BonusStage_DisplayOSDMessage+6A↑o
                 pea     (aHedgehogWild).l ; "  HEDGEHOG        WILD       "
                 pea     (2).w
 
-loc_F673E:                              ; CODE XREF: PrintBonusStageMsg+3DC↓j
+loc_F673E:                              ; CODE XREF: BonusStage_DisplayOSDMessage+3DC↓j
                 pea     (off_78).w
                 clr.l   -(sp)
                 pea     (2).w
                 bra.s   loc_F66FE
 ; ---------------------------------------------------------------------------
 
-loc_F674A:                              ; DATA XREF: PrintBonusStageMsg+6C↑o
+loc_F674A:                              ; DATA XREF: BonusStage_DisplayOSDMessage+6C↑o
                 pea     (aSlamminItDown).l ; "   SLAMMIN'       IT DOWN    "
                 pea     (3).w
                 pea     (off_78).w
                 pea     (6).w
                 pea     (2).w
 
-loc_F6760:                              ; CODE XREF: PrintBonusStageMsg+384↓j
-                                        ; PrintBonusStageMsg+432↓j
+loc_F6760:                              ; CODE XREF: BonusStage_DisplayOSDMessage+384↓j
+                                        ; BonusStage_DisplayOSDMessage+432↓j
                 pea     (6).w
                 bra.w   loc_F6A02
 ; ---------------------------------------------------------------------------
 
-loc_F6768:                              ; DATA XREF: PrintBonusStageMsg+6E↑o
+loc_F6768:                              ; DATA XREF: BonusStage_DisplayOSDMessage+6E↑o
                 pea     (aWeakMove).l   ; "  WEAK MOVE                     "
                 pea     (3).w
                 bra.w   loc_F69F2
 ; ---------------------------------------------------------------------------
 
-loc_F6776:                              ; DATA XREF: PrintBonusStageMsg+70↑o
+loc_F6776:                              ; DATA XREF: BonusStage_DisplayOSDMessage+70↑o
                 pea     (aYouLose).l    ; "  YOU LOSE                       "
                 pea     (5).w
                 pea     (off_3C).w
 
-loc_F6784:                              ; CODE XREF: PrintBonusStageMsg+272↓j
+loc_F6784:                              ; CODE XREF: BonusStage_DisplayOSDMessage+272↓j
                 pea     (off_4).w
 
-loc_F6788:                              ; CODE XREF: PrintBonusStageMsg+398↓j
+loc_F6788:                              ; CODE XREF: BonusStage_DisplayOSDMessage+398↓j
                 pea     (1).w
                 bra.w   loc_F6676
 ; ---------------------------------------------------------------------------
 
-loc_F6790:                              ; DATA XREF: PrintBonusStageMsg+72↑o
+loc_F6790:                              ; DATA XREF: BonusStage_DisplayOSDMessage+72↑o
                 pea     (aWeakShot).l   ; "  WEAK SHOT                     "
                 pea     (6).w
                 pea     (off_78).w
@@ -56687,72 +56687,72 @@ loc_F6790:                              ; DATA XREF: PrintBonusStageMsg+72↑o
                 bra.w   loc_F66AA
 ; ---------------------------------------------------------------------------
 
-loc_F67AA:                              ; DATA XREF: PrintBonusStageMsg+74↑o
+loc_F67AA:                              ; DATA XREF: BonusStage_DisplayOSDMessage+74↑o
                 pea     (aHogWild).l    ; "   HOG WILD                       "
                 pea     (5).w
                 pea     (off_78).w
                 pea     (off_4).w
 
-loc_F67BC:                              ; CODE XREF: PrintBonusStageMsg+248↓j
-                                        ; PrintBonusStageMsg+2B2↓j
+loc_F67BC:                              ; CODE XREF: BonusStage_DisplayOSDMessage+248↓j
+                                        ; BonusStage_DisplayOSDMessage+2B2↓j
                 pea     (1).w
                 bra.w   loc_F66FE
 ; ---------------------------------------------------------------------------
 
-loc_F67C4:                              ; DATA XREF: PrintBonusStageMsg+76↑o
+loc_F67C4:                              ; DATA XREF: BonusStage_DisplayOSDMessage+76↑o
                 pea     (aGrandSlam).l  ; "GRAND SLAM                     "
 
-loc_F67CA:                              ; CODE XREF: PrintBonusStageMsg+2E4↓j
+loc_F67CA:                              ; CODE XREF: BonusStage_DisplayOSDMessage+2E4↓j
                 pea     (6).w
                 pea     (off_78).w
                 clr.l   -(sp)
                 bra.w   loc_F66C4
 ; ---------------------------------------------------------------------------
 
-loc_F67D8:                              ; DATA XREF: PrintBonusStageMsg+78↑o
+loc_F67D8:                              ; DATA XREF: BonusStage_DisplayOSDMessage+78↑o
                 pea     (aSadMoveHedgeho).l ; "  SAD MOVE,    HEDGEHOG  "
 
-loc_F67DE:                              ; CODE XREF: PrintBonusStageMsg+2EE↓j
+loc_F67DE:                              ; CODE XREF: BonusStage_DisplayOSDMessage+2EE↓j
                 pea     (off_4).w
                 pea     (off_78).w
                 pea     (3).w
                 bra.s   loc_F67BC
 ; ---------------------------------------------------------------------------
 
-loc_F67EC:                              ; DATA XREF: PrintBonusStageMsg+7A↑o
+loc_F67EC:                              ; DATA XREF: BonusStage_DisplayOSDMessage+7A↑o
                 pea     (aShakeIt).l    ; "   SHAKE IT                       "
                 pea     (5).w
                 pea     (off_78).w
                 pea     (off_4).w
 
-loc_F67FE:                              ; CODE XREF: PrintBonusStageMsg+2C8↓j
-                                        ; PrintBonusStageMsg+3AC↓j
+loc_F67FE:                              ; CODE XREF: BonusStage_DisplayOSDMessage+2C8↓j
+                                        ; BonusStage_DisplayOSDMessage+3AC↓j
                 pea     (1).w
                 bra.w   loc_F66AA
 ; ---------------------------------------------------------------------------
 
-loc_F6806:                              ; DATA XREF: PrintBonusStageMsg+7C↑o
+loc_F6806:                              ; DATA XREF: BonusStage_DisplayOSDMessage+7C↑o
                 pea     (aTilt).l       ; "       TILT                          "
                 pea     (6).w
                 pea     (dword_2EE0).w
                 bra.w   loc_F6784
 ; ---------------------------------------------------------------------------
 
-loc_F6818:                              ; DATA XREF: PrintBonusStageMsg+7E↑o
+loc_F6818:                              ; DATA XREF: BonusStage_DisplayOSDMessage+7E↑o
                 pea     (aReady?).l     ; "    READY?                        "
                 pea     (1).w
                 pea     (off_50).w
 
-loc_F6826:                              ; CODE XREF: PrintBonusStageMsg+3EC↓j
-                                        ; PrintBonusStageMsg+3FC↓j
+loc_F6826:                              ; CODE XREF: BonusStage_DisplayOSDMessage+3EC↓j
+                                        ; BonusStage_DisplayOSDMessage+3FC↓j
                 clr.l   -(sp)
 
-loc_F6828:                              ; CODE XREF: PrintBonusStageMsg+2DC↓j
+loc_F6828:                              ; CODE XREF: BonusStage_DisplayOSDMessage+2DC↓j
                 clr.l   -(sp)
                 bra.w   loc_F69FE
 ; ---------------------------------------------------------------------------
 
-loc_F682E:                              ; DATA XREF: PrintBonusStageMsg+80↑o
+loc_F682E:                              ; DATA XREF: BonusStage_DisplayOSDMessage+80↑o
                 pea     (aGo).l         ; "       GO!                            "
                 pea     (1).w
                 pea     ($1E).w
@@ -56760,7 +56760,7 @@ loc_F682E:                              ; DATA XREF: PrintBonusStageMsg+80↑o
                 bra.w   loc_F6674
 ; ---------------------------------------------------------------------------
 
-loc_F6842:                              ; DATA XREF: PrintBonusStageMsg+82↑o
+loc_F6842:                              ; DATA XREF: BonusStage_DisplayOSDMessage+82↑o
                 pea     (aHaHaHa).l     ; "   HA HA HA                       "
                 pea     (6).w
                 pea     (off_78).w
@@ -56768,7 +56768,7 @@ loc_F6842:                              ; DATA XREF: PrintBonusStageMsg+82↑o
                 bra.w   loc_F67BC
 ; ---------------------------------------------------------------------------
 
-loc_F6858:                              ; DATA XREF: PrintBonusStageMsg+84↑o
+loc_F6858:                              ; DATA XREF: BonusStage_DisplayOSDMessage+84↑o
                 pea     (aTooBadHog).l  ; "TOO BAD HOG                    "
                 pea     (6).w
                 pea     (off_78).w
@@ -56776,7 +56776,7 @@ loc_F6858:                              ; DATA XREF: PrintBonusStageMsg+84↑o
                 bra.s   loc_F67FE
 ; ---------------------------------------------------------------------------
 
-loc_F686C:                              ; DATA XREF: PrintBonusStageMsg+86↑o
+loc_F686C:                              ; DATA XREF: BonusStage_DisplayOSDMessage+86↑o
                 pea     (aSonicVictory).l ; "     SONIC         VICTORY    "
                 pea     (6).w
                 pea     (off_78).w
@@ -56784,32 +56784,32 @@ loc_F686C:                              ; DATA XREF: PrintBonusStageMsg+86↑o
                 bra.s   loc_F6828
 ; ---------------------------------------------------------------------------
 
-loc_F6880:                              ; DATA XREF: PrintBonusStageMsg+88↑o
+loc_F6880:                              ; DATA XREF: BonusStage_DisplayOSDMessage+88↑o
                 pea     (aGoSonic).l    ; "   GO SONIC                       "
                 bra.w   loc_F67CA
 ; ---------------------------------------------------------------------------
 
-loc_F688A:                              ; DATA XREF: PrintBonusStageMsg+8A↑o
+loc_F688A:                              ; DATA XREF: BonusStage_DisplayOSDMessage+8A↑o
                 pea     (aExtraBall_0).l ; " EXTRA BALL                    "
                 bra.w   loc_F67DE
 ; ---------------------------------------------------------------------------
 
-loc_F6894:                              ; DATA XREF: PrintBonusStageMsg+8C↑o
+loc_F6894:                              ; DATA XREF: BonusStage_DisplayOSDMessage+8C↑o
                 pea     (aRoboSmile).l  ; " ROBO SMILE                     "
 
-loc_F689A:                              ; CODE XREF: PrintBonusStageMsg+328↓j
-                                        ; PrintBonusStageMsg+33C↓j ...
+loc_F689A:                              ; CODE XREF: BonusStage_DisplayOSDMessage+328↓j
+                                        ; BonusStage_DisplayOSDMessage+33C↓j ...
                 pea     (off_4).w
 
-loc_F689E:                              ; CODE XREF: PrintBonusStageMsg+334↓j
-                                        ; PrintBonusStageMsg+36E↓j
+loc_F689E:                              ; CODE XREF: BonusStage_DisplayOSDMessage+334↓j
+                                        ; BonusStage_DisplayOSDMessage+36E↓j
                 pea     (off_78).w
                 clr.l   -(sp)
                 pea     (off_4).w
                 bra.w   loc_F66FE
 ; ---------------------------------------------------------------------------
 
-loc_F68AC:                              ; DATA XREF: PrintBonusStageMsg+8E↑o
+loc_F68AC:                              ; DATA XREF: BonusStage_DisplayOSDMessage+8E↑o
                 pea     (aBustTeeth).l  ; "BUST TEETH                     "
                 pea     (off_4).w
                 pea     (off_78).w
@@ -56818,23 +56818,23 @@ loc_F68AC:                              ; DATA XREF: PrintBonusStageMsg+8E↑o
                 bra.w   loc_F66AA
 ; ---------------------------------------------------------------------------
 
-loc_F68C4:                              ; DATA XREF: PrintBonusStageMsg+90↑o
+loc_F68C4:                              ; DATA XREF: BonusStage_DisplayOSDMessage+90↑o
                 pea     (aTheMarch).l   ; " THE MARCH                      "
                 bra.s   loc_F689A
 ; ---------------------------------------------------------------------------
 
-loc_F68CC:                              ; DATA XREF: PrintBonusStageMsg+92↑o
+loc_F68CC:                              ; DATA XREF: BonusStage_DisplayOSDMessage+92↑o
                 pea     (aOpenIt).l     ; "OPEN IT                    "
                 pea     (6).w
                 bra.s   loc_F689E
 ; ---------------------------------------------------------------------------
 
-loc_F68D8:                              ; DATA XREF: PrintBonusStageMsg+94↑o
+loc_F68D8:                              ; DATA XREF: BonusStage_DisplayOSDMessage+94↑o
                 pea     (aTrappedAlive).l ; "   TRAPPED         ALIVE     "
                 bra.s   loc_F689A
 ; ---------------------------------------------------------------------------
 
-loc_F68E0:                              ; DATA XREF: PrintBonusStageMsg+96↑o
+loc_F68E0:                              ; DATA XREF: BonusStage_DisplayOSDMessage+96↑o
                 pea     (aFreeThem).l   ; " FREE THEM                      "
                 pea     (6).w
                 pea     (off_78).w
@@ -56843,23 +56843,23 @@ loc_F68E0:                              ; DATA XREF: PrintBonusStageMsg+96↑o
                 bra.w   loc_F6676
 ; ---------------------------------------------------------------------------
 
-loc_F68F8:                              ; DATA XREF: PrintBonusStageMsg+98↑o
+loc_F68F8:                              ; DATA XREF: BonusStage_DisplayOSDMessage+98↑o
                 pea     (aCluckerSDefens).l ; " CLUCKER'S     DEFENSE   "
                 bra.s   loc_F689A
 ; ---------------------------------------------------------------------------
 
-loc_F6900:                              ; DATA XREF: PrintBonusStageMsg+9A↑o
+loc_F6900:                              ; DATA XREF: BonusStage_DisplayOSDMessage+9A↑o
                 pea     (aNailTheCrab).l ; "   NAIL THE         CRAB      "
                 bra.s   loc_F689A
 ; ---------------------------------------------------------------------------
 
-loc_F6908:                              ; DATA XREF: PrintBonusStageMsg+9C↑o
+loc_F6908:                              ; DATA XREF: BonusStage_DisplayOSDMessage+9C↑o
                 pea     (aAlmost).l     ; "ALMOST                    "
                 clr.l   -(sp)
                 bra.s   loc_F689E
 ; ---------------------------------------------------------------------------
 
-loc_F6912:                              ; DATA XREF: PrintBonusStageMsg+9E↑o
+loc_F6912:                              ; DATA XREF: BonusStage_DisplayOSDMessage+9E↑o
                 pea     (aFreedom).l    ; "FREEDOM!                    "
                 pea     (6).w
                 pea     (off_78).w
@@ -56868,7 +56868,7 @@ loc_F6912:                              ; DATA XREF: PrintBonusStageMsg+9E↑o
                 bra.w   loc_F6760
 ; ---------------------------------------------------------------------------
 
-loc_F692A:                              ; DATA XREF: PrintBonusStageMsg+A0↑o
+loc_F692A:                              ; DATA XREF: BonusStage_DisplayOSDMessage+A0↑o
                 pea     (aHeadache).l   ; "HEADACHE!                    "
                 pea     (6).w
                 pea     (off_78).w
@@ -56876,7 +56876,7 @@ loc_F692A:                              ; DATA XREF: PrintBonusStageMsg+A0↑o
                 bra.w   loc_F6788
 ; ---------------------------------------------------------------------------
 
-loc_F693E:                              ; DATA XREF: PrintBonusStageMsg+A2↑o
+loc_F693E:                              ; DATA XREF: BonusStage_DisplayOSDMessage+A2↑o
                 pea     (aRobotnikDethro).l ; "  ROBOTNIK    DETHRONED "
                 pea     (6).w
                 pea     (off_78).w
@@ -56884,68 +56884,68 @@ loc_F693E:                              ; DATA XREF: PrintBonusStageMsg+A2↑o
                 bra.w   loc_F67FE
 ; ---------------------------------------------------------------------------
 
-loc_F6952:                              ; DATA XREF: PrintBonusStageMsg+A6↑o
+loc_F6952:                              ; DATA XREF: BonusStage_DisplayOSDMessage+A6↑o
                 pea     (aNailed).l     ; "NAILED!                    "
                 pea     (1).w
                 bra.w   loc_F66F6
 ; ---------------------------------------------------------------------------
 
-loc_F6960:                              ; DATA XREF: PrintBonusStageMsg+A8↑o
+loc_F6960:                              ; DATA XREF: BonusStage_DisplayOSDMessage+A8↑o
                 pea     (aScoreMove).l  ; "SCORE MOVE                     "
                 bra.w   loc_F670C
 ; ---------------------------------------------------------------------------
 
-loc_F696A:                              ; DATA XREF: PrintBonusStageMsg+AA↑o
+loc_F696A:                              ; DATA XREF: BonusStage_DisplayOSDMessage+AA↑o
                 pea     (aFaced).l      ; "FACED!!!                    "
                 bra.w   loc_F6724
 ; ---------------------------------------------------------------------------
 
-loc_F6974:                              ; DATA XREF: PrintBonusStageMsg+AC↑o
+loc_F6974:                              ; DATA XREF: BonusStage_DisplayOSDMessage+AC↑o
                 pea     (aHogPower).l   ; "HOG POWER                    "
                 pea     (1).w
                 bra.w   loc_F673E
 ; ---------------------------------------------------------------------------
 
-loc_F6982:                              ; DATA XREF: PrintBonusStageMsg+AE↑o
+loc_F6982:                              ; DATA XREF: BonusStage_DisplayOSDMessage+AE↑o
                 pea     (aPaused).l     ; "PAUSED                    "
                 clr.l   -(sp)
                 pea     (off_78).w
                 bra.w   loc_F6826
 ; ---------------------------------------------------------------------------
 
-loc_F6992:                              ; DATA XREF: PrintBonusStageMsg+B0↑o
+loc_F6992:                              ; DATA XREF: BonusStage_DisplayOSDMessage+B0↑o
                 pea     (unk_BF6C6).l
                 clr.l   -(sp)
                 pea     ($A).w
                 bra.w   loc_F6826
 ; ---------------------------------------------------------------------------
 
-loc_F69A2:                              ; DATA XREF: PrintBonusStageMsg+B2↑o
+loc_F69A2:                              ; DATA XREF: BonusStage_DisplayOSDMessage+B2↑o
                 pea     (aBonusStage).l ; "     BONUS          STAGE     "
 
-loc_F69A8:                              ; CODE XREF: PrintBonusStageMsg+418↓j
-                                        ; PrintBonusStageMsg+420↓j
+loc_F69A8:                              ; CODE XREF: BonusStage_DisplayOSDMessage+418↓j
+                                        ; BonusStage_DisplayOSDMessage+420↓j
                 clr.l   -(sp)
                 pea     (off_3C).w
                 clr.l   -(sp)
                 bra.w   loc_F6730
 ; ---------------------------------------------------------------------------
 
-loc_F69B4:                              ; DATA XREF: PrintBonusStageMsg+B4↑o
+loc_F69B4:                              ; DATA XREF: BonusStage_DisplayOSDMessage+B4↑o
                 pea     (aBonus).l      ; "BONUS                    "
                 bra.s   loc_F69A8
 ; ---------------------------------------------------------------------------
 
-loc_F69BC:                              ; DATA XREF: PrintBonusStageMsg+B6↑o
+loc_F69BC:                              ; DATA XREF: BonusStage_DisplayOSDMessage+B6↑o
                 pea     (aMultiBallStage).l ; " MULTI BALL      STAGE     "
                 bra.s   loc_F69A8
 ; ---------------------------------------------------------------------------
 
-loc_F69C4:                              ; DATA XREF: PrintBonusStageMsg+B8↑o
+loc_F69C4:                              ; DATA XREF: BonusStage_DisplayOSDMessage+B8↑o
                 pea     (aBall1).l      ; "BALL 1                    "
 
-loc_F69CA:                              ; CODE XREF: PrintBonusStageMsg+43C↓j
-                                        ; PrintBonusStageMsg+444↓j
+loc_F69CA:                              ; CODE XREF: BonusStage_DisplayOSDMessage+43C↓j
+                                        ; BonusStage_DisplayOSDMessage+444↓j
                 clr.l   -(sp)
                 pea     (off_3C).w
                 clr.l   -(sp)
@@ -56953,39 +56953,39 @@ loc_F69CA:                              ; CODE XREF: PrintBonusStageMsg+43C↓j
                 bra.w   loc_F6760
 ; ---------------------------------------------------------------------------
 
-loc_F69D8:                              ; DATA XREF: PrintBonusStageMsg+BA↑o
+loc_F69D8:                              ; DATA XREF: BonusStage_DisplayOSDMessage+BA↑o
                 pea     (aBall2).l      ; "BALL 2                    "
                 bra.s   loc_F69CA
 ; ---------------------------------------------------------------------------
 
-loc_F69E0:                              ; DATA XREF: PrintBonusStageMsg+BC↑o
+loc_F69E0:                              ; DATA XREF: BonusStage_DisplayOSDMessage+BC↑o
                 pea     (aBall3).l      ; "BALL 3                    "
                 bra.s   loc_F69CA
 ; ---------------------------------------------------------------------------
 
-loc_F69E8:                              ; DATA XREF: PrintBonusStageMsg+BE↑o
+loc_F69E8:                              ; DATA XREF: BonusStage_DisplayOSDMessage+BE↑o
                 pea     (aRisingJackpot).l ; "  RISING        JACKPOT"
                 pea     (6).w
 
-loc_F69F2:                              ; CODE XREF: PrintBonusStageMsg+1D0↑j
+loc_F69F2:                              ; CODE XREF: BonusStage_DisplayOSDMessage+1D0↑j
                 pea     (off_78).w
                 pea     (off_4).w
                 pea     (1).w
 
-loc_F69FE:                              ; CODE XREF: PrintBonusStageMsg+F0↑j
-                                        ; PrintBonusStageMsg+288↑j
+loc_F69FE:                              ; CODE XREF: BonusStage_DisplayOSDMessage+F0↑j
+                                        ; BonusStage_DisplayOSDMessage+288↑j
                 pea     (off_4).w
 
-loc_F6A02:                              ; CODE XREF: PrintBonusStageMsg+D8↑j
-                                        ; PrintBonusStageMsg+10C↑j ...
+loc_F6A02:                              ; CODE XREF: BonusStage_DisplayOSDMessage+D8↑j
+                                        ; BonusStage_DisplayOSDMessage+10C↑j ...
                 jsr     (a2)
                 lea     $18(sp),sp
 
-loc_F6A08:                              ; CODE XREF: PrintBonusStageMsg+1A↑j
-                                        ; PrintBonusStageMsg+26↑j ...
+loc_F6A08:                              ; CODE XREF: BonusStage_DisplayOSDMessage+1A↑j
+                                        ; BonusStage_DisplayOSDMessage+26↑j ...
                 movem.l (sp)+,d2/a2
                 rts
-; End of function PrintBonusStageMsg
+; End of function BonusStage_DisplayOSDMessage
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -57054,7 +57054,7 @@ loc_F6A5A:                              ; CODE XREF: sub_F6A4C+A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F6A66:                              ; CODE XREF: sub_F6BF6+17A↓p
+sub_F6A66:                              ; CODE XREF: BonusStage_EventHandler+17A↓p
                                         ; sub_F7E8E+248↓p ...
 
 arg_0           =  4
@@ -57161,7 +57161,7 @@ arg_4           =  8
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F6B92:                              ; CODE XREF: sub_FA588+282A↓p
+sub_F6B92:                              ; CODE XREF: RunUpdate_BonusStage+282A↓p
 
 arg_0           =  4
 arg_4           =  8
@@ -57197,7 +57197,7 @@ arg_4           =  8
 
 ; Attributes: bp-based frame
 
-sub_F6BF6:                              ; CODE XREF: sub_F780E+3A↓p
+BonusStage_EventHandler:                              ; CODE XREF: sub_F780E+3A↓p
                                         ; sub_F785A+34↓p ...
 
 var_18          = -$18
@@ -57218,8 +57218,8 @@ arg_4           =  $C
                 move.w  off_F6C22(pc,d0.l),d0
                 jmp     off_F6C22(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_F6C22:      dc.w loc_F7804-*        ; DATA XREF: sub_F6BF6+24↑r
-                                        ; sub_F6BF6:off_F6C22↓o ...
+off_F6C22:      dc.w loc_F7804-*        ; DATA XREF: BonusStage_EventHandler+24↑r
+                                        ; BonusStage_EventHandler:off_F6C22↓o ...
                 dc.w loc_F6C68-off_F6C22
                 dc.w loc_F6C74-off_F6C22
                 dc.w loc_F6D0C-off_F6C22
@@ -57256,21 +57256,21 @@ off_F6C22:      dc.w loc_F7804-*        ; DATA XREF: sub_F6BF6+24↑r
                 dc.w loc_F77F0-off_F6C22
 ; ---------------------------------------------------------------------------
 
-loc_F6C68:                              ; DATA XREF: sub_F6BF6+2E↑o
+loc_F6C68:                              ; DATA XREF: BonusStage_EventHandler+2E↑o
                 move.w  #$800,d0
                 eor.w   d0,$E(a2)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6C74:                              ; CODE XREF: sub_F6BF6+1DC↓j
-                                        ; sub_F6BF6+20E↓j
+loc_F6C74:                              ; CODE XREF: BonusStage_EventHandler+1DC↓j
+                                        ; BonusStage_EventHandler+20E↓j
                                         ; DATA XREF: ...
                 tst.l   (a2)
                 beq.s   loc_F6C80
                 movea.l (a2),a0
                 move.l  4(a2),4(a0)
 
-loc_F6C80:                              ; CODE XREF: sub_F6BF6+80↑j
+loc_F6C80:                              ; CODE XREF: BonusStage_EventHandler+80↑j
                 tst.l   4(a2)
                 beq.s   loc_F6C8E
                 movea.l 4(a2),a0
@@ -57278,7 +57278,7 @@ loc_F6C80:                              ; CODE XREF: sub_F6BF6+80↑j
                 bra.s   loc_F6CA6
 ; ---------------------------------------------------------------------------
 
-loc_F6C8E:                              ; CODE XREF: sub_F6BF6+8E↑j
+loc_F6C8E:                              ; CODE XREF: BonusStage_EventHandler+8E↑j
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -57287,7 +57287,7 @@ loc_F6C8E:                              ; CODE XREF: sub_F6BF6+8E↑j
                 movea.l #$FF52F8,a0
                 move.l  (a2),(a0,d0.w)
 
-loc_F6CA6:                              ; CODE XREF: sub_F6BF6+96↑j
+loc_F6CA6:                              ; CODE XREF: BonusStage_EventHandler+96↑j
                 clr.l   (a2)
                 clr.l   4(a2)
                 move.w  ($FF568E).l,d0
@@ -57319,12 +57319,12 @@ loc_F6CA6:                              ; CODE XREF: sub_F6BF6+96↑j
                 bra.w   loc_F77FE
 ; ---------------------------------------------------------------------------
 
-loc_F6D0C:                              ; DATA XREF: sub_F6BF6+32↑o
+loc_F6D0C:                              ; DATA XREF: BonusStage_EventHandler+32↑o
                 move.w  #1,($FF547C).l
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6D18:                              ; DATA XREF: sub_F6BF6+34↑o
+loc_F6D18:                              ; DATA XREF: BonusStage_EventHandler+34↑o
                 pea     ($5C).w
                 jsr     PlaySong
                 addq.l  #4,sp
@@ -57352,43 +57352,43 @@ loc_F6D18:                              ; DATA XREF: sub_F6BF6+34↑o
                 asr.l   d1,d0
                 add.w   $88(a5),d0
 
-loc_F6D68:                              ; CODE XREF: sub_F6BF6+30E↓j
-                                        ; sub_F6BF6+B4C↓j
+loc_F6D68:                              ; CODE XREF: BonusStage_EventHandler+30E↓j
+                                        ; BonusStage_EventHandler+B4C↓j
                 add.l   (sp)+,d0
                 addi.w  #$80,d0
                 move.l  d0,-(sp)
                 bsr.w   sub_F6A66
 
-loc_F6D74:                              ; CODE XREF: sub_F6BF6+BEE↓j
+loc_F6D74:                              ; CODE XREF: BonusStage_EventHandler+BEE↓j
                 addq.l  #8,sp
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6D7A:                              ; DATA XREF: sub_F6BF6+36↑o
+loc_F6D7A:                              ; DATA XREF: BonusStage_EventHandler+36↑o
                 addi.l  #unk_493E0,($FF3CB8).l
                 pea     ($2F).w
                 bra.w   loc_F77FE
 ; ---------------------------------------------------------------------------
 
-loc_F6D8C:                              ; DATA XREF: sub_F6BF6+38↑o
+loc_F6D8C:                              ; DATA XREF: BonusStage_EventHandler+38↑o
                 pea     (off_24).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6D98:                              ; DATA XREF: sub_F6BF6+3C↑o
+loc_F6D98:                              ; DATA XREF: BonusStage_EventHandler+3C↑o
                 move.w  #$800,d0
                 eor.w   d0,$E(a2)
 
-loc_F6DA0:                              ; CODE XREF: sub_F6BF6+256↓j
-                                        ; DATA XREF: sub_F6BF6+3A↑o
+loc_F6DA0:                              ; CODE XREF: BonusStage_EventHandler+256↓j
+                                        ; DATA XREF: BonusStage_EventHandler+3A↑o
                 cmpa.l  a5,a2
                 bne.s   loc_F6DD6
                 move.w  $C(a2),d0
                 add.w   d0,d0
                 movea.l #off_D3164,a0
 
-loc_F6DB0:                              ; CODE XREF: sub_F6BF6+238↓j
+loc_F6DB0:                              ; CODE XREF: BonusStage_EventHandler+238↓j
                 move.w  (a0,d0.w),d0
                 sub.w   d0,8(a2)
                 move.w  $C(a2),d0
@@ -57401,12 +57401,12 @@ loc_F6DB0:                              ; CODE XREF: sub_F6BF6+238↓j
                 bra.w   loc_F6C74
 ; ---------------------------------------------------------------------------
 
-loc_F6DD6:                              ; CODE XREF: sub_F6BF6+1AC↑j
+loc_F6DD6:                              ; CODE XREF: BonusStage_EventHandler+1AC↑j
                 move.w  $C(a2),d0
                 add.w   d0,d0
                 movea.l #off_D3164,a0
 
-loc_F6DE2:                              ; CODE XREF: sub_F6BF6+246↓j
+loc_F6DE2:                              ; CODE XREF: BonusStage_EventHandler+246↓j
                 move.w  (a0,d0.w),d0
                 add.w   d0,8(a2)
                 move.w  $C(a2),d0
@@ -57417,17 +57417,17 @@ loc_F6DE2:                              ; CODE XREF: sub_F6BF6+246↓j
                 cmpi.w  #$140,8(a2)
                 bgt.w   loc_F6C74
 
-loc_F6E08:                              ; CODE XREF: sub_F6BF6+1DA↑j
+loc_F6E08:                              ; CODE XREF: BonusStage_EventHandler+1DA↑j
                 addq.w  #1,$C(a2)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6E10:                              ; DATA XREF: sub_F6BF6+40↑o
+loc_F6E10:                              ; DATA XREF: BonusStage_EventHandler+40↑o
                 move.w  #$800,d0
                 eor.w   d0,$E(a2)
 
-loc_F6E18:                              ; CODE XREF: sub_F6BF6+24E↓j
-                                        ; DATA XREF: sub_F6BF6+3E↑o
+loc_F6E18:                              ; CODE XREF: BonusStage_EventHandler+24E↓j
+                                        ; DATA XREF: BonusStage_EventHandler+3E↑o
                 move.l  a5,d0
                 moveq   #$40,d1 ; '@'
                 add.l   d1,d0
@@ -57439,35 +57439,35 @@ loc_F6E18:                              ; CODE XREF: sub_F6BF6+24E↓j
                 bra.s   loc_F6DB0
 ; ---------------------------------------------------------------------------
 
-loc_F6E30:                              ; CODE XREF: sub_F6BF6+22A↑j
+loc_F6E30:                              ; CODE XREF: BonusStage_EventHandler+22A↑j
                 move.w  $C(a2),d0
                 add.w   d0,d0
                 movea.l #off_D322C,a0
                 bra.s   loc_F6DE2
 ; ---------------------------------------------------------------------------
 
-loc_F6E3E:                              ; DATA XREF: sub_F6BF6+42↑o
+loc_F6E3E:                              ; DATA XREF: BonusStage_EventHandler+42↑o
                 ori.w   #$8000,$E(a2)
                 bra.s   loc_F6E18
 ; ---------------------------------------------------------------------------
 
-loc_F6E46:                              ; DATA XREF: sub_F6BF6+44↑o
+loc_F6E46:                              ; DATA XREF: BonusStage_EventHandler+44↑o
                 ori.w   #$8000,$E(a2)
                 bra.w   loc_F6DA0
 ; ---------------------------------------------------------------------------
 
-loc_F6E50:                              ; DATA XREF: sub_F6BF6+46↑o
+loc_F6E50:                              ; DATA XREF: BonusStage_EventHandler+46↑o
                 andi.w  #$9FFF,$E(a2)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6E5A:                              ; DATA XREF: sub_F6BF6+48↑o
+loc_F6E5A:                              ; DATA XREF: BonusStage_EventHandler+48↑o
                 ori.w   #$6000,$E(a2)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6E64:                              ; DATA XREF: sub_F6BF6+4A↑o
-                                        ; sub_F6BF6+4C↑o ...
+loc_F6E64:                              ; DATA XREF: BonusStage_EventHandler+4A↑o
+                                        ; BonusStage_EventHandler+4C↑o ...
                 movea.l $1C(a2),a0
                 addq.w  #1,$12(a0)
                 move.w  $12(a0),d0
@@ -57478,36 +57478,36 @@ loc_F6E64:                              ; DATA XREF: sub_F6BF6+4A↑o
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6E84:                              ; DATA XREF: sub_F6BF6+54↑o
+loc_F6E84:                              ; DATA XREF: BonusStage_EventHandler+54↑o
                 ori.w   #$800,$E(a2)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6E8E:                              ; DATA XREF: sub_F6BF6+56↑o
+loc_F6E8E:                              ; DATA XREF: BonusStage_EventHandler+56↑o
                 andi.w  #$F7FF,$E(a2)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6E98:                              ; CODE XREF: sub_F6BF6+2C8↓j
-                                        ; DATA XREF: sub_F6BF6+58↑o
+loc_F6E98:                              ; CODE XREF: BonusStage_EventHandler+2C8↓j
+                                        ; DATA XREF: BonusStage_EventHandler+58↑o
                 movea.l $1C(a2),a0
                 move.w  #$FFFF,(a0)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6EA4:                              ; DATA XREF: sub_F6BF6+5A↑o
+loc_F6EA4:                              ; DATA XREF: BonusStage_EventHandler+5A↑o
                 clr.w   8(a2)
                 clr.w   $A(a2)
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F6EB0:                              ; DATA XREF: sub_F6BF6+5C↑o
+loc_F6EB0:                              ; DATA XREF: BonusStage_EventHandler+5C↑o
                 clr.w   ($FFEE7E).l
                 move.w  #1,($FF547C).l
                 bra.s   loc_F6E98
 ; ---------------------------------------------------------------------------
 
-loc_F6EC0:                              ; DATA XREF: sub_F6BF6+5E↑o
+loc_F6EC0:                              ; DATA XREF: BonusStage_EventHandler+5E↑o
                 jsr     sub_D69B6
                 ext.l   d0
                 moveq   #$B,d1
@@ -57534,12 +57534,12 @@ loc_F6EC0:                              ; DATA XREF: sub_F6BF6+5E↑o
                 bra.w   loc_F6D68
 ; ---------------------------------------------------------------------------
 
-loc_F6F08:                              ; DATA XREF: sub_F6BF6+60↑o
+loc_F6F08:                              ; DATA XREF: BonusStage_EventHandler+60↑o
                 moveq   #0,d2
                 movea.l #$133C,a2
                 movea.l #$FF4224,a3
 
-loc_F6F16:                              ; CODE XREF: sub_F6BF6+328↓j
+loc_F6F16:                              ; CODE XREF: BonusStage_EventHandler+328↓j
                 move.w  (a2)+,(a3)+
                 addq.l  #1,d2
                 moveq   #$10,d0
@@ -58079,7 +58079,7 @@ loc_F6F16:                              ; CODE XREF: sub_F6BF6+328↓j
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F76FE:                              ; DATA XREF: sub_F6BF6+62↑o
+loc_F76FE:                              ; DATA XREF: BonusStage_EventHandler+62↑o
                 jsr     sub_D69B6
                 ext.l   d0
                 moveq   #$B,d1
@@ -58106,7 +58106,7 @@ loc_F76FE:                              ; DATA XREF: sub_F6BF6+62↑o
                 bra.w   loc_F6D68
 ; ---------------------------------------------------------------------------
 
-loc_F7746:                              ; DATA XREF: sub_F6BF6+64↑o
+loc_F7746:                              ; DATA XREF: BonusStage_EventHandler+64↑o
                 andi.w  #$F7FF,$E(a2)
                 move.w  #$FFFF,($FF5238).l
                 clr.w   ($FFF20C).l
@@ -58115,13 +58115,13 @@ loc_F7746:                              ; DATA XREF: sub_F6BF6+64↑o
                 bra.w   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F776C:                              ; DATA XREF: sub_F6BF6+6C↑o
+loc_F776C:                              ; DATA XREF: BonusStage_EventHandler+6C↑o
                 cmpi.w  #7,($FFF1FE).l
                 bne.w   loc_F7804
                 pea     ($41).w
                 jsr     PlaySong
                 pea     ($18).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addi.l  #$7D0,($FF3CB8).l
                 pea     ($2F).w
                 jsr     PlaySong
@@ -58147,33 +58147,33 @@ loc_F776C:                              ; DATA XREF: sub_F6BF6+6C↑o
                 bra.w   loc_F6D74
 ; ---------------------------------------------------------------------------
 
-loc_F77E8:                              ; DATA XREF: sub_F6BF6+6E↑o
+loc_F77E8:                              ; DATA XREF: BonusStage_EventHandler+6E↑o
                 clr.w   ($FFF1FE).l
                 bra.s   loc_F7804
 ; ---------------------------------------------------------------------------
 
-loc_F77F0:                              ; DATA XREF: sub_F6BF6+70↑o
+loc_F77F0:                              ; DATA XREF: BonusStage_EventHandler+70↑o
                 cmpi.w  #7,($FFF1FE).l
                 bne.s   loc_F7804
                 pea     ($12).w
 
-loc_F77FE:                              ; CODE XREF: sub_F6BF6+112↑j
-                                        ; sub_F6BF6+192↑j
+loc_F77FE:                              ; CODE XREF: BonusStage_EventHandler+112↑j
+                                        ; BonusStage_EventHandler+192↑j
                 jsr     PlaySong
 
-loc_F7804:                              ; CODE XREF: sub_F6BF6+1E↑j
-                                        ; sub_F6BF6+7A↑j ...
+loc_F7804:                              ; CODE XREF: BonusStage_EventHandler+1E↑j
+                                        ; BonusStage_EventHandler+7A↑j ...
                 movem.l var_18(a6),d2-d3/a2-a5
                 unlk    a6
                 rts
-; End of function sub_F6BF6
+; End of function BonusStage_EventHandler
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F780E:                              ; CODE XREF: sub_FA588+3324↓p
-                                        ; sub_FA588+3364↓p ...
+sub_F780E:                              ; CODE XREF: RunUpdate_BonusStage+3324↓p
+                                        ; RunUpdate_BonusStage+3364↓p ...
 
 arg_0           =  4
 
@@ -58197,7 +58197,7 @@ loc_F781C:                              ; CODE XREF: sub_F780E+44↓j
                 move.l  a2,-(sp)
                 move.b  5(a3),d0
                 move.l  d0,-(sp)
-                bsr.w   sub_F6BF6
+                bsr.w   BonusStage_EventHandler
                 addq.l  #8,sp
 
 loc_F784E:                              ; CODE XREF: sub_F780E+18↑j
@@ -58233,7 +58233,7 @@ arg_0           =  4
                 move.l  a3,-(sp)
                 move.b  5(a2),d0
                 move.l  d0,-(sp)
-                bsr.w   sub_F6BF6
+                bsr.w   BonusStage_EventHandler
                 addq.l  #8,sp
 
 loc_F7894:                              ; CODE XREF: sub_F785A+12↑j
@@ -58245,8 +58245,8 @@ loc_F7894:                              ; CODE XREF: sub_F785A+12↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F789A:                              ; CODE XREF: sub_F6BF6+106↑p
-                                        ; sub_F6BF6+BB8↑p ...
+sub_F789A:                              ; CODE XREF: BonusStage_EventHandler+106↑p
+                                        ; BonusStage_EventHandler+BB8↑p ...
 
 arg_0           =  4
 arg_4           =  8
@@ -58261,7 +58261,7 @@ arg_4           =  8
                 move.l  a0,-(sp)
                 move.b  5(a1),d0
                 move.l  d0,-(sp)
-                bsr.w   sub_F6BF6
+                bsr.w   BonusStage_EventHandler
                 addq.l  #8,sp
                 rts
 ; End of function sub_F789A
@@ -58376,8 +58376,8 @@ loc_F7984:                              ; CODE XREF: sub_F78C6+64↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F798A:                              ; CODE XREF: sub_FA588+344A↓p
-                                        ; sub_FA588+3A5C↓p
+sub_F798A:                              ; CODE XREF: RunUpdate_BonusStage+344A↓p
+                                        ; RunUpdate_BonusStage+3A5C↓p
                 movem.l d2-d7/a2-a5,-(sp)
                 bsr.w   sub_F78C6
                 move.w  ($FFA8F6).l,d0
@@ -58527,7 +58527,7 @@ loc_F7AD2:                              ; CODE XREF: sub_F798A+1E↑j
 
 ; Attributes: bp-based frame
 
-sub_F7AFE:                              ; CODE XREF: sub_FA588:loc_FD9CE↓p
+sub_F7AFE:                              ; CODE XREF: RunUpdate_BonusStage:loc_FD9CE↓p
 
 var_2C          = -$2C
 var_4           = -4
@@ -58635,7 +58635,7 @@ loc_F7BEE:                              ; CODE XREF: sub_F7AFE+3C↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F7C08:                              ; CODE XREF: sub_FA588+2698↓p
+BonusStage_BallPhysics:                              ; CODE XREF: RunUpdate_BonusStage+2698↓p
 
 arg_0           =  4
 
@@ -58649,13 +58649,13 @@ arg_0           =  4
                 move.l  $E(a2),d1
                 asr.l   #8,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 tst.l   $E(a2)
                 bge.s   loc_F7C3E
                 neg.l   d2
 
-loc_F7C3E:                              ; CODE XREF: sub_F7C08+32↑j
+loc_F7C3E:                              ; CODE XREF: BonusStage_BallPhysics+32↑j
                 move.l  d2,d0
                 moveq   #$C,d1
                 asr.l   d1,d0
@@ -58667,14 +58667,14 @@ loc_F7C3E:                              ; CODE XREF: sub_F7C08+32↑j
                 move.l  $A(a2),d1
                 asr.l   #8,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 addi.l  #$20,d0 ; ' '
                 move.l  d0,d2
                 tst.l   $A(a2)
                 bge.s   loc_F7C70
                 neg.l   d2
 
-loc_F7C70:                              ; CODE XREF: sub_F7C08+64↑j
+loc_F7C70:                              ; CODE XREF: BonusStage_BallPhysics+64↑j
                 move.l  d2,d0
                 moveq   #$C,d1
                 asr.l   d1,d0
@@ -58684,22 +58684,22 @@ loc_F7C70:                              ; CODE XREF: sub_F7C08+64↑j
                 ble.s   loc_F7C8E
                 move.l  #dword_80000,$A(a2)
 
-loc_F7C8E:                              ; CODE XREF: sub_F7C08+7C↑j
+loc_F7C8E:                              ; CODE XREF: BonusStage_BallPhysics+7C↑j
                 cmpi.l  #dword_80000,$E(a2)
                 ble.s   loc_F7CA0
                 move.l  #dword_80000,$E(a2)
 
-loc_F7CA0:                              ; CODE XREF: sub_F7C08+8E↑j
+loc_F7CA0:                              ; CODE XREF: BonusStage_BallPhysics+8E↑j
                 cmpi.l  #$FFF80000,$A(a2)
                 bge.s   loc_F7CB2
                 move.l  #$FFF80000,$A(a2)
 
-loc_F7CB2:                              ; CODE XREF: sub_F7C08+A0↑j
+loc_F7CB2:                              ; CODE XREF: BonusStage_BallPhysics+A0↑j
                 cmpi.l  #$FFF80000,$E(a2)
                 bge.s   loc_F7CC4
                 move.l  #$FFF80000,$E(a2)
 
-loc_F7CC4:                              ; CODE XREF: sub_F7C08+B2↑j
+loc_F7CC4:                              ; CODE XREF: BonusStage_BallPhysics+B2↑j
                 move.l  $A(a2),d0
                 add.l   d0,2(a2)
                 move.l  $E(a2),d0
@@ -58717,7 +58717,7 @@ loc_F7CC4:                              ; CODE XREF: sub_F7C08+B2↑j
                 bge.s   loc_F7CF4
                 addq.l  #3,d0
 
-loc_F7CF4:                              ; CODE XREF: sub_F7C08+E8↑j
+loc_F7CF4:                              ; CODE XREF: BonusStage_BallPhysics+E8↑j
                 asr.l   #2,d0
                 move.l  d0,$E(a2)
                 move.w  #$185,6(a2)
@@ -58726,8 +58726,8 @@ loc_F7CF4:                              ; CODE XREF: sub_F7C08+E8↑j
                 jsr     (a3)
                 addq.l  #4,sp
 
-loc_F7D0C:                              ; CODE XREF: sub_F7C08+D2↑j
-                                        ; sub_F7C08+D8↑j
+loc_F7D0C:                              ; CODE XREF: BonusStage_BallPhysics+D2↑j
+                                        ; BonusStage_BallPhysics+D8↑j
                 cmpi.w  #$119,2(a2)
                 ble.s   loc_F7D4A
                 tst.l   $A(a2)
@@ -58743,7 +58743,7 @@ loc_F7D0C:                              ; CODE XREF: sub_F7C08+D2↑j
                 bge.s   loc_F7D32
                 addq.l  #3,d0
 
-loc_F7D32:                              ; CODE XREF: sub_F7C08+126↑j
+loc_F7D32:                              ; CODE XREF: BonusStage_BallPhysics+126↑j
                 asr.l   #2,d0
                 move.l  d0,$A(a2)
                 move.w  #$119,2(a2)
@@ -58752,8 +58752,8 @@ loc_F7D32:                              ; CODE XREF: sub_F7C08+126↑j
                 jsr     (a3)
                 addq.l  #4,sp
 
-loc_F7D4A:                              ; CODE XREF: sub_F7C08+10A↑j
-                                        ; sub_F7C08+110↑j ...
+loc_F7D4A:                              ; CODE XREF: BonusStage_BallPhysics+10A↑j
+                                        ; BonusStage_BallPhysics+110↑j ...
                 cmpi.w  #$B,2(a2)
                 bge.s   loc_F7D88
                 tst.l   $A(a2)
@@ -58769,7 +58769,7 @@ loc_F7D4A:                              ; CODE XREF: sub_F7C08+10A↑j
                 bge.s   loc_F7D70
                 addq.l  #3,d0
 
-loc_F7D70:                              ; CODE XREF: sub_F7C08+164↑j
+loc_F7D70:                              ; CODE XREF: BonusStage_BallPhysics+164↑j
                 asr.l   #2,d0
                 move.l  d0,$A(a2)
                 move.w  #$B,2(a2)
@@ -58778,11 +58778,11 @@ loc_F7D70:                              ; CODE XREF: sub_F7C08+164↑j
                 jsr     (a3)
                 addq.l  #4,sp
 
-loc_F7D88:                              ; CODE XREF: sub_F7C08+148↑j
-                                        ; sub_F7C08+14E↑j ...
+loc_F7D88:                              ; CODE XREF: BonusStage_BallPhysics+148↑j
+                                        ; BonusStage_BallPhysics+14E↑j ...
                 movem.l (sp)+,d2/a2-a3
                 rts
-; End of function sub_F7C08
+; End of function BonusStage_BallPhysics
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -58954,7 +58954,7 @@ loc_F7E88:                              ; CODE XREF: sub_F7DDC+44↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F7E8E:                              ; CODE XREF: sub_F95EC+28↓p
+sub_F7E8E:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+28↓p
 
 arg_0           =  4
 
@@ -59029,13 +59029,13 @@ loc_F7F02:                              ; CODE XREF: sub_F7E8E+66↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d4,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -59047,14 +59047,14 @@ loc_F7F02:                              ; CODE XREF: sub_F7E8E+66↑j
 loc_F7F48:                              ; CODE XREF: sub_F7E8E+B6↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d4
@@ -59062,7 +59062,7 @@ loc_F7F48:                              ; CODE XREF: sub_F7E8E+B6↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -59143,7 +59143,7 @@ loc_F8032:                              ; CODE XREF: sub_F7E8E+14E↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (1).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2A).w
                 jsr     (a5)
                 lea     $14(sp),sp
@@ -59176,7 +59176,7 @@ loc_F8100:                              ; DATA XREF: ROM:off_992F0↑o
                 movea.l #off_D350A,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.w  #1,($FFEDCE).l
                 pea     ($2B).w
                 jsr     (a5)
@@ -59203,7 +59203,7 @@ loc_F8136:                              ; CODE XREF: sub_F7E8E+1BC↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (5).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2D).w
                 jsr     (a5)
                 lea     $C(sp),sp
@@ -59228,7 +59228,7 @@ loc_F8190:                              ; CODE XREF: sub_F7E8E+1B0↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (1).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2A).w
                 jsr     (a5)
                 lea     $14(sp),sp
@@ -59259,7 +59259,7 @@ loc_F81F4:                              ; CODE XREF: sub_F7E8E+31E↑j
                 movea.l #off_D350A,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.w  #1,($FFEDCE).l
                 pea     ($2B).w
                 jsr     (a5)
@@ -59286,7 +59286,7 @@ loc_F827C:                              ; CODE XREF: sub_F7E8E+30A↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (5).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2D).w
                 jsr     (a5)
                 lea     $C(sp),sp
@@ -59315,7 +59315,7 @@ loc_F82D6:                              ; CODE XREF: sub_F7E8E+1AA↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (1).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2A).w
                 jsr     (a5)
                 lea     $14(sp),sp
@@ -59346,7 +59346,7 @@ loc_F8340:                              ; CODE XREF: sub_F7E8E+46A↑j
                 movea.l #off_D350A,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.w  #1,($FFEDCE).l
                 pea     ($2B).w
                 jsr     (a5)
@@ -59373,7 +59373,7 @@ loc_F83C8:                              ; CODE XREF: sub_F7E8E+45A↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (5).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2D).w
                 jsr     (a5)
                 lea     $C(sp),sp
@@ -59400,7 +59400,7 @@ loc_F8422:                              ; CODE XREF: sub_F7E8E+44A↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (1).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2A).w
                 jsr     (a5)
                 lea     $14(sp),sp
@@ -59431,7 +59431,7 @@ loc_F8486:                              ; CODE XREF: sub_F7E8E+5B0↑j
                 movea.l #off_D350A,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.w  #1,($FFEDCE).l
                 pea     ($2B).w
                 jsr     (a5)
@@ -59458,7 +59458,7 @@ loc_F850E:                              ; CODE XREF: sub_F7E8E+5A0↑j
                 pea     ($2F).w
                 jsr     (a5)
                 pea     (5).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2D).w
                 jsr     (a5)
                 lea     $C(sp),sp
@@ -59483,7 +59483,7 @@ loc_F8572:                              ; CODE XREF: sub_F7E8E+2A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F8578:                              ; CODE XREF: sub_F95EC+30↓p
+sub_F8578:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+30↓p
 
 arg_0           =  4
 
@@ -59568,7 +59568,7 @@ loc_F8666:                              ; CODE XREF: sub_F8578+20↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F866C:                              ; CODE XREF: sub_F95EC+58↓p
+sub_F866C:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+58↓p
 
 arg_0           =  4
 
@@ -59642,7 +59642,7 @@ loc_F86E0:                              ; CODE XREF: sub_F866C+66↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
@@ -59650,7 +59650,7 @@ loc_F86E0:                              ; CODE XREF: sub_F866C+66↑j
                 asr.l   #8,d1
 
 loc_F870C:                              ; DATA XREF: ROM:0007F184↑o
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -59662,14 +59662,14 @@ loc_F870C:                              ; DATA XREF: ROM:0007F184↑o
 loc_F8722:                              ; CODE XREF: sub_F866C+B2↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -59677,7 +59677,7 @@ loc_F8722:                              ; CODE XREF: sub_F866C+B2↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -59897,7 +59897,7 @@ loc_F893E:                              ; DATA XREF: sub_F866C+202↑o
                 jsr     PlaySong
                 addq.l  #4,sp
                 pea     ($22).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 bra.w   loc_F88BC
 ; ---------------------------------------------------------------------------
 
@@ -59933,7 +59933,7 @@ loc_F8992:                              ; CODE XREF: sub_F866C+334↓j
                 pea     ($2F).w
                 jsr     PlaySong
                 pea     ($23).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($6B).w
                 jsr     PlaySong
                 pea     ($41).w
@@ -59961,7 +59961,7 @@ loc_F89F6:                              ; CODE XREF: sub_F866C+2A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F89FC:                              ; CODE XREF: sub_F95EC+60↓p
+sub_F89FC:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+60↓p
 
 arg_0           =  4
 
@@ -60041,13 +60041,13 @@ loc_F8A78:                              ; CODE XREF: sub_F89FC+6E↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60059,25 +60059,25 @@ loc_F8A78:                              ; CODE XREF: sub_F89FC+6E↑j
 loc_F8AC2:                              ; CODE XREF: sub_F89FC+C2↑j
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60152,7 +60152,7 @@ loc_F8B5E:                              ; CODE XREF: sub_F89FC+15E↑j
                 movea.l #word_D3546,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 lea     $18(sp),sp
                 cmpi.w  #8,(a5)
                 bne.s   loc_F8C34
@@ -60206,7 +60206,7 @@ loc_F8C38:                              ; CODE XREF: sub_F89FC+32↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F8C4C:                              ; CODE XREF: sub_F95EC+48↓p
+sub_F8C4C:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+48↓p
 
 arg_0           =  4
 
@@ -60288,13 +60288,13 @@ loc_F8CD4:                              ; CODE XREF: sub_F8C4C+7A↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60306,25 +60306,25 @@ loc_F8CD4:                              ; CODE XREF: sub_F8C4C+7A↑j
 loc_F8D16:                              ; CODE XREF: sub_F8C4C+C6↑j
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60421,7 +60421,7 @@ loc_F8E18:                              ; CODE XREF: sub_F8C4C+1AA↑j
                 movea.l #off_D3572,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 move.w  ($FF58D0).l,d0
                 add.w   d0,d0
                 movea.l #unk_D3580,a0
@@ -60454,7 +60454,7 @@ loc_F8EA0:                              ; CODE XREF: sub_F8C4C+30↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F8EAE:                              ; CODE XREF: sub_F95EC+38↓p
+sub_F8EAE:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+38↓p
 
 arg_0           =  4
 
@@ -60532,13 +60532,13 @@ loc_F8F2A:                              ; CODE XREF: sub_F8EAE+6E↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60550,25 +60550,25 @@ loc_F8F2A:                              ; CODE XREF: sub_F8EAE+6E↑j
 loc_F8F6C:                              ; CODE XREF: sub_F8EAE+BA↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d4,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60685,7 +60685,7 @@ loc_F90B0:                              ; CODE XREF: sub_F8EAE+32↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F90C4:                              ; CODE XREF: sub_F95EC+40↓p
+sub_F90C4:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+40↓p
 
 arg_0           =  4
 
@@ -60760,13 +60760,13 @@ loc_F913E:                              ; CODE XREF: sub_F90C4+6C↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60778,25 +60778,25 @@ loc_F913E:                              ; CODE XREF: sub_F90C4+6C↑j
 loc_F9180:                              ; CODE XREF: sub_F90C4+B8↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d4,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60883,7 +60883,7 @@ loc_F924A:                              ; CODE XREF: sub_F90C4+164↑j
                 pea     (off_78).w
                 jsr     (a4)
                 pea     (off_4).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 lea     $14(sp),sp
                 moveq   #0,d2
                 movea.l #$FF5238,a2
@@ -60930,7 +60930,7 @@ loc_F930A:                              ; CODE XREF: sub_F90C4+230↑j
 
 loc_F932C:                              ; CODE XREF: sub_F90C4+244↑j
                 pea     ($F).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
 
 loc_F9334:                              ; CODE XREF: sub_F90C4+29C↓j
                 addq.l  #4,sp
@@ -60980,7 +60980,7 @@ loc_F938C:                              ; CODE XREF: sub_F90C4+30↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F9392:                              ; CODE XREF: sub_F95EC+50↓p
+sub_F9392:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+50↓p
 
 arg_0           =  4
 
@@ -61057,13 +61057,13 @@ loc_F940C:                              ; CODE XREF: sub_F9392+6C↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -61075,14 +61075,14 @@ loc_F940C:                              ; CODE XREF: sub_F9392+6C↑j
 loc_F9456:                              ; CODE XREF: sub_F9392+C0↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61090,7 +61090,7 @@ loc_F9456:                              ; CODE XREF: sub_F9392+C0↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -61231,7 +61231,7 @@ loc_F95E6:                              ; CODE XREF: sub_F9392+30↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F95EC:                              ; CODE XREF: sub_FA000+220↓p
+BonusStage_EventHandler_LevelSpecific:                              ; CODE XREF: BonusStage_InnerUpdate+220↓p
 
 arg_0           =  4
 
@@ -61246,14 +61246,14 @@ arg_0           =  4
                 move.w  off_F960A(pc,d0.l),d0
                 jmp     off_F960A(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_F960A:      dc.w loc_F9612-*        ; DATA XREF: sub_F95EC+16↑r
-                                        ; sub_F95EC:off_F960A↓o ...
+off_F960A:      dc.w loc_F9612-*        ; DATA XREF: BonusStage_EventHandler_LevelSpecific+16↑r
+                                        ; BonusStage_EventHandler_LevelSpecific:off_F960A↓o ...
                 dc.w loc_F9622-off_F960A
                 dc.w loc_F9632-off_F960A
                 dc.w loc_F9642-off_F960A
 ; ---------------------------------------------------------------------------
 
-loc_F9612:                              ; DATA XREF: sub_F95EC:off_F960A↑o
+loc_F9612:                              ; DATA XREF: BonusStage_EventHandler_LevelSpecific:off_F960A↑o
                 move.l  a2,-(sp)
                 bsr.w   sub_F7E8E
                 addq.l  #4,sp
@@ -61262,7 +61262,7 @@ loc_F9612:                              ; DATA XREF: sub_F95EC:off_F960A↑o
                 bra.s   loc_F9650
 ; ---------------------------------------------------------------------------
 
-loc_F9622:                              ; DATA XREF: sub_F95EC+20↑o
+loc_F9622:                              ; DATA XREF: BonusStage_EventHandler_LevelSpecific+20↑o
                 move.l  a2,-(sp)
                 bsr.w   sub_F8EAE
                 addq.l  #4,sp
@@ -61271,7 +61271,7 @@ loc_F9622:                              ; DATA XREF: sub_F95EC+20↑o
                 bra.s   loc_F9650
 ; ---------------------------------------------------------------------------
 
-loc_F9632:                              ; DATA XREF: sub_F95EC+22↑o
+loc_F9632:                              ; DATA XREF: BonusStage_EventHandler_LevelSpecific+22↑o
                 move.l  a2,-(sp)
                 bsr.w   sub_F8C4C
                 addq.l  #4,sp
@@ -61280,28 +61280,28 @@ loc_F9632:                              ; DATA XREF: sub_F95EC+22↑o
                 bra.s   loc_F9650
 ; ---------------------------------------------------------------------------
 
-loc_F9642:                              ; DATA XREF: sub_F95EC+24↑o
+loc_F9642:                              ; DATA XREF: BonusStage_EventHandler_LevelSpecific+24↑o
                 move.l  a2,-(sp)
                 bsr.w   sub_F866C
                 addq.l  #4,sp
                 move.l  a2,-(sp)
                 bsr.w   sub_F89FC
 
-loc_F9650:                              ; CODE XREF: sub_F95EC+34↑j
-                                        ; sub_F95EC+44↑j ...
+loc_F9650:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+34↑j
+                                        ; BonusStage_EventHandler_LevelSpecific+44↑j ...
                 addq.l  #4,sp
 
-loc_F9652:                              ; CODE XREF: sub_F95EC+12↑j
+loc_F9652:                              ; CODE XREF: BonusStage_EventHandler_LevelSpecific+12↑j
                 movea.l (sp)+,a2
                 rts
-; End of function sub_F95EC
+; End of function BonusStage_EventHandler_LevelSpecific
 
 
 ; =============== S U B R O U T I N E =======================================
 
 ; Attributes: bp-based frame
 
-sub_F9656:                              ; CODE XREF: sub_FA000+21A↓p
+BonusStage_PhysicsUpdate_question:                              ; CODE XREF: BonusStage_InnerUpdate+21A↓p
 
 var_34          = -$34
 var_C           = -$C
@@ -61320,27 +61320,27 @@ arg_0           =  8
                 moveq   #0,d5
                 movea.l #word_D393E,a3
 
-loc_F9682:                              ; CODE XREF: sub_F9656+3A2↓j
+loc_F9682:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3A2↓j
                 cmpi.w  #$92,2(a2)
                 bgt.s   loc_F968E
                 moveq   #0,d4
                 bra.s   loc_F9690
 ; ---------------------------------------------------------------------------
 
-loc_F968E:                              ; CODE XREF: sub_F9656+32↑j
+loc_F968E:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+32↑j
                 moveq   #1,d4
 
-loc_F9690:                              ; CODE XREF: sub_F9656+36↑j
+loc_F9690:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+36↑j
                 tst.l   d4
                 bne.s   loc_F969C
                 move.w  ($FF55A4).l,d2
                 bra.s   loc_F96A2
 ; ---------------------------------------------------------------------------
 
-loc_F969C:                              ; CODE XREF: sub_F9656+3C↑j
+loc_F969C:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3C↑j
                 move.w  ($FFF1EC).l,d2
 
-loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
+loc_F96A2:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+44↑j
                 ext.l   d2
                 add.l   d2,d2
                 add.l   d5,d2
@@ -61386,7 +61386,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  d6,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  d2,d0
                 move.w  d0,d1
@@ -61404,7 +61404,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 sub.l   (sp)+,d0
                 move.l  d0,var_4(a6)
                 cmpi.l  #unk_B0000,var_4(a6)
@@ -61415,13 +61415,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  (a5),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,var_8(a6)
                 tst.l   var_8(a6)
@@ -61456,13 +61456,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  (a5),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d3
                 tst.l   d3
@@ -61472,13 +61472,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 move.l  (a5),d1
                 neg.l   d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  $A(a2),d0
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 asr.l   #8,d0
@@ -61487,12 +61487,12 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 sub.l   d1,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F9848
                 addq.l  #3,d0
 
-loc_F9848:                              ; CODE XREF: sub_F9656+1EE↑j
+loc_F9848:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+1EE↑j
                 asr.l   #2,d0
                 sub.l   d0,$A(a2)
                 move.l  d7,d0
@@ -61503,12 +61503,12 @@ loc_F9848:                              ; CODE XREF: sub_F9656+1EE↑j
                 move.l  (a5),d1
                 neg.l   d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F986A
                 addq.l  #3,d0
 
-loc_F986A:                              ; CODE XREF: sub_F9656+210↑j
+loc_F986A:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+210↑j
                 asr.l   #2,d0
                 sub.l   d0,$E(a2)
                 tst.l   d4
@@ -61516,13 +61516,13 @@ loc_F986A:                              ; CODE XREF: sub_F9656+210↑j
                 cmpi.w  #9,($FF55A6).l
                 blt.s   loc_F9890
 
-loc_F987E:                              ; CODE XREF: sub_F9656+21C↑j
+loc_F987E:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+21C↑j
                 tst.l   d4
                 beq.w   loc_F999C
                 cmpi.w  #9,($FFF1EE).l
                 bge.w   loc_F999C
 
-loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
+loc_F9890:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+226↑j
                 move.w  d2,d0
                 move.w  d0,d1
                 add.w   d1,d1
@@ -61552,7 +61552,7 @@ loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61572,7 +61572,7 @@ loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61582,7 +61582,7 @@ loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
                 bra.s   loc_F999C
 ; ---------------------------------------------------------------------------
 
-loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
+loc_F9934:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+266↑j
                 move.l  d2,d0
                 move.l  d0,d1
                 add.l   d1,d1
@@ -61596,7 +61596,7 @@ loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61616,7 +61616,7 @@ loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61624,8 +61624,8 @@ loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
                 add.l   (sp)+,d0
                 add.l   d0,$E(a2)
 
-loc_F999C:                              ; CODE XREF: sub_F9656+22A↑j
-                                        ; sub_F9656+236↑j ...
+loc_F999C:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+22A↑j
+                                        ; BonusStage_PhysicsUpdate_question+236↑j ...
                 cmpi.l  #byte_A0000,var_4(a6)
                 bge.s   loc_F99EE
                 move.w  d2,d0
@@ -61655,28 +61655,28 @@ loc_F999C:                              ; CODE XREF: sub_F9656+22A↑j
                 move.l  (a0,d0.w),d0
                 add.l   d0,6(a2)
 
-loc_F99EE:                              ; CODE XREF: sub_F9656+34E↑j
+loc_F99EE:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+34E↑j
                 tst.l   d2
                 beq.s   loc_F99FC
 
-loc_F99F2:                              ; CODE XREF: sub_F9656+106↑j
-                                        ; sub_F9656+112↑j ...
+loc_F99F2:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+106↑j
+                                        ; BonusStage_PhysicsUpdate_question+112↑j ...
                 addq.l  #1,d5
                 moveq   #2,d0
                 cmp.l   d5,d0
                 bgt.w   loc_F9682
 
-loc_F99FC:                              ; CODE XREF: sub_F9656+39A↑j
+loc_F99FC:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+39A↑j
                 cmpi.w  #$92,2(a2)
                 blt.s   loc_F9A08
                 moveq   #0,d4
                 bra.s   loc_F9A0A
 ; ---------------------------------------------------------------------------
 
-loc_F9A08:                              ; CODE XREF: sub_F9656+3AC↑j
+loc_F9A08:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3AC↑j
                 moveq   #1,d4
 
-loc_F9A0A:                              ; CODE XREF: sub_F9656+3B0↑j
+loc_F9A0A:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3B0↑j
                 move.w  d4,d0
                 lsl.w   #3,d0
                 movea.l #word_D3B1A,a0
@@ -61694,10 +61694,10 @@ loc_F9A0A:                              ; CODE XREF: sub_F9656+3B0↑j
                 bra.s   loc_F9A3A
 ; ---------------------------------------------------------------------------
 
-loc_F9A38:                              ; CODE XREF: sub_F9656+3DA↑j
+loc_F9A38:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3DA↑j
                 move.l  d3,d2
 
-loc_F9A3A:                              ; CODE XREF: sub_F9656+3E0↑j
+loc_F9A3A:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3E0↑j
                 tst.l   d6
                 bge.s   loc_F9A44
                 move.l  d6,d5
@@ -61705,10 +61705,10 @@ loc_F9A3A:                              ; CODE XREF: sub_F9656+3E0↑j
                 bra.s   loc_F9A46
 ; ---------------------------------------------------------------------------
 
-loc_F9A44:                              ; CODE XREF: sub_F9656+3E6↑j
+loc_F9A44:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3E6↑j
                 move.l  d6,d5
 
-loc_F9A46:                              ; CODE XREF: sub_F9656+3EC↑j
+loc_F9A46:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3EC↑j
                 cmp.l   d5,d2
                 ble.s   loc_F9A58
                 move.l  d5,d0
@@ -61720,7 +61720,7 @@ loc_F9A46:                              ; CODE XREF: sub_F9656+3EC↑j
                 bra.s   loc_F9A64
 ; ---------------------------------------------------------------------------
 
-loc_F9A58:                              ; CODE XREF: sub_F9656+3F2↑j
+loc_F9A58:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+3F2↑j
                 move.l  d2,d0
                 asr.l   #4,d0
                 move.l  d2,d1
@@ -61728,7 +61728,7 @@ loc_F9A58:                              ; CODE XREF: sub_F9656+3F2↑j
                 add.l   d1,d0
                 add.l   d5,d0
 
-loc_F9A64:                              ; CODE XREF: sub_F9656+400↑j
+loc_F9A64:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+400↑j
                 moveq   #$10,d1
                 asr.l   d1,d0
                 move.l  d0,d5
@@ -61739,13 +61739,13 @@ loc_F9A64:                              ; CODE XREF: sub_F9656+400↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -61754,28 +61754,28 @@ loc_F9A64:                              ; CODE XREF: sub_F9656+400↑j
                 bne.s   loc_F9AA4
                 moveq   #1,d5
 
-loc_F9AA4:                              ; CODE XREF: sub_F9656+44A↑j
+loc_F9AA4:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+44A↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61801,28 +61801,28 @@ loc_F9AA4:                              ; CODE XREF: sub_F9656+44A↑j
                 sub.l   d0,$E(a2)
                 clr.w   $12(a2)
 
-loc_F9B24:                              ; CODE XREF: sub_F9656+418↑j
-                                        ; sub_F9656+444↑j
+loc_F9B24:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+418↑j
+                                        ; BonusStage_PhysicsUpdate_question+444↑j
                 cmpi.w  #$92,2(a2)
                 blt.s   loc_F9B30
                 moveq   #0,d4
                 bra.s   loc_F9B32
 ; ---------------------------------------------------------------------------
 
-loc_F9B30:                              ; CODE XREF: sub_F9656+4D4↑j
+loc_F9B30:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+4D4↑j
                 moveq   #1,d4
 
-loc_F9B32:                              ; CODE XREF: sub_F9656+4D8↑j
+loc_F9B32:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+4D8↑j
                 tst.l   d4
                 bne.s   loc_F9B3E
                 move.w  ($FF55A4).l,d2
                 bra.s   loc_F9B44
 ; ---------------------------------------------------------------------------
 
-loc_F9B3E:                              ; CODE XREF: sub_F9656+4DE↑j
+loc_F9B3E:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+4DE↑j
                 move.w  ($FFF1EC).l,d2
 
-loc_F9B44:                              ; CODE XREF: sub_F9656+4E6↑j
+loc_F9B44:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+4E6↑j
                 ext.l   d2
                 move.w  d4,d0
                 move.w  d0,d1
@@ -61853,10 +61853,10 @@ loc_F9B44:                              ; CODE XREF: sub_F9656+4E6↑j
                 bra.s   loc_F9B8E
 ; ---------------------------------------------------------------------------
 
-loc_F9B8C:                              ; CODE XREF: sub_F9656+52E↑j
+loc_F9B8C:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+52E↑j
                 move.l  d3,d2
 
-loc_F9B8E:                              ; CODE XREF: sub_F9656+534↑j
+loc_F9B8E:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+534↑j
                 tst.l   d6
                 bge.s   loc_F9B98
                 move.l  d6,d5
@@ -61864,10 +61864,10 @@ loc_F9B8E:                              ; CODE XREF: sub_F9656+534↑j
                 bra.s   loc_F9B9A
 ; ---------------------------------------------------------------------------
 
-loc_F9B98:                              ; CODE XREF: sub_F9656+53A↑j
+loc_F9B98:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+53A↑j
                 move.l  d6,d5
 
-loc_F9B9A:                              ; CODE XREF: sub_F9656+540↑j
+loc_F9B9A:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+540↑j
                 cmp.l   d5,d2
                 ble.s   loc_F9BAC
                 move.l  d5,d0
@@ -61879,7 +61879,7 @@ loc_F9B9A:                              ; CODE XREF: sub_F9656+540↑j
                 bra.s   loc_F9BB8
 ; ---------------------------------------------------------------------------
 
-loc_F9BAC:                              ; CODE XREF: sub_F9656+546↑j
+loc_F9BAC:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+546↑j
                 move.l  d2,d0
                 asr.l   #4,d0
                 move.l  d2,d1
@@ -61887,7 +61887,7 @@ loc_F9BAC:                              ; CODE XREF: sub_F9656+546↑j
                 add.l   d1,d0
                 add.l   d5,d0
 
-loc_F9BB8:                              ; CODE XREF: sub_F9656+554↑j
+loc_F9BB8:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+554↑j
                 moveq   #$10,d1
                 asr.l   d1,d0
                 move.l  d0,d5
@@ -61898,13 +61898,13 @@ loc_F9BB8:                              ; CODE XREF: sub_F9656+554↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -61913,28 +61913,28 @@ loc_F9BB8:                              ; CODE XREF: sub_F9656+554↑j
                 bne.s   loc_F9BF8
                 moveq   #1,d5
 
-loc_F9BF8:                              ; CODE XREF: sub_F9656+59E↑j
+loc_F9BF8:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+59E↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61960,34 +61960,34 @@ loc_F9BF8:                              ; CODE XREF: sub_F9656+59E↑j
                 sub.l   d0,$E(a2)
                 move.w  #7,$12(a2)
 
-loc_F9C7A:                              ; CODE XREF: sub_F9656+20↑j
-                                        ; sub_F9656+56C↑j ...
+loc_F9C7A:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+20↑j
+                                        ; BonusStage_PhysicsUpdate_question+56C↑j ...
                 cmpi.w  #$52,2(a2) ; 'R'
                 ble.s   loc_F9C8C
                 cmpi.w  #$D2,2(a2)
                 blt.w   loc_F9FF6
 
-loc_F9C8C:                              ; CODE XREF: sub_F9656+62A↑j
+loc_F9C8C:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+62A↑j
                 cmpi.w  #$92,2(a2)
                 bge.s   loc_F9C98
                 moveq   #0,d4
                 bra.s   loc_F9C9A
 ; ---------------------------------------------------------------------------
 
-loc_F9C98:                              ; CODE XREF: sub_F9656+63C↑j
+loc_F9C98:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+63C↑j
                 moveq   #9,d4
 
-loc_F9C9A:                              ; CODE XREF: sub_F9656+640↑j
+loc_F9C9A:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+640↑j
                 cmpi.w  #$92,2(a2)
                 bge.s   loc_F9CA6
                 moveq   #9,d2
                 bra.s   loc_F9CA8
 ; ---------------------------------------------------------------------------
 
-loc_F9CA6:                              ; CODE XREF: sub_F9656+64A↑j
+loc_F9CA6:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+64A↑j
                 moveq   #$12,d2
 
-loc_F9CA8:                              ; CODE XREF: sub_F9656+64E↑j
+loc_F9CA8:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+64E↑j
                 move.w  d4,d0
                 move.w  d0,d1
                 add.w   d1,d1
@@ -62000,7 +62000,7 @@ loc_F9CA8:                              ; CODE XREF: sub_F9656+64E↑j
                 bra.w   loc_F9EEA
 ; ---------------------------------------------------------------------------
 
-loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
+loc_F9CC4:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+896↓j
                 move.l  (a3),d3
                 sub.l   2(a2),d3
                 move.l  4(a3),d6
@@ -62009,13 +62009,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  d6,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 sub.l   (sp)+,d0
                 move.l  d0,var_4(a6)
                 cmpi.l  #unk_B0000,var_4(a6)
@@ -62026,13 +62026,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $10(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62045,13 +62045,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $10(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62068,7 +62068,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  d4,d0
                 move.w  d0,d1
@@ -62081,7 +62081,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 asr.l   #8,d0
@@ -62099,12 +62099,12 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 move.l  (a0,d0.w),d0
                 asr.l   #8,d0
                 move.l  (sp)+,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F9DF6
                 addq.l  #3,d0
 
-loc_F9DF6:                              ; CODE XREF: sub_F9656+79C↑j
+loc_F9DF6:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+79C↑j
                 asr.l   #2,d0
                 sub.l   d0,$A(a2)
                 move.l  d7,d0
@@ -62124,12 +62124,12 @@ loc_F9DF6:                              ; CODE XREF: sub_F9656+79C↑j
                 neg.l   d0
                 asr.l   #8,d0
                 move.l  (sp)+,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F9E30
                 addq.l  #3,d0
 
-loc_F9E30:                              ; CODE XREF: sub_F9656+7D6↑j
+loc_F9E30:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+7D6↑j
                 asr.l   #2,d0
                 sub.l   d0,$E(a2)
                 clr.w   $12(a2)
@@ -62168,8 +62168,8 @@ loc_F9E30:                              ; CODE XREF: sub_F9656+7D6↑j
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_F9E9E:                              ; CODE XREF: sub_F9656+7EA↑j
-                                        ; sub_F9656+802↑j
+loc_F9E9E:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+7EA↑j
+                                        ; BonusStage_PhysicsUpdate_question+802↑j
                 cmpi.l  #byte_A0000,var_4(a6)
                 bge.s   loc_F9EDC
                 move.w  d4,d0
@@ -62191,29 +62191,29 @@ loc_F9E9E:                              ; CODE XREF: sub_F9656+7EA↑j
                 move.l  (a0,d0.w),d0
                 add.l   d0,6(a2)
 
-loc_F9EDC:                              ; CODE XREF: sub_F9656+850↑j
+loc_F9EDC:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+850↑j
                 moveq   #1,d0
                 move.l  d0,var_C(a6)
                 bra.s   loc_F9EF0
 ; ---------------------------------------------------------------------------
 
-loc_F9EE4:                              ; CODE XREF: sub_F9656+6AC↑j
-                                        ; sub_F9656+6B4↑j ...
+loc_F9EE4:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+6AC↑j
+                                        ; BonusStage_PhysicsUpdate_question+6B4↑j ...
                 moveq   #$1A,d0
                 adda.l  d0,a3
                 addq.l  #1,d4
 
-loc_F9EEA:                              ; CODE XREF: sub_F9656+66A↑j
+loc_F9EEA:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+66A↑j
                 cmp.l   d2,d4
                 blt.w   loc_F9CC4
 
-loc_F9EF0:                              ; CODE XREF: sub_F9656+88C↑j
+loc_F9EF0:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+88C↑j
                 tst.l   var_C(a6)
                 bne.w   loc_F9FF6
                 moveq   #0,d4
                 movea.l #word_D358E,a3
 
-loc_F9F00:                              ; CODE XREF: sub_F9656+99C↓j
+loc_F9F00:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+99C↓j
                 move.l  (a3),d3
                 sub.l   2(a2),d3
                 move.l  4(a3),d6
@@ -62225,10 +62225,10 @@ loc_F9F00:                              ; CODE XREF: sub_F9656+99C↓j
                 bra.s   loc_F9F1A
 ; ---------------------------------------------------------------------------
 
-loc_F9F18:                              ; CODE XREF: sub_F9656+8BA↑j
+loc_F9F18:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+8BA↑j
                 move.l  d3,d2
 
-loc_F9F1A:                              ; CODE XREF: sub_F9656+8C0↑j
+loc_F9F1A:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+8C0↑j
                 tst.l   d6
                 bge.s   loc_F9F24
                 move.l  d6,d5
@@ -62236,10 +62236,10 @@ loc_F9F1A:                              ; CODE XREF: sub_F9656+8C0↑j
                 bra.s   loc_F9F26
 ; ---------------------------------------------------------------------------
 
-loc_F9F24:                              ; CODE XREF: sub_F9656+8C6↑j
+loc_F9F24:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+8C6↑j
                 move.l  d6,d5
 
-loc_F9F26:                              ; CODE XREF: sub_F9656+8CC↑j
+loc_F9F26:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+8CC↑j
                 cmp.l   d5,d2
                 ble.s   loc_F9F38
                 move.l  d5,d0
@@ -62251,7 +62251,7 @@ loc_F9F26:                              ; CODE XREF: sub_F9656+8CC↑j
                 bra.s   loc_F9F44
 ; ---------------------------------------------------------------------------
 
-loc_F9F38:                              ; CODE XREF: sub_F9656+8D2↑j
+loc_F9F38:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+8D2↑j
                 move.l  d2,d0
                 asr.l   #4,d0
                 move.l  d2,d1
@@ -62259,7 +62259,7 @@ loc_F9F38:                              ; CODE XREF: sub_F9656+8D2↑j
                 add.l   d1,d0
                 add.l   d5,d0
 
-loc_F9F44:                              ; CODE XREF: sub_F9656+8E0↑j
+loc_F9F44:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+8E0↑j
                 moveq   #$10,d1
                 asr.l   d1,d0
                 move.l  d0,d5
@@ -62270,13 +62270,13 @@ loc_F9F44:                              ; CODE XREF: sub_F9656+8E0↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62285,28 +62285,28 @@ loc_F9F44:                              ; CODE XREF: sub_F9656+8E0↑j
                 bne.s   loc_F9F82
                 moveq   #1,d5
 
-loc_F9F82:                              ; CODE XREF: sub_F9656+928↑j
+loc_F9F82:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+928↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -62324,27 +62324,27 @@ loc_F9F82:                              ; CODE XREF: sub_F9656+928↑j
                 sub.l   d0,$E(a2)
                 clr.w   $12(a2)
 
-loc_F9FEA:                              ; CODE XREF: sub_F9656+8F8↑j
-                                        ; sub_F9656+924↑j
+loc_F9FEA:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+8F8↑j
+                                        ; BonusStage_PhysicsUpdate_question+924↑j
                 addq.l  #8,a3
                 addq.l  #1,d4
                 moveq   #$E,d0
                 cmp.l   d4,d0
                 bhi.w   loc_F9F00
 
-loc_F9FF6:                              ; CODE XREF: sub_F9656+16↑j
-                                        ; sub_F9656+632↑j ...
+loc_F9FF6:                              ; CODE XREF: BonusStage_PhysicsUpdate_question+16↑j
+                                        ; BonusStage_PhysicsUpdate_question+632↑j ...
                 movem.l var_34(a6),d2-d7/a2-a5
                 unlk    a6
                 rts
-; End of function sub_F9656
+; End of function BonusStage_PhysicsUpdate_question
 
 
 ; =============== S U B R O U T I N E =======================================
 
 ; Attributes: bp-based frame
 
-sub_FA000:                              ; CODE XREF: sub_FA588+236C↓p
+BonusStage_InnerUpdate:                              ; CODE XREF: RunUpdate_BonusStage+236C↓p
 
 var_34          = -$34
 var_C           = -$C
@@ -62359,7 +62359,7 @@ var_2           = -2
                 bra.w   loc_FA22E
 ; ---------------------------------------------------------------------------
 
-loc_FA016:                              ; CODE XREF: sub_FA000+23A↓j
+loc_FA016:                              ; CODE XREF: BonusStage_InnerUpdate+23A↓j
                 movea.l a5,a2
                 tst.w   (a2)
                 blt.w   loc_FA226
@@ -62376,7 +62376,7 @@ loc_FA016:                              ; CODE XREF: sub_FA000+23A↓j
                 bra.w   loc_FA208
 ; ---------------------------------------------------------------------------
 
-loc_FA040:                              ; CODE XREF: sub_FA000+214↓j
+loc_FA040:                              ; CODE XREF: BonusStage_InnerUpdate+214↓j
                 movea.l a4,a3
                 tst.w   (a3)
                 blt.w   loc_FA200
@@ -62389,10 +62389,10 @@ loc_FA040:                              ; CODE XREF: sub_FA000+214↓j
                 bra.s   loc_FA05C
 ; ---------------------------------------------------------------------------
 
-loc_FA05A:                              ; CODE XREF: sub_FA000+52↑j
+loc_FA05A:                              ; CODE XREF: BonusStage_InnerUpdate+52↑j
                 move.l  d7,d4
 
-loc_FA05C:                              ; CODE XREF: sub_FA000+58↑j
+loc_FA05C:                              ; CODE XREF: BonusStage_InnerUpdate+58↑j
                 move.l  6(a3),d6
                 sub.l   6(a2),d6
                 tst.l   d6
@@ -62402,10 +62402,10 @@ loc_FA05C:                              ; CODE XREF: sub_FA000+58↑j
                 bra.s   loc_FA070
 ; ---------------------------------------------------------------------------
 
-loc_FA06E:                              ; CODE XREF: sub_FA000+66↑j
+loc_FA06E:                              ; CODE XREF: BonusStage_InnerUpdate+66↑j
                 move.l  d6,d3
 
-loc_FA070:                              ; CODE XREF: sub_FA000+6C↑j
+loc_FA070:                              ; CODE XREF: BonusStage_InnerUpdate+6C↑j
                 cmp.l   d3,d4
                 ble.s   loc_FA082
                 move.l  d3,d5
@@ -62417,7 +62417,7 @@ loc_FA070:                              ; CODE XREF: sub_FA000+6C↑j
                 bra.s   loc_FA08E
 ; ---------------------------------------------------------------------------
 
-loc_FA082:                              ; CODE XREF: sub_FA000+72↑j
+loc_FA082:                              ; CODE XREF: BonusStage_InnerUpdate+72↑j
                 move.l  d4,d5
                 asr.l   #4,d5
                 move.l  d4,d0
@@ -62425,7 +62425,7 @@ loc_FA082:                              ; CODE XREF: sub_FA000+72↑j
                 add.l   d0,d5
                 add.l   d3,d5
 
-loc_FA08E:                              ; CODE XREF: sub_FA000+80↑j
+loc_FA08E:                              ; CODE XREF: BonusStage_InnerUpdate+80↑j
                 moveq   #$10,d0
                 asr.l   d0,d5
                 moveq   #$16,d0
@@ -62436,7 +62436,7 @@ loc_FA08E:                              ; CODE XREF: sub_FA000+80↑j
                 bge.s   loc_FA0A6
                 addq.l  #1,d0
 
-loc_FA0A6:                              ; CODE XREF: sub_FA000+A2↑j
+loc_FA0A6:                              ; CODE XREF: BonusStage_InnerUpdate+A2↑j
                 asr.l   #1,d0
                 move.l  d0,d4
                 move.l  $E(a2),d0
@@ -62444,7 +62444,7 @@ loc_FA0A6:                              ; CODE XREF: sub_FA000+A2↑j
                 bge.s   loc_FA0B6
                 addq.l  #1,d0
 
-loc_FA0B6:                              ; CODE XREF: sub_FA000+B2↑j
+loc_FA0B6:                              ; CODE XREF: BonusStage_InnerUpdate+B2↑j
                 asr.l   #1,d0
                 move.l  d0,d3
                 move.l  $A(a2),d0
@@ -62462,13 +62462,13 @@ loc_FA0B6:                              ; CODE XREF: sub_FA000+B2↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 asr.l   #8,d0
                 move.l  var_8(a6),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -62477,28 +62477,28 @@ loc_FA0B6:                              ; CODE XREF: sub_FA000+B2↑j
                 bne.s   loc_FA10A
                 moveq   #1,d5
 
-loc_FA10A:                              ; CODE XREF: sub_FA000+106↑j
+loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,var_C(a6)
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -62520,14 +62520,14 @@ loc_FA10A:                              ; CODE XREF: sub_FA000+106↑j
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 neg.l   d0
                 asr.l   #8,d0
                 move.l  d4,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -62536,7 +62536,7 @@ loc_FA10A:                              ; CODE XREF: sub_FA000+106↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  #$1E4,d1
                 jsr     Divide
                 move.l  d0,var_C(a6)
@@ -62544,7 +62544,7 @@ loc_FA10A:                              ; CODE XREF: sub_FA000+106↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  #$1E4,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -62562,29 +62562,29 @@ loc_FA10A:                              ; CODE XREF: sub_FA000+106↑j
                 add.l   d0,$E(a3)
                 clr.w   $12(a3)
 
-loc_FA200:                              ; CODE XREF: sub_FA000+44↑j
-                                        ; sub_FA000+96↑j ...
+loc_FA200:                              ; CODE XREF: BonusStage_InnerUpdate+44↑j
+                                        ; BonusStage_InnerUpdate+96↑j ...
                 moveq   #$1C,d0
                 adda.l  d0,a4
                 addq.w  #1,var_4(a6)
 
-loc_FA208:                              ; CODE XREF: sub_FA000+3C↑j
+loc_FA208:                              ; CODE XREF: BonusStage_InnerUpdate+3C↑j
                 move.w  var_4(a6),d0
                 ext.l   d0
                 cmp.l   ($FF568C).l,d0
                 blt.w   loc_FA040
                 move.l  a2,-(sp)
-                bsr.w   sub_F9656
+                bsr.w   BonusStage_PhysicsUpdate_question
                 move.l  a2,-(sp)
-                bsr.w   sub_F95EC
+                bsr.w   BonusStage_EventHandler_LevelSpecific
                 addq.l  #8,sp
 
-loc_FA226:                              ; CODE XREF: sub_FA000+1A↑j
+loc_FA226:                              ; CODE XREF: BonusStage_InnerUpdate+1A↑j
                 moveq   #$1C,d0
                 adda.l  d0,a5
                 addq.w  #1,var_2(a6)
 
-loc_FA22E:                              ; CODE XREF: sub_FA000+12↑j
+loc_FA22E:                              ; CODE XREF: BonusStage_InnerUpdate+12↑j
                 move.w  var_2(a6),d0
                 ext.l   d0
                 cmp.l   ($FF568C).l,d0
@@ -62592,13 +62592,13 @@ loc_FA22E:                              ; CODE XREF: sub_FA000+12↑j
                 movem.l var_34(a6),d2-d7/a2-a5
                 unlk    a6
                 rts
-; End of function sub_FA000
+; End of function BonusStage_InnerUpdate
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FA248:                              ; CODE XREF: sub_FA588+2370↓p
+BonusStage_FlipperStateMachine:                              ; CODE XREF: RunUpdate_BonusStage+2370↓p
                 movem.l a2-a5,-(sp)
                 movea.l #$FF568C,a2
                 movea.l #$FF5238,a3
@@ -62610,8 +62610,8 @@ sub_FA248:                              ; CODE XREF: sub_FA588+2370↓p
                 bne.s   loc_FA274
                 move.w  #1,(a4)
 
-loc_FA274:                              ; CODE XREF: sub_FA248+22↑j
-                                        ; sub_FA248+26↑j
+loc_FA274:                              ; CODE XREF: BonusStage_FlipperStateMachine+22↑j
+                                        ; BonusStage_FlipperStateMachine+26↑j
                 move.w  (a4),d0
                 ext.l   d0
                 subq.l  #1,d0
@@ -62622,8 +62622,8 @@ loc_FA274:                              ; CODE XREF: sub_FA248+22↑j
                 move.w  off_FA28C(pc,d0.l),d0
                 jmp     off_FA28C(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FA28C:      dc.w loc_FA2A8-*        ; DATA XREF: sub_FA248+3C↑r
-                                        ; sub_FA248:off_FA28C↓o ...
+off_FA28C:      dc.w loc_FA2A8-*        ; DATA XREF: BonusStage_FlipperStateMachine+3C↑r
+                                        ; BonusStage_FlipperStateMachine:off_FA28C↓o ...
                 dc.w loc_FA2DE-off_FA28C
                 dc.w loc_FA308-off_FA28C
                 dc.w loc_FA332-off_FA28C
@@ -62639,12 +62639,12 @@ off_FA28C:      dc.w loc_FA2A8-*        ; DATA XREF: sub_FA248+3C↑r
                 dc.w loc_FA3A4-off_FA28C
 ; ---------------------------------------------------------------------------
 
-loc_FA2A8:                              ; DATA XREF: sub_FA248:off_FA28C↑o
+loc_FA2A8:                              ; DATA XREF: BonusStage_FlipperStateMachine:off_FA28C↑o
                 pea     ($4C).w
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_FA2B4:                              ; DATA XREF: sub_FA248+5C↑o
+loc_FA2B4:                              ; DATA XREF: BonusStage_FlipperStateMachine+5C↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62659,8 +62659,8 @@ loc_FA2B4:                              ; DATA XREF: sub_FA248+5C↑o
                 bra.w   loc_FA3C8
 ; ---------------------------------------------------------------------------
 
-loc_FA2DE:                              ; DATA XREF: sub_FA248+46↑o
-                                        ; sub_FA248+5A↑o
+loc_FA2DE:                              ; DATA XREF: BonusStage_FlipperStateMachine+46↑o
+                                        ; BonusStage_FlipperStateMachine+5A↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62675,8 +62675,8 @@ loc_FA2DE:                              ; DATA XREF: sub_FA248+46↑o
                 bra.w   loc_FA3C8
 ; ---------------------------------------------------------------------------
 
-loc_FA308:                              ; DATA XREF: sub_FA248+48↑o
-                                        ; sub_FA248+58↑o
+loc_FA308:                              ; DATA XREF: BonusStage_FlipperStateMachine+48↑o
+                                        ; BonusStage_FlipperStateMachine+58↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62691,8 +62691,8 @@ loc_FA308:                              ; DATA XREF: sub_FA248+48↑o
                 bra.w   loc_FA3C8
 ; ---------------------------------------------------------------------------
 
-loc_FA332:                              ; DATA XREF: sub_FA248+4A↑o
-                                        ; sub_FA248+56↑o
+loc_FA332:                              ; DATA XREF: BonusStage_FlipperStateMachine+4A↑o
+                                        ; BonusStage_FlipperStateMachine+56↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62707,7 +62707,7 @@ loc_FA332:                              ; DATA XREF: sub_FA248+4A↑o
                 bra.s   loc_FA3C8
 ; ---------------------------------------------------------------------------
 
-loc_FA35A:                              ; DATA XREF: sub_FA248+4C↑o
+loc_FA35A:                              ; DATA XREF: BonusStage_FlipperStateMachine+4C↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62722,20 +62722,20 @@ loc_FA35A:                              ; DATA XREF: sub_FA248+4C↑o
                 bra.s   loc_FA3C8
 ; ---------------------------------------------------------------------------
 
-loc_FA382:                              ; DATA XREF: sub_FA248+4E↑o
+loc_FA382:                              ; DATA XREF: BonusStage_FlipperStateMachine+4E↑o
                 addq.w  #1,(a4)
                 move.w  #6,($FFF1EC).l
                 bra.s   loc_FA3C8
 ; ---------------------------------------------------------------------------
 
-loc_FA38E:                              ; CODE XREF: sub_FA248+150↓j
-                                        ; sub_FA248+15A↓j
+loc_FA38E:                              ; CODE XREF: BonusStage_FlipperStateMachine+150↓j
+                                        ; BonusStage_FlipperStateMachine+15A↓j
                                         ; DATA XREF: ...
                 addq.w  #1,(a4)
                 bra.s   loc_FA3C8
 ; ---------------------------------------------------------------------------
 
-loc_FA392:                              ; DATA XREF: sub_FA248+54↑o
+loc_FA392:                              ; DATA XREF: BonusStage_FlipperStateMachine+54↑o
                 tst.w   ($FF5468).l
                 bne.s   loc_FA38E
                 tst.w   ($FFAB74).l
@@ -62743,7 +62743,7 @@ loc_FA392:                              ; DATA XREF: sub_FA248+54↑o
                 bra.s   loc_FA38E
 ; ---------------------------------------------------------------------------
 
-loc_FA3A4:                              ; DATA XREF: sub_FA248+5E↑o
+loc_FA3A4:                              ; DATA XREF: BonusStage_FlipperStateMachine+5E↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62756,8 +62756,8 @@ loc_FA3A4:                              ; DATA XREF: sub_FA248+5E↑o
                 clr.w   (a4)
                 clr.w   ($FFF1EC).l
 
-loc_FA3C8:                              ; CODE XREF: sub_FA248+36↑j
-                                        ; sub_FA248+92↑j ...
+loc_FA3C8:                              ; CODE XREF: BonusStage_FlipperStateMachine+36↑j
+                                        ; BonusStage_FlipperStateMachine+92↑j ...
                 clr.w   ($FFAB74).l
                 tst.w   ($FF7846).l
                 beq.s   loc_FA3DE
@@ -62765,8 +62765,8 @@ loc_FA3C8:                              ; CODE XREF: sub_FA248+36↑j
                 bne.s   loc_FA3DE
                 move.w  #1,(a5)
 
-loc_FA3DE:                              ; CODE XREF: sub_FA248+18C↑j
-                                        ; sub_FA248+190↑j
+loc_FA3DE:                              ; CODE XREF: BonusStage_FlipperStateMachine+18C↑j
+                                        ; BonusStage_FlipperStateMachine+190↑j
                 move.w  (a5),d0
                 ext.l   d0
                 subq.l  #1,d0
@@ -62777,8 +62777,8 @@ loc_FA3DE:                              ; CODE XREF: sub_FA248+18C↑j
                 move.w  off_FA3F6(pc,d0.l),d0
                 jmp     off_FA3F6(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FA3F6:      dc.w loc_FA412-*        ; DATA XREF: sub_FA248+1A6↑r
-                                        ; sub_FA248:off_FA3F6↓o ...
+off_FA3F6:      dc.w loc_FA412-*        ; DATA XREF: BonusStage_FlipperStateMachine+1A6↑r
+                                        ; BonusStage_FlipperStateMachine:off_FA3F6↓o ...
                 dc.w loc_FA448-off_FA3F6
                 dc.w loc_FA472-off_FA3F6
                 dc.w loc_FA49C-off_FA3F6
@@ -62794,12 +62794,12 @@ off_FA3F6:      dc.w loc_FA412-*        ; DATA XREF: sub_FA248+1A6↑r
                 dc.w loc_FA506-off_FA3F6
 ; ---------------------------------------------------------------------------
 
-loc_FA412:                              ; DATA XREF: sub_FA248:off_FA3F6↑o
+loc_FA412:                              ; DATA XREF: BonusStage_FlipperStateMachine:off_FA3F6↑o
                 pea     ($4C).w
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_FA41E:                              ; DATA XREF: sub_FA248+1C6↑o
+loc_FA41E:                              ; DATA XREF: BonusStage_FlipperStateMachine+1C6↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62814,8 +62814,8 @@ loc_FA41E:                              ; DATA XREF: sub_FA248+1C6↑o
                 bra.w   loc_FA52A
 ; ---------------------------------------------------------------------------
 
-loc_FA448:                              ; DATA XREF: sub_FA248+1B0↑o
-                                        ; sub_FA248+1C4↑o
+loc_FA448:                              ; DATA XREF: BonusStage_FlipperStateMachine+1B0↑o
+                                        ; BonusStage_FlipperStateMachine+1C4↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62830,8 +62830,8 @@ loc_FA448:                              ; DATA XREF: sub_FA248+1B0↑o
                 bra.w   loc_FA52A
 ; ---------------------------------------------------------------------------
 
-loc_FA472:                              ; DATA XREF: sub_FA248+1B2↑o
-                                        ; sub_FA248+1C2↑o
+loc_FA472:                              ; DATA XREF: BonusStage_FlipperStateMachine+1B2↑o
+                                        ; BonusStage_FlipperStateMachine+1C2↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62846,8 +62846,8 @@ loc_FA472:                              ; DATA XREF: sub_FA248+1B2↑o
                 bra.w   loc_FA52A
 ; ---------------------------------------------------------------------------
 
-loc_FA49C:                              ; DATA XREF: sub_FA248+1B4↑o
-                                        ; sub_FA248+1C0↑o
+loc_FA49C:                              ; DATA XREF: BonusStage_FlipperStateMachine+1B4↑o
+                                        ; BonusStage_FlipperStateMachine+1C0↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62862,7 +62862,7 @@ loc_FA49C:                              ; DATA XREF: sub_FA248+1B4↑o
                 bra.s   loc_FA52A
 ; ---------------------------------------------------------------------------
 
-loc_FA4C4:                              ; DATA XREF: sub_FA248+1B6↑o
+loc_FA4C4:                              ; DATA XREF: BonusStage_FlipperStateMachine+1B6↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62877,25 +62877,25 @@ loc_FA4C4:                              ; DATA XREF: sub_FA248+1B6↑o
                 bra.s   loc_FA52A
 ; ---------------------------------------------------------------------------
 
-loc_FA4EC:                              ; DATA XREF: sub_FA248+1B8↑o
+loc_FA4EC:                              ; DATA XREF: BonusStage_FlipperStateMachine+1B8↑o
                 addq.w  #1,(a5)
                 move.w  #6,($FF55A4).l
                 bra.s   loc_FA52A
 ; ---------------------------------------------------------------------------
 
-loc_FA4F8:                              ; CODE XREF: sub_FA248+2BC↓j
-                                        ; DATA XREF: sub_FA248+1BA↑o ...
+loc_FA4F8:                              ; CODE XREF: BonusStage_FlipperStateMachine+2BC↓j
+                                        ; DATA XREF: BonusStage_FlipperStateMachine+1BA↑o ...
                 addq.w  #1,(a5)
                 bra.s   loc_FA52A
 ; ---------------------------------------------------------------------------
 
-loc_FA4FC:                              ; DATA XREF: sub_FA248+1BE↑o
+loc_FA4FC:                              ; DATA XREF: BonusStage_FlipperStateMachine+1BE↑o
                 tst.w   ($FF7846).l
                 bne.s   loc_FA52A
                 bra.s   loc_FA4F8
 ; ---------------------------------------------------------------------------
 
-loc_FA506:                              ; DATA XREF: sub_FA248+1C8↑o
+loc_FA506:                              ; DATA XREF: BonusStage_FlipperStateMachine+1C8↑o
                 move.l  (a2),d0
                 move.l  d0,d1
                 lsl.l   #3,d0
@@ -62908,19 +62908,19 @@ loc_FA506:                              ; DATA XREF: sub_FA248+1C8↑o
                 clr.w   (a5)
                 clr.w   ($FF55A4).l
 
-loc_FA52A:                              ; CODE XREF: sub_FA248+1A0↑j
-                                        ; sub_FA248+1FC↑j ...
+loc_FA52A:                              ; CODE XREF: BonusStage_FlipperStateMachine+1A0↑j
+                                        ; BonusStage_FlipperStateMachine+1FC↑j ...
                 clr.w   ($FF7846).l
                 movem.l (sp)+,a2-a5
                 rts
-; End of function sub_FA248
+; End of function BonusStage_FlipperStateMachine
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FA536:                              ; CODE XREF: sub_FA588:loc_FE0D2↓p
-                                        ; sub_FA588+3B94↓p ...
+sub_FA536:                              ; CODE XREF: RunUpdate_BonusStage:loc_FE0D2↓p
+                                        ; RunUpdate_BonusStage+3B94↓p ...
 
 arg_0           =  4
 
@@ -62960,7 +62960,7 @@ loc_FA560:                              ; CODE XREF: sub_FA536+3C↓j
 
 ; Attributes: bp-based frame
 
-sub_FA588:                              ; CODE XREF: GoToBonusStage+10↑p
+RunUpdate_BonusStage:                              ; CODE XREF: GoToBonusStage+10↑p
 
 var_7C          = -$7C
 var_58          = -$58
@@ -62997,33 +62997,33 @@ arg_0           =  8
                 move.w  off_FA5A4(pc,d0.l),d0
                 jmp     off_FA5A4(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FA5A4:      dc.w loc_FA5AC-*        ; DATA XREF: sub_FA588+14↑r
-                                        ; sub_FA588:off_FA5A4↓o ...
+off_FA5A4:      dc.w loc_FA5AC-*        ; DATA XREF: RunUpdate_BonusStage+14↑r
+                                        ; RunUpdate_BonusStage:off_FA5A4↓o ...
                 dc.w loc_FA5B6-off_FA5A4
                 dc.w loc_FA5C0-off_FA5A4
                 dc.w loc_FA5C8-off_FA5A4
 ; ---------------------------------------------------------------------------
 
-loc_FA5AC:                              ; DATA XREF: sub_FA588:off_FA5A4↑o
+loc_FA5AC:                              ; DATA XREF: RunUpdate_BonusStage:off_FA5A4↑o
                 move.w  #1,($FF3CBC).l
                 bra.s   loc_FA5D0
 ; ---------------------------------------------------------------------------
 
-loc_FA5B6:                              ; DATA XREF: sub_FA588+1E↑o
+loc_FA5B6:                              ; DATA XREF: RunUpdate_BonusStage+1E↑o
                 move.w  #2,($FF3CBC).l
                 bra.s   loc_FA5D0
 ; ---------------------------------------------------------------------------
 
-loc_FA5C0:                              ; DATA XREF: sub_FA588+20↑o
+loc_FA5C0:                              ; DATA XREF: RunUpdate_BonusStage+20↑o
                 clr.w   ($FF3CBC).l
                 bra.s   loc_FA5D0
 ; ---------------------------------------------------------------------------
 
-loc_FA5C8:                              ; DATA XREF: sub_FA588+22↑o
+loc_FA5C8:                              ; DATA XREF: RunUpdate_BonusStage+22↑o
                 move.w  #3,($FF3CBC).l
 
-loc_FA5D0:                              ; CODE XREF: sub_FA588+10↑j
-                                        ; sub_FA588+2C↑j ...
+loc_FA5D0:                              ; CODE XREF: RunUpdate_BonusStage+10↑j
+                                        ; RunUpdate_BonusStage+2C↑j ...
                 move.w  #1,($FF3CA8).l
                 clr.l   ($FF3CB8).l
                 clr.w   ($FFEE7E).l
@@ -63070,14 +63070,14 @@ loc_FA5D0:                              ; CODE XREF: sub_FA588+10↑j
                 move.w  off_FA6AC(pc,d0.l),d0
                 jmp     off_FA6AC(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FA6AC:      dc.w loc_FA6B4-*        ; DATA XREF: sub_FA588+11C↑r
-                                        ; sub_FA588:off_FA6AC↓o ...
+off_FA6AC:      dc.w loc_FA6B4-*        ; DATA XREF: RunUpdate_BonusStage+11C↑r
+                                        ; RunUpdate_BonusStage:off_FA6AC↓o ...
                 dc.w loc_FA6D0-off_FA6AC
                 dc.w loc_FA6EA-off_FA6AC
                 dc.w loc_FA706-off_FA6AC
 ; ---------------------------------------------------------------------------
 
-loc_FA6B4:                              ; DATA XREF: sub_FA588:off_FA6AC↑o
+loc_FA6B4:                              ; DATA XREF: RunUpdate_BonusStage:off_FA6AC↑o
                 moveq   #1,d0
                 move.l  d0,($FF568C).l
                 move.w  #1,($FF036C).l
@@ -63086,7 +63086,7 @@ loc_FA6B4:                              ; DATA XREF: sub_FA588:off_FA6AC↑o
                 bra.s   loc_FA720
 ; ---------------------------------------------------------------------------
 
-loc_FA6D0:                              ; DATA XREF: sub_FA588+126↑o
+loc_FA6D0:                              ; DATA XREF: RunUpdate_BonusStage+126↑o
                 moveq   #5,d0
                 move.l  d0,($FF568C).l
                 move.w  #3,($FF036C).l
@@ -63095,7 +63095,7 @@ loc_FA6D0:                              ; DATA XREF: sub_FA588+126↑o
                 bra.s   loc_FA720
 ; ---------------------------------------------------------------------------
 
-loc_FA6EA:                              ; DATA XREF: sub_FA588+128↑o
+loc_FA6EA:                              ; DATA XREF: RunUpdate_BonusStage+128↑o
                 moveq   #1,d0
                 move.l  d0,($FF568C).l
                 move.w  #1,($FF036C).l
@@ -63104,18 +63104,18 @@ loc_FA6EA:                              ; DATA XREF: sub_FA588+128↑o
                 bra.s   loc_FA720
 ; ---------------------------------------------------------------------------
 
-loc_FA706:                              ; DATA XREF: sub_FA588+12A↑o
+loc_FA706:                              ; DATA XREF: RunUpdate_BonusStage+12A↑o
                 moveq   #1,d0
                 move.l  d0,($FF568C).l
                 move.w  #1,($FF036C).l
                 move.w  #2,($FFF20C).l
                 moveq   #$11,d0
 
-loc_FA720:                              ; CODE XREF: sub_FA588+146↑j
-                                        ; sub_FA588+160↑j ...
+loc_FA720:                              ; CODE XREF: RunUpdate_BonusStage+146↑j
+                                        ; RunUpdate_BonusStage+160↑j ...
                 move.l  d0,($FF5894).l
 
-loc_FA726:                              ; CODE XREF: sub_FA588+116↑j
+loc_FA726:                              ; CODE XREF: RunUpdate_BonusStage+116↑j
                 clr.w   ($FF5742).l
                 clr.w   ($FF5740).l
                 clr.w   ($FF5468).l
@@ -63123,7 +63123,7 @@ loc_FA726:                              ; CODE XREF: sub_FA588+116↑j
                 moveq   #0,d3
                 movea.l #$FF1054,a2
 
-loc_FA746:                              ; CODE XREF: sub_FA588+1C6↓j
+loc_FA746:                              ; CODE XREF: RunUpdate_BonusStage+1C6↓j
                 move.l  d3,(a2)+
                 addq.l  #1,d3
                 moveq   #$14,d0
@@ -63139,7 +63139,7 @@ loc_FA746:                              ; CODE XREF: sub_FA588+1C6↓j
                 move.l  #$40000010,(a0)
                 moveq   #0,d3
 
-loc_FA77A:                              ; CODE XREF: sub_FA588+208↓j
+loc_FA77A:                              ; CODE XREF: RunUpdate_BonusStage+208↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_8(a6)
                 move.w  ($FF547C).l,(a0)
@@ -63170,47 +63170,47 @@ loc_FA77A:                              ; CODE XREF: sub_FA588+208↓j
                 move.w  off_FA7F6(pc,d0.l),d0
                 jmp     off_FA7F6(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FA7F6:      dc.w loc_FA7FE-*        ; DATA XREF: sub_FA588+266↑r
-                                        ; sub_FA588:off_FA7F6↓o ...
+off_FA7F6:      dc.w loc_FA7FE-*        ; DATA XREF: RunUpdate_BonusStage+266↑r
+                                        ; RunUpdate_BonusStage:off_FA7F6↓o ...
                 dc.w loc_FA806-off_FA7F6
                 dc.w loc_FA80E-off_FA7F6
                 dc.w loc_FA816-off_FA7F6
 ; ---------------------------------------------------------------------------
 
-loc_FA7FE:                              ; DATA XREF: sub_FA588:off_FA7F6↑o
+loc_FA7FE:                              ; DATA XREF: RunUpdate_BonusStage:off_FA7F6↑o
                 pea     (off_CB14E).l
                 bra.s   loc_FA81C
 ; ---------------------------------------------------------------------------
 
-loc_FA806:                              ; DATA XREF: sub_FA588+270↑o
+loc_FA806:                              ; DATA XREF: RunUpdate_BonusStage+270↑o
                 pea     (off_D10B0).l
                 bra.s   loc_FA81C
 ; ---------------------------------------------------------------------------
 
-loc_FA80E:                              ; DATA XREF: sub_FA588+272↑o
+loc_FA80E:                              ; DATA XREF: RunUpdate_BonusStage+272↑o
                 pea     (off_CC710).l
                 bra.s   loc_FA81C
 ; ---------------------------------------------------------------------------
 
-loc_FA816:                              ; DATA XREF: sub_FA588+274↑o
+loc_FA816:                              ; DATA XREF: RunUpdate_BonusStage+274↑o
                 pea     (word_CF2DE).l
 
-loc_FA81C:                              ; CODE XREF: sub_FA588+27C↑j
-                                        ; sub_FA588+284↑j ...
+loc_FA81C:                              ; CODE XREF: RunUpdate_BonusStage+27C↑j
+                                        ; RunUpdate_BonusStage+284↑j ...
                 move.l  ($FF5480).l,d0
                 lsl.l   #5,d0
                 move.l  d0,-(sp)
                 jsr     LoadCompressed2Tiles
                 addq.l  #8,sp
 
-loc_FA82E:                              ; CODE XREF: sub_FA588+262↑j
+loc_FA82E:                              ; CODE XREF: RunUpdate_BonusStage+262↑j
                 movea.l #$C00004,a0
                 move.l  a0,var_C(a6)
                 move.l  #$40000003,(a0)
                 moveq   #0,d3
                 moveq   #0,d4
 
-loc_FA842:                              ; CODE XREF: sub_FA588+396↓j
+loc_FA842:                              ; CODE XREF: RunUpdate_BonusStage+396↓j
                 moveq   #0,d2
                 move.w  d3,d0
                 add.w   d0,d0
@@ -63218,7 +63218,7 @@ loc_FA842:                              ; CODE XREF: sub_FA588+396↓j
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
 
-loc_FA854:                              ; CODE XREF: sub_FA588+2E6↓j
+loc_FA854:                              ; CODE XREF: RunUpdate_BonusStage+2E6↓j
                 move.w  (a3)+,d0
                 addi.w  #-$6000,d0
                 movea.l #$C00000,a0
@@ -63237,7 +63237,7 @@ loc_FA854:                              ; CODE XREF: sub_FA588+2E6↓j
                 bra.s   loc_FA898
 ; ---------------------------------------------------------------------------
 
-loc_FA882:                              ; CODE XREF: sub_FA588+314↓j
+loc_FA882:                              ; CODE XREF: RunUpdate_BonusStage+314↓j
                 move.w  (a3)+,d0
                 addi.w  #$2000,d0
                 movea.l #$C00000,a0
@@ -63246,7 +63246,7 @@ loc_FA882:                              ; CODE XREF: sub_FA588+314↓j
                 addq.l  #1,d3
                 addq.l  #1,d2
 
-loc_FA898:                              ; CODE XREF: sub_FA588+2F8↑j
+loc_FA898:                              ; CODE XREF: RunUpdate_BonusStage+2F8↑j
                 moveq   #$14,d0
                 cmp.l   d2,d0
                 bgt.s   loc_FA882
@@ -63257,7 +63257,7 @@ loc_FA898:                              ; CODE XREF: sub_FA588+2F8↑j
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
 
-loc_FA8B0:                              ; CODE XREF: sub_FA588+344↓j
+loc_FA8B0:                              ; CODE XREF: RunUpdate_BonusStage+344↓j
                 move.w  (a3),d0
                 move.w  #$2800,d1
                 eor.w   d1,d0
@@ -63278,7 +63278,7 @@ loc_FA8B0:                              ; CODE XREF: sub_FA588+344↓j
                 bra.s   loc_FA8FA
 ; ---------------------------------------------------------------------------
 
-loc_FA8E2:                              ; CODE XREF: sub_FA588+376↓j
+loc_FA8E2:                              ; CODE XREF: RunUpdate_BonusStage+376↓j
                 move.w  (a3),d0
                 move.w  #$A800,d1
                 eor.w   d1,d0
@@ -63288,13 +63288,13 @@ loc_FA8E2:                              ; CODE XREF: sub_FA588+376↓j
                 subq.l  #2,a3
                 addq.l  #1,d2
 
-loc_FA8FA:                              ; CODE XREF: sub_FA588+358↑j
+loc_FA8FA:                              ; CODE XREF: RunUpdate_BonusStage+358↑j
                 moveq   #$15,d0
                 cmp.l   d2,d0
                 bgt.s   loc_FA8E2
                 moveq   #$28,d2 ; '('
 
-loc_FA902:                              ; CODE XREF: sub_FA588+38E↓j
+loc_FA902:                              ; CODE XREF: RunUpdate_BonusStage+38E↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_20(a6)
                 move.w  #1,(a0)
@@ -63309,7 +63309,7 @@ loc_FA902:                              ; CODE XREF: sub_FA588+38E↓j
                 bra.w   loc_FA9F8
 ; ---------------------------------------------------------------------------
 
-loc_FA926:                              ; CODE XREF: sub_FA588+474↓j
+loc_FA926:                              ; CODE XREF: RunUpdate_BonusStage+474↓j
                 moveq   #0,d2
                 move.w  d3,d0
                 add.w   d0,d0
@@ -63317,7 +63317,7 @@ loc_FA926:                              ; CODE XREF: sub_FA588+474↓j
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
 
-loc_FA938:                              ; CODE XREF: sub_FA588+3CA↓j
+loc_FA938:                              ; CODE XREF: RunUpdate_BonusStage+3CA↓j
                 move.w  (a3)+,d0
                 addi.w  #-$8000,d0
                 movea.l #$C00000,a0
@@ -63336,14 +63336,14 @@ loc_FA938:                              ; CODE XREF: sub_FA588+3CA↓j
                 bra.s   loc_FA976
 ; ---------------------------------------------------------------------------
 
-loc_FA966:                              ; CODE XREF: sub_FA588+3F2↓j
+loc_FA966:                              ; CODE XREF: RunUpdate_BonusStage+3F2↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_28(a6)
                 move.w  (a3)+,(a0)
                 addq.l  #1,d3
                 addq.l  #1,d2
 
-loc_FA976:                              ; CODE XREF: sub_FA588+3DC↑j
+loc_FA976:                              ; CODE XREF: RunUpdate_BonusStage+3DC↑j
                 moveq   #$14,d0
                 cmp.l   d2,d0
                 bgt.s   loc_FA966
@@ -63354,7 +63354,7 @@ loc_FA976:                              ; CODE XREF: sub_FA588+3DC↑j
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
 
-loc_FA98E:                              ; CODE XREF: sub_FA588+422↓j
+loc_FA98E:                              ; CODE XREF: RunUpdate_BonusStage+422↓j
                 move.w  (a3),d0
                 move.w  #$800,d1
                 eor.w   d1,d0
@@ -63375,7 +63375,7 @@ loc_FA98E:                              ; CODE XREF: sub_FA588+422↓j
                 bra.s   loc_FA9D8
 ; ---------------------------------------------------------------------------
 
-loc_FA9C0:                              ; CODE XREF: sub_FA588+454↓j
+loc_FA9C0:                              ; CODE XREF: RunUpdate_BonusStage+454↓j
                 move.w  (a3),d0
                 move.w  #$8800,d1
                 eor.w   d1,d0
@@ -63385,13 +63385,13 @@ loc_FA9C0:                              ; CODE XREF: sub_FA588+454↓j
                 subq.l  #2,a3
                 addq.l  #1,d2
 
-loc_FA9D8:                              ; CODE XREF: sub_FA588+436↑j
+loc_FA9D8:                              ; CODE XREF: RunUpdate_BonusStage+436↑j
                 moveq   #$15,d0
                 cmp.l   d2,d0
                 bgt.s   loc_FA9C0
                 moveq   #$28,d2 ; '('
 
-loc_FA9E0:                              ; CODE XREF: sub_FA588+46C↓j
+loc_FA9E0:                              ; CODE XREF: RunUpdate_BonusStage+46C↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_34(a6)
                 move.w  #1,(a0)
@@ -63401,7 +63401,7 @@ loc_FA9E0:                              ; CODE XREF: sub_FA588+46C↓j
                 bgt.s   loc_FA9E0
                 addq.l  #1,d4
 
-loc_FA9F8:                              ; CODE XREF: sub_FA588+39A↑j
+loc_FA9F8:                              ; CODE XREF: RunUpdate_BonusStage+39A↑j
                 moveq   #$1C,d0
                 cmp.l   d4,d0
                 bgt.w   loc_FA926
@@ -63411,7 +63411,7 @@ loc_FA9F8:                              ; CODE XREF: sub_FA588+39A↑j
                 moveq   #0,d3
                 moveq   #0,d4
 
-loc_FAA14:                              ; CODE XREF: sub_FA588+502↓j
+loc_FAA14:                              ; CODE XREF: RunUpdate_BonusStage+502↓j
                 moveq   #0,d2
                 move.w  d3,d0
                 add.w   d0,d0
@@ -63419,7 +63419,7 @@ loc_FAA14:                              ; CODE XREF: sub_FA588+502↓j
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
 
-loc_FAA26:                              ; CODE XREF: sub_FA588+4B2↓j
+loc_FAA26:                              ; CODE XREF: RunUpdate_BonusStage+4B2↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_3C(a6)
                 move.w  (a3)+,(a0)
@@ -63435,7 +63435,7 @@ loc_FAA26:                              ; CODE XREF: sub_FA588+4B2↓j
                 lea     (a0,d0.w),a0
                 movea.l a0,a3
 
-loc_FAA4E:                              ; CODE XREF: sub_FA588+4E2↓j
+loc_FAA4E:                              ; CODE XREF: RunUpdate_BonusStage+4E2↓j
                 move.w  (a3),d0
                 move.w  #$800,d1
                 eor.w   d1,d0
@@ -63449,7 +63449,7 @@ loc_FAA4E:                              ; CODE XREF: sub_FA588+4E2↓j
                 bgt.s   loc_FAA4E
                 moveq   #$28,d2 ; '('
 
-loc_FAA6E:                              ; CODE XREF: sub_FA588+4FA↓j
+loc_FAA6E:                              ; CODE XREF: RunUpdate_BonusStage+4FA↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_44(a6)
                 move.w  #1,(a0)
@@ -63470,14 +63470,14 @@ loc_FAA6E:                              ; CODE XREF: sub_FA588+4FA↓j
                 move.w  off_FAAA6(pc,d0.l),d0
                 jmp     off_FAAA6(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FAAA6:      dc.w loc_FAAAE-*        ; DATA XREF: sub_FA588+516↑r
-                                        ; sub_FA588:off_FAAA6↓o ...
+off_FAAA6:      dc.w loc_FAAAE-*        ; DATA XREF: RunUpdate_BonusStage+516↑r
+                                        ; RunUpdate_BonusStage:off_FAAA6↓o ...
                 dc.w loc_FAAEC-off_FAAA6
                 dc.w loc_FAB28-off_FAAA6
                 dc.w loc_FAB64-off_FAAA6
 ; ---------------------------------------------------------------------------
 
-loc_FAAAE:                              ; DATA XREF: sub_FA588:off_FAAA6↑o
+loc_FAAAE:                              ; DATA XREF: RunUpdate_BonusStage:off_FAAA6↑o
                 move.l  #$11DC,($FF0364).l
                 pea     ($1F).w
                 clr.l   -(sp)
@@ -63493,7 +63493,7 @@ loc_FAAAE:                              ; DATA XREF: sub_FA588:off_FAAA6↑o
                 bra.w   loc_FAB9E
 ; ---------------------------------------------------------------------------
 
-loc_FAAEC:                              ; DATA XREF: sub_FA588+520↑o
+loc_FAAEC:                              ; DATA XREF: RunUpdate_BonusStage+520↑o
                 move.l  #$125C,($FF0364).l
                 pea     ($23).w
                 clr.l   -(sp)
@@ -63509,7 +63509,7 @@ loc_FAAEC:                              ; DATA XREF: sub_FA588+520↑o
                 bra.s   loc_FAB9E
 ; ---------------------------------------------------------------------------
 
-loc_FAB28:                              ; DATA XREF: sub_FA588+522↑o
+loc_FAB28:                              ; DATA XREF: RunUpdate_BonusStage+522↑o
                 move.l  #$12DC,($FF0364).l
                 pea     ($27).w
                 clr.l   -(sp)
@@ -63525,7 +63525,7 @@ loc_FAB28:                              ; DATA XREF: sub_FA588+522↑o
                 bra.s   loc_FAB9E
 ; ---------------------------------------------------------------------------
 
-loc_FAB64:                              ; DATA XREF: sub_FA588+524↑o
+loc_FAB64:                              ; DATA XREF: RunUpdate_BonusStage+524↑o
                 move.l  #$135C,($FF0364).l
                 pea     ($2B).w
                 clr.l   -(sp)
@@ -63539,13 +63539,13 @@ loc_FAB64:                              ; DATA XREF: sub_FA588+524↑o
                 lea     $18(sp),sp
                 pea     ($2E).w
 
-loc_FAB9E:                              ; CODE XREF: sub_FA588+560↑j
-                                        ; sub_FA588+59E↑j ...
+loc_FAB9E:                              ; CODE XREF: RunUpdate_BonusStage+560↑j
+                                        ; RunUpdate_BonusStage+59E↑j ...
                 pea     (3).w
                 jsr     sub_D8674
                 addq.l  #8,sp
 
-loc_FABAA:                              ; CODE XREF: sub_FA588+510↑j
+loc_FABAA:                              ; CODE XREF: RunUpdate_BonusStage+510↑j
                 clr.w   d4
                 clr.w   d2
                 move.w  d2,d0
@@ -63557,7 +63557,7 @@ loc_FABBA:                              ; DATA XREF: ROM:00017530↑o
                 adda.l  d0,a0
                 movea.l a0,a4
 
-loc_FABBE:                              ; CODE XREF: sub_FA588+678↓j
+loc_FABBE:                              ; CODE XREF: RunUpdate_BonusStage+678↓j
                 clr.w   d3
                 move.w  d3,d0
                 ext.l   d0
@@ -63566,7 +63566,7 @@ loc_FABBE:                              ; CODE XREF: sub_FA588+678↓j
                 movea.l a0,a3
                 movea.l ($FF0364).l,a2
 
-loc_FABD2:                              ; CODE XREF: sub_FA588+65E↓j
+loc_FABD2:                              ; CODE XREF: RunUpdate_BonusStage+65E↓j
                 move.l  d4,d0
                 addq.w  #1,d4
                 ext.l   d0
@@ -63612,7 +63612,7 @@ loc_FABD2:                              ; CODE XREF: sub_FA588+65E↓j
                 addi.w  #$4000,d0
                 move.w  d0,($FF77C6).l
 
-loc_FACA0:                              ; CODE XREF: sub_FA588+6CC↑j
+loc_FACA0:                              ; CODE XREF: RunUpdate_BonusStage+6CC↑j
                 moveq   #3,d0
                 cmp.l   ($FF568C).l,d0
                 bgt.s   loc_FACF4
@@ -63628,7 +63628,7 @@ loc_FACA0:                              ; CODE XREF: sub_FA588+6CC↑j
                 addi.w  #$4000,d0
                 move.w  d0,($FF77E6).l
 
-loc_FACF4:                              ; CODE XREF: sub_FA588+720↑j
+loc_FACF4:                              ; CODE XREF: RunUpdate_BonusStage+720↑j
                 moveq   #4,d0
                 cmp.l   ($FF568C).l,d0
                 bgt.s   loc_FAD48
@@ -63644,7 +63644,7 @@ loc_FACF4:                              ; CODE XREF: sub_FA588+720↑j
                 addi.w  #$4000,d0
                 move.w  d0,($FF7806).l
 
-loc_FAD48:                              ; CODE XREF: sub_FA588+774↑j
+loc_FAD48:                              ; CODE XREF: RunUpdate_BonusStage+774↑j
                 moveq   #5,d0
                 cmp.l   ($FF568C).l,d0
                 bgt.s   loc_FAD9C
@@ -63660,7 +63660,7 @@ loc_FAD48:                              ; CODE XREF: sub_FA588+774↑j
                 addi.w  #$4000,d0
                 move.w  d0,($FF7826).l
 
-loc_FAD9C:                              ; CODE XREF: sub_FA588+7C8↑j
+loc_FAD9C:                              ; CODE XREF: RunUpdate_BonusStage+7C8↑j
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -63819,14 +63819,14 @@ loc_FAD9C:                              ; CODE XREF: sub_FA588+7C8↑j
                 move.w  off_FB068(pc,d0.l),d0
                 jmp     off_FB068(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FB068:      dc.w loc_FB070-*        ; DATA XREF: sub_FA588+AD8↑r
-                                        ; sub_FA588:off_FB068↓o ...
+off_FB068:      dc.w loc_FB070-*        ; DATA XREF: RunUpdate_BonusStage+AD8↑r
+                                        ; RunUpdate_BonusStage:off_FB068↓o ...
                 dc.w loc_FB36C-off_FB068
                 dc.w loc_FB526-off_FB068
                 dc.w loc_FBB00-off_FB068
 ; ---------------------------------------------------------------------------
 
-loc_FB070:                              ; DATA XREF: sub_FA588:off_FB068↑o
+loc_FB070:                              ; DATA XREF: RunUpdate_BonusStage:off_FB068↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -63947,7 +63947,7 @@ loc_FB070:                              ; DATA XREF: sub_FA588:off_FB068↑o
                 bra.w   loc_FC42A
 ; ---------------------------------------------------------------------------
 
-loc_FB36C:                              ; DATA XREF: sub_FA588+AE2↑o
+loc_FB36C:                              ; DATA XREF: RunUpdate_BonusStage+AE2↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -64050,7 +64050,7 @@ loc_FB36C:                              ; DATA XREF: sub_FA588+AE2↑o
                 bra.w   loc_FC42A
 ; ---------------------------------------------------------------------------
 
-loc_FB526:                              ; DATA XREF: sub_FA588+AE4↑o
+loc_FB526:                              ; DATA XREF: RunUpdate_BonusStage+AE4↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -64397,7 +64397,7 @@ loc_FB526:                              ; DATA XREF: sub_FA588+AE4↑o
                 bra.w   loc_FC42A
 ; ---------------------------------------------------------------------------
 
-loc_FBB00:                              ; DATA XREF: sub_FA588+AE6↑o
+loc_FBB00:                              ; DATA XREF: RunUpdate_BonusStage+AE6↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -64918,8 +64918,8 @@ loc_FBBBA:                              ; DATA XREF: ROM:00025678↑o
                 lea     (a0,d0.w),a0
                 move.l  a0,($FF7770).l
 
-loc_FC42A:                              ; CODE XREF: sub_FA588+AD2↑j
-                                        ; sub_FA588+DE0↑j ...
+loc_FC42A:                              ; CODE XREF: RunUpdate_BonusStage+AD2↑j
+                                        ; RunUpdate_BonusStage+DE0↑j ...
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -65000,8 +65000,8 @@ actually_start_bonus:
                 jsr     sub_D562C
                 addq.l  #4,sp
 
-loc_FC5E0:                              ; CODE XREF: sub_FA588+3976↓j
-                                        ; sub_FA588+3980↓j ...
+loc_FC5E0:                              ; CODE XREF: RunUpdate_BonusStage+3976↓j
+                                        ; RunUpdate_BonusStage+3980↓j ...
                 cmpi.w  #3,($FF3CBC).l
                 bne.s   loc_FC610
                 cmpi.w  #8,($FF7842).l
@@ -65013,8 +65013,8 @@ loc_FC5E0:                              ; CODE XREF: sub_FA588+3976↓j
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_FC610:                              ; CODE XREF: sub_FA588+2060↑j
-                                        ; sub_FA588+206A↑j ...
+loc_FC610:                              ; CODE XREF: RunUpdate_BonusStage+2060↑j
+                                        ; RunUpdate_BonusStage+206A↑j ...
                 move.w  ($FF573C).l,($FF74DC).l
                 moveq   #0,d0
                 move.b  ($FF0005).l,d0
@@ -65030,12 +65030,12 @@ loc_FC610:                              ; CODE XREF: sub_FA588+2060↑j
                 beq.s   loc_FC65A
                 subq.w  #1,($FF5742).l
 
-loc_FC65A:                              ; CODE XREF: sub_FA588+20CA↑j
+loc_FC65A:                              ; CODE XREF: RunUpdate_BonusStage+20CA↑j
                 tst.w   ($FF5740).l
                 beq.s   loc_FC668
                 subq.w  #1,($FF5740).l
 
-loc_FC668:                              ; CODE XREF: sub_FA588+20D8↑j
+loc_FC668:                              ; CODE XREF: RunUpdate_BonusStage+20D8↑j
                 moveq   #0,d2
                 move.w  ($FF573C).l,d2
                 btst    #7,d2
@@ -65043,13 +65043,13 @@ loc_FC668:                              ; CODE XREF: sub_FA588+20D8↑j
                 jsr     GEMSPauseAll
                 jsr     sub_DE996
                 pea     ($2B).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 jsr     RunOSDAnimationUpdate
                 jsr     WaitForFF0000
                 bra.s   loc_FC6D4
 ; ---------------------------------------------------------------------------
 
-loc_FC69A:                              ; CODE XREF: sub_FA588+2150↓j
+loc_FC69A:                              ; CODE XREF: RunUpdate_BonusStage+2150↓j
                 move.w  ($FF573C).l,($FF74DC).l
                 moveq   #0,d0
                 move.b  ($FF0005).l,d0
@@ -65062,13 +65062,13 @@ loc_FC69A:                              ; CODE XREF: sub_FA588+2150↓j
                 moveq   #0,d2
                 move.w  ($FF573C).l,d2
 
-loc_FC6D4:                              ; CODE XREF: sub_FA588+2110↑j
+loc_FC6D4:                              ; CODE XREF: RunUpdate_BonusStage+2110↑j
                 btst    #7,d2
                 bne.s   loc_FC69A
                 bra.s   loc_FC716
 ; ---------------------------------------------------------------------------
 
-loc_FC6DC:                              ; CODE XREF: sub_FA588+2192↓j
+loc_FC6DC:                              ; CODE XREF: RunUpdate_BonusStage+2192↓j
                 move.w  ($FF573C).l,($FF74DC).l
                 moveq   #0,d0
                 move.b  ($FF0005).l,d0
@@ -65081,13 +65081,13 @@ loc_FC6DC:                              ; CODE XREF: sub_FA588+2192↓j
                 moveq   #0,d2
                 move.w  ($FF573C).l,d2
 
-loc_FC716:                              ; CODE XREF: sub_FA588+2152↑j
+loc_FC716:                              ; CODE XREF: RunUpdate_BonusStage+2152↑j
                 btst    #7,d2
                 beq.s   loc_FC6DC
                 bra.s   loc_FC758
 ; ---------------------------------------------------------------------------
 
-loc_FC71E:                              ; CODE XREF: sub_FA588+21D4↓j
+loc_FC71E:                              ; CODE XREF: RunUpdate_BonusStage+21D4↓j
                 move.w  ($FF573C).l,($FF74DC).l
                 moveq   #0,d0
                 move.b  ($FF0005).l,d0
@@ -65100,18 +65100,18 @@ loc_FC71E:                              ; CODE XREF: sub_FA588+21D4↓j
                 moveq   #0,d2
                 move.w  ($FF573C).l,d2
 
-loc_FC758:                              ; CODE XREF: sub_FA588+2194↑j
+loc_FC758:                              ; CODE XREF: RunUpdate_BonusStage+2194↑j
                 btst    #7,d2
                 bne.s   loc_FC71E
                 jsr     sub_DE996
                 pea     (off_2C).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #8,sp
                 jsr     RunOSDAnimationUpdate
                 jsr     WaitForFF0000
                 jsr     GEMSResumeAll
 
-loc_FC780:                              ; CODE XREF: sub_FA588+20EC↑j
+loc_FC780:                              ; CODE XREF: RunUpdate_BonusStage+20EC↑j
                 moveq   #$70,d0 ; 'p'
                 and.l   d2,d0
                 moveq   #$70,d1 ; 'p'
@@ -65123,58 +65123,58 @@ loc_FC780:                              ; CODE XREF: sub_FA588+20EC↑j
                 bne.s   loc_FC7AA
                 move.w  #$78,($FF5742).l ; 'x'
 
-loc_FC7A4:                              ; CODE XREF: sub_FA588+2232↓j
+loc_FC7A4:                              ; CODE XREF: RunUpdate_BonusStage+2232↓j
                 pea     ($11).w
                 bra.s   loc_FC7D4
 ; ---------------------------------------------------------------------------
 
-loc_FC7AA:                              ; CODE XREF: sub_FA588+2212↑j
+loc_FC7AA:                              ; CODE XREF: RunUpdate_BonusStage+2212↑j
                 tst.w   ($FF5740).l
                 bne.s   loc_FC7BC
                 move.w  #$78,($FF5740).l ; 'x'
                 bra.s   loc_FC7A4
 ; ---------------------------------------------------------------------------
 
-loc_FC7BC:                              ; CODE XREF: sub_FA588+2228↑j
+loc_FC7BC:                              ; CODE XREF: RunUpdate_BonusStage+2228↑j
                 move.w  #1,($FF5468).l
                 pea     ($77).w
                 jsr     PlaySong
                 addq.l  #4,sp
                 pea     ($12).w
 
-loc_FC7D4:                              ; CODE XREF: sub_FA588+2220↑j
-                bsr.w   PrintBonusStageMsg
+loc_FC7D4:                              ; CODE XREF: RunUpdate_BonusStage+2220↑j
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
                 move.w  #1,($FFAD22).l
                 bra.w   loc_FC8D6
 ; ---------------------------------------------------------------------------
 
-loc_FC7E6:                              ; CODE XREF: sub_FA588+2200↑j
+loc_FC7E6:                              ; CODE XREF: RunUpdate_BonusStage+2200↑j
                 cmpi.w  #5,($FF5898).l
                 bne.s   loc_FC7F6
                 clr.w   ($FF5898).l
 
-loc_FC7F6:                              ; CODE XREF: sub_FA588+2266↑j
+loc_FC7F6:                              ; CODE XREF: RunUpdate_BonusStage+2266↑j
                 tst.w   ($FF5468).l
                 bne.s   loc_FC82E
                 btst    #6,d2
                 beq.s   loc_FC80C
                 move.w  #1,($FF7846).l
 
-loc_FC80C:                              ; CODE XREF: sub_FA588+227A↑j
+loc_FC80C:                              ; CODE XREF: RunUpdate_BonusStage+227A↑j
                 btst    #5,d2
                 beq.s   loc_FC820
                 moveq   #1,d0
                 move.w  d0,($FFAB74).l
                 move.w  d0,($FF7846).l
 
-loc_FC820:                              ; CODE XREF: sub_FA588+2288↑j
+loc_FC820:                              ; CODE XREF: RunUpdate_BonusStage+2288↑j
                 btst    #4,d2
                 beq.s   loc_FC82E
                 move.w  #1,($FFAB74).l
 
-loc_FC82E:                              ; CODE XREF: sub_FA588+2274↑j
-                                        ; sub_FA588+229C↑j
+loc_FC82E:                              ; CODE XREF: RunUpdate_BonusStage+2274↑j
+                                        ; RunUpdate_BonusStage+229C↑j
                 tst.w   ($FF7846).l
                 bne.s   loc_FC85E
                 move.l  ($FF4114).l,d0
@@ -65185,19 +65185,19 @@ loc_FC82E:                              ; CODE XREF: sub_FA588+2274↑j
                 bsr.w   sub_F789A
                 addq.l  #8,sp
 
-loc_FC856:                              ; CODE XREF: sub_FA588+22BA↑j
+loc_FC856:                              ; CODE XREF: RunUpdate_BonusStage+22BA↑j
                 pea     (off_D258E).l
                 bra.s   loc_FC876
 ; ---------------------------------------------------------------------------
 
-loc_FC85E:                              ; CODE XREF: sub_FA588+22AC↑j
+loc_FC85E:                              ; CODE XREF: RunUpdate_BonusStage+22AC↑j
                 pea     (off_D2566).l
                 pea     ($FF4100).l
                 bsr.w   sub_F789A
                 addq.l  #8,sp
                 pea     (off_D2584).l
 
-loc_FC876:                              ; CODE XREF: sub_FA588+22D4↑j
+loc_FC876:                              ; CODE XREF: RunUpdate_BonusStage+22D4↑j
                 pea     ($FF4120).l
                 bsr.w   sub_F789A
                 addq.l  #8,sp
@@ -65211,36 +65211,36 @@ loc_FC876:                              ; CODE XREF: sub_FA588+22D4↑j
                 bsr.w   sub_F789A
                 addq.l  #8,sp
 
-loc_FC8AA:                              ; CODE XREF: sub_FA588+230E↑j
+loc_FC8AA:                              ; CODE XREF: RunUpdate_BonusStage+230E↑j
                 pea     (off_D258E).l
                 bra.s   loc_FC8CA
 ; ---------------------------------------------------------------------------
 
-loc_FC8B2:                              ; CODE XREF: sub_FA588+2300↑j
+loc_FC8B2:                              ; CODE XREF: RunUpdate_BonusStage+2300↑j
                 pea     (off_D2566).l
                 pea     ($FF4180).l
                 bsr.w   sub_F789A
                 addq.l  #8,sp
                 pea     (off_D2584).l
 
-loc_FC8CA:                              ; CODE XREF: sub_FA588+2328↑j
+loc_FC8CA:                              ; CODE XREF: RunUpdate_BonusStage+2328↑j
                 pea     ($FF41A0).l
                 bsr.w   sub_F789A
                 addq.l  #8,sp
 
-loc_FC8D6:                              ; CODE XREF: sub_FA588+20C0↑j
-                                        ; sub_FA588+2208↑j ...
+loc_FC8D6:                              ; CODE XREF: RunUpdate_BonusStage+20C0↑j
+                                        ; RunUpdate_BonusStage+2208↑j ...
                 tst.w   ($FFAD22).l
                 beq.s   loc_FC8EE
                 tst.w   ($FF5898).l
                 bne.s   loc_FC8EE
                 move.w  #1,($FF5898).l
 
-loc_FC8EE:                              ; CODE XREF: sub_FA588+2354↑j
-                                        ; sub_FA588+235C↑j
+loc_FC8EE:                              ; CODE XREF: RunUpdate_BonusStage+2354↑j
+                                        ; RunUpdate_BonusStage+235C↑j
                 clr.w   ($FFAD22).l
-                bsr.w   sub_FA000
-                bsr.w   sub_FA248
+                bsr.w   BonusStage_InnerUpdate
+                bsr.w   BonusStage_FlipperStateMachine
                 bsr.w   sub_F62F4
                 moveq   #0,d3
                 movea.l #$FF5238,a2
@@ -65249,7 +65249,7 @@ loc_FC8EE:                              ; CODE XREF: sub_FA588+2354↑j
                 bra.w   loc_FD886
 ; ---------------------------------------------------------------------------
 
-loc_FC918:                              ; CODE XREF: sub_FA588+3304↓j
+loc_FC918:                              ; CODE XREF: RunUpdate_BonusStage+3304↓j
                 tst.w   (a2)
                 blt.w   loc_FD880
                 tst.l   6(a2)
@@ -65260,20 +65260,20 @@ loc_FC918:                              ; CODE XREF: sub_FA588+3304↓j
                 subq.w  #1,($FF573E).l
                 clr.w   ($FF546A).l
                 pea     ($C).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
                 pea     ($11).w
 
-loc_FC948:                              ; CODE XREF: sub_FA588+3000↓j
-                                        ; sub_FA588+3178↓j
+loc_FC948:                              ; CODE XREF: RunUpdate_BonusStage+3000↓j
+                                        ; RunUpdate_BonusStage+3178↓j
                 jsr     PlaySong
 
-loc_FC94E:                              ; CODE XREF: sub_FA588+2B92↓j
+loc_FC94E:                              ; CODE XREF: RunUpdate_BonusStage+2B92↓j
                 addq.l  #4,sp
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FC954:                              ; CODE XREF: sub_FA588+239A↑j
+loc_FC954:                              ; CODE XREF: RunUpdate_BonusStage+239A↑j
                 cmpi.w  #1,(a2)
                 beq.w   loc_FC9EE
                 cmpi.w  #2,(a2)
@@ -65285,14 +65285,14 @@ loc_FC954:                              ; CODE XREF: sub_FA588+239A↑j
                 movea.l a2,a3
                 addq.l  #6,a3
 
-loc_FC978:                              ; CODE XREF: sub_FA588+2418↓j
-                                        ; sub_FA588+241C↓j
+loc_FC978:                              ; CODE XREF: RunUpdate_BonusStage+2418↓j
+                                        ; RunUpdate_BonusStage+241C↓j
                 move.l  d2,d0
                 add.l   d4,d0
                 bge.s   loc_FC980
                 addq.l  #1,d0
 
-loc_FC980:                              ; CODE XREF: sub_FA588+23F4↑j
+loc_FC980:                              ; CODE XREF: RunUpdate_BonusStage+23F4↑j
                 asr.l   #1,d0
                 move.l  d0,d5
                 move.l  d4,d0
@@ -65309,12 +65309,12 @@ loc_FC980:                              ; CODE XREF: sub_FA588+23F4↑j
                 bra.s   loc_FC978
 ; ---------------------------------------------------------------------------
 
-loc_FC9A2:                              ; CODE XREF: sub_FA588+2414↑j
+loc_FC9A2:                              ; CODE XREF: RunUpdate_BonusStage+2414↑j
                 move.l  d5,d4
                 bra.s   loc_FC978
 ; ---------------------------------------------------------------------------
 
-loc_FC9A6:                              ; CODE XREF: sub_FA588+2402↑j
+loc_FC9A6:                              ; CODE XREF: RunUpdate_BonusStage+2402↑j
                 move.w  #$E0,d0
                 sub.w   d5,d0
                 movea.l $18(a2),a0
@@ -65330,7 +65330,7 @@ loc_FC9A6:                              ; CODE XREF: sub_FA588+2402↑j
                 sub.l   d0,d4
                 move.l  d4,d1
                 move.l  d2,d0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 moveq   #$10,d1
                 asr.l   d1,d0
@@ -65339,8 +65339,8 @@ loc_FC9A6:                              ; CODE XREF: sub_FA588+2402↑j
                 movea.l $18(a2),a0
                 move.w  d0,8(a0)
 
-loc_FC9EE:                              ; CODE XREF: sub_FA588+23D0↑j
-                                        ; sub_FA588+23D8↑j ...
+loc_FC9EE:                              ; CODE XREF: RunUpdate_BonusStage+23D0↑j
+                                        ; RunUpdate_BonusStage+23D8↑j ...
                 move.w  (a2),d0
                 ext.l   d0
                 moveq   #$D,d1
@@ -65350,8 +65350,8 @@ loc_FC9EE:                              ; CODE XREF: sub_FA588+23D0↑j
                 move.w  off_FCA04(pc,d0.l),d0
                 jmp     off_FCA04(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FCA04:      dc.w loc_FCA20-*        ; DATA XREF: sub_FA588+2474↑r
-                                        ; sub_FA588:off_FCA04↓o ...
+off_FCA04:      dc.w loc_FCA20-*        ; DATA XREF: RunUpdate_BonusStage+2474↑r
+                                        ; RunUpdate_BonusStage:off_FCA04↓o ...
                 dc.w loc_FD880-off_FCA04
                 dc.w loc_FD880-off_FCA04
                 dc.w loc_FCD6A-off_FCA04
@@ -65367,7 +65367,7 @@ off_FCA04:      dc.w loc_FCA20-*        ; DATA XREF: sub_FA588+2474↑r
                 dc.w loc_FD804-off_FCA04
 ; ---------------------------------------------------------------------------
 
-loc_FCA20:                              ; DATA XREF: sub_FA588:off_FCA04↑o
+loc_FCA20:                              ; DATA XREF: RunUpdate_BonusStage:off_FCA04↑o
                 tst.w   $12(a2)
                 beq.w   loc_FCC1E
                 cmpi.w  #7,$12(a2)
@@ -65381,7 +65381,7 @@ loc_FCA20:                              ; DATA XREF: sub_FA588:off_FCA04↑o
                 tst.w   d0
                 bne.w   loc_FD880
 
-loc_FCA50:                              ; CODE XREF: sub_FA588+24B8↑j
+loc_FCA50:                              ; CODE XREF: RunUpdate_BonusStage+24B8↑j
                 move.w  $12(a2),d0
                 ext.l   d0
                 subq.l  #1,d0
@@ -65392,8 +65392,8 @@ loc_FCA50:                              ; CODE XREF: sub_FA588+24B8↑j
                 move.w  off_FCA6A(pc,d0.l),d0
                 jmp     off_FCA6A(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FCA6A:      dc.w loc_FCA78-*        ; DATA XREF: sub_FA588+24DA↑r
-                                        ; sub_FA588:off_FCA6A↓o ...
+off_FCA6A:      dc.w loc_FCA78-*        ; DATA XREF: RunUpdate_BonusStage+24DA↑r
+                                        ; RunUpdate_BonusStage:off_FCA6A↓o ...
                 dc.w loc_FCAEE-off_FCA6A
                 dc.w loc_FCB52-off_FCA6A
                 dc.w loc_FCBB8-off_FCA6A
@@ -65402,7 +65402,7 @@ off_FCA6A:      dc.w loc_FCA78-*        ; DATA XREF: sub_FA588+24DA↑r
                 dc.w loc_FD880-off_FCA6A
 ; ---------------------------------------------------------------------------
 
-loc_FCA78:                              ; DATA XREF: sub_FA588:off_FCA6A↑o
+loc_FCA78:                              ; DATA XREF: RunUpdate_BonusStage:off_FCA6A↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -65430,18 +65430,18 @@ loc_FCA78:                              ; DATA XREF: sub_FA588:off_FCA6A↑o
                 move.l  (a0,d0.w),d0
                 addi.l  #unk_40000,d0
 
-loc_FCADA:                              ; CODE XREF: sub_FA588+25C8↓j
-                                        ; sub_FA588+262C↓j ...
+loc_FCADA:                              ; CODE XREF: RunUpdate_BonusStage+25C8↓j
+                                        ; RunUpdate_BonusStage+262C↓j ...
                 move.l  d0,$A(a2)
                 move.l  #$FFFC0000,$E(a2)
 
-loc_FCAE6:                              ; CODE XREF: sub_FA588+2DCE↓j
-                                        ; sub_FA588+2E1A↓j ...
+loc_FCAE6:                              ; CODE XREF: RunUpdate_BonusStage+2DCE↓j
+                                        ; RunUpdate_BonusStage+2E1A↓j ...
                 clr.w   $12(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCAEE:                              ; DATA XREF: sub_FA588+24E4↑o
+loc_FCAEE:                              ; DATA XREF: RunUpdate_BonusStage+24E4↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -65471,7 +65471,7 @@ loc_FCAEE:                              ; DATA XREF: sub_FA588+24E4↑o
                 bra.s   loc_FCADA
 ; ---------------------------------------------------------------------------
 
-loc_FCB52:                              ; DATA XREF: sub_FA588+24E6↑o
+loc_FCB52:                              ; DATA XREF: RunUpdate_BonusStage+24E6↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -65501,7 +65501,7 @@ loc_FCB52:                              ; DATA XREF: sub_FA588+24E6↑o
                 bra.w   loc_FCADA
 ; ---------------------------------------------------------------------------
 
-loc_FCBB8:                              ; DATA XREF: sub_FA588+24E8↑o
+loc_FCBB8:                              ; DATA XREF: RunUpdate_BonusStage+24E8↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -65531,10 +65531,10 @@ loc_FCBB8:                              ; DATA XREF: sub_FA588+24E8↑o
                 bra.w   loc_FCADA
 ; ---------------------------------------------------------------------------
 
-loc_FCC1E:                              ; CODE XREF: sub_FA588+249C↑j
-                                        ; sub_FA588+24A6↑j
+loc_FCC1E:                              ; CODE XREF: RunUpdate_BonusStage+249C↑j
+                                        ; RunUpdate_BonusStage+24A6↑j
                 move.l  a2,-(sp)
-                bsr.w   sub_F7C08
+                bsr.w   BonusStage_BallPhysics
                 addq.l  #4,sp
                 cmpi.w  #$D7,6(a2)
                 bge.w   loc_FCCE8
@@ -65549,13 +65549,13 @@ loc_FCC1E:                              ; CODE XREF: sub_FA588+249C↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCC58:                              ; CODE XREF: sub_FA588+26BE↑j
+loc_FCC58:                              ; CODE XREF: RunUpdate_BonusStage+26BE↑j
                 movea.l $18(a2),a0
                 move.l  #off_C8D6E,$14(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCC68:                              ; CODE XREF: sub_FA588+26B6↑j
+loc_FCC68:                              ; CODE XREF: RunUpdate_BonusStage+26B6↑j
                 cmpi.w  #$58,6(a2) ; 'X'
                 bge.s   loc_FCC80
                 movea.l $18(a2),a0
@@ -65563,13 +65563,13 @@ loc_FCC68:                              ; CODE XREF: sub_FA588+26B6↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCC80:                              ; CODE XREF: sub_FA588+26E6↑j
+loc_FCC80:                              ; CODE XREF: RunUpdate_BonusStage+26E6↑j
                 movea.l $18(a2),a0
                 move.l  #off_C8D52,$14(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCC90:                              ; CODE XREF: sub_FA588+26AE↑j
+loc_FCC90:                              ; CODE XREF: RunUpdate_BonusStage+26AE↑j
                 cmpi.w  #$A4,6(a2)
                 bge.s   loc_FCCC0
                 cmpi.w  #$8B,6(a2)
@@ -65579,13 +65579,13 @@ loc_FCC90:                              ; CODE XREF: sub_FA588+26AE↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCCB0:                              ; CODE XREF: sub_FA588+2716↑j
+loc_FCCB0:                              ; CODE XREF: RunUpdate_BonusStage+2716↑j
                 movea.l $18(a2),a0
                 move.l  #off_C8D36,$14(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCCC0:                              ; CODE XREF: sub_FA588+270E↑j
+loc_FCCC0:                              ; CODE XREF: RunUpdate_BonusStage+270E↑j
                 cmpi.w  #$BE,6(a2)
                 bge.s   loc_FCCD8
                 movea.l $18(a2),a0
@@ -65593,13 +65593,13 @@ loc_FCCC0:                              ; CODE XREF: sub_FA588+270E↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCCD8:                              ; CODE XREF: sub_FA588+273E↑j
+loc_FCCD8:                              ; CODE XREF: RunUpdate_BonusStage+273E↑j
                 movea.l $18(a2),a0
                 move.l  #off_C8D1A,$14(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCCE8:                              ; CODE XREF: sub_FA588+26A4↑j
+loc_FCCE8:                              ; CODE XREF: RunUpdate_BonusStage+26A4↑j
                 cmpi.w  #$13D,6(a2)
                 bge.s   loc_FCD24
                 cmpi.w  #$10A,6(a2)
@@ -65610,14 +65610,14 @@ loc_FCCE8:                              ; CODE XREF: sub_FA588+26A4↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCD0E:                              ; CODE XREF: sub_FA588+276E↑j
+loc_FCD0E:                              ; CODE XREF: RunUpdate_BonusStage+276E↑j
                 cmpi.w  #$124,6(a2)
                 movea.l $18(a2),a0
                 move.l  #off_C8CFE,$14(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCD24:                              ; CODE XREF: sub_FA588+2766↑j
+loc_FCD24:                              ; CODE XREF: RunUpdate_BonusStage+2766↑j
                 cmpi.w  #$170,6(a2)
                 bge.s   loc_FCD54
                 cmpi.w  #$156,6(a2)
@@ -65627,29 +65627,29 @@ loc_FCD24:                              ; CODE XREF: sub_FA588+2766↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCD44:                              ; CODE XREF: sub_FA588+27AA↑j
+loc_FCD44:                              ; CODE XREF: RunUpdate_BonusStage+27AA↑j
                 movea.l $18(a2),a0
                 move.l  #off_C8CE2,$14(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCD54:                              ; CODE XREF: sub_FA588+27A2↑j
+loc_FCD54:                              ; CODE XREF: RunUpdate_BonusStage+27A2↑j
                 cmpi.w  #$189,6(a2)
                 movea.l $18(a2),a0
                 move.l  #off_C8CD4,$14(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCD6A:                              ; DATA XREF: sub_FA588+2482↑o
+loc_FCD6A:                              ; DATA XREF: RunUpdate_BonusStage+2482↑o
                 tst.w   ($FFAD1A).l
                 beq.s   loc_FCD7A
 
-loc_FCD72:                              ; CODE XREF: sub_FA588+2884↓j
+loc_FCD72:                              ; CODE XREF: RunUpdate_BonusStage+2884↓j
                 clr.l   $A(a2)
                 bra.w   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCD7A:                              ; CODE XREF: sub_FA588+27E8↑j
+loc_FCD7A:                              ; CODE XREF: RunUpdate_BonusStage+27E8↑j
                 cmpi.w  #4,$12(a2)
                 blt.s   loc_FCDC4
                 cmpi.w  #7,$12(a2)
@@ -65670,8 +65670,8 @@ loc_FCD7A:                              ; CODE XREF: sub_FA588+27E8↑j
                 jsr     PlaySong
                 lea     $C(sp),sp
 
-loc_FCDC4:                              ; CODE XREF: sub_FA588+27F8↑j
-                                        ; sub_FA588+2800↑j ...
+loc_FCDC4:                              ; CODE XREF: RunUpdate_BonusStage+27F8↑j
+                                        ; RunUpdate_BonusStage+2800↑j ...
                 move.w  $12(a2),d0
                 ext.l   d0
                 moveq   #9,d1
@@ -65681,8 +65681,8 @@ loc_FCDC4:                              ; CODE XREF: sub_FA588+27F8↑j
                 move.w  off_FCDDC(pc,d0.l),d0
                 jmp     off_FCDDC(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FCDDC:      dc.w loc_FCDF0-*        ; DATA XREF: sub_FA588+284C↑r
-                                        ; sub_FA588:off_FCDDC↓o ...
+off_FCDDC:      dc.w loc_FCDF0-*        ; DATA XREF: RunUpdate_BonusStage+284C↑r
+                                        ; RunUpdate_BonusStage:off_FCDDC↓o ...
                 dc.w loc_FCE10-off_FCDDC
                 dc.w loc_FCE30-off_FCDDC
                 dc.w loc_FCE48-off_FCDDC
@@ -65694,22 +65694,22 @@ off_FCDDC:      dc.w loc_FCDF0-*        ; DATA XREF: sub_FA588+284C↑r
                 dc.w loc_FCEF0-off_FCDDC
 ; ---------------------------------------------------------------------------
 
-loc_FCDF0:                              ; DATA XREF: sub_FA588:off_FCDDC↑o
+loc_FCDF0:                              ; DATA XREF: RunUpdate_BonusStage:off_FCDDC↑o
                 cmpi.w  #$46,2(a2) ; 'F'
                 ble.s   loc_FCE00
                 subq.w  #1,2(a2)
                 bra.w   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCE00:                              ; CODE XREF: sub_FA588+286E↑j
+loc_FCE00:                              ; CODE XREF: RunUpdate_BonusStage+286E↑j
                 move.w  #1,$12(a2)
 
-loc_FCE06:                              ; CODE XREF: sub_FA588+28BE↓j
+loc_FCE06:                              ; CODE XREF: RunUpdate_BonusStage+28BE↓j
                 move.w  #4,$16(a2)
                 bra.w   loc_FCD72
 ; ---------------------------------------------------------------------------
 
-loc_FCE10:                              ; DATA XREF: sub_FA588+2856↑o
+loc_FCE10:                              ; DATA XREF: RunUpdate_BonusStage+2856↑o
                 move.w  $16(a2),d0
                 subq.w  #1,$16(a2)
                 tst.w   d0
@@ -65719,19 +65719,19 @@ loc_FCE10:                              ; DATA XREF: sub_FA588+2856↑o
                 bra.w   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCE30:                              ; DATA XREF: sub_FA588+2858↑o
+loc_FCE30:                              ; DATA XREF: RunUpdate_BonusStage+2858↑o
                 cmpi.w  #$DE,2(a2)
                 bge.s   loc_FCE40
                 addq.w  #1,2(a2)
                 bra.w   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCE40:                              ; CODE XREF: sub_FA588+28AE↑j
+loc_FCE40:                              ; CODE XREF: RunUpdate_BonusStage+28AE↑j
                 move.w  #3,$12(a2)
                 bra.s   loc_FCE06
 ; ---------------------------------------------------------------------------
 
-loc_FCE48:                              ; DATA XREF: sub_FA588+285A↑o
+loc_FCE48:                              ; DATA XREF: RunUpdate_BonusStage+285A↑o
                 move.w  $16(a2),d0
                 subq.w  #1,$16(a2)
                 tst.w   d0
@@ -65739,14 +65739,14 @@ loc_FCE48:                              ; DATA XREF: sub_FA588+285A↑o
                 bra.w   loc_FCEE4
 ; ---------------------------------------------------------------------------
 
-loc_FCE5A:                              ; DATA XREF: sub_FA588+285C↑o
+loc_FCE5A:                              ; DATA XREF: RunUpdate_BonusStage+285C↑o
                 addq.w  #4,2(a2)
                 subq.w  #1,$16(a2)
                 cmpi.w  #1,$16(a2)
                 bgt.s   loc_FCE7E
 
-loc_FCE6A:                              ; CODE XREF: sub_FA588+2910↓j
-                                        ; sub_FA588+2928↓j ...
+loc_FCE6A:                              ; CODE XREF: RunUpdate_BonusStage+2910↓j
+                                        ; RunUpdate_BonusStage+2928↓j ...
                 move.w  #8,$12(a2)
                 pea     ($40).w
                 jsr     PlaySong
@@ -65754,12 +65754,12 @@ loc_FCE6A:                              ; CODE XREF: sub_FA588+2910↓j
                 bra.s   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCE7E:                              ; CODE XREF: sub_FA588+28E0↑j
+loc_FCE7E:                              ; CODE XREF: RunUpdate_BonusStage+28E0↑j
                 move.w  #5,$12(a2)
                 bra.s   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCE86:                              ; DATA XREF: sub_FA588+285E↑o
+loc_FCE86:                              ; DATA XREF: RunUpdate_BonusStage+285E↑o
                 move.w  #8,($FFAD18).l
                 subq.w  #1,$16(a2)
                 cmpi.w  #1,$16(a2)
@@ -65768,7 +65768,7 @@ loc_FCE86:                              ; DATA XREF: sub_FA588+285E↑o
                 bra.s   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCEA2:                              ; DATA XREF: sub_FA588+2860↑o
+loc_FCEA2:                              ; DATA XREF: RunUpdate_BonusStage+2860↑o
                 subq.w  #4,2(a2)
                 subq.w  #1,$16(a2)
                 cmpi.w  #1,$16(a2)
@@ -65777,7 +65777,7 @@ loc_FCEA2:                              ; DATA XREF: sub_FA588+2860↑o
                 bra.s   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCEBA:                              ; DATA XREF: sub_FA588+2862↑o
+loc_FCEBA:                              ; DATA XREF: RunUpdate_BonusStage+2862↑o
                 subq.w  #1,$16(a2)
                 cmpi.w  #1,$16(a2)
                 ble.s   loc_FCE6A
@@ -65785,7 +65785,7 @@ loc_FCEBA:                              ; DATA XREF: sub_FA588+2862↑o
                 bra.s   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCECE:                              ; DATA XREF: sub_FA588+2864↑o
+loc_FCECE:                              ; DATA XREF: RunUpdate_BonusStage+2864↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bne.s   loc_FCEF0
@@ -65794,13 +65794,13 @@ loc_FCECE:                              ; DATA XREF: sub_FA588+2864↑o
                 bra.s   loc_FCEF0
 ; ---------------------------------------------------------------------------
 
-loc_FCEE4:                              ; CODE XREF: sub_FA588+2846↑j
-                                        ; sub_FA588+28CE↑j
+loc_FCEE4:                              ; CODE XREF: RunUpdate_BonusStage+2846↑j
+                                        ; RunUpdate_BonusStage+28CE↑j
                 clr.w   $12(a2)
                 move.l  #$FFFF0000,$A(a2)
 
-loc_FCEF0:                              ; CODE XREF: sub_FA588+27EE↑j
-                                        ; sub_FA588+2874↑j ...
+loc_FCEF0:                              ; CODE XREF: RunUpdate_BonusStage+27EE↑j
+                                        ; RunUpdate_BonusStage+2874↑j ...
                 movea.l $18(a2),a0
                 move.w  8(a0),d2
                 ext.l   d2
@@ -65828,7 +65828,7 @@ loc_FCEF0:                              ; CODE XREF: sub_FA588+27EE↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCF5A:                              ; DATA XREF: sub_FA588+2488↑o
+loc_FCF5A:                              ; DATA XREF: RunUpdate_BonusStage+2488↑o
                 move.w  ($FF75DC).l,($FF75BC).l
                 move.w  ($FF75DE).l,($FF75BE).l
                 move.w  ($FF75DC).l,($FF75FC).l
@@ -65844,7 +65844,7 @@ loc_FCF5A:                              ; DATA XREF: sub_FA588+2488↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FCFD6:                              ; DATA XREF: sub_FA588+248A↑o
+loc_FCFD6:                              ; DATA XREF: RunUpdate_BonusStage+248A↑o
                 move.w  $12(a2),d0
                 ext.l   d0
                 moveq   #7,d1
@@ -65854,8 +65854,8 @@ loc_FCFD6:                              ; DATA XREF: sub_FA588+248A↑o
                 move.w  off_FCFEE(pc,d0.l),d0
                 jmp     off_FCFEE(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FCFEE:      dc.w loc_FCFFE-*        ; DATA XREF: sub_FA588+2A5E↑r
-                                        ; sub_FA588:off_FCFEE↓o ...
+off_FCFEE:      dc.w loc_FCFFE-*        ; DATA XREF: RunUpdate_BonusStage+2A5E↑r
+                                        ; RunUpdate_BonusStage:off_FCFEE↓o ...
                 dc.w loc_FD006-off_FCFEE
                 dc.w loc_FD012-off_FCFEE
                 dc.w loc_FD01A-off_FCFEE
@@ -65865,53 +65865,53 @@ off_FCFEE:      dc.w loc_FCFFE-*        ; DATA XREF: sub_FA588+2A5E↑r
                 dc.w loc_FD03C-off_FCFEE
 ; ---------------------------------------------------------------------------
 
-loc_FCFFE:                              ; DATA XREF: sub_FA588:off_FCFEE↑o
+loc_FCFFE:                              ; DATA XREF: RunUpdate_BonusStage:off_FCFEE↑o
                 subq.w  #3,2(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD006:                              ; DATA XREF: sub_FA588+2A68↑o
+loc_FD006:                              ; DATA XREF: RunUpdate_BonusStage+2A68↑o
                 subq.w  #2,2(a2)
 
-loc_FD00A:                              ; CODE XREF: sub_FA588+2A96↓j
+loc_FD00A:                              ; CODE XREF: RunUpdate_BonusStage+2A96↓j
                 subq.w  #2,6(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD012:                              ; DATA XREF: sub_FA588+2A6A↑o
+loc_FD012:                              ; DATA XREF: RunUpdate_BonusStage+2A6A↑o
                 subq.w  #3,6(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD01A:                              ; DATA XREF: sub_FA588+2A6C↑o
+loc_FD01A:                              ; DATA XREF: RunUpdate_BonusStage+2A6C↑o
                 addq.w  #2,2(a2)
                 bra.s   loc_FD00A
 ; ---------------------------------------------------------------------------
 
-loc_FD020:                              ; DATA XREF: sub_FA588+2A6E↑o
+loc_FD020:                              ; DATA XREF: RunUpdate_BonusStage+2A6E↑o
                 addq.w  #3,2(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD028:                              ; DATA XREF: sub_FA588+2A70↑o
+loc_FD028:                              ; DATA XREF: RunUpdate_BonusStage+2A70↑o
                 addq.w  #2,2(a2)
 
-loc_FD02C:                              ; CODE XREF: sub_FA588+2AB8↓j
+loc_FD02C:                              ; CODE XREF: RunUpdate_BonusStage+2AB8↓j
                 addq.w  #2,6(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD034:                              ; DATA XREF: sub_FA588+2A72↑o
+loc_FD034:                              ; DATA XREF: RunUpdate_BonusStage+2A72↑o
                 addq.w  #3,6(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD03C:                              ; DATA XREF: sub_FA588+2A74↑o
+loc_FD03C:                              ; DATA XREF: RunUpdate_BonusStage+2A74↑o
                 subq.w  #2,2(a2)
                 bra.s   loc_FD02C
 ; ---------------------------------------------------------------------------
 
-loc_FD042:                              ; DATA XREF: sub_FA588+248C↑o
+loc_FD042:                              ; DATA XREF: RunUpdate_BonusStage+248C↑o
                 move.w  $12(a2),d0
                 ext.l   d0
                 moveq   #7,d1
@@ -65921,8 +65921,8 @@ loc_FD042:                              ; DATA XREF: sub_FA588+248C↑o
                 move.w  off_FD05A(pc,d0.l),d0
                 jmp     off_FD05A(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FD05A:      dc.w loc_FD06A-*        ; DATA XREF: sub_FA588+2ACA↑r
-                                        ; sub_FA588:off_FD05A↓o ...
+off_FD05A:      dc.w loc_FD06A-*        ; DATA XREF: RunUpdate_BonusStage+2ACA↑r
+                                        ; RunUpdate_BonusStage:off_FD05A↓o ...
                 dc.w loc_FD072-off_FD05A
                 dc.w loc_FD12C-off_FD05A
                 dc.w loc_FD15E-off_FD05A
@@ -65932,12 +65932,12 @@ off_FD05A:      dc.w loc_FD06A-*        ; DATA XREF: sub_FA588+2ACA↑r
                 dc.w loc_FD1F6-off_FD05A
 ; ---------------------------------------------------------------------------
 
-loc_FD06A:                              ; DATA XREF: sub_FA588:off_FD05A↑o
+loc_FD06A:                              ; DATA XREF: RunUpdate_BonusStage:off_FD05A↑o
                 clr.w   $16(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD072:                              ; DATA XREF: sub_FA588+2AD4↑o
+loc_FD072:                              ; DATA XREF: RunUpdate_BonusStage+2AD4↑o
                 move.w  ($FF5482).l,d0
                 addi.w  #$6000,d0
                 movea.l $18(a2),a0
@@ -65951,7 +65951,7 @@ loc_FD072:                              ; DATA XREF: sub_FA588+2AD4↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD0A0:                              ; CODE XREF: sub_FA588+2B06↑j
+loc_FD0A0:                              ; CODE XREF: RunUpdate_BonusStage+2B06↑j
                 cmpi.w  #$50,$16(a2) ; 'P'
                 ble.s   loc_FD11E
                 move.w  $16(a2),d0
@@ -65960,7 +65960,7 @@ loc_FD0A0:                              ; CODE XREF: sub_FA588+2B06↑j
                 sub.w   d0,$A(a0)
                 cmpi.w  #$C8,$16(a2)
 
-loc_FD0BE:                              ; CODE XREF: sub_FA588+2C98↓j
+loc_FD0BE:                              ; CODE XREF: RunUpdate_BonusStage+2C98↓j
                 ble.w   loc_FD880
                 move.w  #$FFFF,(a2)
                 cmpi.w  #2,($FF3CBC).l
@@ -65980,17 +65980,17 @@ loc_FD0BE:                              ; CODE XREF: sub_FA588+2C98↓j
                 movea.l #word_D210E,a0
                 move.w  (a0,d0.w),d1
                 move.l  d1,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 bra.w   loc_FC94E
 ; ---------------------------------------------------------------------------
 
-loc_FD11E:                              ; CODE XREF: sub_FA588+2B1E↑j
+loc_FD11E:                              ; CODE XREF: RunUpdate_BonusStage+2B1E↑j
                 movea.l $18(a2),a0
                 subi.w  #$14,$A(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD12C:                              ; DATA XREF: sub_FA588+2AD6↑o
+loc_FD12C:                              ; DATA XREF: RunUpdate_BonusStage+2AD6↑o
                 move.w  ($FF5482).l,d0
                 addi.w  #$6000,d0
                 movea.l $18(a2),a0
@@ -66004,12 +66004,12 @@ loc_FD12C:                              ; DATA XREF: sub_FA588+2AD6↑o
                 bge.s   loc_FD158
                 addq.l  #3,d0
 
-loc_FD158:                              ; CODE XREF: sub_FA588+2BCC↑j
+loc_FD158:                              ; CODE XREF: RunUpdate_BonusStage+2BCC↑j
                 asr.l   #2,d0
                 bra.w   loc_FD212
 ; ---------------------------------------------------------------------------
 
-loc_FD15E:                              ; DATA XREF: sub_FA588+2AD8↑o
+loc_FD15E:                              ; DATA XREF: RunUpdate_BonusStage+2AD8↑o
                 move.w  ($FF5482).l,d0
                 addi.w  #$6000,d0
                 movea.l $18(a2),a0
@@ -66023,17 +66023,17 @@ loc_FD15E:                              ; DATA XREF: sub_FA588+2AD8↑o
                 bge.s   loc_FD18A
                 addq.l  #3,d0
 
-loc_FD18A:                              ; CODE XREF: sub_FA588+2BFE↑j
+loc_FD18A:                              ; CODE XREF: RunUpdate_BonusStage+2BFE↑j
                 asr.l   #2,d0
 
-loc_FD18C:                              ; CODE XREF: sub_FA588+2C4E↓j
-                                        ; sub_FA588+2C6C↓j
+loc_FD18C:                              ; CODE XREF: RunUpdate_BonusStage+2C4E↓j
+                                        ; RunUpdate_BonusStage+2C6C↓j
                 movea.l $18(a2),a0
                 add.w   d0,8(a0)
                 bra.w   loc_FD21A
 ; ---------------------------------------------------------------------------
 
-loc_FD198:                              ; DATA XREF: sub_FA588+2ADA↑o
+loc_FD198:                              ; DATA XREF: RunUpdate_BonusStage+2ADA↑o
                 movea.l $18(a2),a0
                 addq.w  #1,$16(a2)
                 move.w  $16(a2),d0
@@ -66045,7 +66045,7 @@ loc_FD198:                              ; DATA XREF: sub_FA588+2ADA↑o
                 bra.s   loc_FD212
 ; ---------------------------------------------------------------------------
 
-loc_FD1B8:                              ; DATA XREF: sub_FA588+2ADC↑o
+loc_FD1B8:                              ; DATA XREF: RunUpdate_BonusStage+2ADC↑o
                 movea.l $18(a2),a0
                 addq.w  #1,$16(a2)
                 move.w  $16(a2),d0
@@ -66057,7 +66057,7 @@ loc_FD1B8:                              ; DATA XREF: sub_FA588+2ADC↑o
                 bra.s   loc_FD18C
 ; ---------------------------------------------------------------------------
 
-loc_FD1D8:                              ; DATA XREF: sub_FA588+2ADE↑o
+loc_FD1D8:                              ; DATA XREF: RunUpdate_BonusStage+2ADE↑o
                 movea.l $18(a2),a0
                 addq.w  #1,$16(a2)
                 move.w  $16(a2),d0
@@ -66067,12 +66067,12 @@ loc_FD1D8:                              ; DATA XREF: sub_FA588+2ADE↑o
                 bge.s   loc_FD1F2
                 addq.l  #1,d0
 
-loc_FD1F2:                              ; CODE XREF: sub_FA588+2C66↑j
+loc_FD1F2:                              ; CODE XREF: RunUpdate_BonusStage+2C66↑j
                 asr.l   #1,d0
                 bra.s   loc_FD18C
 ; ---------------------------------------------------------------------------
 
-loc_FD1F6:                              ; DATA XREF: sub_FA588+2AE0↑o
+loc_FD1F6:                              ; DATA XREF: RunUpdate_BonusStage+2AE0↑o
                 movea.l $18(a2),a0
                 addq.w  #1,$16(a2)
                 move.w  $16(a2),d0
@@ -66082,20 +66082,20 @@ loc_FD1F6:                              ; DATA XREF: sub_FA588+2AE0↑o
                 bge.s   loc_FD210
                 addq.l  #1,d0
 
-loc_FD210:                              ; CODE XREF: sub_FA588+2C84↑j
+loc_FD210:                              ; CODE XREF: RunUpdate_BonusStage+2C84↑j
                 asr.l   #1,d0
 
-loc_FD212:                              ; CODE XREF: sub_FA588+2BD2↑j
-                                        ; sub_FA588+2C2E↑j
+loc_FD212:                              ; CODE XREF: RunUpdate_BonusStage+2BD2↑j
+                                        ; RunUpdate_BonusStage+2C2E↑j
                 movea.l $18(a2),a0
                 sub.w   d0,8(a0)
 
-loc_FD21A:                              ; CODE XREF: sub_FA588+2C0C↑j
+loc_FD21A:                              ; CODE XREF: RunUpdate_BonusStage+2C0C↑j
                 cmpi.w  #$64,$16(a2) ; 'd'
                 bra.w   loc_FD0BE
 ; ---------------------------------------------------------------------------
 
-loc_FD224:                              ; DATA XREF: sub_FA588+248E↑o
+loc_FD224:                              ; DATA XREF: RunUpdate_BonusStage+248E↑o
                 move.w  ($FF76BC).l,($FF769C).l
                 move.w  ($FF76BE).l,($FF769E).l
                 cmpi.w  #7,($FF58D0).l
@@ -66122,11 +66122,11 @@ loc_FD224:                              ; DATA XREF: sub_FA588+248E↑o
                 bra.s   loc_FD298
 ; ---------------------------------------------------------------------------
 
-loc_FD294:                              ; CODE XREF: sub_FA588+2CB8↑j
+loc_FD294:                              ; CODE XREF: RunUpdate_BonusStage+2CB8↑j
                 clr.w   $14(a2)
 
-loc_FD298:                              ; CODE XREF: sub_FA588+2CC4↑j
-                                        ; sub_FA588+2D0A↑j
+loc_FD298:                              ; CODE XREF: RunUpdate_BonusStage+2CC4↑j
+                                        ; RunUpdate_BonusStage+2D0A↑j
                 move.w  $12(a2),d0
                 ext.l   d0
                 moveq   #8,d1
@@ -66136,8 +66136,8 @@ loc_FD298:                              ; CODE XREF: sub_FA588+2CC4↑j
                 move.w  off_FD2B0(pc,d0.l),d0
                 jmp     off_FD2B0(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FD2B0:      dc.w loc_FD2C2-*        ; DATA XREF: sub_FA588+2D20↑r
-                                        ; sub_FA588:off_FD2B0↓o ...
+off_FD2B0:      dc.w loc_FD2C2-*        ; DATA XREF: RunUpdate_BonusStage+2D20↑r
+                                        ; RunUpdate_BonusStage:off_FD2B0↓o ...
                 dc.w loc_FD328-off_FD2B0
                 dc.w loc_FD374-off_FD2B0
                 dc.w loc_FD3C0-off_FD2B0
@@ -66148,7 +66148,7 @@ off_FD2B0:      dc.w loc_FD2C2-*        ; DATA XREF: sub_FA588+2D20↑r
                 dc.w loc_FD4F2-off_FD2B0
 ; ---------------------------------------------------------------------------
 
-loc_FD2C2:                              ; DATA XREF: sub_FA588:off_FD2B0↑o
+loc_FD2C2:                              ; DATA XREF: RunUpdate_BonusStage:off_FD2B0↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD880
@@ -66163,14 +66163,14 @@ loc_FD2C2:                              ; DATA XREF: sub_FA588:off_FD2B0↑o
                 addq.l  #8,sp
                 pea     (off_D2B4C).l
 
-loc_FD2FA:                              ; CODE XREF: sub_FA588+2D9E↓j
+loc_FD2FA:                              ; CODE XREF: RunUpdate_BonusStage+2D9E↓j
                 move.l  a4,-(sp)
                 bsr.w   sub_F789A
                 addq.l  #8,sp
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD306:                              ; CODE XREF: sub_FA588+2D50↑j
+loc_FD306:                              ; CODE XREF: RunUpdate_BonusStage+2D50↑j
                 move.w  #2,$12(a2)
                 move.w  #$32,$16(a2) ; '2'
                 pea     (off_D2BB0).l
@@ -66181,7 +66181,7 @@ loc_FD306:                              ; CODE XREF: sub_FA588+2D50↑j
                 bra.s   loc_FD2FA
 ; ---------------------------------------------------------------------------
 
-loc_FD328:                              ; DATA XREF: sub_FA588+2D2A↑o
+loc_FD328:                              ; DATA XREF: RunUpdate_BonusStage+2D2A↑o
                 subq.w  #1,$16(a2)
                 bgt.s   loc_FD364
                 move.w  #$F,$16(a2)
@@ -66193,21 +66193,21 @@ loc_FD328:                              ; DATA XREF: sub_FA588+2D2A↑o
                 bsr.w   sub_F789A
                 lea     $10(sp),sp
 
-loc_FD350:                              ; CODE XREF: sub_FA588+3232↓j
+loc_FD350:                              ; CODE XREF: RunUpdate_BonusStage+3232↓j
                 cmpi.w  #$64,2(a2) ; 'd'
                 bge.w   loc_FCAE6
                 move.w  #3,$12(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD364:                              ; CODE XREF: sub_FA588+2DA4↑j
-                                        ; sub_FA588+2F40↓j ...
+loc_FD364:                              ; CODE XREF: RunUpdate_BonusStage+2DA4↑j
+                                        ; RunUpdate_BonusStage+2F40↓j ...
                 subq.w  #2,2(a2)
                 move.l  #$FFFE0000,$A(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD374:                              ; DATA XREF: sub_FA588+2D2C↑o
+loc_FD374:                              ; DATA XREF: RunUpdate_BonusStage+2D2C↑o
                 subq.w  #1,$16(a2)
                 bgt.s   loc_FD3B0
                 move.w  #$F,$16(a2)
@@ -66219,21 +66219,21 @@ loc_FD374:                              ; DATA XREF: sub_FA588+2D2C↑o
                 bsr.w   sub_F789A
                 lea     $10(sp),sp
 
-loc_FD39C:                              ; CODE XREF: sub_FA588+3244↓j
+loc_FD39C:                              ; CODE XREF: RunUpdate_BonusStage+3244↓j
                 cmpi.w  #$C8,2(a2)
                 ble.w   loc_FCAE6
                 move.w  #4,$12(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD3B0:                              ; CODE XREF: sub_FA588+2DF0↑j
-                                        ; sub_FA588+2F58↓j ...
+loc_FD3B0:                              ; CODE XREF: RunUpdate_BonusStage+2DF0↑j
+                                        ; RunUpdate_BonusStage+2F58↓j ...
                 addq.w  #2,2(a2)
                 move.l  #byte_20000,$A(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD3C0:                              ; DATA XREF: sub_FA588+2D2E↑o
+loc_FD3C0:                              ; DATA XREF: RunUpdate_BonusStage+2D2E↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD880
@@ -66245,26 +66245,26 @@ loc_FD3C0:                              ; DATA XREF: sub_FA588+2D2E↑o
                 bsr.w   sub_F789A
                 lea     $10(sp),sp
 
-loc_FD3E8:                              ; CODE XREF: sub_FA588+325E↓j
+loc_FD3E8:                              ; CODE XREF: RunUpdate_BonusStage+325E↓j
                 jsr     sub_D69B6
                 andi.w  #$8000,d0
                 beq.s   loc_FD404
                 move.w  #2,$12(a2)
 
-loc_FD3FA:                              ; CODE XREF: sub_FA588+2EC6↓j
+loc_FD3FA:                              ; CODE XREF: RunUpdate_BonusStage+2EC6↓j
                 move.w  #$32,$16(a2) ; '2'
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD404:                              ; CODE XREF: sub_FA588+2E6A↑j
+loc_FD404:                              ; CODE XREF: RunUpdate_BonusStage+2E6A↑j
                 move.w  #2,$12(a2)
 
-loc_FD40A:                              ; CODE XREF: sub_FA588+2ECE↓j
+loc_FD40A:                              ; CODE XREF: RunUpdate_BonusStage+2ECE↓j
                 move.w  #$64,$16(a2) ; 'd'
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD414:                              ; DATA XREF: sub_FA588+2D30↑o
+loc_FD414:                              ; DATA XREF: RunUpdate_BonusStage+2D30↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD880
@@ -66276,7 +66276,7 @@ loc_FD414:                              ; DATA XREF: sub_FA588+2D30↑o
                 bsr.w   sub_F789A
                 lea     $10(sp),sp
 
-loc_FD43C:                              ; CODE XREF: sub_FA588+3278↓j
+loc_FD43C:                              ; CODE XREF: RunUpdate_BonusStage+3278↓j
                 jsr     sub_D69B6
                 andi.w  #$8000,d0
                 beq.s   loc_FD450
@@ -66284,12 +66284,12 @@ loc_FD43C:                              ; CODE XREF: sub_FA588+3278↓j
                 bra.s   loc_FD3FA
 ; ---------------------------------------------------------------------------
 
-loc_FD450:                              ; CODE XREF: sub_FA588+2EBE↑j
+loc_FD450:                              ; CODE XREF: RunUpdate_BonusStage+2EBE↑j
                 move.w  #1,$12(a2)
                 bra.s   loc_FD40A
 ; ---------------------------------------------------------------------------
 
-loc_FD458:                              ; DATA XREF: sub_FA588+2D32↑o
+loc_FD458:                              ; DATA XREF: RunUpdate_BonusStage+2D32↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD880
@@ -66306,7 +66306,7 @@ loc_FD458:                              ; DATA XREF: sub_FA588+2D32↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD492:                              ; CODE XREF: sub_FA588+2EE2↑j
+loc_FD492:                              ; CODE XREF: RunUpdate_BonusStage+2EE2↑j
                 cmpi.w  #$92,2(a2)
                 bge.w   loc_FCAE6
                 pea     (off_D2BB0).l
@@ -66320,7 +66320,7 @@ loc_FD492:                              ; CODE XREF: sub_FA588+2EE2↑j
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD4C2:                              ; DATA XREF: sub_FA588+2D34↑o
+loc_FD4C2:                              ; DATA XREF: RunUpdate_BonusStage+2D34↑o
                 cmpi.w  #$92,2(a2)
                 bgt.w   loc_FD364
                 clr.w   $16(a2)
@@ -66328,7 +66328,7 @@ loc_FD4C2:                              ; DATA XREF: sub_FA588+2D34↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD4DA:                              ; DATA XREF: sub_FA588+2D36↑o
+loc_FD4DA:                              ; DATA XREF: RunUpdate_BonusStage+2D36↑o
                 cmpi.w  #$92,2(a2)
                 blt.w   loc_FD3B0
                 clr.w   $16(a2)
@@ -66336,7 +66336,7 @@ loc_FD4DA:                              ; DATA XREF: sub_FA588+2D36↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD4F2:                              ; DATA XREF: sub_FA588+2D38↑o
+loc_FD4F2:                              ; DATA XREF: RunUpdate_BonusStage+2D38↑o
                 clr.l   $A(a2)
                 clr.w   ($FF769C).l
                 clr.w   ($FF769E).l
@@ -66352,7 +66352,7 @@ loc_FD4F2:                              ; DATA XREF: sub_FA588+2D38↑o
                 bsr.w   sub_F6A66
                 addq.l  #8,sp
 
-loc_FD52C:                              ; CODE XREF: sub_FA588+2F84↑j
+loc_FD52C:                              ; CODE XREF: RunUpdate_BonusStage+2F84↑j
                 cmpi.w  #$A,$16(a2)
                 bne.s   loc_FD552
                 move.w  ($FF76BE).l,d0
@@ -66364,28 +66364,28 @@ loc_FD52C:                              ; CODE XREF: sub_FA588+2F84↑j
                 bsr.w   sub_F6A66
                 addq.l  #8,sp
 
-loc_FD552:                              ; CODE XREF: sub_FA588+2FAA↑j
+loc_FD552:                              ; CODE XREF: RunUpdate_BonusStage+2FAA↑j
                 cmpi.w  #$C,$16(a2)
                 bne.s   loc_FD566
                 pea     ($5F).w
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_FD566:                              ; CODE XREF: sub_FA588+2FD0↑j
+loc_FD566:                              ; CODE XREF: RunUpdate_BonusStage+2FD0↑j
                 cmpi.w  #$17,$16(a2)
                 bne.s   loc_FD57A
                 pea     ($79).w
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_FD57A:                              ; CODE XREF: sub_FA588+2FE4↑j
+loc_FD57A:                              ; CODE XREF: RunUpdate_BonusStage+2FE4↑j
                 cmpi.w  #$62,$16(a2) ; 'b'
                 bne.w   loc_FD880
                 pea     (off_40).w
                 bra.w   loc_FC948
 ; ---------------------------------------------------------------------------
 
-loc_FD58C:                              ; DATA XREF: sub_FA588+2490↑o
+loc_FD58C:                              ; DATA XREF: RunUpdate_BonusStage+2490↑o
                 move.w  $12(a2),d0
                 ext.l   d0
                 moveq   #3,d1
@@ -66395,35 +66395,35 @@ loc_FD58C:                              ; DATA XREF: sub_FA588+2490↑o
                 move.w  off_FD5A4(pc,d0.l),d0
                 jmp     off_FD5A4(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FD5A4:      dc.w loc_FD5AC-*        ; DATA XREF: sub_FA588+3014↑r
-                                        ; sub_FA588:off_FD5A4↓o ...
+off_FD5A4:      dc.w loc_FD5AC-*        ; DATA XREF: RunUpdate_BonusStage+3014↑r
+                                        ; RunUpdate_BonusStage:off_FD5A4↓o ...
                 dc.w loc_FD5DE-off_FD5A4
                 dc.w loc_FD5FE-off_FD5A4
                 dc.w loc_FD624-off_FD5A4
 ; ---------------------------------------------------------------------------
 
-loc_FD5AC:                              ; DATA XREF: sub_FA588:off_FD5A4↑o
+loc_FD5AC:                              ; DATA XREF: RunUpdate_BonusStage:off_FD5A4↑o
                 cmpi.w  #$2B,2(a2) ; '+'
                 ble.s   loc_FD5CA
                 subi.l  #unk_18000,2(a2)
 
-loc_FD5BC:                              ; CODE XREF: sub_FA588+3210↓j
+loc_FD5BC:                              ; CODE XREF: RunUpdate_BonusStage+3210↓j
                 movea.l $18(a2),a0
                 andi.w  #$F7FF,$E(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD5CA:                              ; CODE XREF: sub_FA588+302A↑j
-                                        ; sub_FA588+3160↓j
+loc_FD5CA:                              ; CODE XREF: RunUpdate_BonusStage+302A↑j
+                                        ; RunUpdate_BonusStage+3160↓j
                 move.w  #1,$12(a2)
 
-loc_FD5D0:                              ; CODE XREF: sub_FA588+309A↓j
+loc_FD5D0:                              ; CODE XREF: RunUpdate_BonusStage+309A↓j
                 move.w  #4,$16(a2)
                 clr.l   $A(a2)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD5DE:                              ; DATA XREF: sub_FA588+301E↑o
+loc_FD5DE:                              ; DATA XREF: RunUpdate_BonusStage+301E↑o
                 move.w  $16(a2),d0
                 subq.w  #1,$16(a2)
                 tst.w   d0
@@ -66433,24 +66433,24 @@ loc_FD5DE:                              ; DATA XREF: sub_FA588+301E↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD5FE:                              ; DATA XREF: sub_FA588+3020↑o
+loc_FD5FE:                              ; DATA XREF: RunUpdate_BonusStage+3020↑o
                 cmpi.w  #$F9,2(a2)
                 bge.s   loc_FD61C
                 addi.l  #unk_18000,2(a2)
 
-loc_FD60E:                              ; CODE XREF: sub_FA588+3220↓j
+loc_FD60E:                              ; CODE XREF: RunUpdate_BonusStage+3220↓j
                 movea.l $18(a2),a0
                 ori.w   #$800,$E(a0)
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD61C:                              ; CODE XREF: sub_FA588+307C↑j
-                                        ; sub_FA588+31A2↓j
+loc_FD61C:                              ; CODE XREF: RunUpdate_BonusStage+307C↑j
+                                        ; RunUpdate_BonusStage+31A2↓j
                 move.w  #3,$12(a2)
                 bra.s   loc_FD5D0
 ; ---------------------------------------------------------------------------
 
-loc_FD624:                              ; DATA XREF: sub_FA588+3022↑o
+loc_FD624:                              ; DATA XREF: RunUpdate_BonusStage+3022↑o
                 move.w  $16(a2),d0
                 subq.w  #1,$16(a2)
                 tst.w   d0
@@ -66460,7 +66460,7 @@ loc_FD624:                              ; DATA XREF: sub_FA588+3022↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD642:                              ; DATA XREF: sub_FA588+2492↑o
+loc_FD642:                              ; DATA XREF: RunUpdate_BonusStage+2492↑o
                 cmpi.w  #$A,$14(a2)
                 blt.s   loc_FD682
                 cmpi.w  #3,($FF573E).l
@@ -66472,11 +66472,11 @@ loc_FD642:                              ; DATA XREF: sub_FA588+2492↑o
                 pea     ($2F).w
                 jsr     PlaySong
                 pea     ($19).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #8,sp
 
-loc_FD682:                              ; CODE XREF: sub_FA588+30C0↑j
-                                        ; sub_FA588+30CA↑j ...
+loc_FD682:                              ; CODE XREF: RunUpdate_BonusStage+30C0↑j
+                                        ; RunUpdate_BonusStage+30CA↑j ...
                 cmpi.w  #$12,$14(a2)
                 blt.s   loc_FD6C2
                 cmpi.w  #3,($FF573E).l
@@ -66488,11 +66488,11 @@ loc_FD682:                              ; CODE XREF: sub_FA588+30C0↑j
                 pea     ($2F).w
                 jsr     PlaySong
                 pea     ($19).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #8,sp
 
-loc_FD6C2:                              ; CODE XREF: sub_FA588+3100↑j
-                                        ; sub_FA588+310A↑j ...
+loc_FD6C2:                              ; CODE XREF: RunUpdate_BonusStage+3100↑j
+                                        ; RunUpdate_BonusStage+310A↑j ...
                 move.w  $12(a2),d0
                 ext.l   d0
                 moveq   #3,d1
@@ -66502,19 +66502,19 @@ loc_FD6C2:                              ; CODE XREF: sub_FA588+3100↑j
                 move.w  off_FD6DA(pc,d0.l),d0
                 jmp     off_FD6DA(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FD6DA:      dc.w loc_FD6E2-*        ; DATA XREF: sub_FA588+314A↑r
-                                        ; sub_FA588:off_FD6DA↓o ...
+off_FD6DA:      dc.w loc_FD6E2-*        ; DATA XREF: RunUpdate_BonusStage+314A↑r
+                                        ; RunUpdate_BonusStage:off_FD6DA↓o ...
                 dc.w loc_FD704-off_FD6DA
                 dc.w loc_FD724-off_FD6DA
                 dc.w loc_FD734-off_FD6DA
 ; ---------------------------------------------------------------------------
 
-loc_FD6E2:                              ; DATA XREF: sub_FA588:off_FD6DA↑o
+loc_FD6E2:                              ; DATA XREF: RunUpdate_BonusStage:off_FD6DA↑o
                 cmpi.w  #$2B,2(a2) ; '+'
                 ble.w   loc_FD5CA
                 subq.w  #1,2(a2)
 
-loc_FD6F0:                              ; CODE XREF: sub_FA588+31AA↓j
+loc_FD6F0:                              ; CODE XREF: RunUpdate_BonusStage+31AA↓j
                 move.w  2(a2),d0
                 andi.w  #$1F,d0
                 bne.w   loc_FD880
@@ -66522,7 +66522,7 @@ loc_FD6F0:                              ; CODE XREF: sub_FA588+31AA↓j
                 bra.w   loc_FC948
 ; ---------------------------------------------------------------------------
 
-loc_FD704:                              ; DATA XREF: sub_FA588+3154↑o
+loc_FD704:                              ; DATA XREF: RunUpdate_BonusStage+3154↑o
                 move.w  $16(a2),d0
                 subq.w  #1,$16(a2)
                 tst.w   d0
@@ -66532,14 +66532,14 @@ loc_FD704:                              ; DATA XREF: sub_FA588+3154↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD724:                              ; DATA XREF: sub_FA588+3156↑o
+loc_FD724:                              ; DATA XREF: RunUpdate_BonusStage+3156↑o
                 cmpi.w  #$F9,2(a2)
                 bge.w   loc_FD61C
                 addq.w  #1,2(a2)
                 bra.s   loc_FD6F0
 ; ---------------------------------------------------------------------------
 
-loc_FD734:                              ; DATA XREF: sub_FA588+3158↑o
+loc_FD734:                              ; DATA XREF: RunUpdate_BonusStage+3158↑o
                 move.w  $16(a2),d0
                 subq.w  #1,$16(a2)
                 tst.w   d0
@@ -66549,7 +66549,7 @@ loc_FD734:                              ; DATA XREF: sub_FA588+3158↑o
                 bra.w   loc_FD880
 ; ---------------------------------------------------------------------------
 
-loc_FD752:                              ; DATA XREF: sub_FA588+2494↑o
+loc_FD752:                              ; DATA XREF: RunUpdate_BonusStage+2494↑o
                 move.w  $12(a2),d0
                 ext.l   d0
                 moveq   #4,d1
@@ -66559,15 +66559,15 @@ loc_FD752:                              ; DATA XREF: sub_FA588+2494↑o
                 move.w  off_FD76A(pc,d0.l),d0
                 jmp     off_FD76A(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FD76A:      dc.w loc_FD774-*        ; DATA XREF: sub_FA588+31DA↑r
-                                        ; sub_FA588:off_FD76A↓o ...
+off_FD76A:      dc.w loc_FD774-*        ; DATA XREF: RunUpdate_BonusStage+31DA↑r
+                                        ; RunUpdate_BonusStage:off_FD76A↓o ...
                 dc.w loc_FD7AC-off_FD76A
                 dc.w loc_FD7BE-off_FD76A
                 dc.w loc_FD7D0-off_FD76A
                 dc.w loc_FD7EA-off_FD76A
 ; ---------------------------------------------------------------------------
 
-loc_FD774:                              ; DATA XREF: sub_FA588:off_FD76A↑o
+loc_FD774:                              ; DATA XREF: RunUpdate_BonusStage:off_FD76A↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD880
@@ -66579,27 +66579,27 @@ loc_FD774:                              ; DATA XREF: sub_FA588:off_FD76A↑o
                 bra.w   loc_FD5BC
 ; ---------------------------------------------------------------------------
 
-loc_FD79C:                              ; CODE XREF: sub_FA588+3202↑j
+loc_FD79C:                              ; CODE XREF: RunUpdate_BonusStage+3202↑j
                 move.w  #2,$12(a2)
                 move.w  #$32,$16(a2) ; '2'
                 bra.w   loc_FD60E
 ; ---------------------------------------------------------------------------
 
-loc_FD7AC:                              ; DATA XREF: sub_FA588+31E4↑o
+loc_FD7AC:                              ; DATA XREF: RunUpdate_BonusStage+31E4↑o
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD364
                 move.w  #$F,$16(a2)
                 bra.w   loc_FD350
 ; ---------------------------------------------------------------------------
 
-loc_FD7BE:                              ; DATA XREF: sub_FA588+31E6↑o
+loc_FD7BE:                              ; DATA XREF: RunUpdate_BonusStage+31E6↑o
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD3B0
                 move.w  #$F,$16(a2)
                 bra.w   loc_FD39C
 ; ---------------------------------------------------------------------------
 
-loc_FD7D0:                              ; DATA XREF: sub_FA588+31E8↑o
+loc_FD7D0:                              ; DATA XREF: RunUpdate_BonusStage+31E8↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD880
@@ -66608,7 +66608,7 @@ loc_FD7D0:                              ; DATA XREF: sub_FA588+31E8↑o
                 bra.w   loc_FD3E8
 ; ---------------------------------------------------------------------------
 
-loc_FD7EA:                              ; DATA XREF: sub_FA588+31EA↑o
+loc_FD7EA:                              ; DATA XREF: RunUpdate_BonusStage+31EA↑o
                 clr.l   $A(a2)
                 subq.w  #1,$16(a2)
                 bgt.w   loc_FD880
@@ -66617,7 +66617,7 @@ loc_FD7EA:                              ; DATA XREF: sub_FA588+31EA↑o
                 bra.w   loc_FD43C
 ; ---------------------------------------------------------------------------
 
-loc_FD804:                              ; DATA XREF: sub_FA588+2496↑o
+loc_FD804:                              ; DATA XREF: RunUpdate_BonusStage+2496↑o
                 move.w  ($FF765C).l,($FF767C).l
                 move.w  ($FF765E).l,($FF767E).l
                 move.w  ($FF765C).l,d0
@@ -66637,13 +66637,13 @@ loc_FD804:                              ; DATA XREF: sub_FA588+2496↑o
                 move.w  d0,($FF76FC).l
                 move.w  ($FF765E).l,($FF76FE).l
 
-loc_FD880:                              ; CODE XREF: sub_FA588+2392↑j
-                                        ; sub_FA588+239E↑j ...
+loc_FD880:                              ; CODE XREF: RunUpdate_BonusStage+2392↑j
+                                        ; RunUpdate_BonusStage+239E↑j ...
                 moveq   #$1C,d0
                 adda.l  d0,a2
                 addq.l  #1,d3
 
-loc_FD886:                              ; CODE XREF: sub_FA588+238C↑j
+loc_FD886:                              ; CODE XREF: RunUpdate_BonusStage+238C↑j
                 cmp.l   ($FF5894).l,d3
                 blt.w   loc_FC918
                 bsr.w   sub_F6382
@@ -66665,14 +66665,14 @@ loc_FD886:                              ; CODE XREF: sub_FA588+238C↑j
                 move.w  off_FD8CC(pc,d0.l),d0
                 jmp     off_FD8CC(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FD8CC:      dc.w loc_FD8D4-*        ; DATA XREF: sub_FA588+333C↑r
-                                        ; sub_FA588:off_FD8CC↓o ...
+off_FD8CC:      dc.w loc_FD8D4-*        ; DATA XREF: RunUpdate_BonusStage+333C↑r
+                                        ; RunUpdate_BonusStage:off_FD8CC↓o ...
                 dc.w loc_FD8F6-off_FD8CC
                 dc.w loc_FD940-off_FD8CC
                 dc.w loc_FD988-off_FD8CC
 ; ---------------------------------------------------------------------------
 
-loc_FD8D4:                              ; DATA XREF: sub_FA588:off_FD8CC↑o
+loc_FD8D4:                              ; DATA XREF: RunUpdate_BonusStage:off_FD8CC↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -66685,10 +66685,10 @@ loc_FD8D4:                              ; DATA XREF: sub_FA588:off_FD8CC↑o
                 bra.w   loc_FD9CE
 ; ---------------------------------------------------------------------------
 
-loc_FD8F6:                              ; DATA XREF: sub_FA588+3346↑o
+loc_FD8F6:                              ; DATA XREF: RunUpdate_BonusStage+3346↑o
                 moveq   #0,d3
 
-loc_FD8F8:                              ; CODE XREF: sub_FA588+33B2↓j
+loc_FD8F8:                              ; CODE XREF: RunUpdate_BonusStage+33B2↓j
                 move.w  ($FF568E).l,d0
                 add.w   d3,d0
                 move.w  d0,d1
@@ -66709,7 +66709,7 @@ loc_FD8F8:                              ; CODE XREF: sub_FA588+33B2↓j
                 bsr.w   sub_F780E
                 addq.l  #4,sp
 
-loc_FD934:                              ; CODE XREF: sub_FA588+338A↑j
+loc_FD934:                              ; CODE XREF: RunUpdate_BonusStage+338A↑j
                 addq.l  #1,d3
                 moveq   #2,d0
                 cmp.l   d3,d0
@@ -66717,10 +66717,10 @@ loc_FD934:                              ; CODE XREF: sub_FA588+338A↑j
                 bra.w   loc_FD9CE
 ; ---------------------------------------------------------------------------
 
-loc_FD940:                              ; DATA XREF: sub_FA588+3348↑o
+loc_FD940:                              ; DATA XREF: RunUpdate_BonusStage+3348↑o
                 moveq   #0,d3
 
-loc_FD942:                              ; CODE XREF: sub_FA588+33FC↓j
+loc_FD942:                              ; CODE XREF: RunUpdate_BonusStage+33FC↓j
                 move.w  ($FF568E).l,d0
                 add.w   d3,d0
                 move.w  d0,d1
@@ -66741,7 +66741,7 @@ loc_FD942:                              ; CODE XREF: sub_FA588+33FC↓j
                 bsr.w   sub_F780E
                 addq.l  #4,sp
 
-loc_FD97E:                              ; CODE XREF: sub_FA588+33D4↑j
+loc_FD97E:                              ; CODE XREF: RunUpdate_BonusStage+33D4↑j
                 addq.l  #1,d3
                 moveq   #7,d0
                 cmp.l   d3,d0
@@ -66749,10 +66749,10 @@ loc_FD97E:                              ; CODE XREF: sub_FA588+33D4↑j
                 bra.s   loc_FD9CE
 ; ---------------------------------------------------------------------------
 
-loc_FD988:                              ; DATA XREF: sub_FA588+334A↑o
+loc_FD988:                              ; DATA XREF: RunUpdate_BonusStage+334A↑o
                 moveq   #0,d3
 
-loc_FD98A:                              ; CODE XREF: sub_FA588+3444↓j
+loc_FD98A:                              ; CODE XREF: RunUpdate_BonusStage+3444↓j
                 move.w  ($FF568E).l,d0
                 add.w   d3,d0
                 move.w  d0,d1
@@ -66773,14 +66773,14 @@ loc_FD98A:                              ; CODE XREF: sub_FA588+3444↓j
                 bsr.w   sub_F780E
                 addq.l  #4,sp
 
-loc_FD9C6:                              ; CODE XREF: sub_FA588+341C↑j
+loc_FD9C6:                              ; CODE XREF: RunUpdate_BonusStage+341C↑j
                 addq.l  #1,d3
                 moveq   #8,d0
                 cmp.l   d3,d0
                 bgt.s   loc_FD98A
 
-loc_FD9CE:                              ; CODE XREF: sub_FA588+3336↑j
-                                        ; sub_FA588+336A↑j ...
+loc_FD9CE:                              ; CODE XREF: RunUpdate_BonusStage+3336↑j
+                                        ; RunUpdate_BonusStage+336A↑j ...
                 bsr.w   sub_F7AFE
                 bsr.w   sub_F798A
                 jsr     WaitForFF0000
@@ -66799,7 +66799,7 @@ loc_FD9CE:                              ; CODE XREF: sub_FA588+3336↑j
                 moveq   #0,d3
                 movea.l #$FFA674,a2
 
-loc_FDA24:                              ; CODE XREF: sub_FA588+34E8↓j
+loc_FDA24:                              ; CODE XREF: RunUpdate_BonusStage+34E8↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_4C(a6)
                 move.w  (a2),(a0)
@@ -66828,7 +66828,7 @@ loc_FDA24:                              ; CODE XREF: sub_FA588+34E8↓j
                 jsr     RunOSDAnimationUpdate
                 tst.w   ($FF41C0).l
                 beq.s   loc_FDAF2
-                jsr     sub_D8698
+                jsr     ScreenTransition_FromBlack
                 clr.w   ($FF41C0).l
                 clr.w   d4
                 clr.w   d2
@@ -66839,7 +66839,7 @@ loc_FDA24:                              ; CODE XREF: sub_FA588+34E8↓j
                 adda.l  d0,a0
                 movea.l a0,a4
 
-loc_FDAAE:                              ; CODE XREF: sub_FA588+3568↓j
+loc_FDAAE:                              ; CODE XREF: RunUpdate_BonusStage+3568↓j
                 clr.w   d3
                 move.w  d3,d0
                 ext.l   d0
@@ -66848,7 +66848,7 @@ loc_FDAAE:                              ; CODE XREF: sub_FA588+3568↓j
                 movea.l a0,a3
                 movea.l ($FF0364).l,a2
 
-loc_FDAC2:                              ; CODE XREF: sub_FA588+354E↓j
+loc_FDAC2:                              ; CODE XREF: RunUpdate_BonusStage+354E↓j
                 move.l  d4,d0
                 addq.w  #1,d4
                 ext.l   d0
@@ -66869,7 +66869,7 @@ loc_FDAC2:                              ; CODE XREF: sub_FA588+354E↓j
                 cmpi.w  #4,d2
                 blt.s   loc_FDAAE
 
-loc_FDAF2:                              ; CODE XREF: sub_FA588+3504↑j
+loc_FDAF2:                              ; CODE XREF: RunUpdate_BonusStage+3504↑j
                 subq.w  #1,($FF588E).l
                 bgt.s   loc_FDB2E
                 move.w  #6,($FF588E).l
@@ -66882,7 +66882,7 @@ loc_FDAF2:                              ; CODE XREF: sub_FA588+3504↑j
                 jsr     SetPaletteUploadRequestFlag
                 addq.l  #4,sp
 
-loc_FDB2E:                              ; CODE XREF: sub_FA588+3570↑j
+loc_FDB2E:                              ; CODE XREF: RunUpdate_BonusStage+3570↑j
                 tst.w   ($FFAD18).l
                 beq.w   loc_FDC26
                 subq.w  #1,($FFAD18).l
@@ -66890,7 +66890,7 @@ loc_FDB2E:                              ; CODE XREF: sub_FA588+3570↑j
                 bne.s   loc_FDB4C
                 clr.w   ($FFAD1A).l
 
-loc_FDB4C:                              ; CODE XREF: sub_FA588+35BC↑j
+loc_FDB4C:                              ; CODE XREF: RunUpdate_BonusStage+35BC↑j
                 cmpi.w  #$A,($FFAD18).l
                 bge.s   loc_FDB68
                 cmpi.w  #5,($FFAD18).l
@@ -66898,7 +66898,7 @@ loc_FDB4C:                              ; CODE XREF: sub_FA588+35BC↑j
                 tst.w   ($FFAD18).l
                 ble.s   loc_FDBAA
 
-loc_FDB68:                              ; CODE XREF: sub_FA588+35CC↑j
+loc_FDB68:                              ; CODE XREF: RunUpdate_BonusStage+35CC↑j
                 move.w  #$EEE,($FF4226).l
                 move.w  #$EEE,($FF4228).l
                 move.w  #$EEE,($FF422A).l
@@ -66910,8 +66910,8 @@ loc_FDB68:                              ; CODE XREF: sub_FA588+35CC↑j
                 bra.s   loc_FDC1A
 ; ---------------------------------------------------------------------------
 
-loc_FDBAA:                              ; CODE XREF: sub_FA588+35D6↑j
-                                        ; sub_FA588+35DE↑j
+loc_FDBAA:                              ; CODE XREF: RunUpdate_BonusStage+35D6↑j
+                                        ; RunUpdate_BonusStage+35DE↑j
                 movea.l ($FF0364).l,a0
                 move.w  $62(a0),($FF4226).l
                 movea.l ($FF0364).l,a0
@@ -66929,20 +66929,20 @@ loc_FDBAA:                              ; CODE XREF: sub_FA588+35D6↑j
                 movea.l ($FF0364).l,a0
                 move.w  $70(a0),($FF4234).l
 
-loc_FDC1A:                              ; CODE XREF: sub_FA588+3620↑j
+loc_FDC1A:                              ; CODE XREF: RunUpdate_BonusStage+3620↑j
                 pea     (3).w
                 jsr     SetPaletteUploadRequestFlag
                 addq.l  #4,sp
 
-loc_FDC26:                              ; CODE XREF: sub_FA588+35AC↑j
+loc_FDC26:                              ; CODE XREF: RunUpdate_BonusStage+35AC↑j
                 tst.w   ($FF573E).l
                 bne.s   loc_FDC3E
                 cmpi.w  #7,($FF58D0).l
                 bne.s   loc_FDC3E
                 clr.w   ($FFEE7E).l
 
-loc_FDC3E:                              ; CODE XREF: sub_FA588+36A4↑j
-                                        ; sub_FA588+36AE↑j
+loc_FDC3E:                              ; CODE XREF: RunUpdate_BonusStage+36A4↑j
+                                        ; RunUpdate_BonusStage+36AE↑j
                 tst.w   ($FFEE7E).l
                 bne.s   loc_FDC70
                 move.w  ($FF573E).l,d0
@@ -66957,7 +66957,7 @@ loc_FDC3E:                              ; CODE XREF: sub_FA588+36A4↑j
                 tst.w   ($FF547C).l
                 bne.w   loc_FDFDC
 
-loc_FDC70:                              ; CODE XREF: sub_FA588+36BC↑j
+loc_FDC70:                              ; CODE XREF: RunUpdate_BonusStage+36BC↑j
                 tst.w   ($FF036C).l
                 beq.w   loc_FDEF2
                 cmpi.w  #$154,($FF546A).l
@@ -66971,34 +66971,34 @@ loc_FDC70:                              ; CODE XREF: sub_FA588+36BC↑j
                 move.w  off_FDC9C(pc,d0.l),d0
                 jmp     off_FDC9C(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FDC9C:      dc.w loc_FDCA4-*        ; DATA XREF: sub_FA588+370C↑r
-                                        ; sub_FA588:off_FDC9C↓o ...
+off_FDC9C:      dc.w loc_FDCA4-*        ; DATA XREF: RunUpdate_BonusStage+370C↑r
+                                        ; RunUpdate_BonusStage:off_FDC9C↓o ...
                 dc.w loc_FDCAA-off_FDC9C
                 dc.w loc_FDCA4-off_FDC9C
                 dc.w loc_FDCB0-off_FDC9C
 ; ---------------------------------------------------------------------------
 
-loc_FDCA4:                              ; DATA XREF: sub_FA588:off_FDC9C↑o
-                                        ; sub_FA588+3718↑o
+loc_FDCA4:                              ; DATA XREF: RunUpdate_BonusStage:off_FDC9C↑o
+                                        ; RunUpdate_BonusStage+3718↑o
                 pea     ($2D).w
                 bra.s   loc_FDCB4
 ; ---------------------------------------------------------------------------
 
-loc_FDCAA:                              ; DATA XREF: sub_FA588+3716↑o
+loc_FDCAA:                              ; DATA XREF: RunUpdate_BonusStage+3716↑o
                 pea     ($2F).w
                 bra.s   loc_FDCB4
 ; ---------------------------------------------------------------------------
 
-loc_FDCB0:                              ; DATA XREF: sub_FA588+371A↑o
+loc_FDCB0:                              ; DATA XREF: RunUpdate_BonusStage+371A↑o
                 pea     ($2E).w
 
-loc_FDCB4:                              ; CODE XREF: sub_FA588+3720↑j
-                                        ; sub_FA588+3726↑j
-                bsr.w   PrintBonusStageMsg
+loc_FDCB4:                              ; CODE XREF: RunUpdate_BonusStage+3720↑j
+                                        ; RunUpdate_BonusStage+3726↑j
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FDCBA:                              ; CODE XREF: sub_FA588+36FA↑j
-                                        ; sub_FA588+3708↑j
+loc_FDCBA:                              ; CODE XREF: RunUpdate_BonusStage+36FA↑j
+                                        ; RunUpdate_BonusStage+3708↑j
                 cmpi.w  #$118,($FF546A).l
                 bne.s   loc_FDD00
                 move.w  ($FF3CBC).l,d0
@@ -67010,38 +67010,38 @@ loc_FDCBA:                              ; CODE XREF: sub_FA588+36FA↑j
                 move.w  off_FDCDC(pc,d0.l),d0
                 jmp     off_FDCDC(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FDCDC:      dc.w loc_FDCE4-*        ; DATA XREF: sub_FA588+374C↑r
-                                        ; sub_FA588:off_FDCDC↓o ...
+off_FDCDC:      dc.w loc_FDCE4-*        ; DATA XREF: RunUpdate_BonusStage+374C↑r
+                                        ; RunUpdate_BonusStage:off_FDCDC↓o ...
                 dc.w loc_FDCEA-off_FDCDC
                 dc.w loc_FDCF0-off_FDCDC
                 dc.w loc_FDCF6-off_FDCDC
 ; ---------------------------------------------------------------------------
 
-loc_FDCE4:                              ; DATA XREF: sub_FA588:off_FDCDC↑o
+loc_FDCE4:                              ; DATA XREF: RunUpdate_BonusStage:off_FDCDC↑o
                 pea     ($1A).w
                 bra.s   loc_FDCFA
 ; ---------------------------------------------------------------------------
 
-loc_FDCEA:                              ; DATA XREF: sub_FA588+3756↑o
+loc_FDCEA:                              ; DATA XREF: RunUpdate_BonusStage+3756↑o
                 pea     (off_20).w
                 bra.s   loc_FDCFA
 ; ---------------------------------------------------------------------------
 
-loc_FDCF0:                              ; DATA XREF: sub_FA588+3758↑o
+loc_FDCF0:                              ; DATA XREF: RunUpdate_BonusStage+3758↑o
                 pea     ($1E).w
                 bra.s   loc_FDCFA
 ; ---------------------------------------------------------------------------
 
-loc_FDCF6:                              ; DATA XREF: sub_FA588+375A↑o
+loc_FDCF6:                              ; DATA XREF: RunUpdate_BonusStage+375A↑o
                 pea     (off_1C).w
 
-loc_FDCFA:                              ; CODE XREF: sub_FA588+3760↑j
-                                        ; sub_FA588+3766↑j ...
-                bsr.w   PrintBonusStageMsg
+loc_FDCFA:                              ; CODE XREF: RunUpdate_BonusStage+3760↑j
+                                        ; RunUpdate_BonusStage+3766↑j ...
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FDD00:                              ; CODE XREF: sub_FA588+373A↑j
-                                        ; sub_FA588+3748↑j
+loc_FDD00:                              ; CODE XREF: RunUpdate_BonusStage+373A↑j
+                                        ; RunUpdate_BonusStage+3748↑j
                 cmpi.w  #$C8,($FF546A).l
                 bne.s   loc_FDD46
                 move.w  ($FF3CBC).l,d0
@@ -67053,38 +67053,38 @@ loc_FDD00:                              ; CODE XREF: sub_FA588+373A↑j
                 move.w  off_FDD22(pc,d0.l),d0
                 jmp     off_FDD22(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FDD22:      dc.w loc_FDD2A-*        ; DATA XREF: sub_FA588+3792↑r
-                                        ; sub_FA588:off_FDD22↓o ...
+off_FDD22:      dc.w loc_FDD2A-*        ; DATA XREF: RunUpdate_BonusStage+3792↑r
+                                        ; RunUpdate_BonusStage:off_FDD22↓o ...
                 dc.w loc_FDD30-off_FDD22
                 dc.w loc_FDD36-off_FDD22
                 dc.w loc_FDD3C-off_FDD22
 ; ---------------------------------------------------------------------------
 
-loc_FDD2A:                              ; DATA XREF: sub_FA588:off_FDD22↑o
+loc_FDD2A:                              ; DATA XREF: RunUpdate_BonusStage:off_FDD22↑o
                 pea     ($1B).w
                 bra.s   loc_FDD40
 ; ---------------------------------------------------------------------------
 
-loc_FDD30:                              ; DATA XREF: sub_FA588+379C↑o
+loc_FDD30:                              ; DATA XREF: RunUpdate_BonusStage+379C↑o
                 pea     ($21).w
                 bra.s   loc_FDD40
 ; ---------------------------------------------------------------------------
 
-loc_FDD36:                              ; DATA XREF: sub_FA588+379E↑o
+loc_FDD36:                              ; DATA XREF: RunUpdate_BonusStage+379E↑o
                 pea     ($1F).w
                 bra.s   loc_FDD40
 ; ---------------------------------------------------------------------------
 
-loc_FDD3C:                              ; DATA XREF: sub_FA588+37A0↑o
+loc_FDD3C:                              ; DATA XREF: RunUpdate_BonusStage+37A0↑o
                 pea     ($1D).w
 
-loc_FDD40:                              ; CODE XREF: sub_FA588+37A6↑j
-                                        ; sub_FA588+37AC↑j ...
-                bsr.w   PrintBonusStageMsg
+loc_FDD40:                              ; CODE XREF: RunUpdate_BonusStage+37A6↑j
+                                        ; RunUpdate_BonusStage+37AC↑j ...
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FDD46:                              ; CODE XREF: sub_FA588+3780↑j
-                                        ; sub_FA588+378E↑j
+loc_FDD46:                              ; CODE XREF: RunUpdate_BonusStage+3780↑j
+                                        ; RunUpdate_BonusStage+378E↑j
                 cmpi.w  #$78,($FF546A).l ; 'x'
                 bne.s   loc_FDD74
                 cmpi.w  #1,($FF3CBC).l
@@ -67093,31 +67093,31 @@ loc_FDD46:                              ; CODE XREF: sub_FA588+3780↑j
                 bra.s   loc_FDD74
 ; ---------------------------------------------------------------------------
 
-loc_FDD64:                              ; CODE XREF: sub_FA588+37D0↑j
+loc_FDD64:                              ; CODE XREF: RunUpdate_BonusStage+37D0↑j
                 moveq   #$32,d0 ; '2'
                 sub.w   ($FFF20C).l,d0
                 move.l  d0,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FDD74:                              ; CODE XREF: sub_FA588+37C6↑j
-                                        ; sub_FA588+37DA↑j
+loc_FDD74:                              ; CODE XREF: RunUpdate_BonusStage+37C6↑j
+                                        ; RunUpdate_BonusStage+37DA↑j
                 cmpi.w  #$3C,($FF546A).l ; '<'
                 bne.s   loc_FDD88
                 pea     ($13).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FDD88:                              ; CODE XREF: sub_FA588+37F4↑j
+loc_FDD88:                              ; CODE XREF: RunUpdate_BonusStage+37F4↑j
                 tst.w   ($FF546A).l
                 bne.w   loc_FDEEC
                 tst.w   ($FFF1F0).l
                 bne.s   loc_FDDA4
                 pea     (off_14).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FDDA4:                              ; CODE XREF: sub_FA588+3810↑j
+loc_FDDA4:                              ; CODE XREF: RunUpdate_BonusStage+3810↑j
                 move.w  ($FFF1F0).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -67144,10 +67144,10 @@ loc_FDDA4:                              ; CODE XREF: sub_FA588+3810↑j
                 bra.s   loc_FDE00
 ; ---------------------------------------------------------------------------
 
-loc_FDDFA:                              ; CODE XREF: sub_FA588+3868↑j
+loc_FDDFA:                              ; CODE XREF: RunUpdate_BonusStage+3868↑j
                 move.l  #$1130000,d1
 
-loc_FDE00:                              ; CODE XREF: sub_FA588+3870↑j
+loc_FDE00:                              ; CODE XREF: RunUpdate_BonusStage+3870↑j
                 movea.l #$FF523A,a0
                 move.l  d1,(a0,d0.w)
                 move.w  ($FFF1F0).l,d0
@@ -67209,11 +67209,11 @@ loc_FDE00:                              ; CODE XREF: sub_FA588+3870↑j
                 bra.s   loc_FDEF2
 ; ---------------------------------------------------------------------------
 
-loc_FDEEC:                              ; CODE XREF: sub_FA588+3806↑j
+loc_FDEEC:                              ; CODE XREF: RunUpdate_BonusStage+3806↑j
                 subq.w  #1,($FF546A).l
 
-loc_FDEF2:                              ; CODE XREF: sub_FA588+36EE↑j
-                                        ; sub_FA588+3958↑j ...
+loc_FDEF2:                              ; CODE XREF: RunUpdate_BonusStage+36EE↑j
+                                        ; RunUpdate_BonusStage+3958↑j ...
                 move.w  ($FF573E).l,d0
                 or.w    ($FF036C).l,d0
                 bne.w   loc_FC5E0
@@ -67227,20 +67227,20 @@ loc_FDEF2:                              ; CODE XREF: sub_FA588+36EE↑j
                 bra.w   loc_FC5E0
 ; ---------------------------------------------------------------------------
 
-loc_FDF2C:                              ; CODE XREF: sub_FA588+398A↑j
+loc_FDF2C:                              ; CODE XREF: RunUpdate_BonusStage+398A↑j
                 cmpi.w  #$3C,($FF546A).l ; '<'
                 bne.s   loc_FDF46
                 moveq   #$33,d0 ; '3'
                 sub.w   ($FFF20C).l,d0
                 move.l  d0,-(sp)
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FDF46:                              ; CODE XREF: sub_FA588+39AC↑j
+loc_FDF46:                              ; CODE XREF: RunUpdate_BonusStage+39AC↑j
                 subq.w  #1,($FF546A).l
                 bne.w   loc_FC5E0
                 pea     ($14).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($2E).w
                 jsr     PlaySong
                 addq.l  #8,sp
@@ -67265,14 +67265,14 @@ loc_FDF46:                              ; CODE XREF: sub_FA588+39AC↑j
                 bra.w   loc_FC5E0
 ; ---------------------------------------------------------------------------
 
-loc_FDFDC:                              ; CODE XREF: sub_FA588+36DA↑j
-                                        ; sub_FA588+36E4↑j
+loc_FDFDC:                              ; CODE XREF: RunUpdate_BonusStage+36DA↑j
+                                        ; RunUpdate_BonusStage+36E4↑j
                 move.w  #2,($FF3CA8).l
                 bsr.w   sub_F798A
                 clr.w   ($FFEE7A).l
                 jsr     sub_DE996
                 pea     (off_2C).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
                 jsr     RunOSDAnimationUpdate
                 jsr     WaitForFF0000
@@ -67282,7 +67282,7 @@ loc_FDFDC:                              ; CODE XREF: sub_FA588+36DA↑j
                 moveq   #0,d3
                 movea.l #$FFA674,a2
 
-loc_FE022:                              ; CODE XREF: sub_FA588+3AE6↓j
+loc_FE022:                              ; CODE XREF: RunUpdate_BonusStage+3AE6↓j
                 movea.l #$C00000,a0
                 move.l  a0,var_54(a6)
                 move.w  (a2),(a0)
@@ -67316,14 +67316,14 @@ loc_FE022:                              ; CODE XREF: sub_FA588+3AE6↓j
                 move.w  off_FE090(pc,d0.l),d0
                 jmp     off_FE090(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FE090:      dc.w loc_FE098-*        ; DATA XREF: sub_FA588+3B00↑r
-                                        ; sub_FA588:off_FE090↓o ...
+off_FE090:      dc.w loc_FE098-*        ; DATA XREF: RunUpdate_BonusStage+3B00↑r
+                                        ; RunUpdate_BonusStage:off_FE090↓o ...
                 dc.w loc_FE0F0-off_FE090
                 dc.w loc_FE19A-off_FE090
                 dc.w loc_FE206-off_FE090
 ; ---------------------------------------------------------------------------
 
-loc_FE098:                              ; DATA XREF: sub_FA588:off_FE090↑o
+loc_FE098:                              ; DATA XREF: RunUpdate_BonusStage:off_FE090↑o
                 move.w  ($FFEDCE).l,d0
                 ext.l   d0
                 moveq   #4,d1
@@ -67333,39 +67333,39 @@ loc_FE098:                              ; DATA XREF: sub_FA588:off_FE090↑o
                 move.w  off_FE0B0(pc,d0.l),d0
                 jmp     off_FE0B0(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FE0B0:      dc.w loc_FE0D8-*        ; DATA XREF: sub_FA588+3B20↑r
-                                        ; sub_FA588:off_FE0B0↓o ...
+off_FE0B0:      dc.w loc_FE0D8-*        ; DATA XREF: RunUpdate_BonusStage+3B20↑r
+                                        ; RunUpdate_BonusStage:off_FE0B0↓o ...
                 dc.w loc_FE0BA-off_FE0B0
                 dc.w loc_FE0C0-off_FE0B0
                 dc.w loc_FE0C6-off_FE0B0
                 dc.w loc_FE0CC-off_FE0B0
 ; ---------------------------------------------------------------------------
 
-loc_FE0BA:                              ; DATA XREF: sub_FA588+3B2A↑o
+loc_FE0BA:                              ; DATA XREF: RunUpdate_BonusStage+3B2A↑o
                 pea     (byte_BB8).w
                 bra.s   loc_FE0D2
 ; ---------------------------------------------------------------------------
 
-loc_FE0C0:                              ; DATA XREF: sub_FA588+3B2C↑o
+loc_FE0C0:                              ; DATA XREF: RunUpdate_BonusStage+3B2C↑o
                 pea     (unk_1F40).w
                 bra.s   loc_FE0D2
 ; ---------------------------------------------------------------------------
 
-loc_FE0C6:                              ; DATA XREF: sub_FA588+3B2E↑o
+loc_FE0C6:                              ; DATA XREF: RunUpdate_BonusStage+3B2E↑o
                 pea     (unk_4E20).w
                 bra.s   loc_FE0D2
 ; ---------------------------------------------------------------------------
 
-loc_FE0CC:                              ; DATA XREF: sub_FA588+3B30↑o
+loc_FE0CC:                              ; DATA XREF: RunUpdate_BonusStage+3B30↑o
                 move.l  #$2DC6C0,-(sp)
 
-loc_FE0D2:                              ; CODE XREF: sub_FA588+3B36↑j
-                                        ; sub_FA588+3B3C↑j ...
+loc_FE0D2:                              ; CODE XREF: RunUpdate_BonusStage+3B36↑j
+                                        ; RunUpdate_BonusStage+3B3C↑j ...
                 bsr.w   sub_FA536
                 addq.l  #4,sp
 
-loc_FE0D8:                              ; CODE XREF: sub_FA588+3B1C↑j
-                                        ; DATA XREF: sub_FA588:off_FE0B0↑o
+loc_FE0D8:                              ; CODE XREF: RunUpdate_BonusStage+3B1C↑j
+                                        ; DATA XREF: RunUpdate_BonusStage:off_FE0B0↑o
                 move.w  ($FFF206).l,d0
                 ext.l   d0
                 move.l  d0,d1
@@ -67377,7 +67377,7 @@ loc_FE0D8:                              ; CODE XREF: sub_FA588+3B1C↑j
                 bra.w   loc_FE26C
 ; ---------------------------------------------------------------------------
 
-loc_FE0F0:                              ; DATA XREF: sub_FA588+3B0A↑o
+loc_FE0F0:                              ; DATA XREF: RunUpdate_BonusStage+3B0A↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -67441,7 +67441,7 @@ loc_FE0F0:                              ; DATA XREF: sub_FA588+3B0A↑o
                 bra.w   loc_FE260
 ; ---------------------------------------------------------------------------
 
-loc_FE19A:                              ; DATA XREF: sub_FA588+3B0C↑o
+loc_FE19A:                              ; DATA XREF: RunUpdate_BonusStage+3B0C↑o
                 move.w  ($FF58D0).l,d0
                 ext.l   d0
                 moveq   #7,d1
@@ -67451,8 +67451,8 @@ loc_FE19A:                              ; DATA XREF: sub_FA588+3B0C↑o
                 move.w  off_FE1B4(pc,d0.l),d0
                 jmp     off_FE1B4(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FE1B4:      dc.w loc_FE274-*        ; DATA XREF: sub_FA588+3C24↑r
-                                        ; sub_FA588:off_FE1B4↓o ...
+off_FE1B4:      dc.w loc_FE274-*        ; DATA XREF: RunUpdate_BonusStage+3C24↑r
+                                        ; RunUpdate_BonusStage:off_FE1B4↓o ...
                 dc.w loc_FE274-off_FE1B4
                 dc.w loc_FE1C4-off_FE1B4
                 dc.w loc_FE1C4-off_FE1B4
@@ -67462,15 +67462,15 @@ off_FE1B4:      dc.w loc_FE274-*        ; DATA XREF: sub_FA588+3C24↑r
                 dc.w loc_FE1D6-off_FE1B4
 ; ---------------------------------------------------------------------------
 
-loc_FE1C4:                              ; DATA XREF: sub_FA588+3C30↑o
-                                        ; sub_FA588+3C32↑o ...
+loc_FE1C4:                              ; DATA XREF: RunUpdate_BonusStage+3C30↑o
+                                        ; RunUpdate_BonusStage+3C32↑o ...
                 move.w  ($FF58D0).l,d0
                 ext.l   d0
                 move.l  #$C350,d1
                 bra.w   loc_FE266
 ; ---------------------------------------------------------------------------
 
-loc_FE1D6:                              ; DATA XREF: sub_FA588+3C3A↑o
+loc_FE1D6:                              ; DATA XREF: RunUpdate_BonusStage+3C3A↑o
                 move.w  ($FF568E).l,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -67486,12 +67486,12 @@ loc_FE1D6:                              ; DATA XREF: sub_FA588+3C3A↑o
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE1FE:                              ; CODE XREF: sub_FA588+3C6C↑j
+loc_FE1FE:                              ; CODE XREF: RunUpdate_BonusStage+3C6C↑j
                 move.l  #unk_55730,-(sp)
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE206:                              ; DATA XREF: sub_FA588+3B0E↑o
+loc_FE206:                              ; DATA XREF: RunUpdate_BonusStage+3B0E↑o
                 move.w  ($FF7842).l,d0
                 ext.l   d0
                 moveq   #8,d1
@@ -67501,8 +67501,8 @@ loc_FE206:                              ; DATA XREF: sub_FA588+3B0E↑o
                 move.w  off_FE21E(pc,d0.l),d0
                 jmp     off_FE21E(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FE21E:      dc.w loc_FE274-*        ; DATA XREF: sub_FA588+3C8E↑r
-                                        ; sub_FA588:off_FE21E↓o ...
+off_FE21E:      dc.w loc_FE274-*        ; DATA XREF: RunUpdate_BonusStage+3C8E↑r
+                                        ; RunUpdate_BonusStage:off_FE21E↓o ...
                 dc.w loc_FE274-off_FE21E
                 dc.w loc_FE230-off_FE21E
                 dc.w loc_FE236-off_FE21E
@@ -67513,56 +67513,56 @@ off_FE21E:      dc.w loc_FE274-*        ; DATA XREF: sub_FA588+3C8E↑r
                 dc.w loc_FE258-off_FE21E
 ; ---------------------------------------------------------------------------
 
-loc_FE230:                              ; DATA XREF: sub_FA588+3C9A↑o
+loc_FE230:                              ; DATA XREF: RunUpdate_BonusStage+3C9A↑o
                 pea     (dword_FA0).w
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE236:                              ; DATA XREF: sub_FA588+3C9C↑o
+loc_FE236:                              ; DATA XREF: RunUpdate_BonusStage+3C9C↑o
                 pea     (unk_1770).w
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE23C:                              ; DATA XREF: sub_FA588+3C9E↑o
+loc_FE23C:                              ; DATA XREF: RunUpdate_BonusStage+3C9E↑o
                 pea     (unk_1F40).w
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE242:                              ; DATA XREF: sub_FA588+3CA0↑o
+loc_FE242:                              ; DATA XREF: RunUpdate_BonusStage+3CA0↑o
                 pea     (dword_61A8).w
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE248:                              ; DATA XREF: sub_FA588+3CA2↑o
+loc_FE248:                              ; DATA XREF: RunUpdate_BonusStage+3CA2↑o
                 move.l  #$EA60,-(sp)
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE250:                              ; DATA XREF: sub_FA588+3CA4↑o
+loc_FE250:                              ; DATA XREF: RunUpdate_BonusStage+3CA4↑o
                 move.l  #unk_493E0,-(sp)
                 bra.s   loc_FE26E
 ; ---------------------------------------------------------------------------
 
-loc_FE258:                              ; DATA XREF: sub_FA588+3CA6↑o
+loc_FE258:                              ; DATA XREF: RunUpdate_BonusStage+3CA6↑o
                 move.w  ($FF7842).l,d0
                 ext.l   d0
 
-loc_FE260:                              ; CODE XREF: sub_FA588+3C0E↑j
+loc_FE260:                              ; CODE XREF: RunUpdate_BonusStage+3C0E↑j
                 move.l  #unk_493E0,d1
 
-loc_FE266:                              ; CODE XREF: sub_FA588+3C4A↑j
-                jsr     sub_FF8B8
+loc_FE266:                              ; CODE XREF: RunUpdate_BonusStage+3C4A↑j
+                jsr     Multiply_VectorByScalar
 
-loc_FE26C:                              ; CODE XREF: sub_FA588+3B64↑j
+loc_FE26C:                              ; CODE XREF: RunUpdate_BonusStage+3B64↑j
                 move.l  d0,-(sp)
 
-loc_FE26E:                              ; CODE XREF: sub_FA588+3C74↑j
-                                        ; sub_FA588+3C7C↑j ...
+loc_FE26E:                              ; CODE XREF: RunUpdate_BonusStage+3C74↑j
+                                        ; RunUpdate_BonusStage+3C7C↑j ...
                 bsr.w   sub_FA536
                 addq.l  #4,sp
 
-loc_FE274:                              ; CODE XREF: sub_FA588+3AFA↑j
-                                        ; sub_FA588+3C1E↑j ...
+loc_FE274:                              ; CODE XREF: RunUpdate_BonusStage+3AFA↑j
+                                        ; RunUpdate_BonusStage+3C1E↑j ...
                 jsr     GEMSStopAll
                 tst.w   ($FF547C).l
                 bne.s   loc_FE2CC
@@ -67575,33 +67575,33 @@ loc_FE274:                              ; CODE XREF: sub_FA588+3AFA↑j
                 move.w  off_FE29A(pc,d0.l),d0
                 jmp     off_FE29A(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_FE29A:      dc.w loc_FE2A2-*        ; DATA XREF: sub_FA588+3D0A↑r
-                                        ; sub_FA588:off_FE29A↓o ...
+off_FE29A:      dc.w loc_FE2A2-*        ; DATA XREF: RunUpdate_BonusStage+3D0A↑r
+                                        ; RunUpdate_BonusStage:off_FE29A↓o ...
                 dc.w loc_FE2A8-off_FE29A
                 dc.w loc_FE2A2-off_FE29A
                 dc.w loc_FE2AE-off_FE29A
 ; ---------------------------------------------------------------------------
 
-loc_FE2A2:                              ; DATA XREF: sub_FA588:off_FE29A↑o
-                                        ; sub_FA588+3D16↑o
+loc_FE2A2:                              ; DATA XREF: RunUpdate_BonusStage:off_FE29A↑o
+                                        ; RunUpdate_BonusStage+3D16↑o
                 pea     (off_C).w
                 bra.s   loc_FE2B2
 ; ---------------------------------------------------------------------------
 
-loc_FE2A8:                              ; DATA XREF: sub_FA588+3D14↑o
+loc_FE2A8:                              ; DATA XREF: RunUpdate_BonusStage+3D14↑o
                 pea     ($D).w
                 bra.s   loc_FE2B2
 ; ---------------------------------------------------------------------------
 
-loc_FE2AE:                              ; DATA XREF: sub_FA588+3D18↑o
+loc_FE2AE:                              ; DATA XREF: RunUpdate_BonusStage+3D18↑o
                 pea     (8).w
 
-loc_FE2B2:                              ; CODE XREF: sub_FA588+3D1E↑j
-                                        ; sub_FA588+3D24↑j
-                bsr.w   PrintBonusStageMsg
+loc_FE2B2:                              ; CODE XREF: RunUpdate_BonusStage+3D1E↑j
+                                        ; RunUpdate_BonusStage+3D24↑j
+                bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
 
-loc_FE2B8:                              ; CODE XREF: sub_FA588+3D06↑j
+loc_FE2B8:                              ; CODE XREF: RunUpdate_BonusStage+3D06↑j
                 pea     ($45).w
                 jsr     PlaySong
                 addq.l  #4,sp
@@ -67609,19 +67609,19 @@ loc_FE2B8:                              ; CODE XREF: sub_FA588+3D06↑j
                 bra.s   loc_FE2E4
 ; ---------------------------------------------------------------------------
 
-loc_FE2CC:                              ; CODE XREF: sub_FA588+3CF8↑j
+loc_FE2CC:                              ; CODE XREF: RunUpdate_BonusStage+3CF8↑j
                 pea     ($33).w
-                bsr.w   PrintBonusStageMsg
+                bsr.w   BonusStage_DisplayOSDMessage
                 pea     ($10).w
                 jsr     PlaySong
                 move.l  #$1F4,d2
 
-loc_FE2E4:                              ; CODE XREF: sub_FA588+3D42↑j
+loc_FE2E4:                              ; CODE XREF: RunUpdate_BonusStage+3D42↑j
                 moveq   #0,d3
                 bra.s   loc_FE328
 ; ---------------------------------------------------------------------------
 
-loc_FE2E8:                              ; CODE XREF: sub_FA588+3DAE↓j
+loc_FE2E8:                              ; CODE XREF: RunUpdate_BonusStage+3DAE↓j
                 jsr     WaitForFF0000
                 move.w  ($FF573C).l,($FF74DC).l
                 moveq   #0,d0
@@ -67635,14 +67635,14 @@ loc_FE2E8:                              ; CODE XREF: sub_FA588+3DAE↓j
                 jsr     RunOSDAnimationUpdate
                 addq.l  #1,d3
 
-loc_FE328:                              ; CODE XREF: sub_FA588+3D5E↑j
+loc_FE328:                              ; CODE XREF: RunUpdate_BonusStage+3D5E↑j
                 cmp.l   d2,d3
                 bge.s   loc_FE338
                 move.w  ($FF573C).l,d0
                 andi.w  #$FF00,d0
                 beq.s   loc_FE2E8
 
-loc_FE338:                              ; CODE XREF: sub_FA588+3DA2↑j
+loc_FE338:                              ; CODE XREF: RunUpdate_BonusStage+3DA2↑j
                 jsr     ScreenTransition_ToBlack
                 movea.l #$C00004,a0
                 move.l  a0,var_58(a6)
@@ -67652,13 +67652,13 @@ loc_FE338:                              ; CODE XREF: sub_FA588+3DA2↑j
                 beq.s   loc_FE360
                 neg.l   ($FF3CB8).l
 
-loc_FE360:                              ; CODE XREF: sub_FA588+3DD0↑j
+loc_FE360:                              ; CODE XREF: RunUpdate_BonusStage+3DD0↑j
                 jsr     GEMSStopAll
                 move.l  ($FF3CB8).l,d0
                 movem.l var_7C(a6),d2-d6/a2-a5
                 unlk    a6
                 rts
-; End of function sub_FA588
+; End of function RunUpdate_BonusStage
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -69737,7 +69737,7 @@ loc_FF7D0:                              ; CODE XREF: sub_FF73E+9C↓j
                 move.w  ($FF559E).l,d0
                 andi.w  #$A,d0
                 bne.s   loc_FF7D0
-                jsr     sub_D8698
+                jsr     ScreenTransition_FromBlack
                 move.b  #1,($FF7848).l
                 movem.l (sp)+,d2/a2
                 rts
@@ -69855,34 +69855,36 @@ loc_FF8B0:                              ; CODE XREF: sub_FF834+4C↑j
 
 ; =============== S U B R O U T I N E =======================================
 
-
-sub_FF8B8:                              ; CODE XREF: NewLife+62↑p
+; 2D vector multiplication?
+Multiply_VectorByScalar:                ; CODE XREF: NewLife+62↑p
                                         ; sub_DB900+72↑p ...
                 movem.l d0/d2,-(sp)
-                move.l  d0,d2
-                mulu.w  d1,d0
-                clr.w   d2
-                swap    d2
-                beq.s   loc_FF8CE
-                mulu.w  d1,d2
-                swap    d2
-                clr.w   d2
-                add.l   d2,d0
+                move.l  d0,d2           ; d0 is lhs parameter, which iss 2 packed words. It immediately is repurposed as the return register
+                mulu.w  d1,d0           ; Scalar[1] x Rows[0][1] => Result[1]
+                                        ; d1 is made up of 2 words. Lower word scales both elements of d0, Upper word scales both elements of d1
 
-loc_FF8CE:                              ; CODE XREF: sub_FF8B8+C↑j
-                move.l  (sp)+,d2
-                clr.w   d1
+                clr.w   d2              ; d2 used to calculate upper word result for d0
+                swap    d2              ;
+                beq.s   Multiply_VectorByScalar__D2IsZero ; Swap will set Z flag to true if lower word is zero, so can skip any calculations
+                mulu.w  d1,d2           ; Scalar[1] x Rows[0][0]
+                swap    d2              ; then swap back to the upper word
+                clr.w   d2              ; Clear lower half so will assign cleanly back to d0
+                add.l   d2,d0           ; Row[0][0] + Result[0]
+
+Multiply_VectorByScalar__D2IsZero:      ; CODE XREF: Multiply_VectorByScalar+C↑j
+                move.l  (sp)+,d2        ; d2 was previously cached on the stack as it is our rhs parameter also of 2 words, like d0.
+                clr.w   d1              ; This clear is probably unnecessary, as we'll only multiply by the swapped lower word anyway
                 swap    d1
-                beq.s   loc_FF8DE
-                mulu.w  d1,d2
-                swap    d2
-                clr.w   d2
-                add.l   d2,d0
+                beq.s   Multiply_VectorByScalar__D1IsZero ; Swap will set Z flag to true if lower word is zero, so can skip any calculations
+                mulu.w  d1,d2           ; Scalar[0] x Rows[1][0]
+                swap    d2              ;
+                clr.w   d2              ;
+                add.l   d2,d0           ; Rows[1][0] + Result[1]
 
-loc_FF8DE:                              ; CODE XREF: sub_FF8B8+1C↑j
+Multiply_VectorByScalar__D1IsZero:      ; CODE XREF: Multiply_VectorByScalar+1C↑j
                 move.l  (sp)+,d2
                 rts
-; End of function sub_FF8B8
+; End of function Multiply_VectorByScalar
 
 ; ---------------------------------------------------------------------------
                 move.l  (a0),d1
@@ -70436,7 +70438,7 @@ BeginBonus:
 
 bonus_stage_fade_up:
                 move.l  #$FF4180,($FF41A4).l
-                ;jsr     sub_d8698
+                ;jsr     ScreenTransition_FromBlack
                 jmp     actually_start_bonus
 
 bosshack:

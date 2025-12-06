@@ -1,9 +1,10 @@
 bin/*
 output/*
+profiles/*
 /\.vscode/
 *\.code-workspace
 
 errors*\.txt
 /asm68k\.exe
-
-
+ghidra/*
+!ghidra/*.gar

@@ -336,7 +336,8 @@ dword_13DC:     dc.l $790000, $F60300, $50A0708, $8FE0A1C, $B3A0C58, $D820EAC
                 include "src/sonic_sprite_data.asm"
                 include "src/uncompressed_sprite_data.asm"                
 
-off_3909E:      dc.l unk_393B4          ; DATA XREF: ROM:off_C150C↓o
+rom_level_data_sprite_anim_ptr_array_toxic_caves:
+                dc.l unk_393B4          ; DATA XREF: ROM:off_C150C↓o
                 dc.l word_393F2
                 dc.l word_39492
                 dc.l word_3947E
@@ -547,7 +548,7 @@ dword_3939C:    dc.l $9405001D          ; DATA XREF: ROM:000390EA↑o
 word_393A2:     dc.w $9400              ; DATA XREF: ROM:00039182↑o
 dword_393A4:    dc.l $308100, $94140031, $328F41, $18100
                                         ; DATA XREF: ROM:000C0E24↓o
-unk_393B4:      dc.b $94                ; DATA XREF: ROM:off_3909E↑o
+unk_393B4:      dc.b $94                ; DATA XREF: ROM:rom_level_data_sprite_anim_ptr_array_toxic_caves↑o
                 dc.b $14, 0, $32
                 dc.b $91
                 dc.b $40, 0, $33
@@ -45950,7 +45951,9 @@ unk_99E54:      dc.b $11                ; DATA XREF: sub_F2E26+146↓o
 dword_99E64:    dc.l $FFF60902, $8000009, $98A40000, $FFF8FFF2, $9020800
                 dc.l $998A4, $FFFA, $FFEC0902, $8000009, $98A40000, $FFFAFFE4
                 dc.l $9020800, $998A4, $FFFC, $FFE00902, $8000009, $98A40000
-                dc.l $FFFEFFDE, $9020B01, $18, $F3362, $4000009, $94380000
+                dc.l $FFFEFFDE, $9020B01, $18
+                dc.l sub_F3362
+                dc.l $4000009, $94380000
                 dc.l $2000A, $17EC0000, $A17EC, $800020E, $A1614, $A, $161C0000
                 dc.l $A1624, $A, $162C0000, $A1634, $A, $163C0000, $A1644
                 dc.l $A, $164C0000, $A1654, $A, $165C0000, $A1664, $A
@@ -46052,92 +46055,142 @@ dword_99E64:    dc.l $FFF60902, $8000009, $98A40000, $FFF8FFF2, $9020800
                 dc.l $FFFF0800, $9A0FE, 0
                 dc.l $FFFF0901
                 dcb.b 2,0
-unk_9A58A:      dc.b   9                ; DATA XREF: sub_F2E12+4↓o
-                dc.b 1
-                dc.l $2000009, $9ECE000A, $FFE20168, $2000009, $9F240009
-                dc.l $FFE20168, $2000009, $9F400009, $FFE20168, $2000009
-                dc.l $A0FE000C, $D2016C, $9010C14, $B010000, $F, $36760A00
-                dc.l $9A3F0, $A000009, $A4580B01, 0
+rom_intro_sequences_begin:
+                dc.w $0901, $0200, $0009, $9ECE, $000A, $FFE2, $0168, $0200, $0009, $9F24, $0009
+                dc.w $FFE2, $0168, $0200, $0009, $9F40, $0009, $FFE2, $0168, $0200, $0009
+                dc.w $A0FE, $000C, $00D2, $016C, $0901, $0C14
+                dc.w $0B01, $0000, $0000
                 dc.l sub_F3676
-                dc.b  $A
-                dc.l dword_968+$3C
-                dc.b $24, $A, 0
-                dc.l dword_99E64+$628
-                dc.l dword_C04+6
-                dc.b  $B
-                dc.b 1
-                dcb.b 2,0
-                dc.l $F, $36760A00, $9A458, $A000009, $A4580B01, 0
+                dc.w $0A00, $0009, $A3F0
+                dc.w $0A00, $0009, $A458
+                dc.w $0B01, $0000, $0000
                 dc.l sub_F3676
-                dc.l $A000009, $A48C0A00, $9A48C, $C0E, $B010000, $1000F
-                dc.l $36760A00, $9A4F2, $B010000, $2000F, $36760A00, $9A458
-                dc.l $B010000, $1000F, $36760A00, $9A524, $B010000, $2000F
-                dc.l $36760A00, $9A48C, $B00, $F48FE, $C140A00, $9A4C0
-                dc.l $B010000, $1000F, $49280A00, $9A4F2, $B010000, $F
-                dc.l $49280A00, $9A524, $B010000, $1000F, $49280A00, $9A524
-                dc.l $B010000, $F, $49280000, $B030000, $C0000, $8C0000
-                dc.l $88000F, $4DFE0C14, $B010000, $1000F, $4F2A0A00, $9A4C0
-                dc.l $B010000, $1000F, $49280B01, 1, $F4F2A, $A000009
-                dc.l $A4F20B01, 0
+                dc.w $0A00, $0009, $A424
+                dc.w $0A00, $0009, $A48C
+                dc.w $0000, $0C0A
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F3676
+                dc.w $0A00, $0009, $A458
+                dc.w $0A00, $0009, $A458
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F3676
+                dc.w $0A00, $0009, $A48C
+                dc.w $0A00, $0009, $A48C
+                dc.w $0000, $0C0E
+                dc.w $0B01, $0000, $0001
+                dc.l sub_F3676
+                dc.w $0A00, $0009, $A4F2
+                dc.w $0B01, $0000, $0002
+                dc.l sub_F3676
+                dc.w $0A00, $0009, $A458
+                dc.w $0B01, $0000, $0001
+                dc.l sub_F3676
+                dc.w $0A00, $0009, $A524
+                dc.w $0B01, $0000, $0002
+                dc.l sub_F3676
+                dc.w $0A00, $0009, $A48C, $0000, $0B00
+                dc.l sub_F48FE
+                dc.w $0C14
+                dc.w $0A00, $0009, $A4C0
+                dc.w $0B01, $0000, $0001
                 dc.l sub_F4928
-                dc.b  $B
-                dc.b 1
-                dcb.b 2,0
-                dc.l dword_1000C+3
-                dc.l $4F2A0A00, $9A524, $B010000, $1000F, $49280B01, 1
-                dc.l $F4F2A, $A000009, $A5240B01, 0
+                dc.w $0A00, $0009, $A4F2
+                dc.w $0B01, $0000, $0000
                 dc.l sub_F4928
-                dc.l dword_C04+6
-                dc.b  $B
-                dc.b 1
-                dcb.b 2,0
-                dc.l $F, $4F2A0A00, $9A4C0, $9010B01, 0
+                dc.w $0A00, $0009, $A524
+                dc.w $0B01, $0000, $0001
+                dc.l sub_F4928
+                dc.w $0A00, $0009, $A524
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F4928
+                dc.w $0000
+                dc.w $0B03, $0000, $000C, $0000, $008C, $0000, $0088
+                dc.l sub_F4DFE
+                dc.w $0C14
+                dc.w $0B01, $0000, $0001
                 dc.l sub_F4F2A
-                dc.b  $A
-                dc.l dword_968+$3C
-                dc.b $F2, 9, 1
-                dc.b  $B
-                dc.b 1
-                dcb.b 2,0
-                dc.l $F, $4F2A0A00, $9A524, $9010B01, 0
+                dc.w $0A00, $0009, $A4C0
+                dc.w $0B01, $0000, $0001
+                dc.l sub_F4928
+                dc.w $0B01, $0000, $0001
                 dc.l sub_F4F2A
-                dc.b  $A
-                dc.l dword_968+$3D
-                dc.b $24, 9, 1
-                dc.l dword_1100
-                dc.l $670B00, $F4F00, $2000009, $9F68000B, $A000C8, $C020A00
-                dc.l $9A3F0, $A000009, $A5560000, $8000009, $9FB20000
-                dc.l 0
-                dc.b  $C
-                dc.b 2, $A, 0
-                dc.l dword_99E64+$58C
-                dc.l $A000009, $A5560000, $8000009, $9FFC0000, 0
-                dc.b  $C
-                dc.b 2, $A, 0
-                dc.l dword_99E64+$58C
-                dc.l $A000009, $A5560000, $4000009, $9FFC0400, $99ECE
-                dc.l $4000009, $9F320400, $99F54, $4000009, $A0FE0B03
-                dc.l $B, $B4, $A0, $F4C36, $1460000, $90096, $A0000A, $15640200
-                dc.l $9A046, $A0096, $960200, $9A13C, $C00D2, $961100
-                dc.l $7D0C05, $B02FFFF, $FFFFFFFF, $FFFF000F, $4D2A0746
-                dc.l 0
-                dc.l $FFFC0000, $A1564, $8000009, $A0460000, $FFFFFFFF
-                dc.l $8000009, $A13C0000, $FFFF, $9010B02
-                dcb.l 2,$FFFFFFFF
-                dc.l $F4D2A, $7460000, $FFFC, $A, $156C0800, $9A046, $FFFF
-                dc.l $FFFF0800, $9A13C, 0
-                dc.l $FFFF0901, $B02FFFF, $FFFFFFFF, $FFFF000F, $4D2A0746
-                dc.l 0
-                dc.l $FFFC0000, $A1574, $8000009, $A0460000, $FFFFFFFF
-                dc.l $8000009, $A13C0000, $FFFFFFFF, $9010B02
-                dcb.l 2,$FFFFFFFF
-                dc.l $F4D2A, $7460000, $FFFC, $A, $157C0800, $9A046, $FFFF
-                dc.l $FFFF0800, $9A13C, 0
-                dc.l $FFFF0901, $400, $9A046, $4000009, $A13C0200, $9A084
-                dc.l $A0082, $820200, $9A16E, $C00CD, $820C05, $B02FFFF
-                dc.l $FFFFFFFF, $FFFF000F, $4D2A0746, 0
-                dc.l $FFFE0000, $A1564, $8000009, $A0840000, $FFFFFFFF
-                dc.l $8000009, $A16E0000, $FFFF, $9010B02
+                dc.w $0A00, $0009, $A4F2
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F4928
+                dc.w $0B01, $0000, $0001
+                dc.l sub_F4F2A
+                dc.w $0A00, $0009, $A524
+                dc.w $0B01, $0000, $0001
+                dc.l sub_F4928
+                dc.w $0B01, $0000, $0001
+                dc.l sub_F4F2A
+                dc.w $0A00, $0009, $A524
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F4928
+                dc.w $0000, $0C0A
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F4F2A
+                dc.w $0A00, $0009, $A4C0, $0901
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F4F2A
+                dc.w $0A00, $0009, $A4F2, $0901
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F4F2A
+                dc.w $0A00, $0009, $A524, $0901
+                dc.w $0B01, $0000, $0000
+                dc.l sub_F4F2A
+                dc.w $0A00, $0009, $A524, $0901
+                dc.w $0000, $1100, $0067
+                dc.w $0B00
+                dc.l sub_F4F00
+                dc.w $0200, $0009, $9F68
+                dc.w $000B, $00A0, $00C8, $0C02
+                dc.w $0A00, $0009, $A3F0
+                dc.w $0A00, $0009, $A556
+                dc.w $0000
+                dc.w $0800, $0009, $9FB2
+                dc.w $0000, $0000, $0000
+                dc.w $0C02
+                dc.w $0A00, $0009, $A3F0
+                dc.w $0A00, $0009, $A556
+                dc.w $0000
+                dc.w $0800, $0009, $9FFC
+                dc.w $0000, $0000, $0000
+                dc.w $0C02
+                dc.w $0A00, $0009, $A3F0
+                dc.w $0A00, $0009, $A556
+                dc.w $0000
+                dc.w $0400, $0009, $9FFC
+                dc.w $0400, $0009, $9ECE
+                dc.w $0400, $0009, $9F32
+                dc.w $0400, $0009, $9F54
+                dc.w $0400, $0009, $A0FE
+                dc.w $0B03, $0000, $000B
+                dc.w $0000, $00B4, $0000
+                dc.w $00A0
+                dc.l sub_F4C36
+                dc.w $0146, $0000, $0009, $0096
+                dc.w $00A0, $000A, $1564, $0200
+                dc.w $0009, $A046, $000A, $0096, $0096, $0200, $0009, $A13C, $000C, $00D2, $0096, $1100
+                dc.l $007D0C05, $0B02FFFF, $FFFFFFFF, $FFFF000F, $4D2A0746
+                dc.l $00000000
+                dc.l $FFFC0000, $000A1564, $08000009, $A0460000, $FFFFFFFF
+                dc.l $08000009, $A13C0000, $0000FFFF, $09010B02
+                dc.l $FFFFFFFF, $FFFFFFFF
+                dc.l $000F4D2A, $07460000, $0000FFFC, $0000000A, $156C0800, $0009A046, $0000FFFF
+                dc.l $FFFF0800, $0009A13C, $00000000
+                dc.l $FFFF0901, $0B02FFFF, $FFFFFFFF, $FFFF000F, $4D2A0746
+                dc.l $00000000
+                dc.l $FFFC0000, $000A1574, $08000009, $A0460000, $FFFFFFFF
+                dc.l $08000009, $A13C0000, $FFFFFFFF, $09010B02
+                dc.l $FFFFFFFF, $FFFFFFFF
+                dc.l $000F4D2A, $07460000, $0000FFFC, $0000000A, $157C0800, $0009A046, $0000FFFF
+                dc.l $FFFF0800, $0009A13C, $00000000
+                dc.l $FFFF0901, $00000400, $0009A046, $04000009, $A13C0200, $0009A084
+                dc.l $000A0082, $00820200, $0009A16E, $000C00CD, $00820C05, $0B02FFFF
+                dc.l $FFFFFFFF, $FFFF000F, $4D2A0746, $00000000
+                dc.l $FFFE0000, $000A1564, $08000009, $A0840000, $FFFFFFFF
+                dc.l $08000009, $A16E0000, $0000FFFF, $09010B02
                 dcb.l 2,$FFFFFFFF
                 dc.l $F4D2A, $7460000, $FFFF, $A, $156C0800, $9A084, $FFFF
                 dc.l $FFFF0800, $9A16E, 0
@@ -46323,11 +46376,18 @@ dword_9AEB8:    dc.l $46000F, $52EC0B00, $F54F8, $11010016, $C, $A1584
                 dc.l $FFFB0800, $9AF4C, 0
                 dc.l $FFFB0800, $9AF54, 0
                 dc.l $FFFB0800, $9AF6A, 0
-                dc.l $FFFB0B02, $FFFFFFFB, $FFFFFFFF, $F4AE4, $9010000
+                dc.l $FFFB0B02, $FFFFFFFB, $FFFFFFFF
+                dc.l sub_F4AE4
+                dc.l $9010000
                 dc.l $8000009, $AECA0000, $FFFB, $8000009, $AF140000, $FFFB
                 dc.l $8000009, $AF300000, $FFFB, $8000009, $AF440000, $FFFB
                 dc.l $8000009, $AF540000, $FFFB, $8000009, $AF620000, $FFFB
-                dc.l $B02FFFF, $FFFBFFFF, $FFFF000F, $4AE40901, $888, $9AECA
+                dc.l $B02FFFF, $FFFBFFFF
+                dc.b $FF, $FF
+                dc.l sub_F4AE4
+                dc.b $09, $01
+                dc.l $888
+                dc.l $9AECA
                 dc.l 0
                 dc.l dword_50504+$384
                 dc.l dword_9AEB8+$6A
@@ -46345,13 +46405,17 @@ dword_9AEB8:    dc.l $46000F, $52EC0B00, $F54F8, $11010016, $C, $A1584
                 dc.l dword_9AEB8+$B2
                 dc.l 0
                 dc.l dword_50504+$5FE
-                dc.l 5, 1, $F4AE4, $9010000, $8880009, $AECA0000, 5, $8880009
+                dc.l 5, 1
+                dc.l sub_F4AE4
+                dc.l $9010000, $8880009, $AECA0000, 5, $8880009
                 dc.l $AF140000, 5, $8880009, $AF300000, 5, $8880009, $AF440000
                 dc.l 5, $8880009, $AF540000, 5, $8880009, $AF620000, 5
-                dc.l $B020000, $50000, $1000F, $4AE40901
-                dcb.b 2,0
-unk_9B0DA:      dc.b   9                ; DATA XREF: sub_F2554+B4↓o
-                dc.b 1
+                dc.l $B020000, $50000
+                dc.w $0001
+                dc.l sub_F4AE4
+                dc.w $0901
+                dc.w $0000
+unk_9B0DA:      dc.w $0901              ; DATA XREF: sub_F2554+B4↓o
                 dc.l $2000009, $AECA000A, $400168, $2000009, $AF14000A
                 dc.l $400168, $2000009, $AF30000A, $400168, $2000009, $AF44000A
                 dc.l $400168, $2000009, $AF54000A, $400168, $2000009, $AF62000A
@@ -46361,7 +46425,8 @@ unk_9B0DA:      dc.b   9                ; DATA XREF: sub_F2554+B4↓o
                 dc.l $F3AE0, $C0B0A00, $9AF72, $A000009, $AF720A00, $9AFCC
                 dc.l $A000009, $AFCC0B03, $FFFFFFFF, $B, 2, $F3B3E, $1101
                 dc.l $6E1100, $140C07, $C040B02, $FFFFFFFC, $FFFFFFFF
-                dc.l $F4AE4, $9010000, $B03FFFF, $FFFF0000, $B0000, $2000F
+                dc.l sub_F4AE4
+                dc.l $9010000, $B03FFFF, $FFFF0000, $B0000, $2000F
                 dc.l $3B3E0000, $B030000, $100009, $93FA0000, $F, $32000888
                 dc.l $9AECA, 0
                 dc.l dword_808+$80
@@ -46384,7 +46449,11 @@ unk_9B0DA:      dc.b   9                ; DATA XREF: sub_F2554+B4↓o
                 dc.l $B0000, $2000F, $3AE00C0F, $A000009, $B0260A00, $9B026
                 dc.l $A000009, $B0800A00, $9B080, $B030000, $10000, $B0000
                 dc.l $2000F, $3B3E0000, $1101006E, $C040C04, $B020000
-                dc.l $40000, $1000F, $4AE40901, $B03, 1, $B, 2, $F3B3E
+                dc.l $40000
+                dc.b $00, $01
+                dc.l sub_F4AE4
+                dc.b $09, 01
+                dc.l $B03, 1, $B, 2, $F3B3E
                 dc.l $400, $9AECA, $4000009, $AF140400, $9AF30, $4000009
                 dc.l $AF440400, $9AF54, $4000009, $AF620B00, $F4ABA, $9010B03
                 dc.l $10, $993FA, 0
@@ -46684,7 +46753,7 @@ dword_9BB00:    dc.l $8800009, $B35E0000, 0
                 dc.l $80000F, $5E0E0400, $9AECA, $4000009, $AF140400, $9AF62
                 dc.l $4000009, $B30E0400, $9AF44, $4000009, $B3861101
                 dc.l $680000
-word_9BC18:     dc.w 0                  ; DATA XREF: sub_F49B8+36↓r
+rom_intro_sega_logo_sprites_question:     dc.w 0                  ; DATA XREF: sub_F49B8+36↓r
                                         ; sub_F4AE4+10↓r ...
 off_9BC1A:      dc.l off_A1964          ; DATA XREF: sub_F49B8+D2↓o
                                         ; sub_F4AE4+106↓o
@@ -46700,8 +46769,8 @@ dword_9BC3C:    dc.l $140000, $F0000    ; DATA XREF: sub_F4AE4+130↓o
                 dc.b 0, $A
 word_9BC46:     dc.w 0                  ; DATA XREF: sub_F4AE4+48↓o
                 dc.b 0, 5
-off_9BC4A:      dc.l off_A1984          ; DATA XREF: sub_F4C36+60↓r
-                                        ; sub_F4D2A+6C↓r ...
+rom_intro_sprite_array:
+                dc.l off_A1984
                 dc.l off_A198C
                 dc.l off_A1994
                 dc.l off_A199C
@@ -50741,7 +50810,7 @@ off_A1974:      dc.l dword_4FFE8+$13    ; DATA XREF: ROM:0009BC22↑o
                 dc.l $FFFC62CD
 off_A197C:      dc.l word_5FFFA         ; DATA XREF: ROM:off_9BC26↑o
                 dc.l $FFFB62CF
-off_A1984:      dc.l byte_FFFD          ; DATA XREF: ROM:off_9BC4A↑o
+off_A1984:      dc.l byte_FFFD          ; DATA XREF: ROM:rom_intro_sprite_array↑o
                 dc.l $FFFDA2D3
 off_A198C:      dc.l dword_5FFFC        ; DATA XREF: ROM:0009BC4E↑o
                 dc.l $FFFAA2D4
@@ -67371,7 +67440,7 @@ LevelNames:     dc.l aToxicCaves        ; DATA XREF: LevelStart+4C↓o
                 dc.l aLavaPowerhouse    ; "* LAVA POWERHOUSE *"
                 dc.l aTheMachine        ; "* THE MACHINE *"
                 dc.l aShowdown          ; "* SHOWDOWN *"
-off_C150C:      dc.l off_3909E          ; DATA XREF: sub_E1ABE+20↓o
+off_C150C:      dc.l rom_level_data_sprite_anim_ptr_array_toxic_caves          ; DATA XREF: sub_E1ABE+20↓o
                 dc.l off_7E55A
                 dc.l off_98ECA
                 dc.l off_7ED68

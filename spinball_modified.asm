@@ -50102,7 +50102,7 @@ loc_F2E0C:                              ; CODE XREF: sub_F2C82+186↑j
 
 sub_F2E12:                              ; CODE XREF: sub_F2C82+128↑p
                 pea     ($F0).w
-                pea     (unk_9A58A).l
+                pea     (rom_intro_sequences_begin).l
                 jsr     sub_F4538
                 addq.l  #8,sp
                 rts
@@ -53416,7 +53416,7 @@ arg_E           =  $16
                 move.w  arg_E(a6),d0
                 lsl.w   #4,d0
                 move.w  d0,($FF032C).l
-                move.w  (word_9BC18).l,var_2(a6)
+                move.w  (rom_intro_sega_logo_sprites_question).l,var_2(a6)
                 moveq   #1,d0
                 cmp.l   d4,d0
                 bne.s   loc_F4A0E
@@ -53526,7 +53526,7 @@ arg_4           =  $C
                 movem.l d2-d4/a2-a4,-(sp)
                 move.l  arg_4(a6),d2
                 move.l  arg_0(a6),d4
-                move.w  (word_9BC18).l,var_2(a6)
+                move.w  (rom_intro_sega_logo_sprites_question).l,var_2(a6)
                 moveq   #1,d0
                 cmp.l   d4,d0
                 bne.s   loc_F4B14
@@ -53663,7 +53663,7 @@ arg_8           =  $C
                 clr.w   2(a3)
                 move.w  #6,4(a3)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a4),d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -53673,7 +53673,7 @@ arg_8           =  $C
                 move.w  ($FF0328).l,d0
                 ext.l   d0
                 move.l  d0,-(sp)
-                move.l  (off_9BC4A).l,-(sp)
+                move.l  (rom_intro_sprite_array).l,-(sp)
                 jsr     sub_F40BE
                 lea     $14(sp),sp
                 move.w  d0,($FF02C8).l
@@ -53686,7 +53686,7 @@ loc_F4CB4:                              ; CODE XREF: sub_F4C36+C2↓j
                 move.w  #5,2(a2)
                 move.w  d2,4(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a4),d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -53766,7 +53766,7 @@ loc_F4D52:                              ; CODE XREF: sub_F4D2A+CA↓j
                 clr.w   2(a2)
                 move.w  #6,4(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  ($FF032C).l,d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -53776,7 +53776,7 @@ loc_F4D52:                              ; CODE XREF: sub_F4D2A+CA↓j
                 move.w  ($FF0328).l,d0
                 ext.l   d0
                 move.l  d0,-(sp)
-                move.l  (off_9BC4A).l,-(sp)
+                move.l  (rom_intro_sprite_array).l,-(sp)
                 jsr     sub_F40BE
                 lea     $18(sp),sp
                 move.w  d0,(a2)
@@ -53785,13 +53785,13 @@ loc_F4D52:                              ; CODE XREF: sub_F4D2A+CA↓j
 
 loc_F4DAA:                              ; CODE XREF: sub_F4D2A+2E↑j
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 clr.l   -(sp)
                 pea     (off_10).w
                 pea     (off_10).w
                 move.w  2(a2),d0
                 lsl.w   #2,d0
-                movea.l #off_9BC4A,a0
+                movea.l #rom_intro_sprite_array,a0
                 move.l  (a0,d0.w),-(sp)
                 move.w  (a2),d0
                 ext.l   d0
@@ -53850,7 +53850,7 @@ arg_8           =  $10
                 clr.w   2(a4)
                 move.w  #3,4(a4)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.l  d4,-(sp)
                 move.w  (a5),d0
                 ext.l   d0
@@ -53878,7 +53878,7 @@ loc_F4EAC:                              ; CODE XREF: sub_F4DFE+F6↓j
                 move.w  #7,2(a2)
                 move.w  d2,4(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.l  d4,-(sp)
                 move.w  (a5),d0
                 ext.l   d0
@@ -53979,7 +53979,7 @@ loc_F4F74:                              ; CODE XREF: sub_F4F2A+112↓j
                 clr.w   2(a2)
                 move.w  #3,4(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a4),d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -54009,7 +54009,7 @@ loc_F4FDA:                              ; CODE XREF: sub_F4F2A+50↑j
                 jsr     Divide
                 move.l  d0,d3
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 clr.l   -(sp)
                 move.l  d3,d0
                 lsl.l   #4,d0
@@ -54075,7 +54075,7 @@ arg_8           =  $C
                 move.w  #3,4(a3)
                 clr.w   6(a3)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a4),d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -54099,7 +54099,7 @@ loc_F50D2:                              ; CODE XREF: sub_F504A+D0↓j
                 move.w  d2,4(a2)
                 clr.w   6(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a4),d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -54142,7 +54142,7 @@ arg_4           =  $C
                 move.l  arg_0(a6),d3
                 movea.l #sub_F41FE,a3
                 movea.l #$FF02C8,a4
-                move.w  (word_9BC18).l,var_2(a6)
+                move.w  (rom_intro_sega_logo_sprites_question).l,var_2(a6)
                 move.w  d3,d0
                 lsl.w   #4,d0
                 add.w   d0,($FF0328).l
@@ -54574,7 +54574,7 @@ loc_F5570:                              ; CODE XREF: sub_F5522+50↓j
                 move.w  #6,4(a4)
                 move.w  #$D000,6(a4)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a5),d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -54597,7 +54597,7 @@ loc_F55C6:                              ; CODE XREF: sub_F5522+EC↓j
                 move.w  #5,2(a2)
                 move.w  d3,4(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a5),d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -54627,7 +54627,7 @@ loc_F5614:                              ; CODE XREF: sub_F5522+15A↓j
                 jsr     sub_D69E4
                 move.w  d0,4(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  (a5),d0
                 ext.l   d0
                 addi.l  #$20,d0 ; ' '
@@ -54765,7 +54765,7 @@ loc_F5770:                              ; CODE XREF: sub_F56D0+9C↑j
                 andi.w  #$FF,d0
                 or.w    d0,6(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  ($FF032C).l,d0
                 ext.l   d0
                 move.l  d0,-(sp)
@@ -54791,7 +54791,7 @@ loc_F57C4:                              ; CODE XREF: sub_F56D0+64↑j
                 cmpi.w  #2,2(a2)
                 ble.s   loc_F5806
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 clr.l   -(sp)
                 clr.l   -(sp)
                 clr.l   -(sp)
@@ -54828,7 +54828,7 @@ loc_F5806:                              ; CODE XREF: sub_F56D0+FA↑j
 
 loc_F5838:                              ; CODE XREF: sub_F56D0+14C↑j
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 clr.l   -(sp)
                 move.w  6(a2),d0
                 ext.l   d0
@@ -54888,7 +54888,7 @@ loc_F58B0:                              ; CODE XREF: sub_F56D0+294↓j
                 clr.w   2(a2)
                 move.w  #6,4(a2)
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 move.w  ($FF032C).l,d0
                 ext.l   d0
                 addi.l  #$20,d0 ; ' '
@@ -54913,7 +54913,7 @@ loc_F58B0:                              ; CODE XREF: sub_F56D0+294↓j
 
 loc_F591E:                              ; CODE XREF: sub_F56D0+1E6↑j
                 subq.l  #2,sp
-                move.w  (word_9BC18).l,-(sp)
+                move.w  (rom_intro_sega_logo_sprites_question).l,-(sp)
                 clr.l   -(sp)
                 clr.l   -(sp)
                 clr.l   -(sp)

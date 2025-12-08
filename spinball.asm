@@ -38796,7 +38796,7 @@ loc_EB43E:                              ; CODE XREF: sub_EB288+170↑j
                 move.w  $14(a2),$A(a0)
                 movea.l (a2),a0
                 movea.l $3A(a0),a0
-                move.l  #word_318EE,$A(a0)
+                move.l  #rom_level_data_sprite_table_showdown,$A(a0)
                 movea.l (a2),a0
                 movea.l $3A(a0),a0
                 move.w  #3,6(a0)
@@ -43207,7 +43207,7 @@ loc_EE3B0:                              ; CODE XREF: sub_EDDF2+5B8↑j
                 cmpi.w  #$96,$A(a3)
                 blt.w   loc_EF448
                 movea.l $3A(a3),a0
-                move.l  #dword_2B7A4,$A(a0)
+                move.l  #rom_level_data_sprite_table_the_machine,$A(a0)
                 movea.l $3A(a3),a0
                 move.w  #4,6(a0)
                 pea     (1).w
@@ -46618,7 +46618,7 @@ arg_0           =  4
                 move.w  $20(a2),$22(a0)
                 movea.l (a2),a0
                 movea.l $3A(a0),a0
-                move.l  #dword_2B7A4,$A(a0)
+                move.l  #rom_level_data_sprite_table_the_machine,$A(a0)
                 movea.l (a2),a0
                 movea.l $3A(a0),a0
                 move.w  #3,6(a0)
@@ -47012,7 +47012,7 @@ arg_0           =  4
                 move.w  $20(a2),$22(a0)
                 movea.l (a2),a0
                 movea.l $3A(a0),a0
-                move.l  #dword_2B7A4,$A(a0)
+                move.l  #rom_level_data_sprite_table_the_machine,$A(a0)
                 movea.l (a2),a0
                 movea.l $3A(a0),a0
                 move.w  #3,6(a0)

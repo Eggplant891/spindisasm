@@ -1,6 +1,7 @@
                 align $10
+; ---------------------------------------------------------------------------
                 include "src/sonic_animations.asm"
-
+; ---------------------------------------------------------------------------
                 dc.l $28000D, $40001, $24
                 dc.l $260048, $6A008C, $4AE006E, $2A0ECC, $2E0422, $6440866
                 dc.l $CAA0E48, 2, $40008, $6240240, $4420462
@@ -66126,23 +66127,23 @@ off_C0AC4:      dc.l dword_13DC         ; DATA XREF: ROM:off_C0B14↓o
 off_C0ACC:      dc.l dword_13DC         ; DATA XREF: ROM:off_C0B20↓o
 dword_C0AD0:    dc.l $FFE70000, $13DC, $FFEC0000
                                         ; DATA XREF: ROM:000C0B2C↓o
-off_C0ADC:      dc.l dword_2B7A4        ; DATA XREF: ROM:off_C0B5C↓o
+off_C0ADC:      dc.l rom_level_data_sprite_table_the_machine        ; DATA XREF: ROM:off_C0B5C↓o
                                         ; ROM:000C1018↓o ...
                 dc.l 0
-off_C0AE4:      dc.l word_20666         ; DATA XREF: ROM:off_C0B50↓o
+off_C0AE4:      dc.l rom_level_data_sprite_table_lava_powerhouse         ; DATA XREF: ROM:off_C0B50↓o
                                         ; ROM:off_C0B74↓o ...
                 dc.l 0
-off_C0AEC:      dc.l word_20666         ; DATA XREF: ROM:off_C0C04↓o
+off_C0AEC:      dc.l rom_level_data_sprite_table_lava_powerhouse         ; DATA XREF: ROM:off_C0C04↓o
                 dc.l $20FFF2
-off_C0AF4:      dc.l unk_12B0C          ; DATA XREF: ROM:off_C0B44↓o
+off_C0AF4:      dc.l rom_level_data_sprite_table_toxic_caves          ; DATA XREF: ROM:off_C0B44↓o
                                         ; ROM:off_C0E20↓o ...
                 dc.l 0
-off_C0AFC:      dc.l unk_12B0C          ; DATA XREF: ROM:000C0E08↓o
+off_C0AFC:      dc.l rom_level_data_sprite_table_toxic_caves          ; DATA XREF: ROM:000C0E08↓o
                 dc.l $C
 off_C0B04:      dc.l word_E47A          ; DATA XREF: ROM:off_C0B80↓o
                                         ; ROM:off_C0BA4↓o ...
                 dc.l 0
-off_C0B0C:      dc.l word_318EE         ; DATA XREF: ROM:off_C0B68↓o
+off_C0B0C:      dc.l rom_level_data_sprite_table_showdown         ; DATA XREF: ROM:off_C0B68↓o
                                         ; ROM:000C11BC↓o ...
                 dc.l 0
 off_C0B14:      dc.l off_C0AC4          ; DATA XREF: sub_D4830+3E↓o
@@ -68829,8 +68830,8 @@ off_C59F0:      dc.l unk_4000           ; DATA XREF: sub_EDDF2+698↓o
                 align 2
                 dc.w $4000
 dword_C59F8:    dc.l $1B260B0B          ; DATA XREF: sub_EDDF2+6C0↓o
-off_C59FC:      dc.l dword_2B7A4        ; DATA XREF: sub_EDDF2+6AA↓o
-                dc.l dword_2B7A4
+off_C59FC:      dc.l rom_level_data_sprite_table_the_machine        ; DATA XREF: sub_EDDF2+6AA↓o
+                dc.l rom_level_data_sprite_table_the_machine
                 dc.l word_E47A
                 dc.l word_E47A
 unk_C5A0C:      dc.b $40 ; @            ; DATA XREF: sub_EF590+58C↓o

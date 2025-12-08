@@ -46203,7 +46203,10 @@ rom_intro_sequences_begin:
                 dc.l sub_F4D2A
                 dc.l $7460000, $FFFF, $A, $156C0800, $9A084, $FFFF
                 dc.l $FFFF0800, $9A16E, 0
-                dc.l $FFFF0901, $B02FFFF, $FFFFFFFF, $FFFF000F, $4D2A0746
+                dc.l $FFFF0901, $B02FFFF, $FFFFFFFF
+                dc.w $FFFF
+                dc.l sub_F4D2A
+                dc.w $0746
                 dc.l 0
                 dc.l $FFFE0000, $A1574, $8000009, $A0840000, $FFFFFFFF
                 dc.l $8000009, $A16E0000, $FFFFFFFF, $9010B02

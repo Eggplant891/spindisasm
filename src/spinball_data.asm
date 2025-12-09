@@ -76545,7 +76545,7 @@ dword_D1E94:    dc.l 0                  ; DATA XREF: sub_FA588+2408↓o
                 dc.l dword_A0A8C+$2A
                 dc.l dword_B4CDC+$66E
                 dc.l dword_C981C+$576
-                dc.l sub_DE996
+                dc.l OSD_ClearMessageQueue
                 dc.l loc_F375A+3
                 dc.l $1086F0, $11D855, $132B96, $1480BB, $15D7CB, $1730D0
                 dc.l $188BD2, $19E8DA, $1B47F1, $1CA920, $1E0C70, $1F71EC

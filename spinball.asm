@@ -41,7 +41,7 @@ off_20:         dc.l PrivlegeViolation  ; DATA XREF: ROM:00005363↓o
 off_24:         dc.l TraceException     ; DATA XREF: ROM:0000A7B0↓o
                                         ; ROM:0000B1AC↓o ...
 off_28:         dc.l LINE1010Emulator   ; DATA XREF: sub_D3FAC+110↓o
-                                        ; sub_D4228+60↓o ...
+                                        ; LoadLevelTileData+60↓o ...
 off_2C:         dc.l LINE1111Emulator   ; DATA XREF: ROM:00027FBC↓o
                                         ; ROM:00055A18↓o ...
 off_30:         dc.l Error              ; DATA XREF: ROM:00021750↓o
@@ -1470,7 +1470,7 @@ loc_D41D4:                              ; CODE XREF: sub_D3FAC+22E↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D4228:                              ; CODE XREF: RunMain+14A↓p
+LoadLevelTileData:                              ; CODE XREF: RunMain+14A↓p
                                         ; RunMain:loc_D53B6↓p
                 movem.l d2/a2-a3,-(sp)
                 movea.l #$FF75B0,a2
@@ -1508,10 +1508,10 @@ sub_D4228:                              ; CODE XREF: RunMain+14A↓p
                 bra.s   loc_D42B0
 ; ---------------------------------------------------------------------------
 
-loc_D42AC:                              ; CODE XREF: sub_D4228+7C↑j
+loc_D42AC:                              ; CODE XREF: LoadLevelTileData+7C↑j
                 move.w  #$E8,d0
 
-loc_D42B0:                              ; CODE XREF: sub_D4228+82↑j
+loc_D42B0:                              ; CODE XREF: LoadLevelTileData+82↑j
                 add.w   ($FF55AA).l,d0
                 move.w  d0,($FF000A).l
                 jsr     sub_D7AB8
@@ -1525,7 +1525,7 @@ loc_D42B0:                              ; CODE XREF: sub_D4228+82↑j
                 lea     $20(sp),sp
                 clr.w   d2
 
-loc_D42EC:                              ; CODE XREF: sub_D4228+F8↓j
+loc_D42EC:                              ; CODE XREF: LoadLevelTileData+F8↓j
                 move.w  (a2),d0
                 lsl.w   #3,d0
                 move.w  d2,d1
@@ -1545,7 +1545,7 @@ loc_D42EC:                              ; CODE XREF: sub_D4228+F8↓j
                 cmpi.w  #4,d2
                 blt.s   loc_D42EC
 
-loc_D4322:                              ; CODE XREF: sub_D4228+100↓j
+loc_D4322:                              ; CODE XREF: LoadLevelTileData+100↓j
                 move.w  (a3),d0
                 andi.w  #$A,d0
                 bne.s   loc_D4322
@@ -1579,7 +1579,7 @@ loc_D4322:                              ; CODE XREF: sub_D4228+100↓j
                 addq.l  #4,sp
                 movem.l (sp)+,d2/a2-a3
                 rts
-; End of function sub_D4228
+; End of function LoadLevelTileData
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3166,7 +3166,7 @@ GAME_STATE_RING_PORTAL_TRANSITION:                              ; DATA XREF: Run
                 addq.l  #8,sp
                 tst.b   d0
                 beq.s   loc_D53B6
-                bsr.w   sub_D4228
+                bsr.w   LoadLevelTileData
                 pea     (aJackpotRising).l ; "JACKPOT RISING"
                 pea     (3).w
                 pea     ($28).w
@@ -3185,7 +3185,7 @@ GAME_STATE_RING_PORTAL_TRANSITION:                              ; DATA XREF: Run
 ; ---------------------------------------------------------------------------
 
 loc_D53B6:                              ; CODE XREF: RunMain+148↑j
-                bsr.w   sub_D4228
+                bsr.w   LoadLevelTileData
                 pea     (aWelcomeBack).l ; "WELCOME BACK!"
                 pea     (6).w
                 pea     (off_28).w
@@ -3227,8 +3227,7 @@ GAME_STATE_BOSS_ROOM_EXPLODING:                              ; DATA XREF: RunMai
                 move.w  off_D5436(pc,d0.l),d0
                 jmp     off_D5436(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D5436:      dc.w loc_D543E-*        ; DATA XREF: RunMain+1FE↑r
-                                        ; RunMain:off_D5436↓o ...
+off_D5436:      dc.w loc_D543E-*
                 dc.w loc_D5446-off_D5436
                 dc.w loc_D544E-off_D5436
                 dc.w loc_D5456-off_D5436
@@ -3474,7 +3473,7 @@ loc_D5628:                              ; CODE XREF: PlaySong+C↑j
 
 
 sub_D562C:                              ; CODE XREF: sub_D3FAC+246↑p
-                                        ; sub_D4228+158↑p ...
+                                        ; LoadLevelTileData+158↑p ...
 
 arg_0           =  4
 
@@ -3598,7 +3597,7 @@ loc_D56E8:                              ; CODE XREF: sub_D56E0+16↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D56FA:                              ; CODE XREF: sub_D4228+9A↑p
+sub_D56FA:                              ; CODE XREF: LoadLevelTileData+9A↑p
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
                 movea.l #$FFAD24,a2
@@ -3637,7 +3636,7 @@ loc_D573A:                              ; CODE XREF: sub_D56FA+1E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-RunAnimatedObjectsUpdate:                              ; CODE XREF: sub_D4228+136↑p
+RunAnimatedObjectsUpdate:                              ; CODE XREF: LoadLevelTileData+136↑p
                                         ; RunUpdate+16↑p ...
                 movem.l d2-d4/a2-a3,-(sp)
                 tst.b   ($FF7848).l
@@ -7861,7 +7860,7 @@ loc_D7AB2:                              ; CODE XREF: RunUpdate_PaletteAnimations
 
 
 sub_D7AB8:                              ; CODE XREF: sub_D3FAC+140↑p
-                                        ; sub_D4228+94↑p
+                                        ; LoadLevelTileData+94↑p
                 clr.w   ($FF0022).l
                 clr.w   ($FF0024).l
                 clr.w   ($FF0026).l
@@ -8751,7 +8750,7 @@ sub_D831C:                              ; CODE XREF: sub_D4830+24↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D835A:                              ; CODE XREF: sub_D4228+A0↑p
+sub_D835A:                              ; CODE XREF: LoadLevelTileData+A0↑p
                 movem.l d2-d4/a2-a4,-(sp)
                 movea.l #$FF559E,a4
                 move.w  (a4),d4
@@ -8881,7 +8880,7 @@ loc_D844E:                              ; CODE XREF: sub_D8410+2A↑j
 
 
 sub_D845C:                              ; CODE XREF: sub_D3FAC+1DC↑p
-                                        ; sub_D4228+AC↑p ...
+                                        ; LoadLevelTileData+AC↑p ...
                 movem.l d2/a2-a3,-(sp)
                 movea.l #$FF9986,a1
                 tst.w   (a1)
@@ -9118,7 +9117,7 @@ loc_D8628:                              ; CODE XREF: sub_D861A+18↓j
 
 
 sub_D863E:                              ; CODE XREF: sub_D3FAC+216↑p
-                                        ; sub_D4228+E8↑p ...
+                                        ; LoadLevelTileData+E8↑p ...
 
 arg_0           =  4
 
@@ -9147,7 +9146,7 @@ loc_D866C:                              ; CODE XREF: sub_D863E+30↓j
 
 
 sub_D8674:                              ; CODE XREF: sub_D3FAC+20C↑p
-                                        ; sub_D4228+DE↑p ...
+                                        ; LoadLevelTileData+DE↑p ...
 
 arg_2           =  6
 arg_6           =  $A
@@ -9164,7 +9163,7 @@ arg_6           =  $A
 
 
 sub_D8688:                              ; CODE XREF: sub_D3FAC+1E8↑p
-                                        ; sub_D4228+B8↑p ...
+                                        ; LoadLevelTileData+B8↑p ...
 
 arg_2           =  6
 
@@ -9179,7 +9178,7 @@ arg_2           =  6
 
 
 ScreenTransition_FromBlack:                              ; CODE XREF: sub_D3FAC+230↑p
-                                        ; sub_D4228+142↑p ...
+                                        ; LoadLevelTileData+142↑p ...
                 move.l  a2,-(sp)
                 movea.l #$FF0058,a2
                 clr.l   (a2)
@@ -20658,7 +20657,7 @@ loc_DF79C:                              ; CODE XREF: RunOSDAnimationUpdate+E↑j
 
 
 sub_DF7A6:                              ; CODE XREF: sub_D3FAC+114↑p
-                                        ; sub_D4228+64↑p ...
+                                        ; LoadLevelTileData+64↑p ...
 
 arg_0           =  4
 arg_4           =  8
@@ -67635,7 +67634,7 @@ loc_FE360:                              ; CODE XREF: RunUpdate_BonusStage+3DD0�
 ; Attributes: bp-based frame
 
 RunPaletteAnimsAndUpdateSpriteRenderOrder:                              ; CODE XREF: sub_D3FAC+1D6↑p
-                                        ; sub_D4228+A6↑p ...
+                                        ; LoadLevelTileData+A6↑p ...
 
 var_168         = -$168
 var_140         = -$140

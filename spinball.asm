@@ -1586,7 +1586,7 @@ loc_D4322:                              ; CODE XREF: sub_D4228+100↓j
 
 
 StartGame:                              ; CODE XREF: sub_D46FE+2A↓p
-                                        ; sub_D47DE:loc_D480A↓p
+                                        ; RunMainMenu:loc_D480A↓p
                 movem.l d2-d3/a2,-(sp)
                 pea     (off_98).w
                 movea.l #$FF5758,a2
@@ -1966,7 +1966,7 @@ loc_D46F8:                              ; CODE XREF: RunLevelIntro+64↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D46FE:                              ; CODE XREF: sub_D47DE+3C↓p
+sub_D46FE:                              ; CODE XREF: RunMainMenu+3C↓p
                 movem.l d2-d6/a2-a4,-(sp)
                 movea.l #$FF573C,a3
                 movea.l #$FFF8D8,a4
@@ -2057,19 +2057,19 @@ loc_D47BC:                              ; CODE XREF: sub_D46FE+4E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D47DE:                              ; CODE XREF: RunMain:GAME_STATE_MAIN_MENU↓p
+RunMainMenu:                              ; CODE XREF: RunMain:GAME_STATE_MAIN_MENU↓p
                 move.l  d2,-(sp)
                 jsr     sub_F2554
                 move.l  d0,d2
                 bra.s   loc_D47F2
 ; ---------------------------------------------------------------------------
 
-loc_D47EA:                              ; CODE XREF: sub_D47DE+28↓j
+loc_D47EA:                              ; CODE XREF: RunMainMenu+28↓j
                 jsr     sub_FEF2A
                 moveq   #1,d2
 
-loc_D47F2:                              ; CODE XREF: sub_D47DE+A↑j
-                                        ; sub_D47DE+3A↓j ...
+loc_D47F2:                              ; CODE XREF: RunMainMenu+A↑j
+                                        ; RunMainMenu+3A↓j ...
                 move.l  d2,-(sp)
                 jsr     sub_F2E26
                 addq.l  #4,sp
@@ -2082,12 +2082,12 @@ loc_D47F2:                              ; CODE XREF: sub_D47DE+A↑j
                 bra.s   loc_D4810
 ; ---------------------------------------------------------------------------
 
-loc_D480A:                              ; CODE XREF: sub_D47DE+22↑j
+loc_D480A:                              ; CODE XREF: RunMainMenu+22↑j
                 bsr.w   StartGame
                 bra.s   loc_D482C
 ; ---------------------------------------------------------------------------
 
-loc_D4810:                              ; CODE XREF: sub_D47DE+2A↑j
+loc_D4810:                              ; CODE XREF: RunMainMenu+2A↑j
                 jsr     sub_F2C82
                 move.l  d0,d2
                 bne.s   loc_D47F2
@@ -2098,10 +2098,10 @@ loc_D4810:                              ; CODE XREF: sub_D47DE+2A↑j
                 move.l  d0,d2
                 bne.s   loc_D47F2
 
-loc_D482C:                              ; CODE XREF: sub_D47DE+30↑j
+loc_D482C:                              ; CODE XREF: RunMainMenu+30↑j
                 move.l  (sp)+,d2
                 rts
-; End of function sub_D47DE
+; End of function RunMainMenu
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3099,7 +3099,7 @@ GameModes:      dc.w GAME_STATE_MAIN_MENU-*        ; DATA XREF: RunMain+8A↑r
 ; ---------------------------------------------------------------------------
 
 GAME_STATE_MAIN_MENU:                              ; DATA XREF: RunMain:GameModes↑o
-                bsr.w   sub_D47DE
+                bsr.w   RunMainMenu
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
@@ -49256,7 +49256,7 @@ loc_F254A:                              ; CODE XREF: sub_F145E+202↑j
 
 ; Attributes: bp-based frame
 
-sub_F2554:                              ; CODE XREF: sub_D47DE+2↑p
+sub_F2554:                              ; CODE XREF: RunMainMenu+2↑p
 
 var_4           = -4
 
@@ -49953,7 +49953,7 @@ loc_F2C58:                              ; CODE XREF: sub_F2C44+36↓j
 
 ; Attributes: bp-based frame
 
-sub_F2C82:                              ; CODE XREF: sub_D47DE:loc_D4810↑p
+sub_F2C82:                              ; CODE XREF: RunMainMenu:loc_D4810↑p
 
 var_4           = -4
 
@@ -50076,7 +50076,7 @@ sub_F2E12:                              ; CODE XREF: sub_F2C82+128↑p
 
 ; Attributes: bp-based frame
 
-sub_F2E26:                              ; CODE XREF: sub_D47DE+16↑p
+sub_F2E26:                              ; CODE XREF: RunMainMenu+16↑p
 
 var_14          = -$14
 var_8           = -8
@@ -68787,7 +68787,7 @@ loc_FEF0E:                              ; CODE XREF: sub_FED7E+180↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FEF2A:                              ; CODE XREF: sub_D47DE:loc_D47EA↑p
+sub_FEF2A:                              ; CODE XREF: RunMainMenu:loc_D47EA↑p
                 movem.l d2-d3/a2-a5,-(sp)
                 movea.l #$FF573C,a3
                 movea.l #$FF035E,a4
@@ -69118,7 +69118,7 @@ loc_FF288:                              ; CODE XREF: sub_FF1F0+5E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FF2A6:                              ; CODE XREF: sub_D47DE+44↑p
+sub_FF2A6:                              ; CODE XREF: RunMainMenu+44↑p
                                         ; RunUpdate_TallyScoreAndEndLevel+5D2↑p
                 movem.l d2/a2-a3,-(sp)
                 movea.l #$FF573C,a3

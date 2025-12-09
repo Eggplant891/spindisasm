@@ -1203,7 +1203,7 @@ loc_D3EDA:                              ; CODE XREF: NewLife+32↑j
                 pea     (3).w
                 clr.l   -(sp)
                 pea     (7).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 pea     ($17).w
                 jsr     sub_D567E(pc)
                 nop
@@ -1737,7 +1737,7 @@ RunUpdate:                              ; CODE XREF: RunLevelIntro:loc_D46F4↓p
                 bsr.w   RunCurrentLevelUpdate
                 jsr     RunCameraUpdate
                 jsr     RunAnimatedObjectsUpdate
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 jsr     RunUpdate_PaletteAnimations
                 tst.w   ($FF000C).l
                 beq.s   locret_D44FE
@@ -1781,7 +1781,7 @@ loc_D452C:                              ; CODE XREF: RunLevelIntro+22↑j
                 pea     (5).w
                 pea     (2).w
                 pea     (7).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
                 move.w  #$3C,(a4) ; '<'
                 addq.w  #1,(a3)
@@ -1795,7 +1795,7 @@ loc_D4558:                              ; CODE XREF: RunLevelIntro+28↑j
 
 loc_D455E:                              ; CODE XREF: RunLevelIntro+2A↑j
                                         ; RunLevelIntro+56↑j ...
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 bra.w   loc_D46F8
 ; ---------------------------------------------------------------------------
 
@@ -2294,7 +2294,7 @@ loc_D4A02:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 clr.l   -(sp)
                 clr.l   -(sp)
                 pea     (3).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $24(sp),sp
                 bra.w   loc_D4ED0
 ; ---------------------------------------------------------------------------
@@ -2353,7 +2353,7 @@ loc_D4A9C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 clr.l   -(sp)
                 clr.l   -(sp)
                 pea     (4).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $24(sp),sp
                 move.w  #4,($FFF1FA).l
                 bra.w   loc_D4ED0
@@ -2380,7 +2380,7 @@ loc_D4B2A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
 
 loc_D4B3C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+338↓j
                                         ; RunUpdate_TallyScoreAndEndLevel+4D0↓j
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
                 bra.w   loc_D49E2
 ; ---------------------------------------------------------------------------
@@ -2421,7 +2421,7 @@ loc_D4B6A:                              ; DATA XREF: RunUpdate_TallyScoreAndEndL
                 pea     (1).w
 
 loc_D4BBA:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+38C↓j
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
                 pea     ($2F).w
 
@@ -2522,7 +2522,7 @@ loc_D4CBE:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 pea     (1).w
 
 loc_D4CF4:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+488↓j
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
                 pea     (off_28).w
                 bra.w   loc_D4BC8
@@ -2710,7 +2710,7 @@ loc_D4ED0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
 
 loc_D4EE4:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5F0↑j
                                         ; RunUpdate_TallyScoreAndEndLevel+5F6↑j
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 tst.b   d3
                 beq.s   loc_D4EF4
                 jsr     RunUpdate_PaletteAnimations
@@ -3054,8 +3054,8 @@ loc_D5226:                              ; CODE XREF: VDP_UpdateVisibleTileData+2
 RunMain:                                   ; CODE XREF: ROM:000006F8↑j
                 movem.l d2/a2-a5,-(sp)
                 movea.l #$FF573C,a2
-                movea.l #RunOSDAnimationUpdate,a3
-                movea.l #QueueOSDMessage,a4
+                movea.l #OSD_RunAnimationUpdate,a3
+                movea.l #OSD_QueueMessage,a4
                 movea.l #$FF7838,a5
                 cmpi.l  #$27182818,($FFF8D0).l
                 beq.s   loc_D5270
@@ -3404,7 +3404,7 @@ loc_D558C:                              ; CODE XREF: sub_D54CE+8C↑j
                 pea     (6).w
                 pea     (2).w
                 pea     (7).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
 
 loc_D55BC:                              ; CODE XREF: sub_D54CE+C8↑j
@@ -3423,7 +3423,7 @@ loc_D55D0:                              ; CODE XREF: sub_D54CE+FA↑j
                 pea     (3).w
                 clr.l   -(sp)
                 pea     (5).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 pea     ($22).w
                 jsr     PlaySong(pc)
                 nop
@@ -14855,7 +14855,7 @@ GameOver:                               ; CODE XREF: LoseLife+76↑j
 loc_DC27C:                              ; CODE XREF: LoseLife+8A↑j
                 pea     (2).w
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 pea     ($45).w
                 jsr     PlaySong
                 lea     $30(sp),sp
@@ -16546,7 +16546,7 @@ loc_DD1AC:                              ; CODE XREF: RunPlayerUpdate+1E2↑j
                 clr.l   -(sp)
                 pea     (1).w
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 move.b  #$E,$D(a2)
                 pea     (6).w
                 pea     (7).w
@@ -16966,7 +16966,7 @@ loc_DD600:                              ; DATA XREF: RunPlayerUpdate+11A↑o
                 pea     (6).w
                 pea     (2).w
                 pea     (7).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
                 move.b  #$F,$D(a2)
                 pea     (6).w
@@ -18896,7 +18896,7 @@ loc_DE86C:                              ; CODE XREF: sub_DE816+58↓j
 
 
 sub_DE87A:                              ; CODE XREF: sub_DEBB4+50↓p
-                                        ; RunOSDAnimationUpdate+1C6↓p
+                                        ; OSD_RunAnimationUpdate+1C6↓p
 
 arg_0           =  4
 
@@ -19041,7 +19041,7 @@ loc_DE9C2:                              ; CODE XREF: OSD_ClearMessageQueue+38↓
 
 ; Attributes: bp-based frame
 
-QueueOSDMessage:                              ; CODE XREF: NewLife+CA↑p
+OSD_QueueMessage:                              ; CODE XREF: NewLife+CA↑p
                                         ; RunLevelIntro+46↑p ...
 
 var_28          = -$28
@@ -19066,19 +19066,19 @@ arg_14          =  $1C
                 cmp.l   d6,d4
                 bne.s   loc_DEA04
 
-loc_DEA00:                              ; CODE XREF: QueueOSDMessage+24↑j
+loc_DEA00:                              ; CODE XREF: OSD_QueueMessage+24↑j
                 moveq   #0,d4
                 bra.s   loc_DEA06
 ; ---------------------------------------------------------------------------
 
-loc_DEA04:                              ; CODE XREF: QueueOSDMessage+2A↑j
+loc_DEA04:                              ; CODE XREF: OSD_QueueMessage+2A↑j
                 moveq   #1,d4
 
-loc_DEA06:                              ; CODE XREF: QueueOSDMessage+2E↑j
+loc_DEA06:                              ; CODE XREF: OSD_QueueMessage+2E↑j
                 move.w  ($FF5490).l,d2
                 clr.w   d3
 
-loc_DEA0E:                              ; CODE XREF: QueueOSDMessage+1D0↓j
+loc_DEA0E:                              ; CODE XREF: OSD_QueueMessage+1D0↓j
                 move.w  d2,d0
                 move.w  d0,d1
                 lsl.w   #3,d0
@@ -19096,16 +19096,16 @@ loc_DEA0E:                              ; CODE XREF: QueueOSDMessage+1D0↓j
                 tst.l   (a2)
                 bne.s   loc_DEA38
 
-loc_DEA34:                              ; CODE XREF: QueueOSDMessage+54↑j
-                                        ; QueueOSDMessage+5A↑j
+loc_DEA34:                              ; CODE XREF: OSD_QueueMessage+54↑j
+                                        ; OSD_QueueMessage+5A↑j
                 moveq   #0,d5
                 bra.s   loc_DEA3A
 ; ---------------------------------------------------------------------------
 
-loc_DEA38:                              ; CODE XREF: QueueOSDMessage+5E↑j
+loc_DEA38:                              ; CODE XREF: OSD_QueueMessage+5E↑j
                 moveq   #1,d5
 
-loc_DEA3A:                              ; CODE XREF: QueueOSDMessage+62↑j
+loc_DEA3A:                              ; CODE XREF: OSD_QueueMessage+62↑j
                 tst.l   (a2)
                 beq.s   loc_DEA52
                 moveq   #3,d0
@@ -19116,8 +19116,8 @@ loc_DEA3A:                              ; CODE XREF: QueueOSDMessage+62↑j
                 tst.w   d5
                 bne.w   loc_DEB90
 
-loc_DEA52:                              ; CODE XREF: QueueOSDMessage+68↑j
-                                        ; QueueOSDMessage+70↑j
+loc_DEA52:                              ; CODE XREF: OSD_QueueMessage+68↑j
+                                        ; OSD_QueueMessage+70↑j
                 move.l  d6,(a2)
                 move.l  arg_4(a6),4(a2)
                 move.l  arg_8(a6),8(a2)
@@ -19128,7 +19128,7 @@ loc_DEA52:                              ; CODE XREF: QueueOSDMessage+68↑j
                 moveq   #$12,d0
                 adda.l  d0,a1
 
-loc_DEA72:                              ; CODE XREF: QueueOSDMessage+A0↓j
+loc_DEA72:                              ; CODE XREF: OSD_QueueMessage+A0↓j
                 move.b  (a0)+,(a1)+
                 bne.s   loc_DEA72
                 clr.l   $3A(a2)
@@ -19152,7 +19152,7 @@ loc_DEA72:                              ; CODE XREF: QueueOSDMessage+A0↓j
                 moveq   #1,d0
                 move.l  d0,$E(a2)
 
-loc_DEAB0:                              ; CODE XREF: QueueOSDMessage+CA↑j
+loc_DEAB0:                              ; CODE XREF: OSD_QueueMessage+CA↑j
                 move.l  8(a2),d0
                 moveq   #6,d1
                 cmp.l   d1,d0
@@ -19161,8 +19161,8 @@ loc_DEAB0:                              ; CODE XREF: QueueOSDMessage+CA↑j
                 move.w  off_DEAC4(pc,d0.l),d0
                 jmp     off_DEAC4(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DEAC4:      dc.w loc_DEB0A-*        ; DATA XREF: QueueOSDMessage+E8↑r
-                                        ; QueueOSDMessage:off_DEAC4↓o ...
+off_DEAC4:      dc.w loc_DEB0A-*        ; DATA XREF: OSD_QueueMessage+E8↑r
+                                        ; OSD_QueueMessage:off_DEAC4↓o ...
                 dc.w loc_DEADE-off_DEAC4
                 dc.w loc_DEAD2-off_DEAC4
                 dc.w loc_DEAE4-off_DEAC4
@@ -19171,21 +19171,21 @@ off_DEAC4:      dc.w loc_DEB0A-*        ; DATA XREF: QueueOSDMessage+E8↑r
                 dc.w loc_DEAF0-off_DEAC4
 ; ---------------------------------------------------------------------------
 
-loc_DEAD2:                              ; DATA XREF: QueueOSDMessage+F4↑o
+loc_DEAD2:                              ; DATA XREF: OSD_QueueMessage+F4↑o
                 move.w  $3E(a2),d0
 
-loc_DEAD6:                              ; CODE XREF: QueueOSDMessage+11A↓j
+loc_DEAD6:                              ; CODE XREF: OSD_QueueMessage+11A↓j
                 neg.w   d0
                 move.w  d0,$44(a2)
                 bra.s   loc_DEB0A
 ; ---------------------------------------------------------------------------
 
-loc_DEADE:                              ; DATA XREF: QueueOSDMessage+F2↑o
+loc_DEADE:                              ; DATA XREF: OSD_QueueMessage+F2↑o
                 move.w  (a5),$44(a2)
                 bra.s   loc_DEB0A
 ; ---------------------------------------------------------------------------
 
-loc_DEAE4:                              ; DATA XREF: QueueOSDMessage+F6↑o
+loc_DEAE4:                              ; DATA XREF: OSD_QueueMessage+F6↑o
                 move.w  $3E(a2),d0
                 ext.l   d0
                 addq.l  #1,d0
@@ -19193,27 +19193,27 @@ loc_DEAE4:                              ; DATA XREF: QueueOSDMessage+F6↑o
                 bra.s   loc_DEAD6
 ; ---------------------------------------------------------------------------
 
-loc_DEAF0:                              ; DATA XREF: QueueOSDMessage+FA↑o
-                                        ; QueueOSDMessage+FC↑o
+loc_DEAF0:                              ; DATA XREF: OSD_QueueMessage+FA↑o
+                                        ; OSD_QueueMessage+FC↑o
                 move.w  #$FFFF,$44(a2)
                 move.w  #$FFFF,$42(a2)
                 bra.s   loc_DEB0A
 ; ---------------------------------------------------------------------------
 
-loc_DEAFE:                              ; CODE XREF: QueueOSDMessage+E4↑j
-                                        ; DATA XREF: QueueOSDMessage+F8↑o
+loc_DEAFE:                              ; CODE XREF: OSD_QueueMessage+E4↑j
+                                        ; DATA XREF: OSD_QueueMessage+F8↑o
                 clr.w   $44(a2)
                 clr.w   $46(a2)
                 clr.w   $42(a2)
 
-loc_DEB0A:                              ; CODE XREF: QueueOSDMessage+108↑j
-                                        ; QueueOSDMessage+10E↑j ...
+loc_DEB0A:                              ; CODE XREF: OSD_QueueMessage+108↑j
+                                        ; OSD_QueueMessage+10E↑j ...
                 tst.b   ($FF41C2).l
                 beq.s   loc_DEB1A
                 cmp.w   ($FF5490).l,d2
                 bne.s   loc_DEB8C
 
-loc_DEB1A:                              ; CODE XREF: QueueOSDMessage+13C↑j
+loc_DEB1A:                              ; CODE XREF: OSD_QueueMessage+13C↑j
                 moveq   #1,d0
                 cmp.l   4(a2),d0
                 beq.s   loc_DEB72
@@ -19237,20 +19237,20 @@ loc_DEB1A:                              ; CODE XREF: QueueOSDMessage+13C↑j
                 movea.l #off_C1420,a0
                 move.w  (a0,d0.w),$5E(a4)
 
-loc_DEB72:                              ; CODE XREF: QueueOSDMessage+14C↑j
-                                        ; QueueOSDMessage+154↑j
+loc_DEB72:                              ; CODE XREF: OSD_QueueMessage+14C↑j
+                                        ; OSD_QueueMessage+154↑j
                 move.w  d2,($FF5490).l
                 move.b  #1,($FF41C2).l
                 clr.w   ($FF9982).l
                 clr.w   ($FF5734).l
 
-loc_DEB8C:                              ; CODE XREF: QueueOSDMessage+144↑j
+loc_DEB8C:                              ; CODE XREF: OSD_QueueMessage+144↑j
                 moveq   #1,d0
                 bra.s   loc_DEBAA
 ; ---------------------------------------------------------------------------
 
-loc_DEB90:                              ; CODE XREF: QueueOSDMessage+74↑j
-                                        ; QueueOSDMessage+7A↑j
+loc_DEB90:                              ; CODE XREF: OSD_QueueMessage+74↑j
+                                        ; OSD_QueueMessage+7A↑j
                 tst.w   d4
                 beq.s   loc_DEBA8
                 addq.w  #1,d2
@@ -19258,19 +19258,19 @@ loc_DEB90:                              ; CODE XREF: QueueOSDMessage+74↑j
                 blt.s   loc_DEB9E
                 clr.w   d2
 
-loc_DEB9E:                              ; CODE XREF: QueueOSDMessage+1C6↑j
+loc_DEB9E:                              ; CODE XREF: OSD_QueueMessage+1C6↑j
                 addq.w  #1,d3
                 cmpi.w  #3,d3
                 blt.w   loc_DEA0E
 
-loc_DEBA8:                              ; CODE XREF: QueueOSDMessage+1BE↑j
+loc_DEBA8:                              ; CODE XREF: OSD_QueueMessage+1BE↑j
                 moveq   #0,d0
 
-loc_DEBAA:                              ; CODE XREF: QueueOSDMessage+1BA↑j
+loc_DEBAA:                              ; CODE XREF: OSD_QueueMessage+1BA↑j
                 movem.l var_28(a6),d2-d7/a2-a5
                 unlk    a6
                 rts
-; End of function QueueOSDMessage
+; End of function OSD_QueueMessage
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -19350,8 +19350,8 @@ loc_DEC66:                              ; CODE XREF: sub_DEBB4+A2↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DEC6C:                              ; CODE XREF: RunOSDAnimationUpdate+2E4↓p
-                                        ; RunOSDAnimationUpdate+55E↓p
+sub_DEC6C:                              ; CODE XREF: OSD_RunAnimationUpdate+2E4↓p
+                                        ; OSD_RunAnimationUpdate+55E↓p
                 movem.l d2/a2-a4,-(sp)
                 movea.l #$FF41C4,a3
                 movea.l #$FF5490,a4
@@ -19458,8 +19458,8 @@ loc_DED72:                              ; CODE XREF: sub_DEC6C+B0↑j
 
 ; Attributes: bp-based frame
 
-OSD_ProcessAnimationForMsg:                              ; CODE XREF: RunOSDAnimationUpdate+1F2↓p
-                                        ; RunOSDAnimationUpdate+2F6↓p
+OSD_ProcessAnimationForMsg:                              ; CODE XREF: OSD_RunAnimationUpdate+1F2↓p
+                                        ; OSD_RunAnimationUpdate+2F6↓p
 
 var_2C          = -$2C
 var_4           = -4
@@ -20011,7 +20011,7 @@ loc_DF228:                              ; CODE XREF: OSD_ProcessAnimationForMsg+
 
 ; Attributes: bp-based frame
 
-RunOSDAnimationUpdate:                              ; CODE XREF: RunUpdate+1C↑p
+OSD_RunAnimationUpdate:                              ; CODE XREF: RunUpdate+1C↑p
                                         ; RunLevelIntro:loc_D455E↑p ...
 
 var_20          = -$20
@@ -20045,7 +20045,7 @@ var_4           = -4
                 bra.w   loc_DF52E
 ; ---------------------------------------------------------------------------
 
-loc_DF292:                              ; CODE XREF: RunOSDAnimationUpdate+4A↑j
+loc_DF292:                              ; CODE XREF: OSD_RunAnimationUpdate+4A↑j
                 move.l  8(a3),d0
                 moveq   #6,d1
                 cmp.l   d1,d0
@@ -20054,8 +20054,8 @@ loc_DF292:                              ; CODE XREF: RunOSDAnimationUpdate+4A↑
                 move.w  off_DF2A8(pc,d0.l),d0
                 jmp     off_DF2A8(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DF2A8:      dc.w loc_DF2B6-*        ; DATA XREF: RunOSDAnimationUpdate+6E↑r
-                                        ; RunOSDAnimationUpdate:off_DF2A8↓o ...
+off_DF2A8:      dc.w loc_DF2B6-*        ; DATA XREF: OSD_RunAnimationUpdate+6E↑r
+                                        ; OSD_RunAnimationUpdate:off_DF2A8↓o ...
                 dc.w loc_DF30A-off_DF2A8
                 dc.w loc_DF2CC-off_DF2A8
                 dc.w loc_DF2CC-off_DF2A8
@@ -20064,33 +20064,33 @@ off_DF2A8:      dc.w loc_DF2B6-*        ; DATA XREF: RunOSDAnimationUpdate+6E↑
                 dc.w loc_DF358-off_DF2A8
 ; ---------------------------------------------------------------------------
 
-loc_DF2B6:                              ; DATA XREF: RunOSDAnimationUpdate:off_DF2A8↑o
+loc_DF2B6:                              ; DATA XREF: OSD_RunAnimationUpdate:off_DF2A8↑o
                 move.w  $40(a3),d3
 
-loc_DF2BA:                              ; CODE XREF: RunOSDAnimationUpdate+B4↓j
+loc_DF2BA:                              ; CODE XREF: OSD_RunAnimationUpdate+B4↓j
                 moveq   #1,d0
 
-loc_DF2BC:                              ; CODE XREF: RunOSDAnimationUpdate+B8↓j
+loc_DF2BC:                              ; CODE XREF: OSD_RunAnimationUpdate+B8↓j
                 move.l  d0,$3A(a3)
                 bra.w   loc_DF522
 ; ---------------------------------------------------------------------------
 
-loc_DF2C4:                              ; DATA XREF: RunOSDAnimationUpdate+7E↑o
+loc_DF2C4:                              ; DATA XREF: OSD_RunAnimationUpdate+7E↑o
                 move.w  $40(a3),d3
                 bra.w   loc_DF522
 ; ---------------------------------------------------------------------------
 
-loc_DF2CC:                              ; DATA XREF: RunOSDAnimationUpdate+7A↑o
-                                        ; RunOSDAnimationUpdate+7C↑o
+loc_DF2CC:                              ; DATA XREF: OSD_RunAnimationUpdate+7A↑o
+                                        ; OSD_RunAnimationUpdate+7C↑o
                 tst.w   $C(a3)
                 bne.s   loc_DF2EC
                 move.w  $44(a3),d3
                 addq.w  #1,$44(a3)
 
-loc_DF2DA:                              ; CODE XREF: RunOSDAnimationUpdate+E6↓j
+loc_DF2DA:                              ; CODE XREF: OSD_RunAnimationUpdate+E6↓j
                 cmp.w   $40(a3),d3
 
-loc_DF2DE:                              ; CODE XREF: RunOSDAnimationUpdate+D6↓j
+loc_DF2DE:                              ; CODE XREF: OSD_RunAnimationUpdate+D6↓j
                 bne.w   loc_DF522
                 tst.w   $C(a3)
                 bne.s   loc_DF2BA
@@ -20098,10 +20098,10 @@ loc_DF2DE:                              ; CODE XREF: RunOSDAnimationUpdate+D6↓
                 bra.s   loc_DF2BC
 ; ---------------------------------------------------------------------------
 
-loc_DF2EC:                              ; CODE XREF: RunOSDAnimationUpdate+9E↑j
+loc_DF2EC:                              ; CODE XREF: OSD_RunAnimationUpdate+9E↑j
                 addq.w  #2,$44(a3)
 
-loc_DF2F0:                              ; CODE XREF: RunOSDAnimationUpdate+EC↓j
+loc_DF2F0:                              ; CODE XREF: OSD_RunAnimationUpdate+EC↓j
                 move.w  $44(a3),d3
                 andi.w  #$FFFE,d3
                 move.w  d3,d0
@@ -20112,7 +20112,7 @@ loc_DF2F0:                              ; CODE XREF: RunOSDAnimationUpdate+EC↓
                 bra.s   loc_DF2DE
 ; ---------------------------------------------------------------------------
 
-loc_DF30A:                              ; DATA XREF: RunOSDAnimationUpdate+78↑o
+loc_DF30A:                              ; DATA XREF: OSD_RunAnimationUpdate+78↑o
                 tst.w   $C(a3)
                 bne.s   loc_DF31A
                 move.w  $44(a3),d3
@@ -20120,12 +20120,12 @@ loc_DF30A:                              ; DATA XREF: RunOSDAnimationUpdate+78↑
                 bra.s   loc_DF2DA
 ; ---------------------------------------------------------------------------
 
-loc_DF31A:                              ; CODE XREF: RunOSDAnimationUpdate+DC↑j
+loc_DF31A:                              ; CODE XREF: OSD_RunAnimationUpdate+DC↑j
                 subq.w  #2,$44(a3)
                 bra.s   loc_DF2F0
 ; ---------------------------------------------------------------------------
 
-loc_DF320:                              ; DATA XREF: RunOSDAnimationUpdate+80↑o
+loc_DF320:                              ; DATA XREF: OSD_RunAnimationUpdate+80↑o
                 move.w  $40(a3),d3
                 addq.w  #1,$44(a3)
                 cmpi.w  #3,$44(a3)
@@ -20140,18 +20140,18 @@ loc_DF320:                              ; DATA XREF: RunOSDAnimationUpdate+80↑
                 bra.s   loc_DF34C
 ; ---------------------------------------------------------------------------
 
-loc_DF34A:                              ; CODE XREF: RunOSDAnimationUpdate+112↑j
+loc_DF34A:                              ; CODE XREF: OSD_RunAnimationUpdate+112↑j
                 moveq   #1,d0
 
-loc_DF34C:                              ; CODE XREF: RunOSDAnimationUpdate+116↑j
+loc_DF34C:                              ; CODE XREF: OSD_RunAnimationUpdate+116↑j
                 move.l  d0,$3A(a3)
 
-loc_DF350:                              ; CODE XREF: RunOSDAnimationUpdate+10C↑j
+loc_DF350:                              ; CODE XREF: OSD_RunAnimationUpdate+10C↑j
                 clr.w   $44(a3)
                 bra.w   loc_DF522
 ; ---------------------------------------------------------------------------
 
-loc_DF358:                              ; DATA XREF: RunOSDAnimationUpdate+82↑o
+loc_DF358:                              ; DATA XREF: OSD_RunAnimationUpdate+82↑o
                 move.w  $40(a3),d3
                 addq.w  #1,$44(a3)
                 cmpi.w  #3,$44(a3)
@@ -20162,16 +20162,16 @@ loc_DF358:                              ; DATA XREF: RunOSDAnimationUpdate+82↑
                 bra.s   loc_DF376
 ; ---------------------------------------------------------------------------
 
-loc_DF374:                              ; CODE XREF: RunOSDAnimationUpdate+13C↑j
+loc_DF374:                              ; CODE XREF: OSD_RunAnimationUpdate+13C↑j
                 moveq   #1,d0
 
-loc_DF376:                              ; CODE XREF: RunOSDAnimationUpdate+140↑j
+loc_DF376:                              ; CODE XREF: OSD_RunAnimationUpdate+140↑j
                 move.l  d0,$3A(a3)
                 move.w  #2,$44(a3)
                 bra.w   loc_DF522
 ; ---------------------------------------------------------------------------
 
-loc_DF384:                              ; CODE XREF: RunOSDAnimationUpdate+50↑j
+loc_DF384:                              ; CODE XREF: OSD_RunAnimationUpdate+50↑j
                 moveq   #3,d0
                 cmp.l   4(a3),d0
                 bne.s   loc_DF3FE
@@ -20186,7 +20186,7 @@ loc_DF384:                              ; CODE XREF: RunOSDAnimationUpdate+50↑
                 move.l  d0,-(sp)
                 jsr     sub_F641C
 
-loc_DF3B2:                              ; CODE XREF: RunOSDAnimationUpdate+1CA↓j
+loc_DF3B2:                              ; CODE XREF: OSD_RunAnimationUpdate+1CA↓j
                 move.l  a3,d0
                 moveq   #$12,d1
                 add.l   d1,d0
@@ -20198,7 +20198,7 @@ loc_DF3B2:                              ; CODE XREF: RunOSDAnimationUpdate+1CA�
                 bra.w   loc_DF524
 ; ---------------------------------------------------------------------------
 
-loc_DF3CC:                              ; CODE XREF: RunOSDAnimationUpdate+160↑j
+loc_DF3CC:                              ; CODE XREF: OSD_RunAnimationUpdate+160↑j
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -20217,7 +20217,7 @@ loc_DF3CC:                              ; CODE XREF: RunOSDAnimationUpdate+160�
                 bra.s   loc_DF3B2
 ; ---------------------------------------------------------------------------
 
-loc_DF3FE:                              ; CODE XREF: RunOSDAnimationUpdate+158↑j
+loc_DF3FE:                              ; CODE XREF: OSD_RunAnimationUpdate+158↑j
                 subq.w  #1,$C(a3)
                 bgt.w   loc_DF52E
                 moveq   #2,d0
@@ -20234,7 +20234,7 @@ loc_DF3FE:                              ; CODE XREF: RunOSDAnimationUpdate+158�
                 bra.w   loc_DF52E
 ; ---------------------------------------------------------------------------
 
-loc_DF434:                              ; CODE XREF: RunOSDAnimationUpdate+58↑j
+loc_DF434:                              ; CODE XREF: OSD_RunAnimationUpdate+58↑j
                 move.l  $E(a3),d0
                 moveq   #6,d1
                 cmp.l   d1,d0
@@ -20243,8 +20243,8 @@ loc_DF434:                              ; CODE XREF: RunOSDAnimationUpdate+58↑
                 move.w  off_DF44A(pc,d0.l),d0
                 jmp     off_DF44A(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DF44A:      dc.w loc_DF458-*        ; DATA XREF: RunOSDAnimationUpdate+210↑r
-                                        ; RunOSDAnimationUpdate:off_DF44A↓o ...
+off_DF44A:      dc.w loc_DF458-*        ; DATA XREF: OSD_RunAnimationUpdate+210↑r
+                                        ; OSD_RunAnimationUpdate:off_DF44A↓o ...
                 dc.w loc_DF488-off_DF44A
                 dc.w loc_DF464-off_DF44A
                 dc.w loc_DF488-off_DF44A
@@ -20253,16 +20253,16 @@ off_DF44A:      dc.w loc_DF458-*        ; DATA XREF: RunOSDAnimationUpdate+210�
                 dc.w loc_DF50E-off_DF44A
 ; ---------------------------------------------------------------------------
 
-loc_DF458:                              ; DATA XREF: RunOSDAnimationUpdate:off_DF44A↑o
+loc_DF458:                              ; DATA XREF: OSD_RunAnimationUpdate:off_DF44A↑o
                 move.w  ($FFF210).l,d3
 
-loc_DF45E:                              ; CODE XREF: RunOSDAnimationUpdate+254↓j
-                                        ; RunOSDAnimationUpdate+27E↓j
+loc_DF45E:                              ; CODE XREF: OSD_RunAnimationUpdate+254↓j
+                                        ; OSD_RunAnimationUpdate+27E↓j
                 clr.l   (a3)
                 bra.w   loc_DF512
 ; ---------------------------------------------------------------------------
 
-loc_DF464:                              ; DATA XREF: RunOSDAnimationUpdate+21C↑o
+loc_DF464:                              ; DATA XREF: OSD_RunAnimationUpdate+21C↑o
                 tst.w   $C(a3)
                 bne.s   loc_DF474
                 move.w  $44(a3),d3
@@ -20270,18 +20270,18 @@ loc_DF464:                              ; DATA XREF: RunOSDAnimationUpdate+21C�
                 bra.s   loc_DF47C
 ; ---------------------------------------------------------------------------
 
-loc_DF474:                              ; CODE XREF: RunOSDAnimationUpdate+236↑j
+loc_DF474:                              ; CODE XREF: OSD_RunAnimationUpdate+236↑j
                 addq.w  #2,$44(a3)
                 move.w  $44(a3),d3
 
-loc_DF47C:                              ; CODE XREF: RunOSDAnimationUpdate+240↑j
+loc_DF47C:                              ; CODE XREF: OSD_RunAnimationUpdate+240↑j
                 cmp.w   ($FFF210).l,d3
                 ble.w   loc_DF512
                 bra.s   loc_DF45E
 ; ---------------------------------------------------------------------------
 
-loc_DF488:                              ; DATA XREF: RunOSDAnimationUpdate+21A↑o
-                                        ; RunOSDAnimationUpdate+21E↑o
+loc_DF488:                              ; DATA XREF: OSD_RunAnimationUpdate+21A↑o
+                                        ; OSD_RunAnimationUpdate+21E↑o
                 tst.w   $C(a3)
                 bne.s   loc_DF498
                 move.w  $44(a3),d3
@@ -20289,11 +20289,11 @@ loc_DF488:                              ; DATA XREF: RunOSDAnimationUpdate+21A�
                 bra.s   loc_DF4A0
 ; ---------------------------------------------------------------------------
 
-loc_DF498:                              ; CODE XREF: RunOSDAnimationUpdate+25A↑j
+loc_DF498:                              ; CODE XREF: OSD_RunAnimationUpdate+25A↑j
                 subq.w  #2,$44(a3)
                 move.w  $44(a3),d3
 
-loc_DF4A0:                              ; CODE XREF: RunOSDAnimationUpdate+264↑j
+loc_DF4A0:                              ; CODE XREF: OSD_RunAnimationUpdate+264↑j
                 move.w  d3,d0
                 ext.l   d0
                 move.w  $3E(a3),d1
@@ -20304,7 +20304,7 @@ loc_DF4A0:                              ; CODE XREF: RunOSDAnimationUpdate+264�
                 bra.s   loc_DF45E
 ; ---------------------------------------------------------------------------
 
-loc_DF4B2:                              ; DATA XREF: RunOSDAnimationUpdate+222↑o
+loc_DF4B2:                              ; DATA XREF: OSD_RunAnimationUpdate+222↑o
                 move.w  $40(a3),d3
                 cmpi.w  #4,$46(a3)
                 ble.s   loc_DF512
@@ -20315,12 +20315,12 @@ loc_DF4B2:                              ; DATA XREF: RunOSDAnimationUpdate+222�
                 bra.s   loc_DF4D4
 ; ---------------------------------------------------------------------------
 
-loc_DF4CC:                              ; CODE XREF: RunOSDAnimationUpdate+2A4↓j
+loc_DF4CC:                              ; CODE XREF: OSD_RunAnimationUpdate+2A4↓j
                 movea.w d2,a0
                 move.b  (a2)+,$12(a3,a0.w)
                 addq.w  #1,d2
 
-loc_DF4D4:                              ; CODE XREF: RunOSDAnimationUpdate+298↑j
+loc_DF4D4:                              ; CODE XREF: OSD_RunAnimationUpdate+298↑j
                 tst.b   (a2)
                 bne.s   loc_DF4CC
                 tst.w   d2
@@ -20329,15 +20329,15 @@ loc_DF4D4:                              ; CODE XREF: RunOSDAnimationUpdate+298�
                 bra.s   loc_DF4F0
 ; ---------------------------------------------------------------------------
 
-loc_DF4E0:                              ; CODE XREF: RunOSDAnimationUpdate+2A8↑j
+loc_DF4E0:                              ; CODE XREF: OSD_RunAnimationUpdate+2A8↑j
                 movea.w d2,a0
                 clr.b   $11(a3,a0.w)
                 cmpi.w  #1,d2
                 bne.s   loc_DF4F0
                 clr.b   $13(a3)
 
-loc_DF4F0:                              ; CODE XREF: RunOSDAnimationUpdate+2AC↑j
-                                        ; RunOSDAnimationUpdate+2B8↑j
+loc_DF4F0:                              ; CODE XREF: OSD_RunAnimationUpdate+2AC↑j
+                                        ; OSD_RunAnimationUpdate+2B8↑j
                 move.l  a3,d0
                 moveq   #$12,d1
                 add.l   d1,d0
@@ -20353,12 +20353,12 @@ loc_DF4F0:                              ; CODE XREF: RunOSDAnimationUpdate+2AC�
                 bra.s   loc_DF512
 ; ---------------------------------------------------------------------------
 
-loc_DF50E:                              ; DATA XREF: RunOSDAnimationUpdate+220↑o
-                                        ; RunOSDAnimationUpdate+224↑o
+loc_DF50E:                              ; DATA XREF: OSD_RunAnimationUpdate+220↑o
+                                        ; OSD_RunAnimationUpdate+224↑o
                 move.w  $40(a3),d3
 
-loc_DF512:                              ; CODE XREF: RunOSDAnimationUpdate+20A↑j
-                                        ; RunOSDAnimationUpdate+22E↑j ...
+loc_DF512:                              ; CODE XREF: OSD_RunAnimationUpdate+20A↑j
+                                        ; OSD_RunAnimationUpdate+22E↑j ...
                 tst.l   (a3)
                 bne.s   loc_DF522
                 bsr.w   sub_DEC6C
@@ -20367,18 +20367,18 @@ loc_DF512:                              ; CODE XREF: RunOSDAnimationUpdate+20A�
                 bra.w   loc_DF794
 ; ---------------------------------------------------------------------------
 
-loc_DF522:                              ; CODE XREF: RunOSDAnimationUpdate+68↑j
-                                        ; RunOSDAnimationUpdate+8E↑j ...
+loc_DF522:                              ; CODE XREF: OSD_RunAnimationUpdate+68↑j
+                                        ; OSD_RunAnimationUpdate+8E↑j ...
                 move.w  d3,d0
 
-loc_DF524:                              ; CODE XREF: RunOSDAnimationUpdate+196↑j
+loc_DF524:                              ; CODE XREF: OSD_RunAnimationUpdate+196↑j
                 move.l  d0,-(sp)
                 move.l  a3,-(sp)
                 bsr.w   OSD_ProcessAnimationForMsg
                 addq.l  #8,sp
 
-loc_DF52E:                              ; CODE XREF: RunOSDAnimationUpdate+20↑j
-                                        ; RunOSDAnimationUpdate+5C↑j ...
+loc_DF52E:                              ; CODE XREF: OSD_RunAnimationUpdate+20↑j
+                                        ; OSD_RunAnimationUpdate+5C↑j ...
                 subq.w  #1,($FF5734).l
                 bgt.w   loc_DF794
                 move.w  #1,($FF5734).l
@@ -20427,40 +20427,40 @@ loc_DF52E:                              ; CODE XREF: RunOSDAnimationUpdate+20↑
                 move.w  off_DF5D6(pc,d0.l),d0
                 jmp     off_DF5D6(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DF5D6:      dc.w loc_DF5F6-*        ; DATA XREF: RunOSDAnimationUpdate+39C↑r
-                                        ; RunOSDAnimationUpdate:off_DF5D6↓o ...
+off_DF5D6:      dc.w loc_DF5F6-*        ; DATA XREF: OSD_RunAnimationUpdate+39C↑r
+                                        ; OSD_RunAnimationUpdate:off_DF5D6↓o ...
                 dc.w loc_DF5EE-off_DF5D6
                 dc.w loc_DF5EA-off_DF5D6
                 dc.w loc_DF5E6-off_DF5D6
                 dc.w loc_DF5E0-off_DF5D6
 ; ---------------------------------------------------------------------------
 
-loc_DF5E0:                              ; CODE XREF: RunOSDAnimationUpdate+398↑j
-                                        ; DATA XREF: RunOSDAnimationUpdate+3AC↑o
+loc_DF5E0:                              ; CODE XREF: OSD_RunAnimationUpdate+398↑j
+                                        ; DATA XREF: OSD_RunAnimationUpdate+3AC↑o
                 moveq   #1,d0
                 move.l  d0,$3A(a3)
 
-loc_DF5E6:                              ; DATA XREF: RunOSDAnimationUpdate+3AA↑o
+loc_DF5E6:                              ; DATA XREF: OSD_RunAnimationUpdate+3AA↑o
                 move.w  (a4),$1E(a2)
 
-loc_DF5EA:                              ; DATA XREF: RunOSDAnimationUpdate+3A8↑o
+loc_DF5EA:                              ; DATA XREF: OSD_RunAnimationUpdate+3A8↑o
                 move.w  (a5),$1C(a2)
 
-loc_DF5EE:                              ; DATA XREF: RunOSDAnimationUpdate+3A6↑o
+loc_DF5EE:                              ; DATA XREF: OSD_RunAnimationUpdate+3A6↑o
                 movea.l var_8(a6),a0
                 move.w  (a0),$1A(a2)
 
-loc_DF5F6:                              ; DATA XREF: RunOSDAnimationUpdate:off_DF5D6↑o
+loc_DF5F6:                              ; DATA XREF: OSD_RunAnimationUpdate:off_DF5D6↑o
                 movea.l var_4(a6),a0
                 move.w  (a0),$18(a2)
 
-loc_DF5FE:                              ; CODE XREF: RunOSDAnimationUpdate+428↓j
+loc_DF5FE:                              ; CODE XREF: OSD_RunAnimationUpdate+428↓j
                 move.w  #3,($FF5734).l
                 bra.w   loc_DF78C
 ; ---------------------------------------------------------------------------
 
-loc_DF60A:                              ; CODE XREF: RunOSDAnimationUpdate+37E↑j
-                                        ; RunOSDAnimationUpdate+386↑j
+loc_DF60A:                              ; CODE XREF: OSD_RunAnimationUpdate+37E↑j
+                                        ; OSD_RunAnimationUpdate+386↑j
                 moveq   #2,d0
                 cmp.l   $3A(a3),d0
                 bne.s   loc_DF65C
@@ -20478,34 +20478,34 @@ loc_DF60A:                              ; CODE XREF: RunOSDAnimationUpdate+37E�
                 move.w  off_DF636(pc,d0.l),d0
                 jmp     off_DF636(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DF636:      dc.w loc_DF654-*        ; DATA XREF: RunOSDAnimationUpdate+3FC↑r
-                                        ; RunOSDAnimationUpdate:off_DF636↓o ...
+off_DF636:      dc.w loc_DF654-*        ; DATA XREF: OSD_RunAnimationUpdate+3FC↑r
+                                        ; OSD_RunAnimationUpdate:off_DF636↓o ...
                 dc.w loc_DF64E-off_DF636
                 dc.w loc_DF648-off_DF636
                 dc.w loc_DF642-off_DF636
                 dc.w loc_DF640-off_DF636
 ; ---------------------------------------------------------------------------
 
-loc_DF640:                              ; CODE XREF: RunOSDAnimationUpdate+3F8↑j
-                                        ; DATA XREF: RunOSDAnimationUpdate+40C↑o
+loc_DF640:                              ; CODE XREF: OSD_RunAnimationUpdate+3F8↑j
+                                        ; DATA XREF: OSD_RunAnimationUpdate+40C↑o
                 clr.l   (a3)
 
-loc_DF642:                              ; DATA XREF: RunOSDAnimationUpdate+40A↑o
+loc_DF642:                              ; DATA XREF: OSD_RunAnimationUpdate+40A↑o
                 move.w  4(a2),$18(a2)
 
-loc_DF648:                              ; DATA XREF: RunOSDAnimationUpdate+408↑o
+loc_DF648:                              ; DATA XREF: OSD_RunAnimationUpdate+408↑o
                 move.w  4(a2),$1A(a2)
 
-loc_DF64E:                              ; DATA XREF: RunOSDAnimationUpdate+406↑o
+loc_DF64E:                              ; DATA XREF: OSD_RunAnimationUpdate+406↑o
                 move.w  4(a2),$1C(a2)
 
-loc_DF654:                              ; DATA XREF: RunOSDAnimationUpdate:off_DF636↑o
+loc_DF654:                              ; DATA XREF: OSD_RunAnimationUpdate:off_DF636↑o
                 move.w  4(a2),$1E(a2)
                 bra.s   loc_DF5FE
 ; ---------------------------------------------------------------------------
 
-loc_DF65C:                              ; CODE XREF: RunOSDAnimationUpdate+3DE↑j
-                                        ; RunOSDAnimationUpdate+3E6↑j
+loc_DF65C:                              ; CODE XREF: OSD_RunAnimationUpdate+3DE↑j
+                                        ; OSD_RunAnimationUpdate+3E6↑j
                 moveq   #2,d0
                 cmp.l   $3A(a3),d0
                 bne.s   loc_DF6A0
@@ -20522,22 +20522,22 @@ loc_DF65C:                              ; CODE XREF: RunOSDAnimationUpdate+3DE�
                 cmp.w   d1,d0
                 beq.s   loc_DF688
 
-loc_DF682:                              ; CODE XREF: RunOSDAnimationUpdate+448↑j
+loc_DF682:                              ; CODE XREF: OSD_RunAnimationUpdate+448↑j
                 move.w  4(a2),$1A(a2)
 
-loc_DF688:                              ; CODE XREF: RunOSDAnimationUpdate+44E↑j
+loc_DF688:                              ; CODE XREF: OSD_RunAnimationUpdate+44E↑j
                 move.w  4(a2),$18(a2)
 
-loc_DF68E:                              ; CODE XREF: RunOSDAnimationUpdate+4BC↓j
+loc_DF68E:                              ; CODE XREF: OSD_RunAnimationUpdate+4BC↓j
                 move.w  4(a2),$1E(a2)
 
-loc_DF694:                              ; CODE XREF: RunOSDAnimationUpdate+4D6↓j
+loc_DF694:                              ; CODE XREF: OSD_RunAnimationUpdate+4D6↓j
                 move.w  #4,($FF5734).l
                 bra.w   loc_DF78C
 ; ---------------------------------------------------------------------------
 
-loc_DF6A0:                              ; CODE XREF: RunOSDAnimationUpdate+430↑j
-                                        ; RunOSDAnimationUpdate+438↑j
+loc_DF6A0:                              ; CODE XREF: OSD_RunAnimationUpdate+430↑j
+                                        ; OSD_RunAnimationUpdate+438↑j
                 moveq   #2,d0
                 cmp.l   $3A(a3),d0
                 bne.s   loc_DF70A
@@ -20555,8 +20555,8 @@ loc_DF6A0:                              ; CODE XREF: RunOSDAnimationUpdate+430�
                 move.w  off_DF6CC(pc,d0.l),d0
                 jmp     off_DF6CC(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DF6CC:      dc.w loc_DF6DC-*        ; DATA XREF: RunOSDAnimationUpdate+492↑r
-                                        ; RunOSDAnimationUpdate:off_DF6CC↓o ...
+off_DF6CC:      dc.w loc_DF6DC-*        ; DATA XREF: OSD_RunAnimationUpdate+492↑r
+                                        ; OSD_RunAnimationUpdate:off_DF6CC↓o ...
                 dc.w loc_DF6F0-off_DF6CC
                 dc.w loc_DF6DC-off_DF6CC
                 dc.w loc_DF6F0-off_DF6CC
@@ -20565,20 +20565,20 @@ off_DF6CC:      dc.w loc_DF6DC-*        ; DATA XREF: RunOSDAnimationUpdate+492�
                 dc.w loc_DF6DA-off_DF6CC
 ; ---------------------------------------------------------------------------
 
-loc_DF6DA:                              ; CODE XREF: RunOSDAnimationUpdate+48E↑j
-                                        ; DATA XREF: RunOSDAnimationUpdate+4A6↑o
+loc_DF6DA:                              ; CODE XREF: OSD_RunAnimationUpdate+48E↑j
+                                        ; DATA XREF: OSD_RunAnimationUpdate+4A6↑o
                 clr.l   (a3)
 
-loc_DF6DC:                              ; DATA XREF: RunOSDAnimationUpdate:off_DF6CC↑o
-                                        ; RunOSDAnimationUpdate+49E↑o ...
+loc_DF6DC:                              ; DATA XREF: OSD_RunAnimationUpdate:off_DF6CC↑o
+                                        ; OSD_RunAnimationUpdate+49E↑o ...
                 move.w  4(a2),$18(a2)
                 move.w  4(a2),$1A(a2)
                 move.w  4(a2),$1C(a2)
                 bra.s   loc_DF68E
 ; ---------------------------------------------------------------------------
 
-loc_DF6F0:                              ; DATA XREF: RunOSDAnimationUpdate+49C↑o
-                                        ; RunOSDAnimationUpdate+4A0↑o ...
+loc_DF6F0:                              ; DATA XREF: OSD_RunAnimationUpdate+49C↑o
+                                        ; OSD_RunAnimationUpdate+4A0↑o ...
                 movea.l var_4(a6),a0
                 move.w  (a0),$18(a2)
                 movea.l var_8(a6),a0
@@ -20588,8 +20588,8 @@ loc_DF6F0:                              ; DATA XREF: RunOSDAnimationUpdate+49C�
                 bra.s   loc_DF694
 ; ---------------------------------------------------------------------------
 
-loc_DF70A:                              ; CODE XREF: RunOSDAnimationUpdate+474↑j
-                                        ; RunOSDAnimationUpdate+47C↑j
+loc_DF70A:                              ; CODE XREF: OSD_RunAnimationUpdate+474↑j
+                                        ; OSD_RunAnimationUpdate+47C↑j
                 move.l  4(a3),d0
                 moveq   #4,d1
                 cmp.l   d1,d0
@@ -20598,16 +20598,16 @@ loc_DF70A:                              ; CODE XREF: RunOSDAnimationUpdate+474�
                 move.w  off_DF71E(pc,d0.l),d0
                 jmp     off_DF71E(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_DF71E:      dc.w loc_DF728-*        ; DATA XREF: RunOSDAnimationUpdate+4E4↑r
-                                        ; RunOSDAnimationUpdate:off_DF71E↓o ...
+off_DF71E:      dc.w loc_DF728-*        ; DATA XREF: OSD_RunAnimationUpdate+4E4↑r
+                                        ; OSD_RunAnimationUpdate:off_DF71E↓o ...
                 dc.w loc_DF742-off_DF71E
                 dc.w loc_DF76A-off_DF71E
                 dc.w loc_DF728-off_DF71E
                 dc.w loc_DF728-off_DF71E
 ; ---------------------------------------------------------------------------
 
-loc_DF728:                              ; CODE XREF: RunOSDAnimationUpdate+51C↓j
-                                        ; DATA XREF: RunOSDAnimationUpdate:off_DF71E↑o ...
+loc_DF728:                              ; CODE XREF: OSD_RunAnimationUpdate+51C↓j
+                                        ; DATA XREF: OSD_RunAnimationUpdate:off_DF71E↑o ...
                 movea.l var_4(a6),a0
                 move.w  (a0),$18(a2)
                 movea.l var_8(a6),a0
@@ -20617,7 +20617,7 @@ loc_DF728:                              ; CODE XREF: RunOSDAnimationUpdate+51C�
                 bra.s   loc_DF78C
 ; ---------------------------------------------------------------------------
 
-loc_DF742:                              ; DATA XREF: RunOSDAnimationUpdate+4EE↑o
+loc_DF742:                              ; DATA XREF: OSD_RunAnimationUpdate+4EE↑o
                 move.w  $46(a3),d0
                 addq.w  #1,$46(a3)
                 andi.w  #4,d0
@@ -20629,7 +20629,7 @@ loc_DF742:                              ; DATA XREF: RunOSDAnimationUpdate+4EE�
                 bra.s   loc_DF78C
 ; ---------------------------------------------------------------------------
 
-loc_DF76A:                              ; DATA XREF: RunOSDAnimationUpdate+4F0↑o
+loc_DF76A:                              ; DATA XREF: OSD_RunAnimationUpdate+4F0↑o
                 move.w  $18(a2),d2
                 move.w  $1A(a2),$18(a2)
                 move.w  $1C(a2),$1A(a2)
@@ -20637,21 +20637,21 @@ loc_DF76A:                              ; DATA XREF: RunOSDAnimationUpdate+4F0�
                 move.w  d2,$1E(a2)
                 move.w  #$C,($FF5734).l
 
-loc_DF78C:                              ; CODE XREF: RunOSDAnimationUpdate+3D4↑j
-                                        ; RunOSDAnimationUpdate+46A↑j ...
+loc_DF78C:                              ; CODE XREF: OSD_RunAnimationUpdate+3D4↑j
+                                        ; OSD_RunAnimationUpdate+46A↑j ...
                 tst.l   (a3)
                 bne.s   loc_DF794
                 bsr.w   sub_DEC6C
 
-loc_DF794:                              ; CODE XREF: RunOSDAnimationUpdate+2EC↑j
-                                        ; RunOSDAnimationUpdate+302↑j ...
+loc_DF794:                              ; CODE XREF: OSD_RunAnimationUpdate+2EC↑j
+                                        ; OSD_RunAnimationUpdate+302↑j ...
                 ori.w   #8,($FF559E).l
 
-loc_DF79C:                              ; CODE XREF: RunOSDAnimationUpdate+E↑j
+loc_DF79C:                              ; CODE XREF: OSD_RunAnimationUpdate+E↑j
                 movem.l var_20(a6),d2-d3/a2-a5
                 unlk    a6
                 rts
-; End of function RunOSDAnimationUpdate
+; End of function OSD_RunAnimationUpdate
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -21004,7 +21004,7 @@ arg_0           =  8
                 link    a6,#-$3C
                 movem.l d2-d4/a2-a5,-(sp)
                 move.l  arg_0(a6),d4
-                movea.l #QueueOSDMessage,a3
+                movea.l #OSD_QueueMessage,a3
                 movea.l #PlaySong,a4
                 lea     var_3C(a6),a5
                 cmp.w   ($FF027C).l,d4
@@ -24214,7 +24214,7 @@ ls_messageBuffer= -$3C
                 link    a6,#-$3C
                 movem.l d2/a2-a3,-(sp)
                 lea     ls_messageBuffer(a6),a2
-                movea.l #QueueOSDMessage,a3
+                movea.l #OSD_QueueMessage,a3
                 move.w  ($FF5736).l,d0
                 ext.l   d0
                 addq.l  #1,d0
@@ -24545,7 +24545,7 @@ arg_0           =  4
                 pea     (3).w
                 clr.l   -(sp)
                 pea     (5).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $1C(sp),sp
                 pea     (aFindTheBonusGa).l ; "FIND THE BONUS GATES!"
                 pea     (off_4).w
@@ -24553,7 +24553,7 @@ arg_0           =  4
                 pea     (6).w
                 pea     (2).w
                 pea     (7).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 pea     ($12).w
                 jsr     sub_D567E
                 lea     $1C(sp),sp
@@ -24585,7 +24585,7 @@ arg_0           =  4
                 pea     (1).w
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 pea     ($D).w
                 jsr     sub_D567E
                 move.w  $14(a2),d0
@@ -25007,7 +25007,7 @@ arg_0           =  8
                 pea     (5).w
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 movea.l var_18(a6),a2
                 unlk    a6
                 rts
@@ -25703,14 +25703,14 @@ loc_E275E:                              ; DATA XREF: sub_E206A+6A4↑o
                 pea     (off_4).w
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 pea     (aQuickGetOff___).l ; "QUICK, GET OFF..."
                 clr.l   -(sp)
                 pea     (off_3C).w
                 pea     (3).w
                 pea     (1).w
                 pea     (2).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $30(sp),sp
                 move.b  #3,8(a2)
                 move.b  #5,9(a2)
@@ -25878,7 +25878,7 @@ loc_E2980:                              ; CODE XREF: sub_E206A+910↑j
                 pea     (1).w
                 pea     (2).w
                 pea     (1).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
 
 loc_E29B0:                              ; CODE XREF: sub_E206A+900↑j
@@ -30125,7 +30125,7 @@ loc_E55DC:                              ; CODE XREF: sub_E5138+4A0↑j
                 pea     (off_4).w
                 clr.l   -(sp)
                 pea     (1).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $1C(sp),sp
 
 loc_E5618:                              ; CODE XREF: sub_E5138+4B0↑j
@@ -56262,7 +56262,7 @@ loc_F6416:                              ; CODE XREF: sub_F6382+20↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F641C:                              ; CODE XREF: RunOSDAnimationUpdate+17A↑p
+sub_F641C:                              ; CODE XREF: OSD_RunAnimationUpdate+17A↑p
                                         ; sub_F64EC+4C↓p
 
 arg_0           =  4
@@ -56427,7 +56427,7 @@ pbsm_MessageNo  =  4
 
                 movem.l d2/a2,-(sp)
                 move.l  8+pbsm_MessageNo(sp),d2
-                movea.l #QueueOSDMessage,a2
+                movea.l #OSD_QueueMessage,a2
                 cmpi.w  #$C,d2
                 bne.s   loc_F65C0
                 tst.w   ($FF547C).l
@@ -62914,7 +62914,7 @@ loc_FA54C:                              ; CODE XREF: sub_FA536+4A↓j
 
 loc_FA560:                              ; CODE XREF: sub_FA536+3C↓j
                 jsr     WaitForFF0000
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 addq.l  #1,d2
                 moveq   #6,d0
                 cmp.l   d2,d0
@@ -65013,7 +65013,7 @@ loc_FC668:                              ; CODE XREF: RunUpdate_BonusStage+20D8�
                 jsr     OSD_ClearMessageQueue
                 pea     ($2B).w
                 bsr.w   BonusStage_DisplayOSDMessage
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 jsr     WaitForFF0000
                 bra.s   loc_FC6D4
 ; ---------------------------------------------------------------------------
@@ -65076,7 +65076,7 @@ loc_FC758:                              ; CODE XREF: RunUpdate_BonusStage+2194�
                 pea     (off_2C).w
                 bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #8,sp
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 jsr     WaitForFF0000
                 jsr     GEMSResumeAll
 
@@ -66794,7 +66794,7 @@ loc_FDA24:                              ; CODE XREF: RunUpdate_BonusStage+34E8�
                 bgt.s   loc_FDA24
                 clr.l   ($FFA8F4).l
                 move.w  #9,($FF559E).l
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 tst.w   ($FF41C0).l
                 beq.s   loc_FDAF2
                 jsr     ScreenTransition_FromBlack
@@ -67243,7 +67243,7 @@ loc_FDFDC:                              ; CODE XREF: RunUpdate_BonusStage+36DA�
                 pea     (off_2C).w
                 bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 jsr     WaitForFF0000
                 movea.l #$C00004,a0
                 move.l  a0,var_50(a6)
@@ -67601,7 +67601,7 @@ loc_FE2E8:                              ; CODE XREF: RunUpdate_BonusStage+3DAE�
                 eor.b   d1,d0
                 and.b   ($FF573D).l,d0
                 move.b  d0,($FF573C).l
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
                 addq.l  #1,d3
 
 loc_FE328:                              ; CODE XREF: RunUpdate_BonusStage+3D5E↑j
@@ -68758,7 +68758,7 @@ loc_FEED0:                              ; CODE XREF: sub_FED7E+136↑j
                 pea     (off_4).w
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
                 cmpi.w  #5,d2
                 bge.s   loc_FEF0E
@@ -68959,7 +68959,7 @@ loc_FF0C0:                              ; CODE XREF: sub_FEF2A+184↑j
                 clr.l   -(sp)
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 pea     (1).w
                 jsr     sub_FF834(pc)
                 nop
@@ -69361,7 +69361,7 @@ loc_FF51A:                              ; CODE XREF: sub_FF4B4+94↓j
                 clr.l   -(sp)
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 move.w  d4,d0
                 move.l  d0,-(sp)
                 jsr     sub_FF7F0(pc)
@@ -69392,9 +69392,9 @@ loc_FF54C:                              ; CODE XREF: sub_FF4B4+3A↑j
                 clr.l   -(sp)
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
 
 loc_FF592:                              ; CODE XREF: sub_FF4B4+E8↓j
                 move.w  ($FF559E).l,d0
@@ -69446,7 +69446,7 @@ loc_FF5E0:                              ; CODE XREF: sub_FF5A4+94↓j
                 pea     (off_4).w
                 clr.l   -(sp)
                 pea     (6).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $18(sp),sp
                 move.w  d2,d0
                 ext.l   d0
@@ -69570,7 +69570,7 @@ loc_FF6E4:                              ; CODE XREF: sub_FF6B4+76↓j
                 pea     (off_4).w
                 clr.l   -(sp)
                 pea     (7).w
-                jsr     QueueOSDMessage
+                jsr     OSD_QueueMessage
                 lea     $20(sp),sp
                 cmpi.w  #4,d2
                 bge.s   loc_FF724
@@ -69669,7 +69669,7 @@ arg_0           =  4
 
                 movem.l d2-d3,-(sp)
                 move.l  8+arg_0(sp),d2
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
 
 loc_FF7FE:                              ; CODE XREF: sub_FF7F0+18↓j
                 move.w  ($FF559E).l,d0
@@ -69716,7 +69716,7 @@ arg_0           =  4
 
 loc_FF858:                              ; CODE XREF: sub_FF834+48↓j
                 jsr     RunAnimatedObjectsUpdate
-                jsr     RunOSDAnimationUpdate
+                jsr     OSD_RunAnimationUpdate
 
 loc_FF864:                              ; CODE XREF: sub_FF834+22↑j
                 tst.w   d2

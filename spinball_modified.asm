@@ -97,7 +97,7 @@ off_90:         dc.l Trap               ; DATA XREF: ROM:0000F21C↓o
 off_94:         dc.l Trap               ; DATA XREF: ROM:00013FFC↓o
                                         ; ROM:0005D410↓o ...
 off_98:         dc.l Trap               ; DATA XREF: StartGame+4↓o
-                                        ; sub_E9A56+4A↓o ...
+                                        ; RunBossRoomExploding_ToxicCaves+4A↓o ...
 off_9C:         dc.l Trap               ; DATA XREF: ROM:00057BC8↓o
                                         ; ROM:000D3634↓o ...
 off_A0:         dc.l Trap               ; DATA XREF: ROM:00022DB0↓o
@@ -224,7 +224,7 @@ SkipTMSS:                               ; CODE XREF: ROM:loc_224↑j
                 move.w  (a4),d0
 
 loc_230:                                ; DATA XREF: ROM:off_6664↓o
-                                        ; sub_E9A56+5A↓o ...
+                                        ; RunBossRoomExploding_ToxicCaves+5A↓o ...
                 moveq   #0,d0
 
 loc_232:                                ; DATA XREF: ROM:00003913↓o
@@ -342,7 +342,7 @@ dword_2A0:      dc.l $C00000            ; DATA XREF: ROM:00061F48↓o
 dword_2A4:      dc.l $C00004            ; DATA XREF: ROM:0009C4D0↓o
                                         ; Initial a4 - VDP Control
 InitialVDPRegs: dc.b %00000100          ; DATA XREF: ROM:000C29CC↓o
-                                        ; sub_F0E5A+5A↓o
+                                        ; RunBossRoomExploding_TheMachine+5A↓o
                                         ; 0 - No counters, no HInt
                 dc.b %00010100          ; 1 - NTSC (V28), DMA on, no VInt, no display
                 dc.b %00110000          ; 2 - Scroll A at VRAM $C000
@@ -352,7 +352,7 @@ InitialVDPRegs: dc.b %00000100          ; DATA XREF: ROM:000C29CC↓o
                 dc.b %00000000          ; 6 - Always zero
                 dc.b %00000000          ; 7 - Background color is palette 0, color 0
 byte_2B0:       dc.b %00000000          ; DATA XREF: ROM:000C005C↓o
-                                        ; sub_E4B64+B2↓o
+                                        ; RunBossRoomExploding_LavaPowerhouse+B2↓o
                                         ; 8 - Always zero
                 dc.b %00000000          ; 9 - Always zero
 byte_2B2:       dc.b %11111111          ; DATA XREF: ROM:00094230↓o
@@ -363,7 +363,7 @@ byte_2B2:       dc.b %11111111          ; DATA XREF: ROM:00094230↓o
                 dc.b %00110111          ; 13 - H Scroll at VRAM $DC00
                 dc.b %00000000          ; 14 - Always zero
                 dc.b %00000001          ; 15 - Autoincrement data address by 1
-byte_2B8:       dc.b %00000001          ; DATA XREF: sub_E4B64+80↓o
+byte_2B8:       dc.b %00000001          ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+80↓o
                                         ; 16 - Scroll size V32, H64
                 dc.b %00000000          ; 17 - Window at extreme left of screen
 byte_2BA:       dc.b %00000000          ; DATA XREF: ROM:0009C520↓o
@@ -374,23 +374,23 @@ byte_2BB:       dc.b %11111111          ; DATA XREF: ROM:00058BB0↓o
                 dc.b %00000000          ; 21-23 - DMA Source Address $0, VRAM Fill
                 dc.b %00000000
                 dc.b %10000000
-unk_2C0:        dc.b $40 ; @            ; DATA XREF: sub_E4B64+8A↓o
+unk_2C0:        dc.b $40 ; @            ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+8A↓o
 off_2C1:        dc.l byte_80AF          ; DATA XREF: ROM:000C2D9C↓o
                 dc.b 1, $D9, $1F
 dword_2C8:      dc.l $11270021, $2600F977
                                         ; DATA XREF: ROM:00098894↓o
-unk_2D0:        dc.b $ED                ; DATA XREF: sub_E9A56+56↓o
+unk_2D0:        dc.b $ED                ; DATA XREF: RunBossRoomExploding_ToxicCaves+56↓o
 byte_2D1:       dc.b $B0, $DD, $E1      ; DATA XREF: ROM:000988A0↓o
                 dc.l $FDE1ED47
-unk_2D8:        dc.b $ED                ; DATA XREF: sub_E4B64+94↓o
+unk_2D8:        dc.b $ED                ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+94↓o
                 dc.b $4F, $D1, $E1
                 dc.l $F108D9C1
 unk_2E0:        dc.b $D1                ; DATA XREF: sub_F2808+2E↓o
                 dc.b $E1, $F1, $F9
                 dc.l $F3ED5636
 dword_2E8:      dc.l $E9E98104, $8F02C000, $4000, $109FBF
-                                        ; DATA XREF: sub_E4B64+9E↓o
-byte_2F8:       dc.b $DF, $FF           ; DATA XREF: sub_E4B64+A8↓o
+                                        ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+9E↓o
+byte_2F8:       dc.b $DF, $FF           ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+A8↓o
 ; ---------------------------------------------------------------------------
 
 cstart:                                 ; CODE XREF: ROM:PortC_OK↑j
@@ -413,7 +413,7 @@ loc_30C:                                ; DATA XREF: ROM:000C1FF0↓o
                                         ; ROM:00021CB0↓o ...
                 lea     RegionCodes(pc),a0
 
-loc_310:                                ; DATA XREF: sub_E4B64:loc_E4BFE↓o
+loc_310:                                ; DATA XREF: RunBossRoomExploding_LavaPowerhouse:loc_E4BFE↓o
                                         ; ROM:00002AF8↓o ...
                 move.b  (a0,d0.w),d0
                 tst.b   d0
@@ -437,23 +437,23 @@ loc_332:                                ; DATA XREF: ROM:00038704↓o
                                         ; ROM:0002416C↓o
                 lea     ($C00004).l,a5
 
-loc_338:                                ; DATA XREF: sub_E4B64:loc_E4BEA↓o
+loc_338:                                ; DATA XREF: RunBossRoomExploding_LavaPowerhouse:loc_E4BEA↓o
                 move.w  #$8164,(a5)
                 move.w  #$8230,(a5)
 
-loc_340:                                ; DATA XREF: sub_E4B64:loc_E4BE0↓o
+loc_340:                                ; DATA XREF: RunBossRoomExploding_LavaPowerhouse:loc_E4BE0↓o
                                         ; ROM:0000AB2C↓o
                 move.w  #$8C81,(a5)
                 move.w  #$8F02,(a5)
 
-loc_348:                                ; DATA XREF: sub_E4B64:loc_E4C12↓o
+loc_348:                                ; DATA XREF: RunBossRoomExploding_LavaPowerhouse:loc_E4C12↓o
                                         ; ROM:0005E754↓o
                 move.w  #$9001,(a5)
 
 loc_34C:                                ; DATA XREF: ROM:00024058↓o
                 move.l  #$C0020000,(a5)
 
-loc_352:                                ; DATA XREF: sub_EDBBC+5A↓o
+loc_352:                                ; DATA XREF: RunBossRoomExploding_Showdown+5A↓o
                                         ; ROM:00024394↓o
                 move.w  #$EEE,(a4)
                 move.l  #$40000000,(a5)
@@ -3235,36 +3235,36 @@ GAME_STATE_BOSS_ROOM_EXPLODING:                              ; DATA XREF: RunMai
                 ext.l   d0
                 moveq   #3,d1
                 cmp.l   d1,d0
-                bhi.s   loc_D545C
+                bhi.s   BossRoomExploding_LevelJumpTable_Break
                 add.l   d0,d0
-                move.w  off_D5436(pc,d0.l),d0
-                jmp     off_D5436(pc,d0.w)
+                move.w  BossRoomExploding_LevelJumpTable(pc,d0.l),d0
+                jmp     BossRoomExploding_LevelJumpTable(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D5436:      dc.w loc_D543E-*
-                dc.w loc_D5446-off_D5436
-                dc.w loc_D544E-off_D5436
-                dc.w loc_D5456-off_D5436
-; ---------------------------------------------------------------------------
-
-loc_D543E:                              ; DATA XREF: RunMain:off_D5436↑o
-                jsr     sub_E9A56
-                bra.s   loc_D545C
+BossRoomExploding_LevelJumpTable:      dc.w BossRoomExploding_ToxicCaves-*
+                dc.w BossRoomExploding_LavaPowerhouse-BossRoomExploding_LevelJumpTable
+                dc.w BossRoomExploding_TheMachine-BossRoomExploding_LevelJumpTable
+                dc.w BossRoomExploding_Showdown-BossRoomExploding_LevelJumpTable
 ; ---------------------------------------------------------------------------
 
-loc_D5446:                              ; DATA XREF: RunMain+208↑o
-                jsr     sub_E4B64
-                bra.s   loc_D545C
+BossRoomExploding_ToxicCaves:                              ; DATA XREF: RunMain:BossRoomExploding_LevelJumpTable↑o
+                jsr     RunBossRoomExploding_ToxicCaves
+                bra.s   BossRoomExploding_LevelJumpTable_Break
 ; ---------------------------------------------------------------------------
 
-loc_D544E:                              ; DATA XREF: RunMain+20A↑o
-                jsr     sub_F0E5A
-                bra.s   loc_D545C
+BossRoomExploding_LavaPowerhouse:                              ; DATA XREF: RunMain+208↑o
+                jsr     RunBossRoomExploding_LavaPowerhouse
+                bra.s   BossRoomExploding_LevelJumpTable_Break
 ; ---------------------------------------------------------------------------
 
-loc_D5456:                              ; DATA XREF: RunMain+20C↑o
-                jsr     sub_EDBBC
+BossRoomExploding_TheMachine:                              ; DATA XREF: RunMain+20A↑o
+                jsr     RunBossRoomExploding_TheMachine
+                bra.s   BossRoomExploding_LevelJumpTable_Break
+; ---------------------------------------------------------------------------
 
-loc_D545C:                              ; CODE XREF: RunMain+1FA↑j
+BossRoomExploding_Showdown:                              ; DATA XREF: RunMain+20C↑o
+                jsr     RunBossRoomExploding_Showdown
+
+BossRoomExploding_LevelJumpTable_Break:                              ; CODE XREF: RunMain+1FA↑j
                                         ; RunMain+214↑j ...
                 jsr     RunCameraUpdate
 
@@ -26626,7 +26626,7 @@ arg_0           =  4
 
 
 sub_E30F0:                              ; CODE XREF: sub_E312A+1C↓p
-                                        ; sub_E4B64+4E6↓p ...
+                                        ; RunBossRoomExploding_LavaPowerhouse+4E6↓p ...
 
 arg_0           =  4
 
@@ -29116,7 +29116,7 @@ loc_E4B26:                              ; CODE XREF: sub_E4AC6+46↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E4B64:                              ; CODE XREF: RunMain:loc_D5446↑p
+RunBossRoomExploding_LavaPowerhouse:                              ; CODE XREF: RunMain:BossRoomExploding_LavaPowerhouse↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #sub_D69E4,a4
                 movea.l #$FF559E,a5
@@ -29152,8 +29152,8 @@ sub_E4B64:                              ; CODE XREF: RunMain:loc_D5446↑p
                 move.w  off_E4BD4(pc,d0.l),d0
                 jmp     off_E4BD4(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_E4BD4:      dc.w loc_E4BE0-*        ; DATA XREF: sub_E4B64+68↑r
-                                        ; sub_E4B64:off_E4BD4↓o ...
+off_E4BD4:      dc.w loc_E4BE0-*        ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+68↑r
+                                        ; RunBossRoomExploding_LavaPowerhouse:off_E4BD4↓o ...
                 dc.w loc_E4BE0-off_E4BD4
                 dc.w loc_E4BEA-off_E4BD4
                 dc.w loc_E4BF4-off_E4BD4
@@ -29161,43 +29161,43 @@ off_E4BD4:      dc.w loc_E4BE0-*        ; DATA XREF: sub_E4B64+68↑r
                 dc.w loc_E4C08-off_E4BD4
 ; ---------------------------------------------------------------------------
 
-loc_E4BE0:                              ; DATA XREF: sub_E4B64:off_E4BD4↑o
-                                        ; sub_E4B64+72↑o
+loc_E4BE0:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse:off_E4BD4↑o
+                                        ; RunBossRoomExploding_LavaPowerhouse+72↑o
                 pea     (loc_340).w
                 pea     (byte_2B8).w
                 bra.s   loc_E4C1A
 ; ---------------------------------------------------------------------------
 
-loc_E4BEA:                              ; DATA XREF: sub_E4B64+74↑o
+loc_E4BEA:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+74↑o
                 pea     (loc_338).w
                 pea     (unk_2C0).w
                 bra.s   loc_E4C1A
 ; ---------------------------------------------------------------------------
 
-loc_E4BF4:                              ; DATA XREF: sub_E4B64+76↑o
+loc_E4BF4:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+76↑o
                 pea     (RegionTest).w
                 pea     (unk_2D8).w
                 bra.s   loc_E4C1A
 ; ---------------------------------------------------------------------------
 
-loc_E4BFE:                              ; DATA XREF: sub_E4B64+78↑o
+loc_E4BFE:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+78↑o
                 pea     (loc_310).w
                 pea     (dword_2E8).w
                 bra.s   loc_E4C1A
 ; ---------------------------------------------------------------------------
 
-loc_E4C08:                              ; DATA XREF: sub_E4B64+7A↑o
+loc_E4C08:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+7A↑o
                 pea     (loc_300).w
                 pea     (byte_2F8).w
                 bra.s   loc_E4C1A
 ; ---------------------------------------------------------------------------
 
-loc_E4C12:                              ; CODE XREF: sub_E4B64+64↑j
+loc_E4C12:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+64↑j
                 pea     (loc_348).w
                 pea     (byte_2B0).w
 
-loc_E4C1A:                              ; CODE XREF: sub_E4B64+84↑j
-                                        ; sub_E4B64+8E↑j ...
+loc_E4C1A:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+84↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+8E↑j ...
                 jsr     (a4)
                 move.w  d0,d2
                 move.w  d3,d0
@@ -29240,7 +29240,7 @@ loc_E4C1A:                              ; CODE XREF: sub_E4B64+84↑j
                 movea.l $3A(a2),a0
                 move.w  d0,4(a0)
 
-loc_E4C98:                              ; CODE XREF: sub_E4B64+102↑j
+loc_E4C98:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+102↑j
                 moveq   #$22,d0 ; '"'
                 adda.l  d0,a3
                 clr.l   (a3)
@@ -29261,7 +29261,7 @@ loc_E4C98:                              ; CODE XREF: sub_E4B64+102↑j
                 andi.b  #1,d0
                 move.b  d0,9(a3)
 
-loc_E4CE0:                              ; CODE XREF: sub_E4B64+14A↑j
+loc_E4CE0:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+14A↑j
                 addq.w  #2,($FF5234).l
                 move.w  ($FF5234).l,d0
                 cmpi.w  #$FA,d0
@@ -29271,13 +29271,13 @@ loc_E4CE0:                              ; CODE XREF: sub_E4B64+14A↑j
                 bra.s   loc_E4D16
 ; ---------------------------------------------------------------------------
 
-loc_E4D02:                              ; CODE XREF: sub_E4B64+18C↑j
+loc_E4D02:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+18C↑j
                 cmpi.w  #$FA,($FF783A).l
                 bge.s   loc_E4D16
                 move.w  ($FF5234).l,($FF783A).l
 
-loc_E4D16:                              ; CODE XREF: sub_E4B64+19C↑j
-                                        ; sub_E4B64+1A6↑j
+loc_E4D16:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+19C↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+1A6↑j
                 move.w  (a5),d2
                 clr.w   (a5)
                 move.w  d3,d0
@@ -29288,7 +29288,7 @@ loc_E4D16:                              ; CODE XREF: sub_E4B64+19C↑j
                 move.w  d2,(a5)
                 addq.w  #6,($FFF1EA).l
 
-loc_E4D36:                              ; CODE XREF: sub_E4B64+42↑j
+loc_E4D36:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+42↑j
                 moveq   #1,d3
                 move.w  d3,d0
                 ext.l   d0
@@ -29302,7 +29302,7 @@ loc_E4D36:                              ; CODE XREF: sub_E4B64+42↑j
                 bra.s   loc_E4DB4
 ; ---------------------------------------------------------------------------
 
-loc_E4D50:                              ; CODE XREF: sub_E4B64+256↓j
+loc_E4D50:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+256↓j
                 tst.b   8(a2)
                 beq.s   loc_E4DAE
                 tst.l   (a2)
@@ -29317,11 +29317,11 @@ loc_E4D50:                              ; CODE XREF: sub_E4B64+256↓j
                 bra.s   loc_E4D78
 ; ---------------------------------------------------------------------------
 
-loc_E4D74:                              ; CODE XREF: sub_E4B64+20A↑j
+loc_E4D74:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+20A↑j
                 move.w  d2,d0
                 neg.w   d0
 
-loc_E4D78:                              ; CODE XREF: sub_E4B64+20E↑j
+loc_E4D78:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+20E↑j
                 movea.l (a2),a0
                 add.w   d0,8(a0)
                 move.w  $C(a2),d0
@@ -29338,24 +29338,24 @@ loc_E4D78:                              ; CODE XREF: sub_E4B64+20E↑j
                 addq.l  #4,sp
                 clr.b   8(a2)
 
-loc_E4DAE:                              ; CODE XREF: sub_E4B64+1F0↑j
-                                        ; sub_E4B64+1F4↑j ...
+loc_E4DAE:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+1F0↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+1F4↑j ...
                 moveq   #$44,d0 ; 'D'
                 adda.l  d0,a2
                 addq.w  #2,d3
 
-loc_E4DB4:                              ; CODE XREF: sub_E4B64+1EA↑j
+loc_E4DB4:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+1EA↑j
                 cmp.w   ($FF783A).l,d3
                 blt.s   loc_E4D50
                 bra.s   loc_E4DCA
 ; ---------------------------------------------------------------------------
 
-loc_E4DBE:                              ; CODE XREF: sub_E4B64+1E↑j
+loc_E4DBE:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+1E↑j
                 pea     (5).w
                 jsr     sub_D54CE
                 addq.l  #4,sp
 
-loc_E4DCA:                              ; CODE XREF: sub_E4B64+258↑j
+loc_E4DCA:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+258↑j
                 movem.l (sp)+,d2-d4/a2-a5
                 rts
 ; ---------------------------------------------------------------------------
@@ -29381,7 +29381,7 @@ loc_E4DD0:                              ; CODE XREF: sub_E1A48:loc_E1AA6↑p
                 lea     (a0,d0.w),a0
                 movea.l a0,a4
 
-loc_E4E08:                              ; CODE XREF: sub_E4B64+48A↓j
+loc_E4E08:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+48A↓j
                 moveq   #0,d2
                 move.b  1(a4),d2
                 move.w  d2,d0
@@ -29411,7 +29411,7 @@ loc_E4E08:                              ; CODE XREF: sub_E4B64+48A↓j
                 tst.l   $32(a5,a0.l)
                 bne.s   loc_E4EA4
 
-loc_E4E52:                              ; CODE XREF: sub_E4B64+2DC↑j
+loc_E4E52:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+2DC↑j
                 moveq   #0,d0
                 move.w  $20(a2),d0
                 move.l  d0,-(sp)
@@ -29437,8 +29437,8 @@ loc_E4E52:                              ; CODE XREF: sub_E4B64+2DC↑j
                 andi.w  #$7FFF,$24(a3)
                 ori.w   #$2000,$24(a3)
 
-loc_E4EA4:                              ; CODE XREF: sub_E4B64+2D4↑j
-                                        ; sub_E4B64+2EC↑j
+loc_E4EA4:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+2D4↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+2EC↑j
                 move.b  $E(a2),d0
                 ext.w   d0
                 ext.l   d0
@@ -29457,7 +29457,7 @@ loc_E4EA4:                              ; CODE XREF: sub_E4B64+2D4↑j
                 bra.s   loc_E4F16
 ; ---------------------------------------------------------------------------
 
-loc_E4EC6:                              ; CODE XREF: sub_E4B64+34C↑j
+loc_E4EC6:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+34C↑j
                 move.w  $10(a2),d0
                 ext.l   d0
                 lsl.l   #2,d0
@@ -29465,13 +29465,13 @@ loc_E4EC6:                              ; CODE XREF: sub_E4B64+34C↑j
                 tst.l   $32(a5,a0.l)
                 beq.s   loc_E4F16
 
-loc_E4ED6:                              ; CODE XREF: sub_E4B64+352↑j
-                                        ; sub_E4B64+392↓j
+loc_E4ED6:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+352↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+392↓j
                 move.b  #1,8(a2)
                 bra.s   loc_E4F16
 ; ---------------------------------------------------------------------------
 
-loc_E4EDE:                              ; CODE XREF: sub_E4B64+358↑j
+loc_E4EDE:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+358↑j
                 tst.w   $10(a2)
                 beq.s   loc_E4EF8
                 move.l  a2,-(sp)
@@ -29482,12 +29482,12 @@ loc_E4EDE:                              ; CODE XREF: sub_E4B64+358↑j
                 bra.s   loc_E4ED6
 ; ---------------------------------------------------------------------------
 
-loc_E4EF8:                              ; CODE XREF: sub_E4B64+37E↑j
+loc_E4EF8:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+37E↑j
                 move.b  #3,9(a2)
                 bra.s   loc_E4F16
 ; ---------------------------------------------------------------------------
 
-loc_E4F00:                              ; CODE XREF: sub_E4B64+35E↑j
+loc_E4F00:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+35E↑j
                 tst.l   $1C(a2)
                 bne.s   loc_E4F16
                 cmpi.w  #$300,$12(a2)
@@ -29495,8 +29495,8 @@ loc_E4F00:                              ; CODE XREF: sub_E4B64+35E↑j
                 movea.l (a2),a0
                 move.b  #1,$2F(a0)
 
-loc_E4F16:                              ; CODE XREF: sub_E4B64+360↑j
-                                        ; sub_E4B64+370↑j ...
+loc_E4F16:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+360↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+370↑j ...
                 move.b  $E(a2),d0
                 ext.w   d0
                 ext.l   d0
@@ -29508,8 +29508,8 @@ loc_E4F16:                              ; CODE XREF: sub_E4B64+360↑j
                 move.w  off_E4F32(pc,d0.l),d0
                 jmp     off_E4F32(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_E4F32:      dc.w loc_E4F60-*        ; DATA XREF: sub_E4B64+3C6↑r
-                                        ; sub_E4B64:off_E4F32↓o ...
+off_E4F32:      dc.w loc_E4F60-*        ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+3C6↑r
+                                        ; RunBossRoomExploding_LavaPowerhouse:off_E4F32↓o ...
                 dc.w loc_E4FE4-off_E4F32
                 dc.w loc_E4FE4-off_E4F32
                 dc.w loc_E4FE4-off_E4F32
@@ -29534,8 +29534,8 @@ off_E4F32:      dc.w loc_E4F60-*        ; DATA XREF: sub_E4B64+3C6↑r
                 dc.w loc_E4FC4-off_E4F32
 ; ---------------------------------------------------------------------------
 
-loc_E4F60:                              ; DATA XREF: sub_E4B64:off_E4F32↑o
-                                        ; sub_E4B64+3D6↑o ...
+loc_E4F60:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse:off_E4F32↑o
+                                        ; RunBossRoomExploding_LavaPowerhouse+3D6↑o ...
                 move.w  ($FF5686).l,d0
                 addq.w  #1,($FF5686).l
                 ext.l   d0
@@ -29544,8 +29544,8 @@ loc_E4F60:                              ; DATA XREF: sub_E4B64:off_E4F32↑o
                 bra.s   loc_E4FE0
 ; ---------------------------------------------------------------------------
 
-loc_E4F78:                              ; DATA XREF: sub_E4B64+3DA↑o
-                                        ; sub_E4B64+3F6↑o
+loc_E4F78:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+3DA↑o
+                                        ; RunBossRoomExploding_LavaPowerhouse+3F6↑o
                 move.w  ($FF5686).l,d0
                 addq.w  #1,($FF5686).l
                 ext.l   d0
@@ -29560,7 +29560,7 @@ loc_E4F78:                              ; DATA XREF: sub_E4B64+3DA↑o
                 bra.s   loc_E4FE0
 ; ---------------------------------------------------------------------------
 
-loc_E4FAA:                              ; DATA XREF: sub_E4B64+3E8↑o
+loc_E4FAA:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+3E8↑o
                 move.w  ($FF5686).l,d0
                 addq.w  #1,($FF5686).l
                 ext.l   d0
@@ -29568,7 +29568,7 @@ loc_E4FAA:                              ; DATA XREF: sub_E4B64+3E8↑o
                 movea.l #$FF5498,a0
                 move.w  d2,(a0,d0.l)
 
-loc_E4FC4:                              ; DATA XREF: sub_E4B64+3FA↑o
+loc_E4FC4:                              ; DATA XREF: RunBossRoomExploding_LavaPowerhouse+3FA↑o
                 tst.l   $1C(a2)
                 beq.s   loc_E4FE4
                 move.w  ($FF5688).l,d0
@@ -29577,12 +29577,12 @@ loc_E4FC4:                              ; DATA XREF: sub_E4B64+3FA↑o
                 add.l   d0,d0
                 movea.l #$FF589C,a0
 
-loc_E4FE0:                              ; CODE XREF: sub_E4B64+412↑j
-                                        ; sub_E4B64+444↑j
+loc_E4FE0:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+412↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+444↑j
                 move.w  d2,(a0,d0.l)
 
-loc_E4FE4:                              ; CODE XREF: sub_E4B64+3C0↑j
-                                        ; sub_E4B64+464↑j
+loc_E4FE4:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+3C0↑j
+                                        ; RunBossRoomExploding_LavaPowerhouse+464↑j
                                         ; DATA XREF: ...
                 moveq   #$14,d0
                 adda.l  d0,a4
@@ -29592,7 +29592,7 @@ loc_E4FE4:                              ; CODE XREF: sub_E4B64+3C0↑j
                 movea.l #dword_C1D70,a2
                 clr.w   d3
 
-loc_E4FFA:                              ; CODE XREF: sub_E4B64+4BA↓j
+loc_E4FFA:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+4BA↓j
                 move.w  4(a2),d0
                 move.l  d0,-(sp)
                 move.w  2(a2),d0
@@ -29628,7 +29628,7 @@ loc_E4FFA:                              ; CODE XREF: sub_E4B64+4BA↓j
                 clr.l   ($FF74E0).l
                 movem.l (sp)+,d2-d3/a2-a5
                 rts
-; End of function sub_E4B64
+; End of function RunBossRoomExploding_LavaPowerhouse
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -36436,7 +36436,7 @@ loc_E9A26:                              ; CODE XREF: sub_E99D2+3A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E9A56:                              ; CODE XREF: RunMain:loc_D543E↑p
+RunBossRoomExploding_ToxicCaves:                              ; CODE XREF: RunMain:BossRoomExploding_ToxicCaves↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF559E,a4
                 movea.l #SetVRAMWriteAddr,a5
@@ -36503,7 +36503,7 @@ sub_E9A56:                              ; CODE XREF: RunMain:loc_D543E↑p
                 movea.l $3A(a2),a0
                 move.w  d0,4(a0)
 
-loc_E9B3C:                              ; CODE XREF: sub_E9A56+B0↑j
+loc_E9B3C:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+B0↑j
                 moveq   #$22,d0 ; '"'
                 adda.l  d0,a3
                 clr.l   (a3)
@@ -36524,7 +36524,7 @@ loc_E9B3C:                              ; CODE XREF: sub_E9A56+B0↑j
                 andi.b  #1,d0
                 move.b  d0,9(a3)
 
-loc_E9B84:                              ; CODE XREF: sub_E9A56+FC↑j
+loc_E9B84:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+FC↑j
                 addq.w  #2,($FF5234).l
                 move.w  ($FF5234).l,d0
                 cmpi.w  #$FA,d0
@@ -36534,13 +36534,13 @@ loc_E9B84:                              ; CODE XREF: sub_E9A56+FC↑j
                 bra.s   loc_E9BBA
 ; ---------------------------------------------------------------------------
 
-loc_E9BA6:                              ; CODE XREF: sub_E9A56+13E↑j
+loc_E9BA6:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+13E↑j
                 cmpi.w  #$FA,($FF783A).l
                 bge.s   loc_E9BBA
                 move.w  ($FF5234).l,($FF783A).l
 
-loc_E9BBA:                              ; CODE XREF: sub_E9A56+14E↑j
-                                        ; sub_E9A56+158↑j
+loc_E9BBA:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+14E↑j
+                                        ; RunBossRoomExploding_ToxicCaves+158↑j
                 move.w  (a4),d2
                 clr.w   (a4)
                 move.w  d4,d0
@@ -36566,7 +36566,7 @@ loc_E9BBA:                              ; CODE XREF: sub_E9A56+14E↑j
                 move.w  d2,(a4)
                 addq.w  #6,($FFF1EA).l
 
-loc_E9C04:                              ; CODE XREF: sub_E9A56+42↑j
+loc_E9C04:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+42↑j
                 moveq   #1,d2
                 move.w  d2,d0
                 ext.l   d0
@@ -36580,7 +36580,7 @@ loc_E9C04:                              ; CODE XREF: sub_E9A56+42↑j
                 bra.s   loc_E9C82
 ; ---------------------------------------------------------------------------
 
-loc_E9C1E:                              ; CODE XREF: sub_E9A56+232↓j
+loc_E9C1E:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+232↓j
                 tst.b   8(a2)
                 beq.s   loc_E9C7C
                 tst.l   (a2)
@@ -36595,11 +36595,11 @@ loc_E9C1E:                              ; CODE XREF: sub_E9A56+232↓j
                 bra.s   loc_E9C46
 ; ---------------------------------------------------------------------------
 
-loc_E9C42:                              ; CODE XREF: sub_E9A56+1E6↑j
+loc_E9C42:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+1E6↑j
                 move.w  d3,d0
                 neg.w   d0
 
-loc_E9C46:                              ; CODE XREF: sub_E9A56+1EA↑j
+loc_E9C46:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+1EA↑j
                 movea.l (a2),a0
                 add.w   d0,8(a0)
                 move.w  $C(a2),d0
@@ -36616,27 +36616,27 @@ loc_E9C46:                              ; CODE XREF: sub_E9A56+1EA↑j
                 addq.l  #4,sp
                 clr.b   8(a2)
 
-loc_E9C7C:                              ; CODE XREF: sub_E9A56+1CC↑j
-                                        ; sub_E9A56+1D0↑j ...
+loc_E9C7C:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+1CC↑j
+                                        ; RunBossRoomExploding_ToxicCaves+1D0↑j ...
                 moveq   #$44,d0 ; 'D'
                 adda.l  d0,a2
                 addq.w  #2,d2
 
-loc_E9C82:                              ; CODE XREF: sub_E9A56+1C6↑j
+loc_E9C82:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+1C6↑j
                 cmp.w   ($FF783A).l,d2
                 blt.s   loc_E9C1E
                 bra.s   loc_E9C98
 ; ---------------------------------------------------------------------------
 
-loc_E9C8C:                              ; CODE XREF: sub_E9A56+1E↑j
+loc_E9C8C:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+1E↑j
                 pea     (5).w
                 jsr     sub_D54CE
                 addq.l  #4,sp
 
-loc_E9C98:                              ; CODE XREF: sub_E9A56+234↑j
+loc_E9C98:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+234↑j
                 movem.l (sp)+,d2-d4/a2-a5
                 rts
-; End of function sub_E9A56
+; End of function RunBossRoomExploding_ToxicCaves
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -42481,7 +42481,7 @@ loc_EDB82:                              ; CODE XREF: sub_EDB1A+7C↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_EDBBC:                              ; CODE XREF: RunMain:loc_D5456↑p
+RunBossRoomExploding_Showdown:                              ; CODE XREF: RunMain:BossRoomExploding_Showdown↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF559E,a4
                 movea.l #SetVRAMWriteAddr,a5
@@ -42543,7 +42543,7 @@ sub_EDBBC:                              ; CODE XREF: RunMain:loc_D5456↑p
                 movea.l $3A(a2),a0
                 ori.w   #4,4(a0)
 
-loc_EDC90:                              ; CODE XREF: sub_EDBBC+AC↑j
+loc_EDC90:                              ; CODE XREF: RunBossRoomExploding_Showdown+AC↑j
                 moveq   #$22,d0 ; '"'
                 adda.l  d0,a3
                 clr.l   (a3)
@@ -42567,7 +42567,7 @@ loc_EDCCA:                              ; DATA XREF: ROM:00010C84↑o
                 andi.b  #1,d0
                 move.b  d0,9(a3)
 
-loc_EDCD8:                              ; CODE XREF: sub_EDBBC+EA↑j
+loc_EDCD8:                              ; CODE XREF: RunBossRoomExploding_Showdown+EA↑j
                 addq.w  #2,($FF5234).l
 
 loc_EDCDE:                              ; DATA XREF: ROM:00010A58↑o
@@ -42580,14 +42580,14 @@ loc_EDCDE:                              ; DATA XREF: ROM:00010A58↑o
                 bra.s   loc_EDD0E
 ; ---------------------------------------------------------------------------
 
-loc_EDCFA:                              ; CODE XREF: sub_EDBBC+12C↑j
+loc_EDCFA:                              ; CODE XREF: RunBossRoomExploding_Showdown+12C↑j
                                         ; DATA XREF: ROM:0002C148↑o
                 cmpi.w  #$FA,($FF783A).l
                 bge.s   loc_EDD0E
                 move.w  ($FF5234).l,($FF783A).l
 
-loc_EDD0E:                              ; CODE XREF: sub_EDBBC+13C↑j
-                                        ; sub_EDBBC+146↑j
+loc_EDD0E:                              ; CODE XREF: RunBossRoomExploding_Showdown+13C↑j
+                                        ; RunBossRoomExploding_Showdown+146↑j
                 move.w  (a4),d2
                 clr.w   (a4)
                 move.w  d4,d0
@@ -42613,7 +42613,7 @@ loc_EDD0E:                              ; CODE XREF: sub_EDBBC+13C↑j
                 move.w  d2,(a4)
                 addq.w  #6,($FFF1EA).l
 
-loc_EDD58:                              ; CODE XREF: sub_EDBBC+42↑j
+loc_EDD58:                              ; CODE XREF: RunBossRoomExploding_Showdown+42↑j
                 moveq   #1,d2
                 move.w  d2,d0
                 ext.l   d0
@@ -42627,7 +42627,7 @@ loc_EDD58:                              ; CODE XREF: sub_EDBBC+42↑j
                 bra.s   loc_EDDD6
 ; ---------------------------------------------------------------------------
 
-loc_EDD72:                              ; CODE XREF: sub_EDBBC+220↓j
+loc_EDD72:                              ; CODE XREF: RunBossRoomExploding_Showdown+220↓j
                 tst.b   8(a2)
                 beq.s   loc_EDDD0
                 tst.l   (a2)
@@ -42642,11 +42642,11 @@ loc_EDD72:                              ; CODE XREF: sub_EDBBC+220↓j
                 bra.s   loc_EDD9A
 ; ---------------------------------------------------------------------------
 
-loc_EDD96:                              ; CODE XREF: sub_EDBBC+1D4↑j
+loc_EDD96:                              ; CODE XREF: RunBossRoomExploding_Showdown+1D4↑j
                 move.w  d3,d0
                 neg.w   d0
 
-loc_EDD9A:                              ; CODE XREF: sub_EDBBC+1D8↑j
+loc_EDD9A:                              ; CODE XREF: RunBossRoomExploding_Showdown+1D8↑j
                 movea.l (a2),a0
                 add.w   d0,8(a0)
                 move.w  $C(a2),d0
@@ -42663,27 +42663,27 @@ loc_EDD9A:                              ; CODE XREF: sub_EDBBC+1D8↑j
                 addq.l  #4,sp
                 clr.b   8(a2)
 
-loc_EDDD0:                              ; CODE XREF: sub_EDBBC+1BA↑j
-                                        ; sub_EDBBC+1BE↑j ...
+loc_EDDD0:                              ; CODE XREF: RunBossRoomExploding_Showdown+1BA↑j
+                                        ; RunBossRoomExploding_Showdown+1BE↑j ...
                 moveq   #$44,d0 ; 'D'
                 adda.l  d0,a2
                 addq.w  #2,d2
 
-loc_EDDD6:                              ; CODE XREF: sub_EDBBC+1B4↑j
+loc_EDDD6:                              ; CODE XREF: RunBossRoomExploding_Showdown+1B4↑j
                 cmp.w   ($FF783A).l,d2
                 blt.s   loc_EDD72
                 bra.s   loc_EDDEC
 ; ---------------------------------------------------------------------------
 
-loc_EDDE0:                              ; CODE XREF: sub_EDBBC+1E↑j
+loc_EDDE0:                              ; CODE XREF: RunBossRoomExploding_Showdown+1E↑j
                 pea     (5).w
                 jsr     sub_D54CE
                 addq.l  #4,sp
 
-loc_EDDEC:                              ; CODE XREF: sub_EDBBC+222↑j
+loc_EDDEC:                              ; CODE XREF: RunBossRoomExploding_Showdown+222↑j
                 movem.l (sp)+,d2-d4/a2-a5
                 rts
-; End of function sub_EDBBC
+; End of function RunBossRoomExploding_Showdown
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -47147,7 +47147,7 @@ loc_F0E2A:                              ; CODE XREF: sub_F0DD6+3A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F0E5A:                              ; CODE XREF: RunMain:loc_D544E↑p
+RunBossRoomExploding_TheMachine:                              ; CODE XREF: RunMain:BossRoomExploding_TheMachine↑p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF559E,a4
                 movea.l #$FF783A,a5
@@ -47214,7 +47214,7 @@ sub_F0E5A:                              ; CODE XREF: RunMain:loc_D544E↑p
                 movea.l $3A(a2),a0
                 move.w  d0,4(a0)
 
-loc_F0F40:                              ; CODE XREF: sub_F0E5A+B0↑j
+loc_F0F40:                              ; CODE XREF: RunBossRoomExploding_TheMachine+B0↑j
                 moveq   #$22,d0 ; '"'
                 adda.l  d0,a3
                 clr.l   (a3)
@@ -47235,7 +47235,7 @@ loc_F0F40:                              ; CODE XREF: sub_F0E5A+B0↑j
                 andi.b  #1,d0
                 move.b  d0,9(a3)
 
-loc_F0F88:                              ; CODE XREF: sub_F0E5A+FC↑j
+loc_F0F88:                              ; CODE XREF: RunBossRoomExploding_TheMachine+FC↑j
                 addq.w  #2,($FF5234).l
                 move.w  ($FF5234).l,d0
                 cmpi.w  #$FA,d0
@@ -47245,13 +47245,13 @@ loc_F0F88:                              ; CODE XREF: sub_F0E5A+FC↑j
                 bra.s   loc_F0FB2
 ; ---------------------------------------------------------------------------
 
-loc_F0FA6:                              ; CODE XREF: sub_F0E5A+13E↑j
+loc_F0FA6:                              ; CODE XREF: RunBossRoomExploding_TheMachine+13E↑j
                 cmpi.w  #$FA,(a5)
                 bge.s   loc_F0FB2
                 move.w  ($FF5234).l,(a5)
 
-loc_F0FB2:                              ; CODE XREF: sub_F0E5A+14A↑j
-                                        ; sub_F0E5A+150↑j
+loc_F0FB2:                              ; CODE XREF: RunBossRoomExploding_TheMachine+14A↑j
+                                        ; RunBossRoomExploding_TheMachine+150↑j
                 move.w  (a4),d2
                 clr.w   (a4)
                 move.w  d4,d0
@@ -47262,7 +47262,7 @@ loc_F0FB2:                              ; CODE XREF: sub_F0E5A+14A↑j
                 move.w  d2,(a4)
                 addq.w  #6,($FFF1EA).l
 
-loc_F0FD2:                              ; CODE XREF: sub_F0E5A+42↑j
+loc_F0FD2:                              ; CODE XREF: RunBossRoomExploding_TheMachine+42↑j
                 moveq   #1,d2
                 move.w  d2,d0
                 ext.l   d0
@@ -47276,7 +47276,7 @@ loc_F0FD2:                              ; CODE XREF: sub_F0E5A+42↑j
                 bra.s   loc_F1050
 ; ---------------------------------------------------------------------------
 
-loc_F0FEC:                              ; CODE XREF: sub_F0E5A+1F8↓j
+loc_F0FEC:                              ; CODE XREF: RunBossRoomExploding_TheMachine+1F8↓j
                 tst.b   8(a2)
                 beq.s   loc_F104A
                 tst.l   (a2)
@@ -47291,11 +47291,11 @@ loc_F0FEC:                              ; CODE XREF: sub_F0E5A+1F8↓j
                 bra.s   loc_F1014
 ; ---------------------------------------------------------------------------
 
-loc_F1010:                              ; CODE XREF: sub_F0E5A+1B0↑j
+loc_F1010:                              ; CODE XREF: RunBossRoomExploding_TheMachine+1B0↑j
                 move.w  d3,d0
                 neg.w   d0
 
-loc_F1014:                              ; CODE XREF: sub_F0E5A+1B4↑j
+loc_F1014:                              ; CODE XREF: RunBossRoomExploding_TheMachine+1B4↑j
                 movea.l (a2),a0
                 add.w   d0,8(a0)
                 move.w  $C(a2),d0
@@ -47312,27 +47312,27 @@ loc_F1014:                              ; CODE XREF: sub_F0E5A+1B4↑j
                 addq.l  #4,sp
                 clr.b   8(a2)
 
-loc_F104A:                              ; CODE XREF: sub_F0E5A+196↑j
-                                        ; sub_F0E5A+19A↑j ...
+loc_F104A:                              ; CODE XREF: RunBossRoomExploding_TheMachine+196↑j
+                                        ; RunBossRoomExploding_TheMachine+19A↑j ...
                 moveq   #$44,d0 ; 'D'
                 adda.l  d0,a2
                 addq.w  #2,d2
 
-loc_F1050:                              ; CODE XREF: sub_F0E5A+190↑j
+loc_F1050:                              ; CODE XREF: RunBossRoomExploding_TheMachine+190↑j
                 cmp.w   (a5),d2
                 blt.s   loc_F0FEC
                 bra.s   loc_F1062
 ; ---------------------------------------------------------------------------
 
-loc_F1056:                              ; CODE XREF: sub_F0E5A+1E↑j
+loc_F1056:                              ; CODE XREF: RunBossRoomExploding_TheMachine+1E↑j
                 pea     (5).w
                 jsr     sub_D54CE
                 addq.l  #4,sp
 
-loc_F1062:                              ; CODE XREF: sub_F0E5A+1FA↑j
+loc_F1062:                              ; CODE XREF: RunBossRoomExploding_TheMachine+1FA↑j
                 movem.l (sp)+,d2-d4/a2-a5
                 rts
-; End of function sub_F0E5A
+; End of function RunBossRoomExploding_TheMachine
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -67984,7 +67984,7 @@ loc_FE47E:                              ; CODE XREF: sub_FE460+36↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FE6C6:                              ; CODE XREF: sub_E4B64+4A8↑p
+sub_FE6C6:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+4A8↑p
                                         ; sub_E6240+338↑p ...
 
 arg_0           =  4

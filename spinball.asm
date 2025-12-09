@@ -28,7 +28,7 @@ off_8:          dc.l BusError           ; DATA XREF: RunUpdate_ToxicCaves+1A92�
                                         ; RunUpdate_ToxicCaves+1D2C↓o ...
 off_C:          dc.l AddressError       ; DATA XREF: RunUpdate_ToxicCaves+74E↓o
                                         ; RunUpdate_ToxicCaves+13D6↓o ...
-off_10:         dc.l IllegalInstruction ; DATA XREF: sub_D4830+5C↓o
+off_10:         dc.l IllegalInstruction ; DATA XREF: PlayPlayerVictoryAnimation+5C↓o
                                         ; RunUpdate_ToxicCaves+10D4↓o ...
 off_14:         dc.l ZeroDivide         ; DATA XREF: RunUpdate_TallyScoreAndEndLevel+24A↓o
                                         ; RunUpdate_TallyScoreAndEndLevel+328↓o ...
@@ -45,7 +45,7 @@ off_28:         dc.l LINE1010Emulator   ; DATA XREF: sub_D3FAC+110↓o
 off_2C:         dc.l LINE1111Emulator   ; DATA XREF: ROM:00027FBC↓o
                                         ; ROM:00055A18↓o ...
 off_30:         dc.l Error              ; DATA XREF: ROM:00021750↓o
-                                        ; sub_D4830+78↓o ...
+                                        ; PlayPlayerVictoryAnimation+78↓o ...
 off_34:         dc.l Error              ; DATA XREF: ROM:0000B190↓o
                                         ; ROM:000288FC↓o ...
 off_38:         dc.l ReservedException1 ; DATA XREF: ROM:000570F8↓o
@@ -120,8 +120,8 @@ off_C0:         dc.l Error              ; DATA XREF: ROM:off_C13F0↓o
                                         ; ROM:off_C1400↓o ...
 off_C4:         dc.l Error              ; DATA XREF: ROM:00035CA8↓o
                                         ; ROM:00059460↓o ...
-off_C8:         dc.l Error              ; DATA XREF: sub_E4AC6+72↓o
-                                        ; sub_E99D2+60↓o ...
+off_C8:         dc.l Error              ; DATA XREF: LavaPowerhouse_BossRoomExploding_Begin+72↓o
+                                        ; ToxicCaves_BossRoomExploding_Begin+60↓o ...
 off_CC:         dc.l Error              ; DATA XREF: ROM:0002CA74↓o
                                         ; ROM:000357E8↓o ...
 off_D0:         dc.l Error              ; DATA XREF: ROM:00010984↓o
@@ -1455,7 +1455,7 @@ loc_D41D4:                              ; CODE XREF: sub_D3FAC+22E↓j
                 nop
                 clr.b   ($FF7848).l
                 pea     (1).w
-                jsr     sub_D54CE(pc)
+                jsr     SetGameState(pc)
                 nop
                 addq.l  #8,sp
                 jsr     WaitForFF0000
@@ -2107,7 +2107,7 @@ loc_D482C:                              ; CODE XREF: RunMainMenu+30↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
+PlayPlayerVictoryAnimation:                              ; CODE XREF: SetGameState:loc_D55F8↓p
                 move.l  a2,-(sp)
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -2154,7 +2154,7 @@ sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
                 clr.w   ($FFF1EA).l
                 movea.l (sp)+,a2
                 rts
-; End of function sub_D4830
+; End of function PlayPlayerVictoryAnimation
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -2692,7 +2692,7 @@ loc_D4EA8:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
 
 loc_D4EC4:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5DA↑j
                 clr.l   -(sp)
-                jsr     sub_D54CE(pc)
+                jsr     SetGameState(pc)
                 nop
                 addq.l  #4,sp
                 bra.s   loc_D4EF4
@@ -3065,7 +3065,7 @@ RunMain:                                   ; CODE XREF: ROM:000006F8↑j
 
 loc_D5270:                              ; CODE XREF: RunMain+26↑j
                 clr.l   -(sp)
-                jsr     sub_D54CE(pc)
+                jsr     SetGameState(pc)
                 nop
                 addq.l  #4,sp
 
@@ -3277,7 +3277,7 @@ GAME_STATE_LEVEL_COMPLETE_OUTRO:                              ; DATA XREF: RunMa
                 bge.s   loc_D5462
                 jsr     sub_D871E
                 pea     (6).w
-                jsr     sub_D54CE(pc)
+                jsr     SetGameState(pc)
                 nop
                 addq.l  #4,sp
                 bra.s   loc_D5462
@@ -3305,7 +3305,7 @@ loc_D54BC:                              ; CODE XREF: RunMain+292↓j
 
 ; Attributes: bp-based frame
 
-sub_D54CE:                              ; CODE XREF: sub_D3FAC+256↑p
+SetGameState:                              ; CODE XREF: sub_D3FAC+256↑p
                                         ; RunUpdate_TallyScoreAndEndLevel+5E4↑p ...
 
 var_8           = -8
@@ -3319,21 +3319,21 @@ arg_0           =  8
                 subq.l  #1,d0
                 moveq   #5,d1
                 cmp.l   d1,d0
-                bhi.w   loc_D5604
+                bhi.w   SetGameState_BOSS_ROOM_EXPLODING
                 add.l   d0,d0
-                move.w  off_D54FA(pc,d0.l),d0
-                jmp     off_D54FA(pc,d0.w)
+                move.w  SetGameState_CurrentStateJumpTable(pc,d0.l),d0
+                jmp     SetGameState_CurrentStateJumpTable(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D54FA:      dc.w loc_D5506-*        ; DATA XREF: sub_D54CE+24↑r
-                                        ; sub_D54CE:off_D54FA↓o ...
-                dc.w loc_D5604-off_D54FA
-                dc.w loc_D5604-off_D54FA
-                dc.w loc_D5552-off_D54FA
-                dc.w loc_D55F8-off_D54FA
-                dc.w loc_D55FE-off_D54FA
+SetGameState_CurrentStateJumpTable:
+                dc.w SetGameState_LEVEL_INTRO-*
+                dc.w SetGameState_BOSS_ROOM_EXPLODING-SetGameState_CurrentStateJumpTable
+                dc.w SetGameState_BOSS_ROOM_EXPLODING-SetGameState_CurrentStateJumpTable
+                dc.w loc_D5552-SetGameState_CurrentStateJumpTable
+                dc.w loc_D55F8-SetGameState_CurrentStateJumpTable
+                dc.w loc_D55FE-SetGameState_CurrentStateJumpTable
 ; ---------------------------------------------------------------------------
 
-loc_D5506:                              ; DATA XREF: sub_D54CE:off_D54FA↑o
+SetGameState_LEVEL_INTRO:                              ; DATA XREF: SetGameState:SetGameState_CurrentStateJumpTable↑o
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -3352,48 +3352,48 @@ loc_D5506:                              ; DATA XREF: sub_D54CE:off_D54FA↑o
                 jsr     sub_DB836
                 move.l  #$FFF79E00,$22(a2)
 
-loc_D5548:                              ; CODE XREF: sub_D54CE+6A↑j
+loc_D5548:                              ; CODE XREF: SetGameState+6A↑j
                 move.b  #6,$C(a2)
-                bra.w   loc_D5604
+                bra.w   SetGameState_BOSS_ROOM_EXPLODING
 ; ---------------------------------------------------------------------------
 
-loc_D5552:                              ; DATA XREF: sub_D54CE+32↑o
+loc_D5552:                              ; DATA XREF: SetGameState+32↑o
                 move.w  (a3),d0
                 ext.l   d0
                 moveq   #3,d1
                 cmp.l   d1,d0
-                bhi.s   loc_D558C
+                bhi.s   SetGameState_BOSS_ROOM_EXPLODING_Break
                 add.l   d0,d0
-                move.w  off_D5566(pc,d0.l),d0
-                jmp     off_D5566(pc,d0.w)
+                move.w  SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable(pc,d0.l),d0
+                jmp     SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable(pc,d0.w)
 ; ---------------------------------------------------------------------------
-off_D5566:      dc.w loc_D556E-*        ; DATA XREF: sub_D54CE+90↑r
-                                        ; sub_D54CE:off_D5566↓o ...
-                dc.w loc_D5576-off_D5566
-                dc.w loc_D557E-off_D5566
-                dc.w loc_D5586-off_D5566
-; ---------------------------------------------------------------------------
-
-loc_D556E:                              ; DATA XREF: sub_D54CE:off_D5566↑o
-                jsr     sub_E99D2
-                bra.s   loc_D558C
+SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable:
+                dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_TOXIC_CAVES-*
+                dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_LAVA_POWERHOUSE-SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable
+                dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_THE_MACHINE-SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable
+                dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_SHOWDOWN-SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable
 ; ---------------------------------------------------------------------------
 
-loc_D5576:                              ; DATA XREF: sub_D54CE+9A↑o
-                jsr     sub_E4AC6
-                bra.s   loc_D558C
+SetGameState_BOSS_ROOM_EXPLODING_LEVEL_TOXIC_CAVES:
+                jsr     ToxicCaves_BossRoomExploding_Begin
+                bra.s   SetGameState_BOSS_ROOM_EXPLODING_Break
 ; ---------------------------------------------------------------------------
 
-loc_D557E:                              ; DATA XREF: sub_D54CE+9C↑o
-                jsr     sub_F0DD6
-                bra.s   loc_D558C
+SetGameState_BOSS_ROOM_EXPLODING_LEVEL_LAVA_POWERHOUSE:
+                jsr     LavaPowerhouse_BossRoomExploding_Begin
+                bra.s   SetGameState_BOSS_ROOM_EXPLODING_Break
 ; ---------------------------------------------------------------------------
 
-loc_D5586:                              ; DATA XREF: sub_D54CE+9E↑o
-                jsr     sub_EDB1A
+SetGameState_BOSS_ROOM_EXPLODING_LEVEL_THE_MACHINE
+                jsr     TheMachine_BossRoomExploding_Begin
+                bra.s   SetGameState_BOSS_ROOM_EXPLODING_Break
+; ---------------------------------------------------------------------------
 
-loc_D558C:                              ; CODE XREF: sub_D54CE+8C↑j
-                                        ; sub_D54CE+A6↑j ...
+SetGameState_BOSS_ROOM_EXPLODING_LEVEL_SHOWDOWN:
+                jsr     Showdown_BossRoomExploding_Begin
+
+SetGameState_BOSS_ROOM_EXPLODING_Break:                              ; CODE XREF: SetGameState+8C↑j
+                                        ; SetGameState+A6↑j ...
                 jsr     GEMS_MuteAllSounds(pc)
                 nop
                 cmpi.w  #3,(a3)
@@ -3407,17 +3407,17 @@ loc_D558C:                              ; CODE XREF: sub_D54CE+8C↑j
                 jsr     OSD_QueueMessage
                 lea     $18(sp),sp
 
-loc_D55BC:                              ; CODE XREF: sub_D54CE+C8↑j
+loc_D55BC:                              ; CODE XREF: SetGameState+C8↑j
                 cmpi.w  #3,(a3)
                 bge.s   loc_D55CA
                 pea     (aLevelCompleted).l ; "* LEVEL COMPLETED *"
                 bra.s   loc_D55D0
 ; ---------------------------------------------------------------------------
 
-loc_D55CA:                              ; CODE XREF: sub_D54CE+F2↑j
+loc_D55CA:                              ; CODE XREF: SetGameState+F2↑j
                 pea     (aMissionAccompl).l ; "MISSION ACCOMPLISHED"
 
-loc_D55D0:                              ; CODE XREF: sub_D54CE+FA↑j
+loc_D55D0:                              ; CODE XREF: SetGameState+FA↑j
                 pea     (4).w
                 pea     ($C8).w
                 pea     (3).w
@@ -3428,23 +3428,23 @@ loc_D55D0:                              ; CODE XREF: sub_D54CE+FA↑j
                 jsr     PlaySong(pc)
                 nop
                 lea     $1C(sp),sp
-                bra.s   loc_D5604
+                bra.s   SetGameState_BOSS_ROOM_EXPLODING
 ; ---------------------------------------------------------------------------
 
-loc_D55F8:                              ; DATA XREF: sub_D54CE+34↑o
-                bsr.w   sub_D4830
-                bra.s   loc_D5604
+loc_D55F8:                              ; DATA XREF: SetGameState+34↑o
+                bsr.w   PlayPlayerVictoryAnimation
+                bra.s   SetGameState_BOSS_ROOM_EXPLODING
 ; ---------------------------------------------------------------------------
 
-loc_D55FE:                              ; DATA XREF: sub_D54CE+36↑o
+loc_D55FE:                              ; DATA XREF: SetGameState+36↑o
                 clr.w   ($FF55A0).l
 
-loc_D5604:                              ; CODE XREF: sub_D54CE+1E↑j
-                                        ; sub_D54CE+80↑j ...
+SetGameState_BOSS_ROOM_EXPLODING:                              ; CODE XREF: SetGameState+1E↑j
+                                        ; SetGameState+80↑j ...
                 movem.l var_8(a6),a2-a3
                 unlk    a6
                 rts
-; End of function sub_D54CE
+; End of function SetGameState
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3523,7 +3523,7 @@ loc_D567A:                              ; CODE XREF: sub_D565E+A↑j
 
 
 sub_D567E:                              ; CODE XREF: NewLife+D4↑p
-                                        ; sub_D4830+60↑p ...
+                                        ; PlayPlayerVictoryAnimation+60↑p ...
 
 arg_0           =  4
 
@@ -4601,7 +4601,7 @@ loc_D5F10:                              ; CODE XREF: AnimObj_DecodeCurrentAnimFr
 
 
 AnimObj_InitialiseInstance:                              ; CODE XREF: RunLevelIntro+F2↑p
-                                        ; sub_D4830+44↑p ...
+                                        ; PlayPlayerVictoryAnimation+44↑p ...
 
 arg_0           =  4
 arg_4           =  8
@@ -8727,7 +8727,7 @@ loc_D82E2:                              ; CODE XREF: sub_D81D8+11E↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D831C:                              ; CODE XREF: sub_D4830+24↑p
+sub_D831C:                              ; CODE XREF: PlayPlayerVictoryAnimation+24↑p
                                         ; sub_D8558+A↓p
                 movem.l d2/a2,-(sp)
                 movea.l #$FF559E,a2
@@ -9221,7 +9221,7 @@ loc_D86DA:                              ; CODE XREF: ScreenTransition_ToBlack+18
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D86E6:                              ; CODE XREF: sub_D4830+66↑p
+sub_D86E6:                              ; CODE XREF: PlayPlayerVictoryAnimation+66↑p
                                         ; RunPlayerUpdate+BCC↓p
                 move.w  #8,($FF005C).l
                 moveq   #6,d0
@@ -11396,7 +11396,7 @@ loc_D9D28:                              ; CODE XREF: RunUpdate_ToxicCaves+DBA↑
                 pea     (3).w
                 jsr     sub_D85A0
                 pea     (off_4).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 lea     $C(sp),sp
                 move.b  #6,$C(a4)
                 clr.l   $1E(a4)
@@ -13716,7 +13716,7 @@ sub_DB744:                              ; CODE XREF: sub_D3FAC+F4↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-SetPlayerAnimation:                              ; CODE XREF: sub_D4830+7C↑p
+SetPlayerAnimation:                              ; CODE XREF: PlayPlayerVictoryAnimation+7C↑p
                                         ; RunUpdate_ToxicCaves+30C↑p ...
 
 arg_0           =  4
@@ -13762,7 +13762,7 @@ loc_DB832:                              ; CODE XREF: SetPlayerAnimation+4C↑j
 
 
 sub_DB836:                              ; CODE XREF: RunLevelIntro+1E6↑p
-                                        ; sub_D54CE+6C↑p ...
+                                        ; SetGameState+6C↑p ...
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -17460,7 +17460,7 @@ loc_DDAFE:                              ; CODE XREF: RunPlayerUpdate+CC↑j
                 cmpi.w  #$FA,2(a0)
                 ble.s   loc_DDB28
                 pea     (6).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
 
 loc_DDB28:                              ; CODE XREF: RunPlayerUpdate+B46↑j
@@ -25285,7 +25285,7 @@ loc_E22FA:                              ; CODE XREF: sub_E206A+26C↑j
                 cmpi.b  #4,($FFF1F8).l
                 bne.w   loc_E2F78
                 pea     (off_4).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
                 bra.w   loc_E2F8A
 ; ---------------------------------------------------------------------------
@@ -29027,7 +29027,7 @@ loc_E4AC0:                              ; CODE XREF: sub_E4A8C+12↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E4AC6:                              ; CODE XREF: sub_D54CE:loc_D5576↑p
+LavaPowerhouse_BossRoomExploding_Begin:                              ; CODE XREF: SetGameState:SetGameState_BOSS_ROOM_EXPLODING_LEVEL_LAVA_POWERHOUSE↑p
                 movem.l d2/a2-a3,-(sp)
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -29046,7 +29046,7 @@ sub_E4AC6:                              ; CODE XREF: sub_D54CE:loc_D5576↑p
                 movea.l #$FFAD24,a2
                 clr.w   d2
 
-loc_E4B0A:                              ; CODE XREF: sub_E4AC6+6A↓j
+loc_E4B0A:                              ; CODE XREF: LavaPowerhouse_BossRoomExploding_Begin+6A↓j
                 cmpa.l  (a3),a2
                 beq.s   loc_E4B26
                 clr.b   $2A(a2)
@@ -29056,8 +29056,8 @@ loc_E4B0A:                              ; CODE XREF: sub_E4AC6+6A↓j
                 beq.s   loc_E4B26
                 ori.w   #$8000,$24(a2)
 
-loc_E4B26:                              ; CODE XREF: sub_E4AC6+46↑j
-                                        ; sub_E4AC6+58↑j
+loc_E4B26:                              ; CODE XREF: LavaPowerhouse_BossRoomExploding_Begin+46↑j
+                                        ; LavaPowerhouse_BossRoomExploding_Begin+58↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
@@ -29074,7 +29074,7 @@ loc_E4B26:                              ; CODE XREF: sub_E4AC6+46↑j
                 move.b  #1,($FF7848).l
                 movem.l (sp)+,d2/a2-a3
                 rts
-; End of function sub_E4AC6
+; End of function LavaPowerhouse_BossRoomExploding_Begin
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -29316,7 +29316,7 @@ loc_E4DB4:                              ; CODE XREF: RunBossRoomExploding_LavaPo
 
 loc_E4DBE:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+1E↑j
                 pea     (5).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
 
 loc_E4DCA:                              ; CODE XREF: RunBossRoomExploding_LavaPowerhouse+258↑j
@@ -36353,7 +36353,7 @@ loc_E99CC:                              ; CODE XREF: sub_E9968+28↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E99D2:                              ; CODE XREF: sub_D54CE:loc_D556E↑p
+ToxicCaves_BossRoomExploding_Begin:                              ; CODE XREF: SetGameState:SetGameState_BOSS_ROOM_EXPLODING_LEVEL_TOXIC_CAVES↑p
                 movem.l d2/a2,-(sp)
                 clr.w   ($FFAD1E).l
                 clr.w   ($FF5234).l
@@ -36361,7 +36361,7 @@ sub_E99D2:                              ; CODE XREF: sub_D54CE:loc_D556E↑p
                 movea.l #$FFAD24,a2
                 clr.w   d2
 
-loc_E99F0:                              ; CODE XREF: sub_E99D2+5E↓j
+loc_E99F0:                              ; CODE XREF: ToxicCaves_BossRoomExploding_Begin+5E↓j
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -36379,8 +36379,8 @@ loc_E99F0:                              ; CODE XREF: sub_E99D2+5E↓j
                 beq.s   loc_E9A26
                 ori.w   #$8000,$24(a2)
 
-loc_E9A26:                              ; CODE XREF: sub_E99D2+3A↑j
-                                        ; sub_E99D2+4C↑j
+loc_E9A26:                              ; CODE XREF: ToxicCaves_BossRoomExploding_Begin+3A↑j
+                                        ; ToxicCaves_BossRoomExploding_Begin+4C↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
@@ -36394,7 +36394,7 @@ loc_E9A26:                              ; CODE XREF: sub_E99D2+3A↑j
                 move.b  #1,($FF7848).l
                 movem.l (sp)+,d2/a2
                 rts
-; End of function sub_E99D2
+; End of function ToxicCaves_BossRoomExploding_Begin
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -36594,7 +36594,7 @@ loc_E9C82:                              ; CODE XREF: RunBossRoomExploding_ToxicC
 
 loc_E9C8C:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+1E↑j
                 pea     (5).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
 
 loc_E9C98:                              ; CODE XREF: RunBossRoomExploding_ToxicCaves+234↑j
@@ -42227,7 +42227,7 @@ loc_ED92C:                              ; CODE XREF: sub_ED5D8+34E↑j
                 tst.w   $42(a4)
                 bne.s   loc_ED93E
                 pea     (off_4).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
 
 loc_ED93E:                              ; CODE XREF: sub_ED5D8+358↑j
@@ -42387,7 +42387,7 @@ loc_EDB14:                              ; CODE XREF: sub_ED5D8+502↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_EDB1A:                              ; CODE XREF: sub_D54CE:loc_D5586↑p
+Showdown_BossRoomExploding_Begin:                              ; CODE XREF: SetGameState:SetGameState_BOSS_ROOM_EXPLODING_LEVEL_SHOWDOWN↑p
                 movem.l d2/a2,-(sp)
                 clr.w   ($FFAD1E).l
                 clr.w   ($FF5234).l
@@ -42395,7 +42395,7 @@ sub_EDB1A:                              ; CODE XREF: sub_D54CE:loc_D5586↑p
                 movea.l #$FFAD24,a2
                 clr.w   d2
 
-loc_EDB38:                              ; CODE XREF: sub_EDB1A+5E↓j
+loc_EDB38:                              ; CODE XREF: Showdown_BossRoomExploding_Begin+5E↓j
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -42413,8 +42413,8 @@ loc_EDB38:                              ; CODE XREF: sub_EDB1A+5E↓j
                 beq.s   loc_EDB6E
                 ori.w   #$8000,$24(a2)
 
-loc_EDB6E:                              ; CODE XREF: sub_EDB1A+3A↑j
-                                        ; sub_EDB1A+4C↑j
+loc_EDB6E:                              ; CODE XREF: Showdown_BossRoomExploding_Begin+3A↑j
+                                        ; Showdown_BossRoomExploding_Begin+4C↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
@@ -42423,7 +42423,7 @@ loc_EDB6E:                              ; CODE XREF: sub_EDB1A+3A↑j
                 movea.l #$FF88A2,a2
                 clr.w   d2
 
-loc_EDB82:                              ; CODE XREF: sub_EDB1A+7C↓j
+loc_EDB82:                              ; CODE XREF: Showdown_BossRoomExploding_Begin+7C↓j
                 move.l  a2,-(sp)
                 lea     $22(a2),a2
                 jsr     sub_E1F48
@@ -42439,7 +42439,7 @@ loc_EDB82:                              ; CODE XREF: sub_EDB1A+7C↓j
                 move.b  #1,($FF7848).l
                 movem.l (sp)+,d2/a2
                 rts
-; End of function sub_EDB1A
+; End of function Showdown_BossRoomExploding_Begin
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -42641,7 +42641,7 @@ loc_EDDD6:                              ; CODE XREF: RunBossRoomExploding_Showdo
 
 loc_EDDE0:                              ; CODE XREF: RunBossRoomExploding_Showdown+1E↑j
                 pea     (5).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
 
 loc_EDDEC:                              ; CODE XREF: RunBossRoomExploding_Showdown+222↑j
@@ -42774,7 +42774,7 @@ loc_EDED0:                              ; DATA XREF: sub_EDDF2+DC↑o
                 cmpi.w  #$32,$C(a2) ; '2'
                 bne.s   loc_EDF52
                 pea     (off_4).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
                 move.b  #6,$C(a4)
                 clr.l   $1E(a4)
@@ -47064,7 +47064,7 @@ loc_F0DD2:                              ; CODE XREF: sub_F0D16+A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F0DD6:                              ; CODE XREF: sub_D54CE:loc_D557E↑p
+TheMachine_BossRoomExploding_Begin:                              ; CODE XREF: SetGameState:SetGameState_BOSS_ROOM_EXPLODING_LEVEL_THE_MACHINE↑p
                 movem.l d2/a2,-(sp)
                 clr.w   ($FFAD1E).l
                 clr.w   ($FF5234).l
@@ -47072,7 +47072,7 @@ sub_F0DD6:                              ; CODE XREF: sub_D54CE:loc_D557E↑p
                 movea.l #$FFAD24,a2
                 clr.w   d2
 
-loc_F0DF4:                              ; CODE XREF: sub_F0DD6+5E↓j
+loc_F0DF4:                              ; CODE XREF: TheMachine_BossRoomExploding_Begin+5E↓j
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -47090,8 +47090,8 @@ loc_F0DF4:                              ; CODE XREF: sub_F0DD6+5E↓j
                 beq.s   loc_F0E2A
                 ori.w   #$8000,$24(a2)
 
-loc_F0E2A:                              ; CODE XREF: sub_F0DD6+3A↑j
-                                        ; sub_F0DD6+4C↑j
+loc_F0E2A:                              ; CODE XREF: TheMachine_BossRoomExploding_Begin+3A↑j
+                                        ; TheMachine_BossRoomExploding_Begin+4C↑j
                 addq.w  #1,d2
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
@@ -47105,7 +47105,7 @@ loc_F0E2A:                              ; CODE XREF: sub_F0DD6+3A↑j
                 move.b  #1,($FF7848).l
                 movem.l (sp)+,d2/a2
                 rts
-; End of function sub_F0DD6
+; End of function TheMachine_BossRoomExploding_Begin
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -47290,7 +47290,7 @@ loc_F1050:                              ; CODE XREF: RunBossRoomExploding_TheMac
 
 loc_F1056:                              ; CODE XREF: RunBossRoomExploding_TheMachine+1E↑j
                 pea     (5).w
-                jsr     sub_D54CE
+                jsr     SetGameState
                 addq.l  #4,sp
 
 loc_F1062:                              ; CODE XREF: RunBossRoomExploding_TheMachine+1FA↑j

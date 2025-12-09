@@ -1756,7 +1756,7 @@ locret_D44FE:                           ; CODE XREF: RunUpdate+2E↑j
 
 
 RunLevelIntro:                              ; CODE XREF: sub_D46FE+5E↓p
-                                        ; RunMain:loc_D52D8↓p
+                                        ; RunMain:GAME_STATE_LEVEL_INTRO↓p
                 movem.l a2-a5,-(sp)
                 movea.l #$FF55A0,a3
                 movea.l #$FFF1FA,a4
@@ -2057,7 +2057,7 @@ loc_D47BC:                              ; CODE XREF: sub_D46FE+4E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D47DE:                              ; CODE XREF: RunMain:loc_D52D0↓p
+sub_D47DE:                              ; CODE XREF: RunMain:GAME_STATE_MAIN_MENU↓p
                 move.l  d2,-(sp)
                 jsr     sub_F2554
                 move.l  d0,d2
@@ -2161,7 +2161,7 @@ sub_D4830:                              ; CODE XREF: sub_D54CE:loc_D55F8↓p
 
 ; Attributes: bp-based frame
 
-RunUpdate_TallyScoreAndEndLevel:                              ; CODE XREF: RunMain:loc_D54AC↓p
+RunUpdate_TallyScoreAndEndLevel:                              ; CODE XREF: RunMain:GAME_STATE_LEVEL_END_SCORE_TALLY↓p
 
 var_44          = -$44
 var_28          = -$28
@@ -3088,27 +3088,27 @@ MainLoop:                               ; CODE XREF: RunMain+294↓j
                 move.w  GameModes(pc,d0.l),d0
                 jmp     GameModes(pc,d0.w)
 ; ---------------------------------------------------------------------------
-GameModes:      dc.w loc_D52D0-*        ; DATA XREF: RunMain+8A↑r
+GameModes:      dc.w GAME_STATE_MAIN_MENU-*        ; DATA XREF: RunMain+8A↑r
                                         ; RunMain:GameModes↓o ...
-                dc.w loc_D52D8-GameModes
-                dc.w loc_D52E0-GameModes
-                dc.w loc_D5356-GameModes
-                dc.w loc_D541E-GameModes
-                dc.w loc_D546C-GameModes
-                dc.w loc_D54AC-GameModes
+                dc.w GAME_STATE_LEVEL_INTRO-GameModes
+                dc.w GAME_STATE_NORMAL_LEVEL-GameModes
+                dc.w GAME_STATE_RING_PORTAL_TRANSITION-GameModes
+                dc.w GAME_STATE_BOSS_ROOM_EXPLODING-GameModes
+                dc.w GAME_STATE_LEVEL_COMPLETE_OUTRO-GameModes
+                dc.w GAME_STATE_LEVEL_END_SCORE_TALLY-GameModes
 ; ---------------------------------------------------------------------------
 
-loc_D52D0:                              ; DATA XREF: RunMain:GameModes↑o
+GAME_STATE_MAIN_MENU:                              ; DATA XREF: RunMain:GameModes↑o
                 bsr.w   sub_D47DE
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D52D8:                              ; DATA XREF: RunMain+94↑o
+GAME_STATE_LEVEL_INTRO:                              ; DATA XREF: RunMain+94↑o
                 bsr.w   RunLevelIntro
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D52E0:                              ; DATA XREF: RunMain+96↑o
+GAME_STATE_NORMAL_LEVEL:                              ; DATA XREF: RunMain+96↑o
                 move.w  (a2),d0
                 andi.w  #$8000,d0
                 beq.s   loc_D5348
@@ -3155,7 +3155,7 @@ loc_D5348:                              ; CODE XREF: RunMain+B6↑j
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D5356:                              ; DATA XREF: RunMain+98↑o
+GAME_STATE_RING_PORTAL_TRANSITION:                              ; DATA XREF: RunMain+98↑o
                 tst.w   ($FFF1FA).l
                 bgt.w   loc_D5406
                 jsr     ScreenTransition_ToBlack
@@ -3217,7 +3217,7 @@ loc_D5406:                              ; CODE XREF: RunMain+12C↑j
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
-loc_D541E:                              ; DATA XREF: RunMain+9A↑o
+GAME_STATE_BOSS_ROOM_EXPLODING:                              ; DATA XREF: RunMain+9A↑o
                 move.w  ($FF75B0).l,d0
                 ext.l   d0
                 moveq   #3,d1
@@ -3262,7 +3262,7 @@ loc_D5462:                              ; CODE XREF: RunMain+266↓j
                 bra.w   loc_D5342
 ; ---------------------------------------------------------------------------
 
-loc_D546C:                              ; DATA XREF: RunMain+9C↑o
+GAME_STATE_LEVEL_COMPLETE_OUTRO:                              ; DATA XREF: RunMain+9C↑o
                 jsr     RunPlayerUpdate
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
@@ -3283,7 +3283,7 @@ loc_D546C:                              ; DATA XREF: RunMain+9C↑o
                 bra.s   loc_D5462
 ; ---------------------------------------------------------------------------
 
-loc_D54AC:                              ; DATA XREF: RunMain+9E↑o
+GAME_STATE_LEVEL_END_SCORE_TALLY:                              ; DATA XREF: RunMain+9E↑o
                 bsr.w   RunUpdate_TallyScoreAndEndLevel
 
 WaitForNextMode:                        ; CODE XREF: RunMain+84↑j
@@ -16353,7 +16353,7 @@ sub_DCF8C:                              ; CODE XREF: RunPlayerUpdate+1E4↓p
 
 
 RunPlayerUpdate:                              ; CODE XREF: RunUpdate↑p
-                                        ; RunMain:loc_D546C↑p
+                                        ; RunMain:GAME_STATE_LEVEL_COMPLETE_OUTRO↑p
                 movem.l d2-d6/a2-a5,-(sp)
                 movea.l #$FF573C,a4
                 movea.l #$FFF1FA,a5

@@ -2085,9 +2085,9 @@ loc_D47F2:                              ; CODE XREF: RunMainMenu+A↑j
 ; ---------------------------------------------------------------------------
 
 loc_D480A:                              ; CODE XREF: RunMainMenu+22↑j
-                ;bsr.w   StartGame
-                ;bra.s   loc_D482C
-                jmp     BeginBonusModeFromTitleScreen
+                bsr.w   StartGame
+                bra.s   loc_D482C
+                ;jmp     BeginBonusModeFromTitleScreen
 ; ---------------------------------------------------------------------------
 
 loc_D4810:                              ; CODE XREF: RunMainMenu+2A↑j

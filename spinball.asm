@@ -2221,7 +2221,7 @@ off_D4948:      dc.w loc_D496C-*        ; DATA XREF: RunUpdate_TallyScoreAndEndL
 ; ---------------------------------------------------------------------------
 
 loc_D496C:                              ; DATA XREF: RunUpdate_TallyScoreAndEndLevel:off_D4948↑o
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 tst.b   d3
                 bne.s   loc_D497E
                 tst.w   ($FF000C).l
@@ -2287,7 +2287,7 @@ loc_D4A02:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 move.l  ($FF000E).l,-(sp)
                 pea     var_28(a6)
                 jsr     sub_DE816
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     var_28(a6)
                 pea     (4).w
                 pea     ($32).w
@@ -2346,7 +2346,7 @@ loc_D4A9C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 move.l  ($FF000E).l,-(sp)
                 pea     var_28(a6)
                 jsr     sub_DE816
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     var_28(a6)
                 pea     (4).w
                 pea     ($32).w
@@ -2412,7 +2412,7 @@ loc_D4B6A:                              ; DATA XREF: RunUpdate_TallyScoreAndEndL
                 pea     var_28(a6)
                 jsr     sub_DE79A
                 addq.l  #8,sp
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     var_28(a6)
                 pea     (4).w
                 pea     ($32).w
@@ -2466,7 +2466,7 @@ loc_D4C1E:                              ; DATA XREF: RunUpdate_TallyScoreAndEndL
                 pea     var_28(a6)
                 jsr     sub_DE79A
                 addq.l  #8,sp
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     var_28(a6)
                 pea     (4).w
                 pea     ($32).w
@@ -2513,7 +2513,7 @@ loc_D4CBE:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 pea     var_28(a6)
                 jsr     sub_DE79A
                 addq.l  #8,sp
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     var_28(a6)
                 pea     (4).w
                 pea     ($32).w
@@ -2547,7 +2547,7 @@ loc_D4D22:                              ; DATA XREF: RunUpdate_TallyScoreAndEndL
                 pea     var_28(a6)
                 jsr     sub_DE79A
                 addq.l  #8,sp
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     var_28(a6)
                 pea     (4).w
                 pea     ($32).w
@@ -2704,7 +2704,7 @@ loc_D4ED0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 beq.s   loc_D4EE4
                 cmpi.w  #$A,(a5)
                 bge.s   loc_D4EE4
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 bra.w   loc_D4932
 ; ---------------------------------------------------------------------------
 
@@ -3132,7 +3132,7 @@ GAME_STATE_NORMAL_LEVEL:                              ; DATA XREF: RunMain+96↑
 loc_D5318:                              ; CODE XREF: RunMain+DA↑j
                 move.b  #1,(a5)
                 jsr     GEMSPauseAll
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     (aGamePaused).l ; "GAME PAUSED"
                 clr.l   -(sp)
                 pea     (2).w
@@ -14836,7 +14836,7 @@ loc_DC210:                              ; CODE XREF: LoseLife+2A↑j
                 movea.l $3A(a0),a0
                 ori.w   #4,6(a0)
                 move.b  #$86,$C(a2)
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 subq.b  #1,$46(a2)
                 beq.s   GameOver
                 pea     (aTooBaaad).l   ; "() TOO BAAAD ()"
@@ -19009,7 +19009,7 @@ loc_DE984:                              ; CODE XREF: OSD_UpdateTilesInRAM+8E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DE996:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel:loc_D496C↑p
+OSD_ClearMessageQueue:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel:loc_D496C↑p
                                         ; RunUpdate_TallyScoreAndEndLevel+138↑p ...
                 move.l  d2,-(sp)
                 clr.b   ($FF009A).l
@@ -19025,7 +19025,7 @@ sub_DE996:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 lea     (a0,d0.w),a0
                 movea.l a0,a1
 
-loc_DE9C2:                              ; CODE XREF: sub_DE996+38↓j
+loc_DE9C2:                              ; CODE XREF: OSD_ClearMessageQueue+38↓j
                 clr.l   (a1)
                 moveq   #$48,d0 ; 'H'
                 adda.l  d0,a1
@@ -19034,7 +19034,7 @@ loc_DE9C2:                              ; CODE XREF: sub_DE996+38↓j
                 blt.s   loc_DE9C2
                 move.l  (sp)+,d2
                 rts
-; End of function sub_DE996
+; End of function OSD_ClearMessageQueue
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -20680,7 +20680,7 @@ arg_8           =  $C
                 add.w   d1,d0
                 move.w  d0,($FFF20E).l
                 move.w  d4,($FFF212).l
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 tst.b   d2
                 beq.s   loc_DF81E
                 move.w  ($FF75B0).l,d0
@@ -20748,7 +20748,7 @@ arg_4           =  8
                 add.w   d1,d0
                 move.w  d0,($FFF20E).l
                 move.w  d3,($FFF212).l
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 movem.l (sp)+,d2-d3
                 rts
 ; End of function sub_DF85A
@@ -21240,7 +21240,7 @@ off_DFC8C:      dc.w m_CorkPoppingUp-*  ; DATA XREF: TriggerOSDMessage+1A4↑r
 ; ---------------------------------------------------------------------------
 
 m_CorkPoppingUp:                        ; DATA XREF: TriggerOSDMessage:off_DFC8C↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aCorkPoppingUp_).l ; "CORK POPPING UP..."
                 clr.l   -(sp)
                 pea     ($1E).w
@@ -21301,7 +21301,7 @@ loc_DFD94:                              ; CODE XREF: TriggerOSDMessage+296↑j
 ; ---------------------------------------------------------------------------
 
 loc_DFD9C:                              ; DATA XREF: TriggerOSDMessage+1B2↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aDrainingSlime).l ; "* DRAINING SLIME *"
                 pea     (off_4).w
                 pea     ($5A).w
@@ -23482,7 +23482,7 @@ loc_E11FA:                              ; CODE XREF: TriggerOSDMessage+17C8↓j
 ; ---------------------------------------------------------------------------
 
 loc_E1200:                              ; DATA XREF: TriggerOSDMessage+15D4↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 addq.w  #1,($FF5892).l
                 move.w  ($FF5892).l,d0
                 ext.l   d0
@@ -23521,7 +23521,7 @@ loc_E123C:                              ; DATA XREF: TriggerOSDMessage+15D6↑o
 ; ---------------------------------------------------------------------------
 
 loc_E127A:                              ; DATA XREF: TriggerOSDMessage+15D8↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aHitOtherTarget).l ; "HIT OTHER TARGETS"
                 clr.l   -(sp)
                 pea     (off_3C).w
@@ -23554,7 +23554,7 @@ loc_E12AC:                              ; DATA XREF: TriggerOSDMessage+15DE↑o
 ; ---------------------------------------------------------------------------
 
 loc_E12BE:                              ; DATA XREF: TriggerOSDMessage+15E2↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aEruptionBonus).l ; "!! ERUPTION BONUS !!"
                 clr.l   -(sp)
                 pea     (off_28).w
@@ -23679,7 +23679,7 @@ loc_E13FE:                              ; DATA XREF: TriggerOSDMessage+1670↑o
 
 loc_E1418:                              ; DATA XREF: TriggerOSDMessage+1672↑o
                                         ; TriggerOSDMessage+1674↑o ...
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 cmpi.w  #$58,d4 ; 'X'
                 bne.s   loc_E142A
                 pea     (aPartyTime).l  ; "* PARTY TIME *"
@@ -23720,7 +23720,7 @@ loc_E143E:                              ; CODE XREF: TriggerOSDMessage+1948↑j
 
 loc_E146E:                              ; DATA XREF: TriggerOSDMessage+1678↑o
                                         ; TriggerOSDMessage+1682↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 cmpi.w  #$5B,d4 ; '['
                 bne.s   loc_E1482
                 moveq   #0,d0
@@ -23789,7 +23789,7 @@ loc_E1506:                              ; DATA XREF: TriggerOSDMessage+167E↑o
 
 loc_E151E:                              ; DATA XREF: TriggerOSDMessage+1680↑o
                                         ; TriggerOSDMessage+1684↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 cmpi.w  #$5F,d4 ; '_'
                 bne.s   loc_E1530
                 pea     (aLeft).l       ; "LEFT"
@@ -23873,7 +23873,7 @@ loc_E15F2:                              ; DATA XREF: TriggerOSDMessage:off_E10A2
 ; ---------------------------------------------------------------------------
 
 loc_E1608:                              ; DATA XREF: TriggerOSDMessage+15C4↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aBlockDestroyed).l ; "BLOCK DESTROYED !"
                 clr.l   -(sp)
                 pea     ($A).w
@@ -23933,7 +23933,7 @@ loc_E1672:                              ; DATA XREF: TriggerOSDMessage+15C8↑o
 ; ---------------------------------------------------------------------------
 
 loc_E16BC:                              ; DATA XREF: TriggerOSDMessage+15E4↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 moveq   #0,d0
                 addq.w  #1,($FFABB8).l
                 move.w  ($FFABB8).l,d0
@@ -23961,7 +23961,7 @@ loc_E16BC:                              ; DATA XREF: TriggerOSDMessage+15E4↑o
 ; ---------------------------------------------------------------------------
 
 loc_E1716:                              ; DATA XREF: TriggerOSDMessage+15EE↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aGotHim_0).l   ; "GOT HIM !!"
                 pea     (6).w
                 pea     ($1E).w
@@ -23983,7 +23983,7 @@ loc_E172A:                              ; CODE XREF: TriggerOSDMessage+1CC8↓j
 
 loc_E1752:                              ; DATA XREF: TriggerOSDMessage+161A↑o
                                         ; TriggerOSDMessage+161C↑o ...
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 cmpi.w  #$2C,d4 ; ','
                 bne.s   loc_E1764
                 pea     (aEerrr___click).l ; "EERRR...CLICK !"
@@ -24007,7 +24007,7 @@ loc_E1778:                              ; CODE XREF: TriggerOSDMessage+1C82↑j
 ; ---------------------------------------------------------------------------
 
 loc_E177E:                              ; DATA XREF: TriggerOSDMessage+1620↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aRobotnikSShip).l ; " ()ROBOTNIK'S SHIP()"
                 clr.l   -(sp)
                 pea     ($5A).w
@@ -24015,7 +24015,7 @@ loc_E177E:                              ; DATA XREF: TriggerOSDMessage+1620↑o
 ; ---------------------------------------------------------------------------
 
 loc_E1792:                              ; DATA XREF: TriggerOSDMessage+1622↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aBustBlocksFirs).l ; "BUST BLOCKS FIRST!"
                 pea     (3).w
                 pea     (off_28).w
@@ -24024,7 +24024,7 @@ loc_E1792:                              ; DATA XREF: TriggerOSDMessage+1622↑o
 ; ---------------------------------------------------------------------------
 
 loc_E17AC:                              ; DATA XREF: TriggerOSDMessage+1626↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aSmellMySocks).l ; "SMELL MY SOCKS !!"
                 clr.l   -(sp)
                 pea     ($5A).w
@@ -24048,7 +24048,7 @@ loc_E17D0:                              ; DATA XREF: TriggerOSDMessage+1630↑o
 loc_E17E0:                              ; DATA XREF: TriggerOSDMessage+1632↑o
                 pea     (off_78).w
                 jsr     (a4)
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aRobotnikIsGett).l ; "() ROBOTNIK IS GETTING AWAY..."
                 pea     (1).w
                 clr.l   -(sp)
@@ -24095,7 +24095,7 @@ loc_E183E:                              ; DATA XREF: TriggerOSDMessage+1646↑o
 ; ---------------------------------------------------------------------------
 
 loc_E1854:                              ; DATA XREF: TriggerOSDMessage+1648↑o
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 movea.l #$FFABB8,a0
                 movea.l a0,a2
                 move.w  (a0),d2
@@ -24144,7 +24144,7 @@ loc_E18B2:                              ; CODE XREF: TriggerOSDMessage+1DB8↑j
 ; ---------------------------------------------------------------------------
 
 loc_E18DA:                              ; CODE XREF: TriggerOSDMessage+1DDC↑j
-                bsr.w   sub_DE996
+                bsr.w   OSD_ClearMessageQueue
                 pea     (aTotalRobotnikB).l ; "() TOTAL ROBOTNIK BONUS ADDED..."
                 clr.l   -(sp)
                 pea     ($5A).w
@@ -24538,7 +24538,7 @@ arg_0           =  4
                 bne.s   loc_E1CA8
                 pea     (1).w
                 bsr.w   sub_E1B5A
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     (aAllRingsCollec).l ; "ALL RINGS COLLECTED"
                 pea     (6).w
                 pea     (off_28).w
@@ -24578,7 +24578,7 @@ arg_0           =  4
 
                 move.l  a2,-(sp)
                 movea.l 4+arg_0(sp),a2
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     (aEnteringMultiB).l ; "* ENTERING MULTI BALL *"
                 pea     (5).w
                 pea     (off_3C).w
@@ -25000,7 +25000,7 @@ arg_0           =  8
                 pea     var_14(a6)
                 jsr     sprintf         ; void sprintf(char *outputBuffer, char *formatString, ...);
                                         ; A specialized version that only handles %%, %d, and %s with no special flags.
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     var_14(a6)
                 pea     (6).w
                 pea     (off_78).w
@@ -25871,7 +25871,7 @@ loc_E2966:                              ; CODE XREF: sub_E206A+75E↑j
 
 loc_E2980:                              ; CODE XREF: sub_E206A+910↑j
                 move.l  #$FFFE8000,$22(a4)
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     (aWhoaThatWasClo).l ; "WHOA! THAT WAS CLOSE, DUDE..."
                 pea     (1).w
                 clr.l   -(sp)
@@ -56437,7 +56437,7 @@ loc_F65C0:                              ; CODE XREF: BonusStage_DisplayOSDMessag
                 cmpi.w  #$12,($FFEE7A).l
                 beq.w   loc_F6A08
                 move.w  d2,($FFEE7A).l
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     ($7A).w
                 jsr     PlaySong
                 addq.l  #4,sp
@@ -65010,7 +65010,7 @@ loc_FC668:                              ; CODE XREF: RunUpdate_BonusStage+20D8�
                 btst    #7,d2
                 beq.w   loc_FC780
                 jsr     GEMSPauseAll
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     ($2B).w
                 bsr.w   BonusStage_DisplayOSDMessage
                 jsr     RunOSDAnimationUpdate
@@ -65072,7 +65072,7 @@ loc_FC71E:                              ; CODE XREF: RunUpdate_BonusStage+21D4�
 loc_FC758:                              ; CODE XREF: RunUpdate_BonusStage+2194↑j
                 btst    #7,d2
                 bne.s   loc_FC71E
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     (off_2C).w
                 bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #8,sp
@@ -67192,7 +67192,7 @@ loc_FDEF2:                              ; CODE XREF: RunUpdate_BonusStage+36EE�
                 bne.s   loc_FDF2C
                 move.w  #$78,($FF546A).l ; 'x'
                 clr.w   ($FFEE7A).l
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 bra.w   loc_FC5E0
 ; ---------------------------------------------------------------------------
 
@@ -67239,7 +67239,7 @@ loc_FDFDC:                              ; CODE XREF: RunUpdate_BonusStage+36DA�
                 move.w  #2,($FF3CA8).l
                 bsr.w   sub_F798A
                 clr.w   ($FFEE7A).l
-                jsr     sub_DE996
+                jsr     OSD_ClearMessageQueue
                 pea     (off_2C).w
                 bsr.w   BonusStage_DisplayOSDMessage
                 addq.l  #4,sp

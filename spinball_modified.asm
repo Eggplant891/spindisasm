@@ -3789,15 +3789,6 @@ loc_D589E:                              ; CODE XREF: RunAnimatedObjectsUpdate+14
                 movem.l (sp)+,d2-d4/a2-a3
                 rts
 ; End of function RunAnimatedObjectsUpdate
-				nop
-				nop
-				nop
-				
-				nop
-				nop
-				nop
-				
-				nop
 
 ; =============== S U B R O U T I N E =======================================
 

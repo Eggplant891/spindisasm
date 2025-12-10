@@ -1173,7 +1173,7 @@ loc_D3EC6:                              ; CODE XREF: NewLife+44↑j
                 move.w  d2,d1
                 ext.l   d1
                 move.l  d3,d0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d3
 
 loc_D3EDA:                              ; CODE XREF: NewLife+32↑j
@@ -3085,20 +3085,20 @@ MainLoop:                               ; CODE XREF: RunMain+294↓j
                 cmp.l   d1,d0
                 bhi.w   WaitForNextMode
                 add.l   d0,d0
-                move.w  GameModes(pc,d0.l),d0
-                jmp     GameModes(pc,d0.w)
+                move.w  GameState_JumpTable(pc,d0.l),d0
+                jmp     GameState_JumpTable(pc,d0.w)
 ; ---------------------------------------------------------------------------
-GameModes:      dc.w GAME_STATE_MAIN_MENU-*        ; DATA XREF: RunMain+8A↑r
-                                        ; RunMain:GameModes↓o ...
-                dc.w GAME_STATE_LEVEL_INTRO-GameModes
-                dc.w GAME_STATE_NORMAL_LEVEL-GameModes
-                dc.w GAME_STATE_RING_PORTAL_TRANSITION-GameModes
-                dc.w GAME_STATE_BOSS_ROOM_EXPLODING-GameModes
-                dc.w GAME_STATE_LEVEL_COMPLETE_OUTRO-GameModes
-                dc.w GAME_STATE_LEVEL_END_SCORE_TALLY-GameModes
+GameState_JumpTable:
+                dc.w GAME_STATE_MAIN_MENU-*
+                dc.w GAME_STATE_LEVEL_INTRO-GameState_JumpTable
+                dc.w GAME_STATE_NORMAL_LEVEL-GameState_JumpTable
+                dc.w GAME_STATE_RING_PORTAL_TRANSITION-GameState_JumpTable
+                dc.w GAME_STATE_BOSS_ROOM_EXPLODING-GameState_JumpTable
+                dc.w GAME_STATE_LEVEL_COMPLETE_OUTRO-GameState_JumpTable
+                dc.w GAME_STATE_LEVEL_END_SCORE_TALLY-GameState_JumpTable
 ; ---------------------------------------------------------------------------
 
-GAME_STATE_MAIN_MENU:                              ; DATA XREF: RunMain:GameModes↑o
+GAME_STATE_MAIN_MENU:                              ; DATA XREF: RunMain:GameState_JumpTable↑o
                 bsr.w   RunMainMenu
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
@@ -13901,13 +13901,13 @@ arg_8           =  $10
                 ext.l   d0
                 move.w  6(a2),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  2(a2),d0
                 ext.l   d0
                 move.w  4(a2),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 sub.l   (sp)+,d0
                 move.l  d0,var_10(a6)
                 move.l  d0,-(sp)
@@ -13915,13 +13915,13 @@ arg_8           =  $10
                 ext.l   d0
                 move.w  d5,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  $26(a3),d0
                 ext.l   d0
                 move.w  d4,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 add.l   (sp)+,d0
                 move.l  (sp)+,d1
@@ -13986,7 +13986,7 @@ arg_8           =  $10
                 ext.l   d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d6,d1
                 jsr     Divide
                 move.w  d0,d3
@@ -13996,7 +13996,7 @@ arg_8           =  $10
                 ext.l   d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d6,d1
                 jsr     Divide
                 move.w  d0,d2
@@ -14074,13 +14074,13 @@ loc_DBB22:                              ; CODE XREF: sub_DB900+21C↑j
                 ext.l   d0
                 move.w  d5,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  var_14(a6),d0
                 ext.l   d0
                 move.w  d4,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 add.l   var_10(a6),d0
                 moveq   #0,d1
@@ -14101,26 +14101,26 @@ loc_DBB8C:                              ; CODE XREF: sub_DB900+1CA↑j
                 ext.l   d0
                 move.w  2(a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  var_C(a6),d0
                 ext.l   d0
                 move.w  var_C(a6),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 move.w  6(a5),d0
                 ext.l   d0
                 move.w  6(a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  4(a5),d0
                 ext.l   d0
                 move.w  4(a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d3
                 cmpi.l  #$90,d2
@@ -23437,7 +23437,7 @@ loc_E1170:                              ; CODE XREF: TriggerOSDMessage+185C↓j
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #dword_186A0,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
 
 loc_E11A8:                              ; CODE XREF: TriggerOSDMessage+1852↓j
                 move.l  d0,d2
@@ -23515,7 +23515,7 @@ loc_E123C:                              ; DATA XREF: TriggerOSDMessage+15D6↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
@@ -23569,7 +23569,7 @@ loc_E12BE:                              ; DATA XREF: TriggerOSDMessage+15E2↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$61A8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 moveq   #0,d0
                 move.w  ($FFAB88).l,d0
@@ -23588,7 +23588,7 @@ loc_E1316:                              ; CODE XREF: TriggerOSDMessage+1826↑j
                 add.l   d0,d1
                 asr.l   #5,d1
                 move.l  d2,d0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 bra.w   loc_E11A8
 ; ---------------------------------------------------------------------------
 
@@ -23620,7 +23620,7 @@ loc_E1358:                              ; DATA XREF: TriggerOSDMessage+15F2↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 bra.w   loc_DFE5A
 ; ---------------------------------------------------------------------------
@@ -23758,7 +23758,7 @@ loc_E14AC:                              ; DATA XREF: TriggerOSDMessage+167C↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 move.l  d2,-(sp)
                 move.l  a5,-(sp)
@@ -23915,7 +23915,7 @@ loc_E1672:                              ; DATA XREF: TriggerOSDMessage+15C8↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 move.l  d2,-(sp)
                 move.l  a5,d0
@@ -23954,7 +23954,7 @@ loc_E16BC:                              ; DATA XREF: TriggerOSDMessage+15E4↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 pea     ($58).w
                 bra.w   loc_DFC4C
@@ -23976,7 +23976,7 @@ loc_E172A:                              ; CODE XREF: TriggerOSDMessage+1CC8↓j
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 bra.w   loc_E09B8
 ; ---------------------------------------------------------------------------
@@ -24103,7 +24103,7 @@ loc_E1854:                              ; DATA XREF: TriggerOSDMessage+1648↑o
                 andi.l  #$FFFF,d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 add.l   d2,d2
                 move.l  d2,-(sp)
@@ -50514,7 +50514,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  1(a2),d1
@@ -50533,7 +50533,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 moveq   #0,d1
@@ -50551,7 +50551,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  (a2),d1
@@ -50633,7 +50633,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 ext.l   d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50649,7 +50649,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 andi.l  #$F,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50666,7 +50666,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 ext.l   d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50753,7 +50753,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50772,7 +50772,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50792,7 +50792,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -53426,7 +53426,7 @@ loc_F4A18:                              ; CODE XREF: sub_F49B8+F4↓j
                 addq.l  #8,sp
                 ext.l   d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 lsl.l   #4,d0
                 move.w  ($FF0328).l,d1
                 ext.l   d1
@@ -53540,7 +53540,7 @@ loc_F4B32:                              ; CODE XREF: sub_F4AE4+144↓j
                 addq.l  #8,sp
                 ext.l   d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 lsl.l   #4,d0
                 move.w  ($FF0328).l,d1
                 ext.l   d1
@@ -54404,7 +54404,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  1(a2),d1
@@ -54424,7 +54424,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 moveq   #0,d1
@@ -54443,7 +54443,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d4,d1
                 jsr     Divide
                 move.b  (a2),d1
@@ -54926,7 +54926,7 @@ loc_F5982:                              ; CODE XREF: sub_F56D0+2FE↓j
                 move.l  d1,d0
                 move.w  (a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F59A6
                 moveq   #$1F,d1
@@ -54979,7 +54979,7 @@ loc_F5A04:                              ; CODE XREF: sub_F56D0+37A↓j
                 move.l  d1,d0
                 move.w  (a5),d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F5A28
                 moveq   #$1F,d1
@@ -55479,7 +55479,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 ext.l   d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 asr.l   #5,d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
@@ -55493,7 +55493,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 andi.l  #$F,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 asr.l   #5,d0
                 moveq   #0,d1
                 move.b  1(a2),d1
@@ -55508,7 +55508,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 ext.l   d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 asr.l   #5,d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
@@ -58620,7 +58620,7 @@ arg_0           =  4
                 move.l  $E(a2),d1
                 asr.l   #8,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 tst.l   $E(a2)
                 bge.s   loc_F7C3E
@@ -58638,7 +58638,7 @@ loc_F7C3E:                              ; CODE XREF: BonusStage_BallPhysics+32�
                 move.l  $A(a2),d1
                 asr.l   #8,d1
                 ext.l   d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 addi.l  #$20,d0 ; ' '
                 move.l  d0,d2
                 tst.l   $A(a2)
@@ -59000,13 +59000,13 @@ loc_F7F02:                              ; CODE XREF: sub_F7E8E+66↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d4,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -59018,14 +59018,14 @@ loc_F7F02:                              ; CODE XREF: sub_F7E8E+66↑j
 loc_F7F48:                              ; CODE XREF: sub_F7E8E+B6↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d4
@@ -59033,7 +59033,7 @@ loc_F7F48:                              ; CODE XREF: sub_F7E8E+B6↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -59613,7 +59613,7 @@ loc_F86E0:                              ; CODE XREF: sub_F866C+66↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
@@ -59621,7 +59621,7 @@ loc_F86E0:                              ; CODE XREF: sub_F866C+66↑j
                 asr.l   #8,d1
 
 loc_F870C:                              ; DATA XREF: ROM:0007F184↑o
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -59633,14 +59633,14 @@ loc_F870C:                              ; DATA XREF: ROM:0007F184↑o
 loc_F8722:                              ; CODE XREF: sub_F866C+B2↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -59648,7 +59648,7 @@ loc_F8722:                              ; CODE XREF: sub_F866C+B2↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60012,13 +60012,13 @@ loc_F8A78:                              ; CODE XREF: sub_F89FC+6E↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60030,25 +60030,25 @@ loc_F8A78:                              ; CODE XREF: sub_F89FC+6E↑j
 loc_F8AC2:                              ; CODE XREF: sub_F89FC+C2↑j
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60260,13 +60260,13 @@ loc_F8CD4:                              ; CODE XREF: sub_F8C4C+7A↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60278,25 +60278,25 @@ loc_F8CD4:                              ; CODE XREF: sub_F8C4C+7A↑j
 loc_F8D16:                              ; CODE XREF: sub_F8C4C+C6↑j
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60504,13 +60504,13 @@ loc_F8F2A:                              ; CODE XREF: sub_F8EAE+6E↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60522,25 +60522,25 @@ loc_F8F2A:                              ; CODE XREF: sub_F8EAE+6E↑j
 loc_F8F6C:                              ; CODE XREF: sub_F8EAE+BA↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d4,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60732,13 +60732,13 @@ loc_F913E:                              ; CODE XREF: sub_F90C4+6C↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60750,25 +60750,25 @@ loc_F913E:                              ; CODE XREF: sub_F90C4+6C↑j
 loc_F9180:                              ; CODE XREF: sub_F90C4+B8↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d4,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -61029,13 +61029,13 @@ loc_F940C:                              ; CODE XREF: sub_F9392+6C↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -61047,14 +61047,14 @@ loc_F940C:                              ; CODE XREF: sub_F9392+6C↑j
 loc_F9456:                              ; CODE XREF: sub_F9392+C0↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61062,7 +61062,7 @@ loc_F9456:                              ; CODE XREF: sub_F9392+C0↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -61358,7 +61358,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  d6,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  d2,d0
                 move.w  d0,d1
@@ -61376,7 +61376,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 sub.l   (sp)+,d0
                 move.l  d0,var_4(a6)
                 cmpi.l  #unk_B0000,var_4(a6)
@@ -61387,13 +61387,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  (a5),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,var_8(a6)
                 tst.l   var_8(a6)
@@ -61428,13 +61428,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  (a5),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d3
                 tst.l   d3
@@ -61444,13 +61444,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 move.l  (a5),d1
                 neg.l   d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  $A(a2),d0
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 asr.l   #8,d0
@@ -61459,7 +61459,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 sub.l   d1,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F9848
                 addq.l  #3,d0
@@ -61475,7 +61475,7 @@ loc_F9848:                              ; CODE XREF: sub_F9656+1EE↑j
                 move.l  (a5),d1
                 neg.l   d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F986A
                 addq.l  #3,d0
@@ -61524,7 +61524,7 @@ loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61544,7 +61544,7 @@ loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61568,7 +61568,7 @@ loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61588,7 +61588,7 @@ loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61711,13 +61711,13 @@ loc_F9A64:                              ; CODE XREF: sub_F9656+400↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -61729,25 +61729,25 @@ loc_F9A64:                              ; CODE XREF: sub_F9656+400↑j
 loc_F9AA4:                              ; CODE XREF: sub_F9656+44A↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61870,13 +61870,13 @@ loc_F9BB8:                              ; CODE XREF: sub_F9656+554↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -61888,25 +61888,25 @@ loc_F9BB8:                              ; CODE XREF: sub_F9656+554↑j
 loc_F9BF8:                              ; CODE XREF: sub_F9656+59E↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61981,13 +61981,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  d6,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 sub.l   (sp)+,d0
                 move.l  d0,var_4(a6)
                 cmpi.l  #unk_B0000,var_4(a6)
@@ -61998,13 +61998,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $10(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62017,13 +62017,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $10(a3),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62040,7 +62040,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.w  d4,d0
                 move.w  d0,d1
@@ -62053,7 +62053,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 asr.l   #8,d0
@@ -62071,7 +62071,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 move.l  (a0,d0.w),d0
                 asr.l   #8,d0
                 move.l  (sp)+,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F9DF6
                 addq.l  #3,d0
@@ -62096,7 +62096,7 @@ loc_F9DF6:                              ; CODE XREF: sub_F9656+79C↑j
                 neg.l   d0
                 asr.l   #8,d0
                 move.l  (sp)+,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 tst.l   d0
                 bge.s   loc_F9E30
                 addq.l  #3,d0
@@ -62242,13 +62242,13 @@ loc_F9F44:                              ; CODE XREF: sub_F9656+8E0↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62260,25 +62260,25 @@ loc_F9F44:                              ; CODE XREF: sub_F9656+8E0↑j
 loc_F9F82:                              ; CODE XREF: sub_F9656+928↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -62434,13 +62434,13 @@ loc_FA0B6:                              ; CODE XREF: BonusStage_InnerUpdate+B2�
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 asr.l   #8,d0
                 move.l  var_8(a6),d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -62452,25 +62452,25 @@ loc_FA0B6:                              ; CODE XREF: BonusStage_InnerUpdate+B2�
 loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,var_C(a6)
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -62492,14 +62492,14 @@ loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106�
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 neg.l   d0
                 asr.l   #8,d0
                 move.l  d4,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -62508,7 +62508,7 @@ loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106�
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  #$1E4,d1
                 jsr     Divide
                 move.l  d0,var_C(a6)
@@ -62516,7 +62516,7 @@ loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106�
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  #$1E4,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -65298,7 +65298,7 @@ loc_FC9A6:                              ; CODE XREF: RunUpdate_BonusStage+2402�
                 sub.l   d0,d4
                 move.l  d4,d1
                 move.l  d2,d0
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
                 move.l  d0,d2
                 moveq   #$10,d1
                 asr.l   d1,d0
@@ -67519,7 +67519,7 @@ loc_FE260:                              ; CODE XREF: RunUpdate_BonusStage+3C0E�
                 move.l  #unk_493E0,d1
 
 loc_FE266:                              ; CODE XREF: RunUpdate_BonusStage+3C4A↑j
-                jsr     sub_FF8B8
+                jsr     Multiply_VectorByScalar
 
 loc_FE26C:                              ; CODE XREF: RunUpdate_BonusStage+3B64↑j
                 move.l  d0,-(sp)
@@ -69770,7 +69770,7 @@ loc_FF8B0:                              ; CODE XREF: sub_FF834+4C↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FF8B8:                              ; CODE XREF: NewLife+62↑p
+Multiply_VectorByScalar:                              ; CODE XREF: NewLife+62↑p
                                         ; sub_DB900+72↑p ...
                 movem.l d0/d2,-(sp)
                 move.l  d0,d2
@@ -69783,7 +69783,7 @@ sub_FF8B8:                              ; CODE XREF: NewLife+62↑p
                 clr.w   d2
                 add.l   d2,d0
 
-loc_FF8CE:                              ; CODE XREF: sub_FF8B8+C↑j
+loc_FF8CE:                              ; CODE XREF: Multiply_VectorByScalar+C↑j
                 move.l  (sp)+,d2
                 clr.w   d1
                 swap    d1
@@ -69793,10 +69793,10 @@ loc_FF8CE:                              ; CODE XREF: sub_FF8B8+C↑j
                 clr.w   d2
                 add.l   d2,d0
 
-loc_FF8DE:                              ; CODE XREF: sub_FF8B8+1C↑j
+loc_FF8DE:                              ; CODE XREF: Multiply_VectorByScalar+1C↑j
                 move.l  (sp)+,d2
                 rts
-; End of function sub_FF8B8
+; End of function Multiply_VectorByScalar
 
 ; ---------------------------------------------------------------------------
                 move.l  (a0),d1

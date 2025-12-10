@@ -3240,7 +3240,8 @@ GAME_STATE_BOSS_ROOM_EXPLODING:                              ; DATA XREF: RunMai
                 move.w  BossRoomExploding_LevelJumpTable(pc,d0.l),d0
                 jmp     BossRoomExploding_LevelJumpTable(pc,d0.w)
 ; ---------------------------------------------------------------------------
-BossRoomExploding_LevelJumpTable:      dc.w BossRoomExploding_ToxicCaves-*
+BossRoomExploding_LevelJumpTable:
+                dc.w BossRoomExploding_ToxicCaves-*
                 dc.w BossRoomExploding_LavaPowerhouse-BossRoomExploding_LevelJumpTable
                 dc.w BossRoomExploding_TheMachine-BossRoomExploding_LevelJumpTable
                 dc.w BossRoomExploding_Showdown-BossRoomExploding_LevelJumpTable
@@ -3331,14 +3332,15 @@ arg_0           =  8
                 subq.l  #1,d0
                 moveq   #5,d1
                 cmp.l   d1,d0
-                bhi.w   loc_D5604
+                bhi.w   SetGameState_BOSS_ROOM_EXPLODING
                 add.l   d0,d0
                 move.w  SetGameState_CurrentStateJumpTable(pc,d0.l),d0
                 jmp     SetGameState_CurrentStateJumpTable(pc,d0.w)
 ; ---------------------------------------------------------------------------
-SetGameState_CurrentStateJumpTable:      dc.w SetGameState_LEVEL_INTRO-*
-                dc.w loc_D5604-SetGameState_CurrentStateJumpTable
-                dc.w loc_D5604-SetGameState_CurrentStateJumpTable
+SetGameState_CurrentStateJumpTable:
+                dc.w SetGameState_LEVEL_INTRO-*
+                dc.w SetGameState_BOSS_ROOM_EXPLODING-SetGameState_CurrentStateJumpTable
+                dc.w SetGameState_BOSS_ROOM_EXPLODING-SetGameState_CurrentStateJumpTable
                 dc.w loc_D5552-SetGameState_CurrentStateJumpTable
                 dc.w loc_D55F8-SetGameState_CurrentStateJumpTable
                 dc.w loc_D55FE-SetGameState_CurrentStateJumpTable
@@ -3365,7 +3367,7 @@ SetGameState_LEVEL_INTRO:
 
 loc_D5548:                              ; CODE XREF: SetGameState+6A↑j
                 move.b  #6,$C(a2)
-                bra.w   loc_D5604
+                bra.w   SetGameState_BOSS_ROOM_EXPLODING
 ; ---------------------------------------------------------------------------
 
 loc_D5552:                              ; DATA XREF: SetGameState+32↑o
@@ -3378,8 +3380,8 @@ loc_D5552:                              ; DATA XREF: SetGameState+32↑o
                 move.w  SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable(pc,d0.l),d0
                 jmp     SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable(pc,d0.w)
 ; ---------------------------------------------------------------------------
-SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable:      dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_TOXIC_CAVES-*        ; DATA XREF: SetGameState+90↑r
-                                        ; SetGameState:SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable↓o ...
+SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable:
+                dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_TOXIC_CAVES-*
                 dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_LAVA_POWERHOUSE-SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable
                 dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_THE_MACHINE-SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable
                 dc.w SetGameState_BOSS_ROOM_EXPLODING_LEVEL_SHOWDOWN-SetGameState_BOSS_ROOM_EXPLODING_LevelJumpTable
@@ -3439,18 +3441,18 @@ loc_D55D0:                              ; CODE XREF: SetGameState+FA↑j
                 jsr     PlaySong(pc)
                 nop
                 lea     $1C(sp),sp
-                bra.s   loc_D5604
+                bra.s   SetGameState_BOSS_ROOM_EXPLODING
 ; ---------------------------------------------------------------------------
 
 loc_D55F8:                              ; DATA XREF: SetGameState+34↑o
                 bsr.w   PlayPlayerVictoryAnimation
-                bra.s   loc_D5604
+                bra.s   SetGameState_BOSS_ROOM_EXPLODING
 ; ---------------------------------------------------------------------------
 
 loc_D55FE:                              ; DATA XREF: SetGameState+36↑o
                 clr.w   ($FF55A0).l
 
-loc_D5604:                              ; CODE XREF: SetGameState+1E↑j
+SetGameState_BOSS_ROOM_EXPLODING:                              ; CODE XREF: SetGameState+1E↑j
                                         ; SetGameState+80↑j ...
                 movem.l var_8(a6),a2-a3
                 unlk    a6
@@ -21069,18 +21071,16 @@ Alert_GotAnEmerald:                     ; CODE XREF: TriggerOSDMessage+3C↑j
                 pea     (5).w
                 jsr     (a3)
                 jmp     EmeraldPitch_PitchUpEmerald
-                ;pea     (a500000).l     ; "500,000"
-                ;pea     (6).w
-                ;pea     (off_3C).w
-                ;pea     (off_4).w
-                ;pea     (2).w
-                ;pea     (7).w
-                ;jsr     (a3)
-                dcb.b   22,$FF
-                dcb.b   14,$FF
-                ;lea     $18(sp),sp
-                ;move.l  #off_7A120,d2
-                ;pea     ($E).w
+                ;pea     (a500000).l     ; "500,000". 6 bytes because big number
+                pea     (6).w
+                pea     (off_3C).w
+                pea     (off_4).w
+                pea     (2).w
+                pea     (7).w
+                jsr     (a3)
+                lea     $18(sp),sp
+                move.l  #off_7A120,d2
+                pea     ($E).w
 
 loc_DFB76:                              ; CODE XREF: TriggerOSDMessage+E8↓j
                                         ; TriggerOSDMessage+306↓j ...

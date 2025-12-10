@@ -1205,7 +1205,7 @@ loc_D3EDA:                              ; CODE XREF: NewLife+32↑j
                 pea     (7).w
                 jsr     OSD_QueueMessage
                 pea     ($17).w
-                jsr     sub_D567E(pc)
+                jsr     GEMS_PlayJingle(pc)
                 nop
                 pea     ($28).w
                 jsr     PlaySong(pc)
@@ -2136,7 +2136,7 @@ PlayPlayerVictoryAnimation:                              ; CODE XREF: SetGameSta
                 jsr     GEMS_MuteAllSounds(pc)
                 nop
                 pea     (off_10).w
-                jsr     sub_D567E(pc)
+                jsr     GEMS_PlayJingle(pc)
                 nop
                 jsr     sub_D86E6
                 movea.l (a2),a0
@@ -2234,7 +2234,7 @@ loc_D497E:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 tst.b   $46(a2)
                 bne.w   loc_D4ED0
                 pea     ($13).w
-                jsr     sub_D567E(pc)
+                jsr     GEMS_PlayJingle(pc)
                 nop
 
 loc_D499A:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+D2↓j
@@ -3522,7 +3522,7 @@ loc_D567A:                              ; CODE XREF: sub_D565E+A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D567E:                              ; CODE XREF: NewLife+D4↑p
+GEMS_PlayJingle:                              ; CODE XREF: NewLife+D4↑p
                                         ; PlayPlayerVictoryAnimation+60↑p ...
 
 arg_0           =  4
@@ -3539,16 +3539,16 @@ arg_0           =  4
                 addq.l  #4,sp
                 move.w  d2,($FF548C).l
 
-loc_D56A4:                              ; CODE XREF: sub_D567E+C↑j
+loc_D56A4:                              ; CODE XREF: GEMS_PlayJingle+C↑j
                 move.l  (sp)+,d2
                 rts
-; End of function sub_D567E
+; End of function GEMS_PlayJingle
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D56A8:                              ; CODE XREF: sub_D567E+E↑p
+sub_D56A8:                              ; CODE XREF: GEMS_PlayJingle+E↑p
                 move.l  a2,-(sp)
                 movea.l #$FF548C,a2
                 tst.w   (a2)
@@ -21055,7 +21055,7 @@ Alert_GotAnEmerald:                     ; CODE XREF: TriggerOSDMessage+3C↑j
 
 loc_DFB76:                              ; CODE XREF: TriggerOSDMessage+E8↓j
                                         ; TriggerOSDMessage+306↓j ...
-                jsr     sub_D567E
+                jsr     GEMS_PlayJingle
 
 loc_DFB7C:                              ; CODE XREF: TriggerOSDMessage+16E↓j
                 addq.l  #4,sp
@@ -23431,7 +23431,7 @@ loc_E1170:                              ; CODE XREF: TriggerOSDMessage+185C↓j
                 pea     (5).w
                 jsr     (a3)
                 pea     ($12).w
-                jsr     sub_D567E
+                jsr     GEMS_PlayJingle
                 lea     $1C(sp),sp
                 move.w  ($FF5892).l,d2
                 ext.l   d2
@@ -23899,7 +23899,7 @@ loc_E163E:                              ; DATA XREF: TriggerOSDMessage+15C6↑o
                 pea     (5).w
                 jsr     (a3)
                 pea     ($12).w
-                jsr     sub_D567E
+                jsr     GEMS_PlayJingle
                 lea     $1C(sp),sp
                 move.l  #off_7A120,d2
                 bra.w   loc_E193E
@@ -24555,7 +24555,7 @@ arg_0           =  4
                 pea     (7).w
                 jsr     OSD_QueueMessage
                 pea     ($12).w
-                jsr     sub_D567E
+                jsr     GEMS_PlayJingle
                 lea     $1C(sp),sp
                 move.w  $C(a2),($FF55A8).l
                 move.w  #$212,$C(a2)
@@ -24571,8 +24571,7 @@ loc_E1CA8:                              ; CODE XREF: GetRing+28↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E1CAE:                              ; CODE XREF: sub_E5138+19A↓p
-                                        ; RunPlayerCollision_ToxicCaves+224↓p ...
+CurrentLevel_BeginTransitionToMultiballStage:
 
 arg_0           =  4
 
@@ -24587,7 +24586,7 @@ arg_0           =  4
                 pea     (6).w
                 jsr     OSD_QueueMessage
                 pea     ($D).w
-                jsr     sub_D567E
+                jsr     GEMS_PlayJingle
                 move.w  $14(a2),d0
                 addi.w  #-$18,d0
                 move.l  d0,-(sp)
@@ -24600,7 +24599,7 @@ arg_0           =  4
                 move.w  #$78,($FFF1FA).l ; 'x'
                 movea.l (sp)+,a2
                 rts
-; End of function sub_E1CAE
+; End of function CurrentLevel_BeginTransitionToMultiballStage
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -29854,7 +29853,7 @@ loc_E52C8:                              ; DATA XREF: sub_E5138:off_E528E↑o
                 tst.b   8(a2)
                 beq.w   loc_E5E24
                 move.l  a2,-(sp)
-                jsr     sub_E1CAE
+                jsr     CurrentLevel_BeginTransitionToMultiballStage
 
 loc_E52D8:                              ; CODE XREF: sub_E5138+31A↓j
                                         ; sub_E5138+346↓j ...
@@ -31926,7 +31925,7 @@ loc_E67F4:                              ; DATA XREF: RunPlayerCollision_ToxicCav
                 tst.b   8(a2)
                 beq.w   loc_E6C18
                 move.l  a2,-(sp)
-                jsr     sub_E1CAE
+                jsr     CurrentLevel_BeginTransitionToMultiballStage
                 bra.s   loc_E67EC
 ; ---------------------------------------------------------------------------
 
@@ -37526,7 +37525,7 @@ loc_EA5EC:                              ; CODE XREF: sub_EA2BA+952↓j
 
 loc_EA5F2:                              ; DATA XREF: sub_EA2BA+242↑o
                 move.l  a2,-(sp)
-                jsr     sub_E1CAE
+                jsr     CurrentLevel_BeginTransitionToMultiballStage
 
 loc_EA5FA:                              ; CODE XREF: sub_EA2BA+35C↓j
                 addq.l  #4,sp
@@ -48025,7 +48024,7 @@ loc_F1744:                              ; CODE XREF: sub_F145E+15A↑j
                 tst.b   8(a3)
                 beq.w   loc_F1CD6
                 move.l  a3,-(sp)
-                jsr     sub_E1CAE
+                jsr     CurrentLevel_BeginTransitionToMultiballStage
                 bra.s   loc_F173E
 ; ---------------------------------------------------------------------------
 
@@ -68898,7 +68897,7 @@ CheckCheatCode:                         ; CODE XREF: sub_FEF2A+AA↑j
                 cmpi.b  #$F,($FF5750).l ; Once F (15) correct key combos have occurred, set level select enabled flag
                 bne.s   CreditsCheatCode
                 pea     ($12).w
-                jsr     sub_D567E
+                jsr     GEMS_PlayJingle
                 addq.l  #4,sp
                 move.b  #1,($FFF8F8).l  ; Set Level Select Activated bool
                 bra.s   CreditsCheatCode
@@ -68923,7 +68922,7 @@ CreditsCheatCode:                       ; CODE XREF: sub_FEF2A+136↑j
                 cmpi.b  #$F,(a5)
                 bne.s   loc_FF0B2
                 pea     ($12).w
-                jsr     sub_D567E ; Play jingle on successful code entry for Credits
+                jsr     GEMS_PlayJingle ; Play jingle on successful code entry for Credits
                 addq.l  #4,sp
                 moveq   #1,d3
                 bra.s   loc_FF0C0

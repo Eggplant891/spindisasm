@@ -1349,7 +1349,7 @@ loc_D4094:                              ; CODE XREF: sub_D3FAC+E4↑j
                 move.b  #1,($FFEDAA).l
                 clr.w   ($FF5756).l
                 clr.w   ($FFF1FC).l
-                jsr     sub_D7AB8
+                jsr     InitialisePersistentVars_Common
                 move.w  (a3),d0
                 ext.l   d0
                 moveq   #3,d1
@@ -1514,9 +1514,9 @@ loc_D42AC:                              ; CODE XREF: LoadLevelTileData+7C↑j
 loc_D42B0:                              ; CODE XREF: LoadLevelTileData+82↑j
                 add.w   ($FF55AA).l,d0
                 move.w  d0,($FF000A).l
-                jsr     sub_D7AB8
-                jsr     sub_D56FA
-                jsr     sub_D835A
+                jsr     InitialisePersistentVars_Common
+                jsr     GameSprite_UpdateVisible
+                jsr     Initialise_ActiveSpriteArray
                 jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
                 jsr     sub_D845C
                 ori.w   #9,(a3)
@@ -3598,12 +3598,12 @@ loc_D56E8:                              ; CODE XREF: sub_D56E0+16↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D56FA:                              ; CODE XREF: LoadLevelTileData+9A↑p
+GameSprite_UpdateVisible:                              ; CODE XREF: LoadLevelTileData+9A↑p
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
                 movea.l #$FFAD24,a2
 
-loc_D5706:                              ; CODE XREF: sub_D56FA+4C↓j
+loc_D5706:                              ; CODE XREF: GameSprite_UpdateVisible+4C↓j
                 move.w  $24(a2),d0
                 andi.w  #$8000,d0
                 bne.s   loc_D5724
@@ -3614,7 +3614,7 @@ loc_D5706:                              ; CODE XREF: sub_D56FA+4C↓j
                 andi.w  #$2000,d0
                 beq.s   loc_D573A
 
-loc_D5724:                              ; CODE XREF: sub_D56FA+14↑j
+loc_D5724:                              ; CODE XREF: GameSprite_UpdateVisible+14↑j
                 movea.l $3A(a2),a0
                 move.w  8(a0),d0
                 move.l  d0,-(sp)
@@ -3622,8 +3622,8 @@ loc_D5724:                              ; CODE XREF: sub_D56FA+14↑j
                 jsr     GameSprite_Update
                 addq.l  #8,sp
 
-loc_D573A:                              ; CODE XREF: sub_D56FA+1E↑j
-                                        ; sub_D56FA+28↑j
+loc_D573A:                              ; CODE XREF: GameSprite_UpdateVisible+1E↑j
+                                        ; GameSprite_UpdateVisible+28↑j
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
                 addq.l  #1,d2
@@ -3631,7 +3631,7 @@ loc_D573A:                              ; CODE XREF: sub_D56FA+1E↑j
                 blt.s   loc_D5706
                 movem.l (sp)+,d2/a2
                 rts
-; End of function sub_D56FA
+; End of function GameSprite_UpdateVisible
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -7860,7 +7860,7 @@ loc_D7AB2:                              ; CODE XREF: RunUpdate_PaletteAnimations
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D7AB8:                              ; CODE XREF: sub_D3FAC+140↑p
+InitialisePersistentVars_Common:                              ; CODE XREF: sub_D3FAC+140↑p
                                         ; LoadLevelTileData+94↑p
                 clr.w   ($FF0022).l
                 clr.w   ($FF0024).l
@@ -7883,7 +7883,7 @@ sub_D7AB8:                              ; CODE XREF: sub_D3FAC+140↑p
                 clr.w   ($FF0046).l
                 clr.w   ($FF0048).l
                 rts
-; End of function sub_D7AB8
+; End of function InitialisePersistentVars_Common
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -8071,7 +8071,7 @@ loc_D7CC8:                              ; CODE XREF: GameSprite_RefreshVDPSprite
 
 ; Attributes: bp-based frame
 
-GameSprite_Update:                              ; CODE XREF: sub_D56FA+38↑p
+GameSprite_Update:                              ; CODE XREF: GameSprite_UpdateVisible+38↑p
                                         ; RunAnimatedObjectsUpdate+116↑p ...
 
 var_40          = -$40
@@ -8624,7 +8624,7 @@ loc_D81D4:                              ; CODE XREF: sub_D81C0+A↑j
 
 
 sub_D81D8:                              ; CODE XREF: sub_D831C+E↓p
-                                        ; sub_D835A+E↓p
+                                        ; Initialise_ActiveSpriteArray+E↓p
                 movem.l d2-d4/a2-a3,-(sp)
                 movea.l #ClearRAMBlock,a3 ; void ClearRAMBlock(void *addr, int n);
                                         ; Clears (sets to 0) n bytes of RAM starting at addr.
@@ -8751,7 +8751,7 @@ sub_D831C:                              ; CODE XREF: PlayPlayerVictoryAnimation+
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D835A:                              ; CODE XREF: LoadLevelTileData+A0↑p
+Initialise_ActiveSpriteArray:                              ; CODE XREF: LoadLevelTileData+A0↑p
                 movem.l d2-d4/a2-a4,-(sp)
                 movea.l #$FF559E,a4
                 move.w  (a4),d4
@@ -8760,7 +8760,7 @@ sub_D835A:                              ; CODE XREF: LoadLevelTileData+A0↑p
                 movea.l #$FF10A8,a2
                 clr.w   d3
 
-loc_D8374:                              ; CODE XREF: sub_D835A+4E↓j
+loc_D8374:                              ; CODE XREF: Initialise_ActiveSpriteArray+4E↓j
                 move.b  #$FF,$22(a2)
                 clr.l   $24(a2)
                 clr.l   $28(a2)
@@ -8771,7 +8771,7 @@ loc_D8374:                              ; CODE XREF: sub_D835A+4E↓j
                 lea     $E(a0),a0
                 movea.l a0,a3
 
-loc_D8392:                              ; CODE XREF: sub_D835A+42↓j
+loc_D8392:                              ; CODE XREF: Initialise_ActiveSpriteArray+42↓j
                 move.b  #$FF,(a3)+
                 addq.w  #1,d2
                 cmpi.w  #$14,d2
@@ -8784,7 +8784,7 @@ loc_D8392:                              ; CODE XREF: sub_D835A+42↓j
                 move.w  d4,(a4)
                 movem.l (sp)+,d2-d4/a2-a4
                 rts
-; End of function sub_D835A
+; End of function Initialise_ActiveSpriteArray
 
 
 ; =============== S U B R O U T I N E =======================================

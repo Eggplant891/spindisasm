@@ -1350,7 +1350,7 @@ loc_D4094:                              ; CODE XREF: sub_D3FAC+E4↑j
                 move.b  #1,($FFEDAA).l
                 clr.w   ($FF5756).l
                 clr.w   ($FFF1FC).l
-                jsr     sub_D7AB8
+                jsr     InitialisePersistentVars_Common
                 move.w  (a3),d0
                 ext.l   d0
                 moveq   #3,d1
@@ -1517,9 +1517,9 @@ loc_D42AC:                              ; CODE XREF: LoadLevelTileData+7C↑j
 loc_D42B0:                              ; CODE XREF: LoadLevelTileData+82↑j
                 add.w   ($FF55AA).l,d0
                 move.w  d0,($FF000A).l
-                jsr     sub_D7AB8
-                jsr     sub_D56FA
-                jsr     sub_D835A
+                jsr     InitialisePersistentVars_Common
+                jsr     GameSprite_UpdateVisible
+                jsr     Initialise_ActiveSpriteArray
                 jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
                 jsr     sub_D845C
                 ori.w   #9,(a3)
@@ -3611,12 +3611,13 @@ loc_D56E8:                              ; CODE XREF: sub_D56E0+16↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D56FA:                              ; CODE XREF: LoadLevelTileData+9A↑p
+GameSprite_UpdateVisible:                              ; CODE XREF: LoadLevelTileData+9A↑p
+                ;jmp     GameSprite_UpdateVisible_Optimised
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
                 movea.l #$FFAD24,a2
 
-loc_D5706:                              ; CODE XREF: sub_D56FA+4C↓j
+loc_D5706:                              ; CODE XREF: GameSprite_UpdateVisible+4C↓j
                 move.w  $24(a2),d0
                 andi.w  #$8000,d0
                 bne.s   loc_D5724
@@ -3627,7 +3628,7 @@ loc_D5706:                              ; CODE XREF: sub_D56FA+4C↓j
                 andi.w  #$2000,d0
                 beq.s   loc_D573A
 
-loc_D5724:                              ; CODE XREF: sub_D56FA+14↑j
+loc_D5724:                              ; CODE XREF: GameSprite_UpdateVisible+14↑j
                 movea.l $3A(a2),a0
                 move.w  8(a0),d0
                 move.l  d0,-(sp)
@@ -3635,16 +3636,17 @@ loc_D5724:                              ; CODE XREF: sub_D56FA+14↑j
                 jsr     GameSprite_Update
                 addq.l  #8,sp
 
-loc_D573A:                              ; CODE XREF: sub_D56FA+1E↑j
-                                        ; sub_D56FA+28↑j
+loc_D573A:                              ; CODE XREF: GameSprite_UpdateVisible+1E↑j
+                                        ; GameSprite_UpdateVisible+28↑j
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
                 addq.l  #1,d2
                 cmpi.l  #$100,d2 ; Animated obj iteration of some kind
                 blt.s   loc_D5706
                 movem.l (sp)+,d2/a2
+GameSprite_UpdateVisible_Optimised_Return:
                 rts
-; End of function sub_D56FA
+; End of function GameSprite_UpdateVisible
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -3779,26 +3781,24 @@ loc_D5882:                              ; CODE XREF: RunAnimatedObjectsUpdate+62
                 adda.l  d0,a2
                 cmpi.w  #$100,d2 ; Number of animated objs to update
                 bcs.w   loc_D57A8
-ReturnFrom_RunOptimisedAnimationsUpdate:
+;ReturnFrom_RunOptimisedAnimationsUpdate:
                 tst.b   ($FF3F3A).l
-                ;bne.s   loc_D589E
-                ;jsr     ROAU_RunUpdate_Rings	; jsr     RunUpdate_Rings
-
+                bne.s   loc_D589E
+                jsr     ROAU_RunUpdate_Rings	;jsr     RunUpdate_Rings ;
+;ReturnFrom_RunOptimisedAnimationsUpdate:
 loc_D589E:                              ; CODE XREF: RunAnimatedObjectsUpdate+148↑j
-                ;jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
+                jsr     RunPaletteAnimsAndUpdateSpriteRenderOrder
+ReturnFrom_RunOptimisedAnimationsUpdate:
                 jsr     sub_D845C
                 movem.l (sp)+,d2-d4/a2-a3
                 rts
 ; End of function RunAnimatedObjectsUpdate
-				nop
-				nop
-				nop
 
-				nop
-				nop
-				nop
-
-				nop
+;				nop
+				;nop
+				;nop
+;
+				;nop
 
 ; =============== S U B R O U T I N E =======================================
 
@@ -3979,7 +3979,7 @@ AnimObj_UpdateTimedAnimations:                              ; CODE XREF: RunAnim
 arg_0           =  4
 
                 movem.l d2/a2-a3,-(sp)
-                movea.l $C+arg_0(sp),a3
+                movea.l arg_0(sp),a3
 
 loc_D5A0E:                              ; CODE XREF: AnimObj_UpdateTimedAnimations+11E↓j
                 move.w  $22(a3),d0
@@ -7885,7 +7885,7 @@ loc_D7AB2:                              ; CODE XREF: RunUpdate_PaletteAnimations
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D7AB8:                              ; CODE XREF: sub_D3FAC+140↑p
+InitialisePersistentVars_Common:                              ; CODE XREF: sub_D3FAC+140↑p
                                         ; LoadLevelTileData+94↑p
                 clr.w   ($FF0022).l
                 clr.w   ($FF0024).l
@@ -7908,7 +7908,7 @@ sub_D7AB8:                              ; CODE XREF: sub_D3FAC+140↑p
                 clr.w   ($FF0046).l
                 clr.w   ($FF0048).l
                 rts
-; End of function sub_D7AB8
+; End of function InitialisePersistentVars_Common
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -8096,7 +8096,7 @@ loc_D7CC8:                              ; CODE XREF: GameSprite_RefreshVDPSprite
 
 ; Attributes: bp-based frame
 
-GameSprite_Update:                              ; CODE XREF: sub_D56FA+38↑p
+GameSprite_Update:                              ; CODE XREF: GameSprite_UpdateVisible+38↑p
                                         ; RunAnimatedObjectsUpdate+116↑p ...
 
 var_40          = -$40
@@ -8649,7 +8649,7 @@ loc_D81D4:                              ; CODE XREF: sub_D81C0+A↑j
 
 
 sub_D81D8:                              ; CODE XREF: sub_D831C+E↓p
-                                        ; sub_D835A+E↓p
+                                        ; Initialise_ActiveSpriteArray+E↓p
                 movem.l d2-d4/a2-a3,-(sp)
                 movea.l #ClearRAMBlock,a3 ; void ClearRAMBlock(void *addr, int n);
                                         ; Clears (sets to 0) n bytes of RAM starting at addr.
@@ -8776,7 +8776,7 @@ sub_D831C:                              ; CODE XREF: PlayPlayerVictoryAnimation+
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D835A:                              ; CODE XREF: LoadLevelTileData+A0↑p
+Initialise_ActiveSpriteArray:                              ; CODE XREF: LoadLevelTileData+A0↑p
                 movem.l d2-d4/a2-a4,-(sp)
                 movea.l #$FF559E,a4
                 move.w  (a4),d4
@@ -8785,7 +8785,7 @@ sub_D835A:                              ; CODE XREF: LoadLevelTileData+A0↑p
                 movea.l #$FF10A8,a2
                 clr.w   d3
 
-loc_D8374:                              ; CODE XREF: sub_D835A+4E↓j
+loc_D8374:                              ; CODE XREF: Initialise_ActiveSpriteArray+4E↓j
                 move.b  #$FF,$22(a2)
                 clr.l   $24(a2)
                 clr.l   $28(a2)
@@ -8796,7 +8796,7 @@ loc_D8374:                              ; CODE XREF: sub_D835A+4E↓j
                 lea     $E(a0),a0
                 movea.l a0,a3
 
-loc_D8392:                              ; CODE XREF: sub_D835A+42↓j
+loc_D8392:                              ; CODE XREF: Initialise_ActiveSpriteArray+42↓j
                 move.b  #$FF,(a3)+
                 addq.w  #1,d2
                 cmpi.w  #$14,d2
@@ -8809,7 +8809,7 @@ loc_D8392:                              ; CODE XREF: sub_D835A+42↓j
                 move.w  d4,(a4)
                 movem.l (sp)+,d2-d4/a2-a4
                 rts
-; End of function sub_D835A
+; End of function Initialise_ActiveSpriteArray
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -24269,14 +24269,14 @@ ls_messageBuffer= -$3C
                 pea     (off_28).w
                 pea     (5).w
                 pea     (2).w
-                
+
                 pea     (7).w ;
                 jsr     (a3)
                 move.w  ($FF5736).l,d0
                 ;jmp     DoCustomIntro
 				;dcb.b   2,$FF
 				;dcb.b   4,$FF
-				
+
 CustIntroRtn:   move.w  d0,d1
                 lsl.w   #2,d1
                 add.w   d1,d0
@@ -31889,10 +31889,10 @@ off_E6738:      dc.w loc_E6756-*        ; DATA XREF: RunPlayerCollision_ToxicCav
 ; Ghidra seems to strongly disagree with IDA Pro on where this jump table ends, and where the function begins. Ghidra believes the loc_E6756 is the entry point
 ; Going with Ghidra's assessment as the andi.b #A,a6 assembly doesn't seem to compile consistently
 loc_E674C:                              ; DATA XREF: RunPlayerCollision_ToxicCaves+142↑o
-                                        ; XREF[2]:     FUN_000e65da:000e671c(*), 
-                                        ; FUN_000e65da:000e6724(R) 
+                                        ; XREF[2]:     FUN_000e65da:000e671c(*),
+                                        ; FUN_000e65da:000e6724(R)
                 dc.b $02
-loc_E674D:                              ; XREF[1]:     FUN_000e65da:000e6724(R)  
+loc_E674D:                              ; XREF[1]:     FUN_000e65da:000e6724(R)
                 dc.b $06
                 dc.b $09
                 dc.b $0a
@@ -68780,17 +68780,17 @@ loc_FEECE:                              ; CODE XREF: sub_FED7E+13C↑j
 loc_FEED0:                              ; CODE XREF: sub_FED7E+136↑j
                 move.w  d3,d0
                 lsl.w   #2,d0
-                cmpi.w  #2,d2
-                bne.s   QueueOptionText
-QueueSoundTestText:
-                jsr     PrintSoundTest
-                movea.l #$FF0A60,a0
-                move.l  a0,-(sp)
-                bra.s   QueueOptionMsg
-QueueOptionText:
+;                cmpi.w  #2,d2
+;                bne.s   QueueOptionText
+;QueueSoundTestText:
+;                jsr     PrintSoundTest
+;                movea.l #$FF0A60,a0
+;                move.l  a0,-(sp)
+;                bra.s   QueueOptionMsg
+;QueueOptionText:
                 movea.l #OptionsStrings,a0
                 move.l  (a0,d0.w),-(sp)
-QueueOptionMsg:
+;QueueOptionMsg:
                 pea     ($4).w
                 pea     ($A).w
                 pea     ($4).w
@@ -68878,25 +68878,26 @@ loc_FEFC2:                              ; CODE XREF: sub_FEF2A+88↑j
                 addq.l  #4,sp
 
 loc_FEFCE:                              ; CODE XREF: sub_FEF2A+84↑j
-PollForPlayMusicBtn:
-                move.w  (a3),d0 ; (a3)/d0 -> Joystick state
-                andi.w  #aJoystickButtonMask_C,d0
-                beq.s   SoundTest_PlayNotPressed ; Branch if C button not pressed
-                ;jmp     BeginBonusModeFromOptionsScreen
-                jmp     PlaySoundTestMusic ; Now can play music
-SoundTest_PlayNotPressed:
+;PollForPlayMusicBtn:
+;                move.w  (a3),d0 ; (a3)/d0 -> Joystick state
+;                andi.w  #aJoystickButtonMask_C,d0
+;                beq.s   SoundTest_PlayNotPressed ; Branch if C button not pressed
+;                ;jmp     BeginBonusModeFromOptionsScreen
+;                jmp     PlaySoundTestMusic ; Now can play music
+;SoundTest_PlayNotPressed:
                 move.w  (a3),d0
                 andi.w  #aJoystickButtonMask_LeftAndRight,d0
                 beq.w   CheckCheatCode  ; Options menu Level Select cheat code routine
+                move.w  (a3),d0
                 andi.w  #aJoystickButtonMask_Left,d0
                 beq.s   loc_FEFFC
                 movea.w d2,a0
-                move.b  $FF0A00,d4
-                subq.b  #1,d4
-				bpl.s   no_sountest_loop
-				move.b  #$7F,d4 ; Value is negative so should wrap first before executing print
-                move.b  d4,$FF0A00
-no_sountest_loop:
+;                move.b  $FF0A00,d4
+;                subq.b  #1,d4
+;				bpl.s   no_sountest_loop
+;				move.b  #$7F,d4 ; Value is negative so should wrap first before executing print
+;                move.b  d4,$FF0A00
+;no_sountest_loop:
                 subq.b  #1,(a4,a0.w)
                 bpl.s   loc_FF014
                 movea.l #OptionsCounts,a0
@@ -68913,12 +68914,12 @@ loc_FEFFC:                              ; CODE XREF: sub_FEF2A+B2↑j
 loc_FF000:                              ; DATA XREF: ROM:00010EAC↑o
                                         ; ROM:0001774C↑o ...
                 movea.l a0,a2
-                move.b  $FF0A00,d4
-                addi.b  #1,d4
-				cmpi.b  #$7F,d4
-				bls.s   dont_loop_soundtest
-				clr.b   d4
-dont_loop_soundtest:
+;                move.b  $FF0A00,d4
+;                addi.b  #1,d4
+;				cmpi.b  #$7F,d4
+;				bls.s   dont_loop_soundtest
+;				clr.b   d4
+;dont_loop_soundtest:
                 addq.b  #1,(a0)
                 move.b  (a0),d0
                 movea.l #OptionsCounts,a0
@@ -68928,7 +68929,7 @@ dont_loop_soundtest:
 
 loc_FF014:                              ; CODE XREF: sub_FEF2A+BA↑j
                                         ; sub_FEF2A+D0↑j ...
-                move.b  d4,$FF0A00
+;                move.b  d4,$FF0A00
                 move.w  d2,d0
                 move.l  d0,-(sp)
                 jsr     sub_FF4B4(pc)
@@ -68936,15 +68937,15 @@ loc_FF014:                              ; CODE XREF: sub_FEF2A+BA↑j
                 pea     (off_7C).w
                 jsr     PlaySong
                 addq.l  #8,sp
-                bra.s   CheckCheatCode
-PlaySoundTestMusic:
-                jsr     GEMS_MuteAllSounds
-                nop
-                move.b  $FF0A00,d4
-                ext.w   d4
-                move.l  d4,-(sp)
-                jsr     GEMSStartSong
-                lea     ($4,sp),sp
+;                bra.s   CheckCheatCode
+;PlaySoundTestMusic:
+;                jsr     GEMS_MuteAllSounds
+;                nop
+;                move.b  $FF0A00,d4
+;                ext.w   d4
+;                move.l  d4,-(sp)
+;                jsr     GEMSStartSong
+;                lea     ($4,sp),sp
 CheckCheatCode:                         ; CODE XREF: sub_FEF2A+AA↑j
                 move.w  (a3),d0
                 andi.w  #$FF00,d0
@@ -69017,20 +69018,20 @@ loc_FF0C0:                              ; CODE XREF: sub_FEF2A+184↑j
                 ext.w   d2
                 move.w  d2,d0
                 lsl.w   #2,d0
-                cmpi.w  #2,d2
-                bne.s   QueueOptionText_2
-QueueSoundTestText_2:
-                jsr     PrintSoundTest
-                movea.l #$FF0A60,a0
-                move.l  a0,-(sp)
-                bra.s QueueOptionMsg_2
-QueueOptionText_2:
+;                cmpi.w  #2,d2
+;                bne.s   QueueOptionText_2
+;QueueSoundTestText_2:
+;                jsr     PrintSoundTest
+;                movea.l #$FF0A60,a0
+;                move.l  a0,-(sp)
+;                bra.s QueueOptionMsg_2
+;QueueOptionText_2:
                 movea.l #OptionsStrings,a0
                 move.l  (a0,d0.w),-(sp)
-QueueOptionMsg_2:
+;QueueOptionMsg_2:
                 pea     (off_4).w
                 pea     ($A).w
-                pea     (off_4).w
+                clr.l   -(sp) ; pea     (off_4).w
                 clr.l   -(sp)
                 pea     (6).w
                 jsr     OSD_QueueMessage
@@ -69459,20 +69460,22 @@ loc_FF54C:                              ; CODE XREF: sub_FF4B4+3A↑j
                 add.w   d0,d3
                 move.w  d3,d0
                 lsl.w   #2,d0
-                cmpi.w  #2,d2
-                bne.s   QueueOptionText_3
-QueueSoundTestText_3:
-                jsr     PrintSoundTest
-                movea.l #$FF0A60,a0
-                move.l  a0,-(sp)
-                bra.s QueueOptionMsg_3
-QueueOptionText_3:
+;                cmpi.w  #2,d2
+;                bne.s   QueueOptionText_3
+;QueueSoundTestText_3:
+;                jsr     PrintSoundTest
+;                movea.l #$FF0A60,a0
+;                move.l  a0,-(sp)
+;                bra.s QueueOptionMsg_3
+;QueueOptionText_3:
                 movea.l #OptionsStrings,a0
                 move.l  (a0,d0.w),-(sp)
-QueueOptionMsg_3:
-                pea     (off_4).w
+                clr.l   -(sp)
+;QueueOptionMsg_3:
+;                pea     (off_4).w
                 pea     ($A).w
-                pea     (off_4).w
+                clr.l   -(sp)
+;                pea     (off_4).w
                 clr.l   -(sp)
                 pea     (6).w
                 jsr     OSD_QueueMessage
@@ -70779,6 +70782,9 @@ s_camera_activation_bound_left = $FFEDB4
 s_camera_activation_bound_right = $FFEDA8
 
 ROAU_IsObjectInsideCameraActivationBorder:
+                ; d4|d5 = CameraBottom|CameraTop
+                ; d6|d7 = CameraReft|CameraRight
+
                 ; Top Camera Bounds
                 move.l  8(a2),d1           ; Load position details: x_pos (upper word) y_pos (lower word) - Seems to be bottom of bbox
                 cmp.w   d4,d1               ; if y_pos above screen top <= due to y-positive being downwards
@@ -70817,7 +70823,7 @@ ROAU_ReturnTrue:
                 rts
 
 RunOptimisedAnimationsUpdate:
-                movem.l d2-d7/a2-a6,-(sp) ; Store registers
+                movem.l d2-d7/a1-a6,-(sp) ; Store registers
 
 ROAU_Initialisation:
                 move.w  ($FF55AA).l,d0
@@ -70832,7 +70838,7 @@ ROAU_Initialisation:
                 move.w  ($FF5754).l,d0
                 addi.w  #$172,d0
                 move.w  d0,($FFEDA8).l
-                movea.l #$FFAD24,a2
+                movea.l #$FFAD24,a2 ; #$FFAD24
                 clr.w   d2
 
                 move.w (s_camera_activation_bound_top).l,d4
@@ -70845,9 +70851,10 @@ ROAU_Initialisation:
 
 ROAU_LoopBegin:
                 move.w  $24(a2),d0
-                andi.w  #$8000,d0
+                btst.l  #$F,d0
                 beq.w   ROAU_loc_D5882
-                andi.w  #$FFF7,$22(a2)
+                lea     $22(a2),a6
+                andi.w  #$FFF7,(a6)
 
                 movea.l $3A(a2),a3      ; game_sprite ptr
                 ;move.w  (a3),d4         ; cached screen xpos|ypos
@@ -70857,18 +70864,16 @@ ROAU_LoopBegin:
                 bsr.w   ROAU_IsObjectInsideCameraActivationBorder
                 tst.b   d0
                 bne.s   ROAU_loc_D57E2
-                move.w  $22(a2),d0
-                andi.w  #$80,d0
+                move.w  (a6),d0
+                btst.l  #$7,d0
                 beq.s   ROAU_loc_D57EC
 
 ROAU_loc_D57E2:
                 bsr.w    ROAU_sub_D65B0
 
 ROAU_loc_D57EC:
-                move.l  a2,-(sp)
                 jsr     AnimObj_UpdateTimedAnimations
                 nop
-                addq.l  #4,sp
                 bra.s   ROAU_loc_D581A
 ; ---------------------------------------------------------------------------
 
@@ -70882,9 +70887,9 @@ ROAU_loc_D57F6:
                 bsr.w   ROAU_AnimObj_UpdateFlags_ShouldRender
 
 ROAU_loc_D581A:
-                andi.w  #$FFBF,$22(a2)
-                move.w  $22(a2),d0
-                andi.w  #$80,d0
+                andi.w  #$FFBF,(a6)
+                move.w  (a6),d0
+                btst.l  #$7,d0
                 beq.s   ROAU_loc_D5834
                 move.l  a2,-(sp)
                 jsr     AnimObj_UpdateGameSprite
@@ -70892,18 +70897,17 @@ ROAU_loc_D581A:
                 addq.l  #4,sp
 
 ROAU_loc_D5834:
-                move.w  $22(a2),d0
-                andi.w  #$8000,d0
+                move.w  (a6),d0
+                btst.l  #$F,d0
                 bne.s   ROAU_loc_D5878
                 cmp.l   (a3),d3
                 bne.s   ROAU_loc_D5848
                 bra.s   ROAU_loc_D5882
 
 ROAU_loc_D5848:
-                move.w  $22(a2),d0
-                andi.w  #8,d0
+                move.w  (a6),d0
+                btst.l  #$4,d0
                 bne.s   ROAU_loc_D5882
-                move.w  $22(a2),d0
                 andi.w  #3,d0
                 beq.s   ROAU_loc_D586E
                 move.w  8(a3),d0
@@ -70936,10 +70940,10 @@ ROAU_loc_D5882:
                 bcs.w   ROAU_LoopBegin
                 tst.b   ($FF3F3A).l
                 bne.s   ROAU_BranchException
-                movem.l (sp)+,d2-d7/a2-a6        ; Restore registers
+                movem.l (sp)+,d2-d7/a1-a6        ; Restore registers
                 jmp     ReturnFrom_RunOptimisedAnimationsUpdate
 ROAU_BranchException:
-                movem.l (sp)+,d2-d7/a2-a6        ; Restore registers
+                movem.l (sp)+,d2-d7/a1-a6        ; Restore registers
                 jmp     loc_D589E
 ; End of function RunAnimatedObjectsUpdate
 
@@ -71194,6 +71198,40 @@ ROAU_loc_FEA62:
                 movem.l var_24(a6),d2-d5/a2-a5
                 unlk    a6
                 rts
+
+GameSprite_UpdateVisible_Optimised:                              ; CODE XREF: LoadLevelTileData+9A↑p
+                movem.l d2-d3/a2-a5,-(sp)
+                moveq   #0,d2
+                movea.l #$FFAD24,a2
+                movea.l $24(a2),a3
+                movea.l $3A(a2),a4
+                movea.l $8(a4),a5
+
+GameSprite_UpdateVisible_Optimised_Loop:                         ; CODE XREF: GameSprite_UpdateVisible+4C↓j
+                move.w  (a3),d3
+                btst.l  #$F,d3
+                beq.s   GUVO_loc_D5724
+                btst.l  #$D,d3
+                beq.s   GUVO_loc_D573A
+
+GUVO_loc_D5724:                              ; CODE XREF: GameSprite_UpdateVisible+14↑j
+                movea.l (a4),a0
+                move.w  (a5),d0
+                move.l  d0,-(sp)
+                move.l  (a4),-(sp)
+                jsr     GameSprite_Update
+                addq.l  #8,sp
+
+GUVO_loc_D573A:                              ; CODE XREF: GameSprite_UpdateVisible+1E↑j
+                                        ; GameSprite_UpdateVisible+28↑j
+                moveq   #$40,d0 ; '@'
+                adda.l  d0,a2
+                addq.l  #1,d2
+                cmpi.l  #$100,d2 ; Animated obj iteration of some kind
+                blt.s   GameSprite_UpdateVisible_Optimised_Loop
+                movem.l (sp)+,d2-d5/a2-a5
+                jmp     GameSprite_UpdateVisible_Optimised_Return
+; End of function GameSprite_Optimised_UpdateVisible
 ; End of function RunUpdate_Rings
 
 ; end of 'ROM'

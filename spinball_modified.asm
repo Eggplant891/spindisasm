@@ -21066,26 +21066,25 @@ Alert_GotAnEmerald:                     ; CODE XREF: TriggerOSDMessage+3C↑j
                 pea     (2).w
                 pea     (5).w
                 jsr     (a3)
-                pea     (a500000).l     ; "500,000". 6 bytes because big number
+                pea     (a500000).l     ; "500,000"
                 pea     (6).w
                 pea     (off_3C).w
                 pea     (off_4).w
                 pea     (2).w
                 pea     (7).w
-                ;jsr     (a3)
-                jmp     EmeraldPitch_PitchUpEmerald
-
+                jsr     (a3)
+                ;jmp     EmeraldPitch_PitchUpEmerald
                 lea     $30(sp),sp
+                move.l  #off_7A120,d2
                 pea     ($E).w
 
 loc_DFB76:                              ; CODE XREF: TriggerOSDMessage+E8↓j
                                         ; TriggerOSDMessage+306↓j ...
                 jsr     GEMS_PlayJingle
-                addq.l  #4,sp
 
 EmeraldPitch_PitchUpEmerald_Return:
-                move.l  #off_7A120,d2
 loc_DFB7C:                              ; CODE XREF: TriggerOSDMessage+16E↓j
+                addq.l  #4,sp
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
@@ -70543,6 +70542,7 @@ TargetBank      =  $E
 EmeraldPitch_PitchUpEmerald:
                 jsr     (a3)
                 lea     $30(sp),sp
+                move.l  #off_7A120,d2   ; Score 500,000 points
                 movem.l d0-d2/a0,-(sp)
                 ; Calculate how many emeralds collected to pitch up audio
                 move.w  ($FF5736).l,d0 ; Current player index
@@ -70619,8 +70619,6 @@ EmeraldPitch_PitchUpEmerald:
                 pea     (TargetBank).w
                 jsr     GEMS_ApplyPitchBend
                 lea     $A(sp),sp
-
-                lea     $4(sp),sp
 
                 ; Return to main code
                 movem.l (sp)+,d0-d2/a0

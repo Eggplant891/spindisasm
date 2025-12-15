@@ -50,7 +50,7 @@ off_34:         dc.l Error              ; DATA XREF: ROM:0000B190↓o
                                         ; ROM:000288FC↓o ...
 off_38:         dc.l ReservedException1 ; DATA XREF: ROM:000570F8↓o
                                         ; ROM:00057358↓o ...
-off_3C:         dc.l ReservedException2 ; DATA XREF: NewLife+BC↓o
+off_3C:         dc.l ReservedException2 ; DATA XREF: AwardScore+BC↓o
                                         ; RunLevelIntro+36↓o ...
 off_40:         dc.l Error              ; DATA XREF: ROM:off_A980↓o
                                         ; ROM:00017D10↓o ...
@@ -1136,7 +1136,7 @@ InfiniteLoop:                           ; CODE XREF: InfiniteLoop↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-NewLife:                                ; CODE XREF: GoToBonusStage+40↓p
+AwardScore:                             ; CODE XREF: GoToBonusStage+40↓p
                                         ; RunUpdate_TallyScoreAndEndLevel+EE↓p ...
 
 arg_0           =  4
@@ -1166,18 +1166,18 @@ arg_0           =  4
                 move.b  ($FFEDAA).l,d2
                 ext.w   d2
 
-loc_D3EC6:                              ; CODE XREF: NewLife+44↑j
-                                        ; NewLife+4C↑j
+loc_D3EC6:                              ; CODE XREF: AwardScore+44↑j
+                                        ; AwardScore+4C↑j
                 cmpi.w  #1,d2
                 ble.s   loc_D3EDA
                 move.w  d2,d1
                 ext.l   d1
                 move.l  d3,d0
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d3
 
-loc_D3EDA:                              ; CODE XREF: NewLife+32↑j
-                                        ; NewLife+5A↑j
+loc_D3EDA:                              ; CODE XREF: AwardScore+32↑j
+                                        ; AwardScore+5A↑j
                 move.l  4(a2),d2
                 add.l   d3,4(a2)
                 cmpi.b  #9,$46(a2)
@@ -1212,11 +1212,11 @@ loc_D3EDA:                              ; CODE XREF: NewLife+32↑j
                 nop
                 lea     $20(sp),sp
 
-loc_D3F58:                              ; CODE XREF: NewLife+A↑j
-                                        ; NewLife+78↑j ...
+loc_D3F58:                              ; CODE XREF: AwardScore+A↑j
+                                        ; AwardScore+78↑j ...
                 movem.l (sp)+,d2-d3/a2
                 rts
-; End of function NewLife
+; End of function AwardScore
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -1251,7 +1251,7 @@ loc_D3F96:                              ; CODE XREF: GoToBonusStage+18↑j
                 jsr     GEMS_MuteAllSounds(pc)
                 nop
                 move.l  d2,-(sp)
-                bsr.w   NewLife
+                bsr.w   AwardScore
                 addq.l  #8,sp
                 move.b  d3,d0
                 movem.l (sp)+,d2-d3
@@ -2259,7 +2259,7 @@ loc_D49B6:                              ; DATA XREF: RunUpdate_TallyScoreAndEndL
 
 loc_D49CA:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+DA↑j
                 move.l  ($FF000E).l,-(sp)
-                bsr.w   NewLife
+                bsr.w   AwardScore
                 addq.l  #4,sp
                 pea     ($21).w
                 jsr     GEMSStopSong
@@ -2319,7 +2319,7 @@ loc_D4A66:                              ; DATA XREF: RunUpdate_TallyScoreAndEndL
 loc_D4A76:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+298↓j
                                         ; RunUpdate_TallyScoreAndEndLevel+34C↓j
                 move.l  ($FF000E).l,-(sp)
-                bsr.w   NewLife
+                bsr.w   AwardScore
                 bra.w   loc_D49E0
 ; ---------------------------------------------------------------------------
 
@@ -3450,7 +3450,7 @@ SetGameState_BOSS_ROOM_EXPLODING:                              ; CODE XREF: SetG
 ; =============== S U B R O U T I N E =======================================
 
 
-PlaySong:                               ; CODE XREF: NewLife+DE↑p
+PlaySong:                               ; CODE XREF: AwardScore+DE↑p
                                         ; RunLevelIntro+19E↑p ...
 
 arg_0           =  4
@@ -3522,7 +3522,7 @@ loc_D567A:                              ; CODE XREF: sub_D565E+A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-GEMS_PlayJingle:                              ; CODE XREF: NewLife+D4↑p
+GEMS_PlayJingle:                              ; CODE XREF: AwardScore+D4↑p
                                         ; PlayPlayerVictoryAnimation+60↑p ...
 
 arg_0           =  4
@@ -5662,7 +5662,7 @@ arg_A           =  $E
 ; =============== S U B R O U T I N E =======================================
 
 
-SignedMultiply:                         ; CODE XREF: sub_DB900+116↓p
+Multiply_short:                         ; CODE XREF: sub_DB900+116↓p
                                         ; sub_DB900+134↓p ...
 
 arg_2           =  6
@@ -5671,7 +5671,7 @@ arg_6           =  $A
                 move.w  arg_2(sp),d0
                 muls.w  arg_6(sp),d0
                 rts
-; End of function SignedMultiply
+; End of function Multiply_short
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -8091,7 +8091,7 @@ arg_6           =  $E
                 movem.l d2-d7/a2-a5,-(sp)
                 movea.l arg_0(a6),a4
 
-loc_D7CD8:                              ; CODE XREF: GameSprite_Update+1CA↓j
+GameSprite_Update_Loop:                              ; CODE XREF: GameSprite_Update+1CA↓j
                 tst.l   $A(a4)
                 beq.w   loc_D8152
                 cmpi.w  #$3FFF,arg_6(a6)
@@ -8222,7 +8222,7 @@ loc_D7E2A:                              ; CODE XREF: GameSprite_Update+11E↑j
                 addq.l  #4,sp
                 move.b  d0,d3
                 cmpi.b  #$FF,d3
-                bne.s   loc_D7E9A
+                bne.s   GameSprite_Update_LoopEnd
                 cmpi.b  #$FF,$22(a4)
                 beq.w   loc_D8152
                 tst.l   $24(a4)
@@ -8245,12 +8245,12 @@ loc_D7E2A:                              ; CODE XREF: GameSprite_Update+11E↑j
                 addq.l  #4,sp
                 move.b  d0,d3
                 cmpi.b  #$FF,d3
-                bne.s   loc_D7E9A
+                bne.s   GameSprite_Update_LoopEnd
                 move.w  8(a4),arg_6(a6)
-                bra.w   loc_D7CD8
+                bra.w   GameSprite_Update_Loop
 ; ---------------------------------------------------------------------------
 
-loc_D7E9A:                              ; CODE XREF: GameSprite_Update+170↑j
+GameSprite_Update_LoopEnd:                              ; CODE XREF: GameSprite_Update+170↑j
                                         ; GameSprite_Update+1C2↑j
                 move.l  a4,-(sp)
                 bsr.w   GameSprite_RefreshVDPSpriteData
@@ -13901,13 +13901,13 @@ arg_8           =  $10
                 ext.l   d0
                 move.w  6(a2),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.w  2(a2),d0
                 ext.l   d0
                 move.w  4(a2),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 sub.l   (sp)+,d0
                 move.l  d0,var_10(a6)
                 move.l  d0,-(sp)
@@ -13915,13 +13915,13 @@ arg_8           =  $10
                 ext.l   d0
                 move.w  d5,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.w  $26(a3),d0
                 ext.l   d0
                 move.w  d4,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 add.l   (sp)+,d0
                 move.l  (sp)+,d1
@@ -13952,7 +13952,7 @@ arg_8           =  $10
                 move.w  var_C(a6),d0
                 sub.w   4(a5),d0
                 move.l  d0,-(sp)
-                jsr     SignedMultiply
+                jsr     Multiply_short
                 addq.l  #8,sp
                 move.l  d0,-(sp)
                 move.w  6(a5),d0
@@ -13961,7 +13961,7 @@ arg_8           =  $10
                 move.w  6(a5),d0
                 sub.w   2(a5),d0
                 move.l  d0,-(sp)
-                jsr     SignedMultiply
+                jsr     Multiply_short
                 addq.l  #8,sp
                 add.l   (sp)+,d0
                 move.l  d0,d6
@@ -13969,14 +13969,14 @@ arg_8           =  $10
                 move.l  d0,-(sp)
                 move.w  var_C(a6),d0
                 move.l  d0,-(sp)
-                jsr     SignedMultiply
+                jsr     Multiply_short
                 addq.l  #8,sp
                 move.l  d0,-(sp)
                 move.w  2(a5),d0
                 move.l  d0,-(sp)
                 move.w  4(a5),d0
                 move.l  d0,-(sp)
-                jsr     SignedMultiply
+                jsr     Multiply_short
                 addq.l  #8,sp
                 sub.l   (sp)+,d0
                 move.l  d0,d2
@@ -13986,7 +13986,7 @@ arg_8           =  $10
                 ext.l   d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d6,d1
                 jsr     Divide
                 move.w  d0,d3
@@ -13996,7 +13996,7 @@ arg_8           =  $10
                 ext.l   d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d6,d1
                 jsr     Divide
                 move.w  d0,d2
@@ -14074,13 +14074,13 @@ loc_DBB22:                              ; CODE XREF: sub_DB900+21C↑j
                 ext.l   d0
                 move.w  d5,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.w  var_14(a6),d0
                 ext.l   d0
                 move.w  d4,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 add.l   var_10(a6),d0
                 moveq   #0,d1
@@ -14101,26 +14101,26 @@ loc_DBB8C:                              ; CODE XREF: sub_DB900+1CA↑j
                 ext.l   d0
                 move.w  2(a5),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.w  var_C(a6),d0
                 ext.l   d0
                 move.w  var_C(a6),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 move.w  6(a5),d0
                 ext.l   d0
                 move.w  6(a5),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.w  4(a5),d0
                 ext.l   d0
                 move.w  4(a5),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d3
                 cmpi.l  #$90,d2
@@ -14595,7 +14595,7 @@ arg_4           =  8
                 movem.l d2-d7/a2-a3,-(sp)
                 move.l  $20+arg_4(sp),d6
                 move.l  $20+arg_0(sp),d7
-                movea.l #SignedMultiply,a3
+                movea.l #Multiply_short,a3
                 move.w  ($FF5736).l,d0
                 move.w  d0,d1
                 lsl.w   #2,d1
@@ -14867,7 +14867,7 @@ loc_DC27C:                              ; CODE XREF: LoseLife+8A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DC29C:                              ; CODE XREF: sub_E5138+5E6↓p
+Trigger_OnEmeraldCollected:                              ; CODE XREF: sub_E5138+5E6↓p
                                         ; RunPlayerCollision_ToxicCaves+634↓p ...
 
 arg_0           =  4
@@ -14898,10 +14898,10 @@ arg_0           =  4
                 bra.s   loc_DC2EE
 ; ---------------------------------------------------------------------------
 
-loc_DC2EC:                              ; CODE XREF: sub_DC29C+4A↑j
+loc_DC2EC:                              ; CODE XREF: Trigger_OnEmeraldCollected+4A↑j
                 moveq   #$65,d0 ; 'e'
 
-loc_DC2EE:                              ; CODE XREF: sub_DC29C+4E↑j
+loc_DC2EE:                              ; CODE XREF: Trigger_OnEmeraldCollected+4E↑j
                 move.l  d0,-(sp)
                 jsr     TriggerOSDMessage
                 move.w  #$611,$C(a2)
@@ -14915,7 +14915,7 @@ loc_DC2EE:                              ; CODE XREF: sub_DC29C+4E↑j
                 clr.w   ($FF55A0).l
                 movem.l (sp)+,a2-a3
                 rts
-; End of function sub_DC29C
+; End of function Trigger_OnEmeraldCollected
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -14976,7 +14976,7 @@ loc_DC38C:                              ; CODE XREF: ApplyFlipperForceToPlayer+5
                 move.l  d0,-(sp)
                 move.w  d2,d0
                 move.l  d0,-(sp)
-                jsr     SignedMultiply
+                jsr     Multiply_short
                 lsl.l   #2,d0
                 move.l  d0,$1E(a2)
                 move.w  $2E(a2),d0
@@ -14986,7 +14986,7 @@ loc_DC38C:                              ; CODE XREF: ApplyFlipperForceToPlayer+5
                 move.l  d0,-(sp)
                 move.w  d2,d0
                 move.l  d0,-(sp)
-                jsr     SignedMultiply
+                jsr     Multiply_short
                 lea     $10(sp),sp
                 lsl.l   #2,d0
                 move.l  d0,$22(a2)
@@ -15487,7 +15487,7 @@ loc_DC896:                              ; CODE XREF: RunPlayerPinballPhysics+41C
                 cmpi.w  #2,$2A(a3)
                 ble.w   loc_DCA24
                 pea     (dword_3A98).w
-                jsr     NewLife
+                jsr     AwardScore
                 pea     (off_C0B80).l
                 move.l  a2,-(sp)
                 jsr     sub_E1ECA
@@ -16758,7 +16758,7 @@ loc_DD412:                              ; CODE XREF: RunPlayerUpdate+438↑j
                 move.l  d1,-(sp)
                 clr.l   -(sp)
                 pea     ($6F).w
-                jsr     sub_F628C
+                jsr     GEMS_ApplyPitchBend
                 lea     $14(sp),sp
 
 loc_DD446:                              ; CODE XREF: RunPlayerUpdate+42A↑j
@@ -19041,7 +19041,7 @@ loc_DE9C2:                              ; CODE XREF: OSD_ClearMessageQueue+38↓
 
 ; Attributes: bp-based frame
 
-OSD_QueueMessage:                              ; CODE XREF: NewLife+CA↑p
+OSD_QueueMessage:                              ; CODE XREF: AwardScore+CA↑p
                                         ; RunLevelIntro+46↑p ...
 
 var_28          = -$28
@@ -21027,7 +21027,7 @@ loc_DFB0A:                              ; CODE XREF: TriggerOSDMessage+26↑j
                 beq.s   Alert_GotAnEmerald
                 moveq   #$65,d1 ; 'e'
                 cmp.w   d1,d0
-                beq.s   Alert_AllEmeraldsNewLife
+                beq.s   Alert_AllEmeraldsAwardScore
                 moveq   #$66,d1 ; 'f'
                 cmp.w   d1,d0
                 beq.w   Alert_NotEnoughEmeralds
@@ -21062,7 +21062,7 @@ loc_DFB7C:                              ; CODE XREF: TriggerOSDMessage+16E↓j
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
 
-Alert_AllEmeraldsNewLife:               ; CODE XREF: TriggerOSDMessage+42↑j
+Alert_AllEmeraldsAwardScore:               ; CODE XREF: TriggerOSDMessage+42↑j
                 pea     (aAllEmeraldsCol).l ; "ALL EMERALDS COLLECTED"
                 pea     (3).w
                 pea     (off_3C).w
@@ -23437,7 +23437,7 @@ loc_E1170:                              ; CODE XREF: TriggerOSDMessage+185C↓j
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #dword_186A0,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
 
 loc_E11A8:                              ; CODE XREF: TriggerOSDMessage+1852↓j
                 move.l  d0,d2
@@ -23515,7 +23515,7 @@ loc_E123C:                              ; DATA XREF: TriggerOSDMessage+15D6↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 bra.w   loc_E193E
 ; ---------------------------------------------------------------------------
@@ -23569,7 +23569,7 @@ loc_E12BE:                              ; DATA XREF: TriggerOSDMessage+15E2↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$61A8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 moveq   #0,d0
                 move.w  ($FFAB88).l,d0
@@ -23588,7 +23588,7 @@ loc_E1316:                              ; CODE XREF: TriggerOSDMessage+1826↑j
                 add.l   d0,d1
                 asr.l   #5,d1
                 move.l  d2,d0
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 bra.w   loc_E11A8
 ; ---------------------------------------------------------------------------
 
@@ -23620,7 +23620,7 @@ loc_E1358:                              ; DATA XREF: TriggerOSDMessage+15F2↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 bra.w   loc_DFE5A
 ; ---------------------------------------------------------------------------
@@ -23758,7 +23758,7 @@ loc_E14AC:                              ; DATA XREF: TriggerOSDMessage+167C↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 move.l  d2,-(sp)
                 move.l  a5,-(sp)
@@ -23915,7 +23915,7 @@ loc_E1672:                              ; DATA XREF: TriggerOSDMessage+15C8↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 move.l  d2,-(sp)
                 move.l  a5,d0
@@ -23954,7 +23954,7 @@ loc_E16BC:                              ; DATA XREF: TriggerOSDMessage+15E4↑o
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 pea     ($58).w
                 bra.w   loc_DFC4C
@@ -23976,7 +23976,7 @@ loc_E172A:                              ; CODE XREF: TriggerOSDMessage+1CC8↓j
                 ext.l   d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 bra.w   loc_E09B8
 ; ---------------------------------------------------------------------------
@@ -24103,7 +24103,7 @@ loc_E1854:                              ; DATA XREF: TriggerOSDMessage+1648↑o
                 andi.l  #$FFFF,d2
                 move.l  d2,d0
                 move.l  #$C350,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 add.l   d2,d2
                 move.l  d2,-(sp)
@@ -24193,7 +24193,7 @@ loc_E1938:                              ; CODE XREF: TriggerOSDMessage+5E2↑j
 loc_E193E:                              ; CODE XREF: TriggerOSDMessage+4C↑j
                                         ; TriggerOSDMessage+9E↑j ...
                 move.l  d2,-(sp)
-                jsr     NewLife
+                jsr     AwardScore
                 move.w  d4,($FF027C).l
                 movem.l var_58(a6),d2-d4/a2-a5
                 unlk    a6
@@ -26990,7 +26990,7 @@ loc_E350C:                              ; CODE XREF: sub_E3150+3AC↑j
 loc_E3518:                              ; CODE XREF: sub_E3150+3BA↑j
                 move.w  #$C,($FF783C).l
                 pea     (byte_1388).w
-                jsr     NewLife
+                jsr     AwardScore
                 pea     ($39).w
                 jsr     PlaySong
                 pea     ($FF7C8C).l
@@ -27447,7 +27447,7 @@ loc_E3A2E:                              ; CODE XREF: sub_E3150+8CE↑j
 loc_E3A3A:                              ; CODE XREF: sub_E3150+8DC↑j
                 move.w  #$C,($FF783C).l
                 pea     (byte_1388).w
-                jsr     NewLife
+                jsr     AwardScore
                 pea     ($39).w
                 jsr     PlaySong
                 pea     ($FF7CAE).l
@@ -27815,7 +27815,7 @@ loc_E3E3C:                              ; CODE XREF: sub_E3150+CDE↑j
 
 loc_E3E5C:                              ; CODE XREF: sub_E3150+CF8↑j
                 pea     (byte_1388).w
-                jsr     NewLife
+                jsr     AwardScore
                 addq.l  #4,sp
                 pea     ($39).w
                 jsr     PlaySong
@@ -28067,7 +28067,7 @@ loc_E40FA:                              ; CODE XREF: sub_E3150+F9C↑j
 
 loc_E411A:                              ; CODE XREF: sub_E3150+FB6↑j
                 pea     (byte_1388).w
-                jsr     NewLife
+                jsr     AwardScore
                 addq.l  #4,sp
                 pea     ($39).w
                 jsr     PlaySong
@@ -30217,7 +30217,7 @@ loc_E5706:                              ; DATA XREF: sub_E5138+15E↑o
                 movea.l (a2),a0
                 ori.w   #$8000,$22(a0)
                 move.l  a2,-(sp)
-                jsr     sub_DC29C
+                jsr     Trigger_OnEmeraldCollected
                 addq.l  #4,sp
                 tst.w   $10(a2)
                 beq.w   loc_E52DA
@@ -30598,7 +30598,7 @@ loc_E5AA4:                              ; CODE XREF: sub_E5138+956↑j
                 clr.w   $C(a2)
                 jsr     sub_DB836
                 pea     (dword_3A98).w
-                jsr     NewLife
+                jsr     AwardScore
                 lea     $14(sp),sp
                 pea     ($7B).w
                 bra.w   loc_E544C
@@ -30666,7 +30666,7 @@ loc_E5B9C:                              ; CODE XREF: sub_E5138+A60↑j
                 move.b  #5,9(a2)
                 move.w  #$A,$C(a2)
                 move.l  #off_124F8,-(sp)
-                jsr     NewLife
+                jsr     AwardScore
                 pea     ($7B).w
                 jsr     PlaySong
                 lea     $14(sp),sp
@@ -30693,7 +30693,7 @@ loc_E5BF0:                              ; CODE XREF: sub_E5138+A6C↑j
                 pea     (off_C0BA4).l
                 jsr     AnimObj_InitialiseInstance
                 pea     (byte_1388).w
-                jsr     NewLife
+                jsr     AwardScore
                 lea     $30(sp),sp
                 bra.w   loc_E5D0C
 ; ---------------------------------------------------------------------------
@@ -31005,7 +31005,7 @@ loc_E5FCC:                              ; CODE XREF: sub_E5138+E70↑j
 loc_E5FD0:                              ; CODE XREF: sub_E5138+E92↑j
                 jsr     TriggerOSDMessage
                 move.l  #$C350,-(sp)
-                jsr     NewLife
+                jsr     AwardScore
                 pea     ($77).w
                 jsr     GEMSStopSong
                 lea     $10(sp),sp
@@ -32245,7 +32245,7 @@ loc_E6BFE:                              ; CODE XREF: RunPlayerCollision_ToxicCav
                 movea.l (a2),a0
                 ori.w   #$8000,$22(a0)
                 move.l  a2,-(sp)
-                jsr     sub_DC29C
+                jsr     Trigger_OnEmeraldCollected
                 bra.w   loc_E67EC
 ; ---------------------------------------------------------------------------
 
@@ -37541,7 +37541,7 @@ loc_EA602:                              ; DATA XREF: sub_EA2BA:off_EA4B2↑o
                 movea.l (a2),a0
                 ori.w   #$8000,$22(a0)
                 move.l  a2,-(sp)
-                jsr     sub_DC29C
+                jsr     Trigger_OnEmeraldCollected
                 bra.s   loc_EA5FA
 ; ---------------------------------------------------------------------------
 
@@ -37888,7 +37888,7 @@ loc_EAA38:                              ; DATA XREF: sub_EA2BA+214↑o
                 pea     ($37).w
                 jsr     PlaySong
                 move.l  #$C350,-(sp)
-                jsr     NewLife
+                jsr     AwardScore
                 addq.l  #8,sp
                 jsr     sub_EACC2
                 jsr     sub_EACA6
@@ -42106,7 +42106,7 @@ loc_ED690:                              ; CODE XREF: sub_ED5D8+78↑j
                 bne.s   loc_ED7A2
                 clr.b   ($FF4019).l
                 pea     (dword_3A98).w
-                jsr     NewLife
+                jsr     AwardScore
                 movea.l a5,a2
                 lea     $1D38(a2),a2
                 pea     (off_C0B80).l
@@ -42126,7 +42126,7 @@ loc_ED7A2:                              ; CODE XREF: sub_ED5D8+188↑j
                 bne.s   loc_ED7EC
                 clr.b   (a2)
                 pea     (dword_3A98).w
-                jsr     NewLife
+                jsr     AwardScore
                 movea.l a5,a2
                 lea     $1D5A(a2),a2
                 pea     (off_C0B80).l
@@ -48493,7 +48493,7 @@ loc_F1C9E:                              ; CODE XREF: sub_F145E+182↑j
                 movea.l (a3),a0
                 ori.w   #$8000,$22(a0)
                 move.l  a3,-(sp)
-                jsr     sub_DC29C
+                jsr     Trigger_OnEmeraldCollected
                 bra.w   loc_F173E
 ; ---------------------------------------------------------------------------
 
@@ -50514,7 +50514,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d4,d1
                 jsr     Divide
                 move.b  1(a2),d1
@@ -50533,7 +50533,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d4,d1
                 jsr     Divide
                 moveq   #0,d1
@@ -50551,7 +50551,7 @@ loc_F3248:                              ; CODE XREF: sub_F3200+11E↓j
                 andi.l  #$F,d1
                 sub.l   d1,d0
                 move.l  d2,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d4,d1
                 jsr     Divide
                 move.b  (a2),d1
@@ -50633,7 +50633,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 ext.l   d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50649,7 +50649,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 andi.l  #$F,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50666,7 +50666,7 @@ loc_F33AC:                              ; CODE XREF: sub_F3362+104↓j
                 ext.l   d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50753,7 +50753,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50772,7 +50772,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -50792,7 +50792,7 @@ loc_F34F8:                              ; CODE XREF: sub_F34AE+116↓j
                 move.l  d1,d0
                 move.w  d2,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.w  d4,d1
                 ext.l   d1
                 jsr     Divide
@@ -53426,7 +53426,7 @@ loc_F4A18:                              ; CODE XREF: sub_F49B8+F4↓j
                 addq.l  #8,sp
                 ext.l   d0
                 move.l  d4,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 lsl.l   #4,d0
                 move.w  ($FF0328).l,d1
                 ext.l   d1
@@ -53540,7 +53540,7 @@ loc_F4B32:                              ; CODE XREF: sub_F4AE4+144↓j
                 addq.l  #8,sp
                 ext.l   d0
                 move.l  d4,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 lsl.l   #4,d0
                 move.w  ($FF0328).l,d1
                 ext.l   d1
@@ -54404,7 +54404,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d4,d1
                 jsr     Divide
                 move.b  1(a2),d1
@@ -54424,7 +54424,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d4,d1
                 jsr     Divide
                 moveq   #0,d1
@@ -54443,7 +54443,7 @@ loc_F53C8:                              ; CODE XREF: sub_F52EC+1B8↓j
                 sub.l   d1,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d4,d1
                 jsr     Divide
                 move.b  (a2),d1
@@ -54926,7 +54926,7 @@ loc_F5982:                              ; CODE XREF: sub_F56D0+2FE↓j
                 move.l  d1,d0
                 move.w  (a5),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 tst.l   d0
                 bge.s   loc_F59A6
                 moveq   #$1F,d1
@@ -54979,7 +54979,7 @@ loc_F5A04:                              ; CODE XREF: sub_F56D0+37A↓j
                 move.l  d1,d0
                 move.w  (a5),d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 tst.l   d0
                 bge.s   loc_F5A28
                 moveq   #$1F,d1
@@ -55479,7 +55479,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 ext.l   d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 asr.l   #5,d0
                 move.b  1(a2),d1
                 andi.l  #$F,d1
@@ -55493,7 +55493,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 andi.l  #$F,d0
                 move.w  d3,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 asr.l   #5,d0
                 moveq   #0,d1
                 move.b  1(a2),d1
@@ -55508,7 +55508,7 @@ loc_F5E60:                              ; CODE XREF: sub_F5E0E+F4↓j
                 ext.l   d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 asr.l   #5,d0
                 move.b  (a2),d1
                 andi.l  #$F,d1
@@ -56061,7 +56061,7 @@ sub_F6282:
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F628C:                              ; CODE XREF: RunPlayerUpdate+47C↑p
+GEMS_ApplyPitchBend:                              ; CODE XREF: RunPlayerUpdate+47C↑p
                 jsr     GEMS_stdstartup(pc)
                 moveq   #$1E,d0
                 jsr     GEMS_stdcmdwrite(pc)
@@ -56074,7 +56074,7 @@ sub_F628C:                              ; CODE XREF: RunPlayerUpdate+47C↑p
                 asr.w   #8,d0
                 jsr     GEMS_stdwrite(pc)
                 jmp     GEMS_stdcleanup(pc)
-; End of function sub_F628C
+; End of function GEMS_ApplyPitchBend
 
 ; ---------------------------------------------------------------------------
 ; START OF FUNCTION CHUNK FOR VBlank
@@ -58620,7 +58620,7 @@ arg_0           =  4
                 move.l  $E(a2),d1
                 asr.l   #8,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 tst.l   $E(a2)
                 bge.s   loc_F7C3E
@@ -58638,7 +58638,7 @@ loc_F7C3E:                              ; CODE XREF: BonusStage_BallPhysics+32�
                 move.l  $A(a2),d1
                 asr.l   #8,d1
                 ext.l   d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 addi.l  #$20,d0 ; ' '
                 move.l  d0,d2
                 tst.l   $A(a2)
@@ -59000,13 +59000,13 @@ loc_F7F02:                              ; CODE XREF: sub_F7E8E+66↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d4,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -59018,14 +59018,14 @@ loc_F7F02:                              ; CODE XREF: sub_F7E8E+66↑j
 loc_F7F48:                              ; CODE XREF: sub_F7E8E+B6↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d4
@@ -59033,7 +59033,7 @@ loc_F7F48:                              ; CODE XREF: sub_F7E8E+B6↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -59613,7 +59613,7 @@ loc_F86E0:                              ; CODE XREF: sub_F866C+66↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
@@ -59621,7 +59621,7 @@ loc_F86E0:                              ; CODE XREF: sub_F866C+66↑j
                 asr.l   #8,d1
 
 loc_F870C:                              ; DATA XREF: ROM:0007F184↑o
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -59633,14 +59633,14 @@ loc_F870C:                              ; DATA XREF: ROM:0007F184↑o
 loc_F8722:                              ; CODE XREF: sub_F866C+B2↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -59648,7 +59648,7 @@ loc_F8722:                              ; CODE XREF: sub_F866C+B2↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60012,13 +60012,13 @@ loc_F8A78:                              ; CODE XREF: sub_F89FC+6E↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60030,25 +60030,25 @@ loc_F8A78:                              ; CODE XREF: sub_F89FC+6E↑j
 loc_F8AC2:                              ; CODE XREF: sub_F89FC+C2↑j
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60260,13 +60260,13 @@ loc_F8CD4:                              ; CODE XREF: sub_F8C4C+7A↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60278,25 +60278,25 @@ loc_F8CD4:                              ; CODE XREF: sub_F8C4C+7A↑j
 loc_F8D16:                              ; CODE XREF: sub_F8C4C+C6↑j
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d4,d0
                 move.l  d4,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60504,13 +60504,13 @@ loc_F8F2A:                              ; CODE XREF: sub_F8EAE+6E↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60522,25 +60522,25 @@ loc_F8F2A:                              ; CODE XREF: sub_F8EAE+6E↑j
 loc_F8F6C:                              ; CODE XREF: sub_F8EAE+BA↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d4,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -60732,13 +60732,13 @@ loc_F913E:                              ; CODE XREF: sub_F90C4+6C↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -60750,25 +60750,25 @@ loc_F913E:                              ; CODE XREF: sub_F90C4+6C↑j
 loc_F9180:                              ; CODE XREF: sub_F90C4+B8↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d4,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -61029,13 +61029,13 @@ loc_F940C:                              ; CODE XREF: sub_F9392+6C↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -61047,14 +61047,14 @@ loc_F940C:                              ; CODE XREF: sub_F9392+6C↑j
 loc_F9456:                              ; CODE XREF: sub_F9392+C0↑j
                 move.l  d6,d0
                 move.l  d6,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d7
                 move.l  d0,-(sp)
                 move.l  d5,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61062,7 +61062,7 @@ loc_F9456:                              ; CODE XREF: sub_F9392+C0↑j
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d7,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -61358,7 +61358,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  d6,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.w  d2,d0
                 move.w  d0,d1
@@ -61376,7 +61376,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 sub.l   (sp)+,d0
                 move.l  d0,var_4(a6)
                 cmpi.l  #unk_B0000,var_4(a6)
@@ -61387,13 +61387,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  (a5),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,var_8(a6)
                 tst.l   var_8(a6)
@@ -61428,13 +61428,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  (a5),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d3
                 tst.l   d3
@@ -61444,13 +61444,13 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 move.l  (a5),d1
                 neg.l   d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  $A(a2),d0
                 asr.l   #8,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 asr.l   #8,d0
@@ -61459,7 +61459,7 @@ loc_F96A2:                              ; CODE XREF: sub_F9656+44↑j
                 sub.l   d1,d0
                 move.l  (a4),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 tst.l   d0
                 bge.s   loc_F9848
                 addq.l  #3,d0
@@ -61475,7 +61475,7 @@ loc_F9848:                              ; CODE XREF: sub_F9656+1EE↑j
                 move.l  (a5),d1
                 neg.l   d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 tst.l   d0
                 bge.s   loc_F986A
                 addq.l  #3,d0
@@ -61524,7 +61524,7 @@ loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61544,7 +61544,7 @@ loc_F9890:                              ; CODE XREF: sub_F9656+226↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61568,7 +61568,7 @@ loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61588,7 +61588,7 @@ loc_F9934:                              ; CODE XREF: sub_F9656+266↑j
                 moveq   #$11,d7
                 asr.l   d7,d1
                 exg     d7,a0
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 jsr     sub_D69B6
                 ext.l   d0
@@ -61711,13 +61711,13 @@ loc_F9A64:                              ; CODE XREF: sub_F9656+400↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -61729,25 +61729,25 @@ loc_F9A64:                              ; CODE XREF: sub_F9656+400↑j
 loc_F9AA4:                              ; CODE XREF: sub_F9656+44A↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61870,13 +61870,13 @@ loc_F9BB8:                              ; CODE XREF: sub_F9656+554↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -61888,25 +61888,25 @@ loc_F9BB8:                              ; CODE XREF: sub_F9656+554↑j
 loc_F9BF8:                              ; CODE XREF: sub_F9656+59E↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -61981,13 +61981,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  d6,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 sub.l   (sp)+,d0
                 move.l  d0,var_4(a6)
                 cmpi.l  #unk_B0000,var_4(a6)
@@ -61998,13 +61998,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $10(a3),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62017,13 +62017,13 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $14(a3),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $10(a3),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62040,7 +62040,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.w  d4,d0
                 move.w  d0,d1
@@ -62053,7 +62053,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 asr.l   #8,d0
@@ -62071,7 +62071,7 @@ loc_F9CC4:                              ; CODE XREF: sub_F9656+896↓j
                 move.l  (a0,d0.w),d0
                 asr.l   #8,d0
                 move.l  (sp)+,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 tst.l   d0
                 bge.s   loc_F9DF6
                 addq.l  #3,d0
@@ -62096,7 +62096,7 @@ loc_F9DF6:                              ; CODE XREF: sub_F9656+79C↑j
                 neg.l   d0
                 asr.l   #8,d0
                 move.l  (sp)+,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 tst.l   d0
                 bge.s   loc_F9E30
                 addq.l  #3,d0
@@ -62242,13 +62242,13 @@ loc_F9F44:                              ; CODE XREF: sub_F9656+8E0↑j
                 asr.l   #8,d0
                 move.l  $E(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  $A(a2),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d7
                 tst.l   d7
@@ -62260,25 +62260,25 @@ loc_F9F44:                              ; CODE XREF: sub_F9656+8E0↑j
 loc_F9F82:                              ; CODE XREF: sub_F9656+928↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d3,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d7,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d3
@@ -62434,13 +62434,13 @@ loc_FA0B6:                              ; CODE XREF: BonusStage_InnerUpdate+B2�
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 asr.l   #8,d0
                 move.l  var_8(a6),d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -62452,25 +62452,25 @@ loc_FA0B6:                              ; CODE XREF: BonusStage_InnerUpdate+B2�
 loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106↑j
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,var_C(a6)
                 move.l  d5,d0
                 move.l  d5,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d6,d0
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  (sp)+,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -62492,14 +62492,14 @@ loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106�
                 asr.l   #8,d0
                 move.l  d3,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,-(sp)
                 move.l  d7,d0
                 neg.l   d0
                 asr.l   #8,d0
                 move.l  d4,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 add.l   (sp)+,d0
                 move.l  d0,d2
                 tst.l   d2
@@ -62508,7 +62508,7 @@ loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106�
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  #$1E4,d1
                 jsr     Divide
                 move.l  d0,var_C(a6)
@@ -62516,7 +62516,7 @@ loc_FA10A:                              ; CODE XREF: BonusStage_InnerUpdate+106�
                 asr.l   #8,d0
                 move.l  d2,d1
                 asr.l   #8,d1
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  #$1E4,d1
                 jsr     Divide
                 move.l  d0,d2
@@ -65298,7 +65298,7 @@ loc_FC9A6:                              ; CODE XREF: RunUpdate_BonusStage+2402�
                 sub.l   d0,d4
                 move.l  d4,d1
                 move.l  d2,d0
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
                 move.l  d0,d2
                 moveq   #$10,d1
                 asr.l   d1,d0
@@ -67519,7 +67519,7 @@ loc_FE260:                              ; CODE XREF: RunUpdate_BonusStage+3C0E�
                 move.l  #unk_493E0,d1
 
 loc_FE266:                              ; CODE XREF: RunUpdate_BonusStage+3C4A↑j
-                jsr     Multiply_VectorByScalar
+                jsr     Multiply_unsigned_long
 
 loc_FE26C:                              ; CODE XREF: RunUpdate_BonusStage+3B64↑j
                 move.l  d0,-(sp)
@@ -69770,7 +69770,7 @@ loc_FF8B0:                              ; CODE XREF: sub_FF834+4C↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-Multiply_VectorByScalar:                              ; CODE XREF: NewLife+62↑p
+Multiply_unsigned_long:                              ; CODE XREF: AwardScore+62↑p
                                         ; sub_DB900+72↑p ...
                 movem.l d0/d2,-(sp)
                 move.l  d0,d2
@@ -69783,7 +69783,7 @@ Multiply_VectorByScalar:                              ; CODE XREF: NewLife+62↑
                 clr.w   d2
                 add.l   d2,d0
 
-loc_FF8CE:                              ; CODE XREF: Multiply_VectorByScalar+C↑j
+loc_FF8CE:                              ; CODE XREF: Multiply_unsigned_long+C↑j
                 move.l  (sp)+,d2
                 clr.w   d1
                 swap    d1
@@ -69793,10 +69793,10 @@ loc_FF8CE:                              ; CODE XREF: Multiply_VectorByScalar+C�
                 clr.w   d2
                 add.l   d2,d0
 
-loc_FF8DE:                              ; CODE XREF: Multiply_VectorByScalar+1C↑j
+loc_FF8DE:                              ; CODE XREF: Multiply_unsigned_long+1C↑j
                 move.l  (sp)+,d2
                 rts
-; End of function Multiply_VectorByScalar
+; End of function Multiply_unsigned_long
 
 ; ---------------------------------------------------------------------------
                 move.l  (a0),d1
@@ -69805,8 +69805,8 @@ loc_FF8DE:                              ; CODE XREF: Multiply_VectorByScalar+1C�
 ; =============== S U B R O U T I N E =======================================
 
 
-Divide:                              ; CODE XREF: NewLife+82↑p
-                                        ; NewLife+94↑p ...
+Divide:                              ; CODE XREF: AwardScore+82↑p
+                                        ; AwardScore+94↑p ...
                 cmpi.l  #$7FFF,d1
                 bgt.s   loc_FF8FE
                 cmpi.l  #$FFFF8000,d1

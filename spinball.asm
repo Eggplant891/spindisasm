@@ -3160,7 +3160,7 @@ GAME_STATE_RING_PORTAL_TRANSITION:                              ; DATA XREF: Run
                 bgt.w   loc_D5406
                 jsr     ScreenTransition_ToBlack
                 clr.l   -(sp)
-                jsr     sub_E1B5A
+                jsr     BonusStage_InitialiseForCurrentLevel
                 clr.l   -(sp)
                 bsr.w   GoToBonusStage
                 addq.l  #8,sp
@@ -15100,7 +15100,7 @@ loc_DC480:                              ; CODE XREF: RunPlayerPinballPhysics+23C
                 move.w  $A(a2),d0
                 ext.l   d0
                 move.l  d0,-(sp)
-                jsr     GetRing
+                jsr     Trigger_OnRingCollected
                 addq.l  #4,sp
                 bra.w   loc_DC60E
 ; ---------------------------------------------------------------------------
@@ -24446,8 +24446,8 @@ loc_E1B52:                              ; CODE XREF: RunPlayerCollisionForCurren
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_E1B5A:                              ; CODE XREF: RunMain+138↑p
-                                        ; GetRing+7A↓p
+BonusStage_InitialiseForCurrentLevel:                              ; CODE XREF: RunMain+138↑p
+                                        ; Trigger_OnRingCollected+7A↓p
 
 arg_0           =  4
 
@@ -24461,7 +24461,7 @@ arg_0           =  4
                 bra.s   loc_E1BA2
 ; ---------------------------------------------------------------------------
 
-loc_E1B78:                              ; CODE XREF: sub_E1B5A+5C↓j
+loc_E1B78:                              ; CODE XREF: BonusStage_InitialiseForCurrentLevel+5C↓j
                 tst.b   d3
                 beq.s   loc_E1B8E
                 pea     (off_C115C).l
@@ -24472,19 +24472,19 @@ loc_E1B78:                              ; CODE XREF: sub_E1B5A+5C↓j
                 bra.s   loc_E1B98
 ; ---------------------------------------------------------------------------
 
-loc_E1B8E:                              ; CODE XREF: sub_E1B5A+20↑j
+loc_E1B8E:                              ; CODE XREF: BonusStage_InitialiseForCurrentLevel+20↑j
                 move.l  a2,-(sp)
                 jsr     sub_E1F48(pc)
                 nop
                 addq.l  #4,sp
 
-loc_E1B98:                              ; CODE XREF: sub_E1B5A+32↑j
+loc_E1B98:                              ; CODE XREF: BonusStage_InitialiseForCurrentLevel+32↑j
                 move.b  d3,8(a2)
                 moveq   #$22,d0 ; '"'
                 adda.l  d0,a2
                 addq.w  #1,d2
 
-loc_E1BA2:                              ; CODE XREF: sub_E1B5A+1C↑j
+loc_E1BA2:                              ; CODE XREF: BonusStage_InitialiseForCurrentLevel+1C↑j
                 move.w  ($FF75B0).l,d0
                 movea.l #unk_C1520,a0
                 move.b  (a0,d0.w),d0
@@ -24493,13 +24493,13 @@ loc_E1BA2:                              ; CODE XREF: sub_E1B5A+1C↑j
                 bgt.s   loc_E1B78
                 movem.l (sp)+,d2-d3/a2
                 rts
-; End of function sub_E1B5A
+; End of function BonusStage_InitialiseForCurrentLevel
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-GetRing:                                ; CODE XREF: RunPlayerPinballPhysics+E4↑p
+Trigger_OnRingCollected:                                ; CODE XREF: RunPlayerPinballPhysics+E4↑p
                                         ; sub_E1D10+F2↓p
 
 arg_0           =  4
@@ -24537,7 +24537,7 @@ arg_0           =  4
                 cmp.b   $48(a2),d0
                 bne.s   loc_E1CA8
                 pea     (1).w
-                bsr.w   sub_E1B5A
+                bsr.w   BonusStage_InitialiseForCurrentLevel
                 jsr     OSD_ClearMessageQueue
                 pea     (aAllRingsCollec).l ; "ALL RINGS COLLECTED"
                 pea     (6).w
@@ -24561,11 +24561,11 @@ arg_0           =  4
                 move.w  #$212,$C(a2)
                 move.w  #$B4,($FFF1FA).l
 
-loc_E1CA8:                              ; CODE XREF: GetRing+28↑j
-                                        ; GetRing+74↑j
+loc_E1CA8:                              ; CODE XREF: Trigger_OnRingCollected+28↑j
+                                        ; Trigger_OnRingCollected+74↑j
                 movem.l (sp)+,d2/a2
                 rts
-; End of function GetRing
+; End of function Trigger_OnRingCollected
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -24716,7 +24716,7 @@ loc_E1DFA:                              ; CODE XREF: sub_E1D10+DC↑j
                 move.w  $A(a2),d0
                 ext.l   d0
                 move.l  d0,-(sp)
-                bsr.w   GetRing
+                bsr.w   Trigger_OnRingCollected
                 bra.w   loc_E1EB2
 ; ---------------------------------------------------------------------------
 
@@ -68009,7 +68009,7 @@ arg_8           =  $C
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FE758:                              ; CODE XREF: GetRing+4A↑p
+sub_FE758:                              ; CODE XREF: Trigger_OnRingCollected+4A↑p
 
 arg_2           =  6
 

@@ -1,0 +1,9 @@
+--- Sequencer Command Notes ---
+
+$11YY 00XX - Play GEMS audio -> Sequencer_CallGEMSFunction in jump table located at $000F459A
+YY -> Command
+    -> 00 -> Play Once
+    -> 01 -> Stop
+XX -> Audio bank target
+
+$0009B12C - 2 Longs for YPos and then XPos of sparkle stars that follow plane. Seems to affect spawning of all of them

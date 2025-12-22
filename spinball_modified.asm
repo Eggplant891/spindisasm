@@ -1589,7 +1589,7 @@ loc_D4322:                              ; CODE XREF: LoadLevelTileData+100↓j
 
 
 StartGame:                              ; CODE XREF: sub_D46FE+2A↓p
-                                        ; RunMainMenu:loc_D480A↓p
+                                        ; FrontendLoop:loc_D480A↓p
                 movem.l d2-d3/a2,-(sp)
                 pea     (off_98).w
                 movea.l #$FF5758,a2
@@ -1971,7 +1971,7 @@ loc_D46F8:                              ; CODE XREF: RunLevelIntro+64↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_D46FE:                              ; CODE XREF: RunMainMenu+3C↓p
+sub_D46FE:                              ; CODE XREF: FrontendLoop+3C↓p
                 movem.l d2-d6/a2-a4,-(sp)
                 movea.l #$FF573C,a3
                 movea.l #$FFF8D8,a4
@@ -2062,21 +2062,21 @@ loc_D47BC:                              ; CODE XREF: sub_D46FE+4E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-RunMainMenu:                              ; CODE XREF: RunMain:GAME_STATE_MAIN_MENU↓p
+FrontendLoop:                              ; CODE XREF: RunMain:GAME_STATE_MAIN_MENU↓p
                 move.l  d2,-(sp)
-                jsr     sub_F2554
+                jsr     IntroCutscene_SegaLogo
                 move.l  d0,d2
                 bra.s   loc_D47F2
 ; ---------------------------------------------------------------------------
 
-loc_D47EA:                              ; CODE XREF: RunMainMenu+28↓j
-                jsr     sub_FEF2A
+loc_D47EA:                              ; CODE XREF: FrontendLoop+28↓j
+                jsr     OptionsMenu_Run
                 moveq   #1,d2
 
-loc_D47F2:                              ; CODE XREF: RunMainMenu+A↑j
-                                        ; RunMainMenu+3A↓j ...
+loc_D47F2:                              ; CODE XREF: FrontendLoop+A↑j
+                                        ; FrontendLoop+3A↓j ...
                 move.l  d2,-(sp)
-                jsr     sub_F2E26
+                jsr     MainMenu_Run
                 addq.l  #4,sp
                 moveq   #1,d1
                 cmp.l   d1,d0
@@ -2087,27 +2087,27 @@ loc_D47F2:                              ; CODE XREF: RunMainMenu+A↑j
                 bra.s   loc_D4810
 ; ---------------------------------------------------------------------------
 
-loc_D480A:                              ; CODE XREF: RunMainMenu+22↑j
+loc_D480A:                              ; CODE XREF: FrontendLoop+22↑j
                 bsr.w   StartGame
                 bra.s   loc_D482C
                 ;jmp     BeginBonusModeFromTitleScreen
 ; ---------------------------------------------------------------------------
 
-loc_D4810:                              ; CODE XREF: RunMainMenu+2A↑j
-                jsr     sub_F2C82
+loc_D4810:                              ; CODE XREF: FrontendLoop+2A↑j
+                jsr     IntroCutscene_Prologue
                 move.l  d0,d2
                 bne.s   loc_D47F2
                 bsr.w   sub_D46FE
                 move.l  d0,d2
                 bne.s   loc_D47F2
-                jsr     sub_FF2A6
+                jsr     ResetGlobals
                 move.l  d0,d2
                 bne.s   loc_D47F2
 
-loc_D482C:                              ; CODE XREF: RunMainMenu+30↑j
+loc_D482C:                              ; CODE XREF: FrontendLoop+30↑j
                 move.l  (sp)+,d2
                 rts
-; End of function RunMainMenu
+; End of function FrontendLoop
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -2696,7 +2696,7 @@ loc_D4EA8:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
                 ext.w   d0
                 cmp.w   d2,d0
                 bgt.s   loc_D4E8C
-                jsr     sub_FF2A6
+                jsr     ResetGlobals
                 tst.b   d3
                 beq.s   loc_D4EC4
                 jsr     sub_FF1F0
@@ -3111,7 +3111,7 @@ GameState_JumpTable:
 ; ---------------------------------------------------------------------------
 
 GAME_STATE_MAIN_MENU:                              ; DATA XREF: RunMain:GameState_JumpTable↑o
-                bsr.w   RunMainMenu
+                bsr.w   FrontendLoop
                 bra.w   WaitForNextMode
 ; ---------------------------------------------------------------------------
 
@@ -20753,7 +20753,7 @@ loc_DF830:                              ; CODE XREF: sub_DF7A6+76↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_DF85A:                              ; CODE XREF: sub_FEF2A+1B2↓p
+sub_DF85A:                              ; CODE XREF: OptionsMenu_Run+1B2↓p
                                         ; sub_FF4B4+2E↓p ...
 
 arg_0           =  4
@@ -49288,7 +49288,7 @@ loc_F254A:                              ; CODE XREF: sub_F145E+202↑j
 
 ; Attributes: bp-based frame
 
-sub_F2554:                              ; CODE XREF: RunMainMenu+2↑p
+IntroCutscene_SegaLogo:                              ; CODE XREF: FrontendLoop+2↑p
 
 var_4           = -4
 
@@ -49340,7 +49340,7 @@ var_4           = -4
                 jsr     sub_F4ABA
                 jsr     GEMSStopAll
 
-loc_F2624:                              ; CODE XREF: sub_F2554+C2↑j
+loc_F2624:                              ; CODE XREF: IntroCutscene_SegaLogo+C2↑j
                 pea     (off_10).w
                 jsr     sub_F3362
                 jsr     TurnDisplayOff
@@ -49353,14 +49353,14 @@ loc_F2624:                              ; CODE XREF: sub_F2554+C2↑j
                 bra.s   loc_F264C
 ; ---------------------------------------------------------------------------
 
-loc_F264A:                              ; CODE XREF: sub_F2554+F0↑j
+loc_F264A:                              ; CODE XREF: IntroCutscene_SegaLogo+F0↑j
                 moveq   #0,d0
 
-loc_F264C:                              ; CODE XREF: sub_F2554+F4↑j
+loc_F264C:                              ; CODE XREF: IntroCutscene_SegaLogo+F4↑j
                 move.l  (sp)+,d2
                 unlk    a6
                 rts
-; End of function sub_F2554
+; End of function IntroCutscene_SegaLogo
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -49985,7 +49985,7 @@ loc_F2C58:                              ; CODE XREF: sub_F2C44+36↓j
 
 ; Attributes: bp-based frame
 
-sub_F2C82:                              ; CODE XREF: RunMainMenu:loc_D4810↑p
+IntroCutscene_Prologue:                              ; CODE XREF: FrontendLoop:loc_D4810↑p
 
 var_4           = -4
 
@@ -50065,7 +50065,7 @@ var_4           = -4
                 jsr     sub_F54F8
                 jsr     GEMSStopAll
 
-loc_F2DCC:                              ; CODE XREF: sub_F2C82+130↑j
+loc_F2DCC:                              ; CODE XREF: IntroCutscene_Prologue+130↑j
                 pea     ($1E).w
                 jsr     sub_F3362
                 jsr     TurnDisplayOff
@@ -50082,20 +50082,20 @@ loc_F2DCC:                              ; CODE XREF: sub_F2C82+130↑j
                 bra.s   loc_F2E0C
 ; ---------------------------------------------------------------------------
 
-loc_F2E0A:                              ; CODE XREF: sub_F2C82+182↑j
+loc_F2E0A:                              ; CODE XREF: IntroCutscene_Prologue+182↑j
                 moveq   #0,d0
 
-loc_F2E0C:                              ; CODE XREF: sub_F2C82+186↑j
+loc_F2E0C:                              ; CODE XREF: IntroCutscene_Prologue+186↑j
                 move.l  (sp)+,d2
                 unlk    a6
                 rts
-; End of function sub_F2C82
+; End of function IntroCutscene_Prologue
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F2E12:                              ; CODE XREF: sub_F2C82+128↑p
+sub_F2E12:                              ; CODE XREF: IntroCutscene_Prologue+128↑p
                 pea     ($F0).w
                 pea     (rom_intro_sequences_begin).l
                 jsr     sub_F4538
@@ -50108,7 +50108,7 @@ sub_F2E12:                              ; CODE XREF: sub_F2C82+128↑p
 
 ; Attributes: bp-based frame
 
-sub_F2E26:                              ; CODE XREF: RunMainMenu+16↑p
+MainMenu_Run:                              ; CODE XREF: FrontendLoop+16↑p
 
 var_14          = -$14
 var_8           = -8
@@ -50176,10 +50176,10 @@ arg_0           =  8
                 bra.s   loc_F2F2A
 ; ---------------------------------------------------------------------------
 
-loc_F2F24:                              ; CODE XREF: sub_F2E26+DE↑j
+loc_F2F24:                              ; CODE XREF: MainMenu_Run+DE↑j
                 move.l  #$80,d2
 
-loc_F2F2A:                              ; CODE XREF: sub_F2E26+FC↑j
+loc_F2F2A:                              ; CODE XREF: MainMenu_Run+FC↑j
                 jsr     WaitForVBlank
                 tst.l   d2
                 beq.s   loc_F2F5C
@@ -50193,7 +50193,7 @@ loc_F2F2A:                              ; CODE XREF: sub_F2E26+FC↑j
                 jsr     (a2)
                 lea     $10(sp),sp
 
-loc_F2F5C:                              ; CODE XREF: sub_F2E26+10C↑j
+loc_F2F5C:                              ; CODE XREF: MainMenu_Run+10C↑j
                 jsr     sub_F2F96(pc)
                 nop
                 move.l  d0,d2
@@ -50210,14 +50210,14 @@ loc_F2F5C:                              ; CODE XREF: sub_F2E26+10C↑j
                 movem.l var_14(a6),d2-d3/a2
                 unlk    a6
                 rts
-; End of function sub_F2E26
+; End of function MainMenu_Run
 
 
 ; =============== S U B R O U T I N E =======================================
 
 ; Attributes: bp-based frame
 
-sub_F2F96:                              ; CODE XREF: sub_F2E26:loc_F2F5C↑p
+sub_F2F96:                              ; CODE XREF: MainMenu_Run:loc_F2F5C↑p
 
 var_20          = -$20
 var_4           = -4
@@ -50481,8 +50481,8 @@ loc_F31D6:                              ; CODE XREF: sub_F3148+5A↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F31EA:                              ; CODE XREF: sub_F2554+12↑p
-                                        ; sub_F2554+E2↑p ...
+sub_F31EA:                              ; CODE XREF: IntroCutscene_SegaLogo+12↑p
+                                        ; IntroCutscene_SegaLogo+E2↑p ...
 
 arg_0           =  4
 
@@ -50505,8 +50505,8 @@ loc_F31F8:                              ; CODE XREF: sub_F31EA+A↑j
 
 ; Attributes: bp-based frame
 
-sub_F3200:                              ; CODE XREF: sub_F2554+88↑p
-                                        ; sub_F2554+A0↑p ...
+sub_F3200:                              ; CODE XREF: IntroCutscene_SegaLogo+88↑p
+                                        ; IntroCutscene_SegaLogo+A0↑p ...
 
 var_64          = -$64
 var_40          = -$40
@@ -50626,7 +50626,7 @@ loc_F333E:                              ; CODE XREF: sub_F3200+38↑j
 
 ; Attributes: bp-based frame
 
-sub_F3362:                              ; CODE XREF: sub_F2554+D4↑p
+sub_F3362:                              ; CODE XREF: IntroCutscene_SegaLogo+D4↑p
                                         ; sub_F2652:loc_F27BA↑p ...
 
 var_11C         = -$11C
@@ -50869,7 +50869,7 @@ loc_F35DE:                              ; CODE XREF: sub_F34AE+2E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F360E:                              ; CODE XREF: sub_F2C82+3A↑p
+sub_F360E:                              ; CODE XREF: IntroCutscene_Prologue+3A↑p
                 move.l  a2,-(sp)
                 movea.l #$FF58D4,a0
                 clr.w   ($FFF8CE).l
@@ -51136,7 +51136,7 @@ dword_F3822:    dc.l $1020102           ; DATA XREF: sub_F3810+C↑r
 ; =============== S U B R O U T I N E =======================================
 
 
-InitVDPForGame:                         ; CODE XREF: sub_F2554+1E↑p
+InitVDPForGame:                         ; CODE XREF: IntroCutscene_SegaLogo+1E↑p
                                         ; sub_F2652+2A↑p ...
                 move    #$2700,sr
                 move.l  d1,-(sp)
@@ -51214,7 +51214,7 @@ byte_F38C4:     dc.b %00000001          ; DATA XREF: sub_F3C06+12↓r
 ; =============== S U B R O U T I N E =======================================
 
 
-WaitForVBlank:                          ; CODE XREF: sub_F2554+18↑p
+WaitForVBlank:                          ; CODE XREF: IntroCutscene_SegaLogo+18↑p
                                         ; sub_F2652+24↑p ...
                 tst.b   ($FFF2C9).l
                 bne.s   WaitForVBlank
@@ -51226,7 +51226,7 @@ WaitForVBlank:                          ; CODE XREF: sub_F2554+18↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-TurnDisplayOn:                          ; CODE XREF: sub_F2554+8E↑p
+TurnDisplayOn:                          ; CODE XREF: IntroCutscene_SegaLogo+8E↑p
                                         ; sub_F2652+11C↑p ...
                 bsr.s   WaitForVBlank
                 move.b  MainVDPReg1Val(pc),d0
@@ -51242,7 +51242,7 @@ TurnDisplayOn:                          ; CODE XREF: sub_F2554+8E↑p
 ; =============== S U B R O U T I N E =======================================
 
 
-TurnDisplayOff:                         ; CODE XREF: sub_F2554+DA↑p
+TurnDisplayOff:                         ; CODE XREF: IntroCutscene_SegaLogo+DA↑p
                                         ; sub_F2652+176↑p ...
                 bsr.s   WaitForVBlank
                 move.b  MainVDPReg1Val(pc),d0
@@ -51464,8 +51464,8 @@ arg_0           =  4
 ; =============== S U B R O U T I N E =======================================
 
 
-ForceUnholdButton:                      ; CODE XREF: sub_F2554+AA↑p
-                                        ; sub_F2C82+122↑p ...
+ForceUnholdButton:                      ; CODE XREF: IntroCutscene_SegaLogo+AA↑p
+                                        ; IntroCutscene_Prologue+122↑p ...
 
 arg_0           =  4
 
@@ -51483,7 +51483,7 @@ arg_0           =  4
 ; palette[0] is the # of bytes; palette[1..palette[0]] is the actual palette.
 ; Attributes: bp-based frame
 
-LoadPalette:                            ; CODE XREF: sub_F2554+74↑p
+LoadPalette:                            ; CODE XREF: IntroCutscene_SegaLogo+74↑p
                                         ; sub_F2652+C6↑p ...
 
 lp_Palette      =  8
@@ -51608,7 +51608,7 @@ arg_4           =  8
 
 
 CRAMWriteOneTo:                         ; CODE XREF: sub_F2652+D6↑p
-                                        ; sub_F2C82+EC↑p ...
+                                        ; IntroCutscene_Prologue+EC↑p ...
 
 arg_0           =  4
 arg_4           =  8
@@ -51697,7 +51697,7 @@ loc_F3BA4:                              ; CODE XREF: sub_F3B3E+2A↑j
 
 ; Attributes: bp-based frame
 
-LoadUncOrComp2Tiles:                    ; CODE XREF: sub_F2554+48↑p
+LoadUncOrComp2Tiles:                    ; CODE XREF: IntroCutscene_SegaLogo+48↑p
                                         ; sub_F2652+36↑p ...
 
 arg_0           =  8
@@ -51741,7 +51741,7 @@ loc_F3BFA:                              ; CODE XREF: LoadUncOrComp2Tiles+3A↑j
 
 ; Attributes: bp-based frame
 
-sub_F3C06:                              ; CODE XREF: sub_F2554+68↑p
+sub_F3C06:                              ; CODE XREF: IntroCutscene_SegaLogo+68↑p
                                         ; sub_F2652+96↑p ...
 
 arg_0           =  8
@@ -52057,7 +52057,7 @@ loc_F3E96:                              ; CODE XREF: sub_F3E48+40↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-VDPIntControl:                          ; CODE XREF: sub_F2554+28↑p
+VDPIntControl:                          ; CODE XREF: IntroCutscene_SegaLogo+28↑p
                                         ; sub_F2652+E0↑p ...
 
 arg_0           =  4
@@ -52077,7 +52077,7 @@ arg_4           =  8
 
 ; Attributes: bp-based frame
 
-sub_F3EB8:                              ; CODE XREF: sub_F2554+32↑p
+sub_F3EB8:                              ; CODE XREF: IntroCutscene_SegaLogo+32↑p
                                         ; sub_F2652+F2↑p ...
 
 arg_0           =  8
@@ -52122,7 +52122,7 @@ loc_F3EFC:                              ; CODE XREF: sub_F3EB8+3C↑j
 
 ; Attributes: bp-based frame
 
-sub_F3F1A:                              ; CODE XREF: sub_F2554+3C↑p
+sub_F3F1A:                              ; CODE XREF: IntroCutscene_SegaLogo+3C↑p
                                         ; sub_F2652+FA↑p ...
 
 arg_0           =  8
@@ -52689,8 +52689,8 @@ loc_F43D8:                              ; CODE XREF: sub_F43BA+E↑j
 ; End of function sub_F43BA
 
 ; ---------------------------------------------------------------------------
-byte_F43DC:     dc.b 0                  ; DATA XREF: sub_F2C82+F2↑o
-                                        ; sub_F2C82+166↑o
+byte_F43DC:     dc.b 0                  ; DATA XREF: IntroCutscene_Prologue+F2↑o
+                                        ; IntroCutscene_Prologue+166↑o
                 dc.b $FF, $F8, $76
 
 ; =============== S U B R O U T I N E =======================================
@@ -52860,7 +52860,7 @@ loc_F4520:                              ; CODE XREF: sub_F4492+64↑j
 
 ; Attributes: bp-based frame
 
-sub_F4538:                              ; CODE XREF: sub_F2554+BA↑p
+sub_F4538:                              ; CODE XREF: IntroCutscene_SegaLogo+BA↑p
                                         ; sub_F2E12+A↑p ...
 
 arg_0           =  8
@@ -53483,7 +53483,7 @@ loc_F4A18:                              ; CODE XREF: sub_F49B8+F4↓j
 
 
 ; =============== S U B R O U T I N E =======================================
-sub_F4ABA:                              ; CODE XREF: sub_F2554+C4↑p
+sub_F4ABA:                              ; CODE XREF: IntroCutscene_SegaLogo+C4↑p
                                         ; DATA XREF: ROM:0009B220↑o
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
@@ -53709,7 +53709,7 @@ loc_F4CB4:                              ; CODE XREF: sub_F4C36+C2↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F4D00:                              ; CODE XREF: sub_F2C82+138↑p
+sub_F4D00:                              ; CODE XREF: IntroCutscene_Prologue+138↑p
                                         ; DATA XREF: ROM:0009ADA8↑o
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
@@ -53903,7 +53903,7 @@ loc_F4EAC:                              ; CODE XREF: sub_F4DFE+F6↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F4F00:                              ; CODE XREF: sub_F2C82+132↑p
+sub_F4F00:                              ; CODE XREF: IntroCutscene_Prologue+132↑p
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
                 movea.l #$FF0336,a2
@@ -54513,7 +54513,7 @@ loc_F54CE:                              ; CODE XREF: sub_F52EC+B6↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F54F8:                              ; CODE XREF: sub_F2C82+13E↑p
+sub_F54F8:                              ; CODE XREF: IntroCutscene_Prologue+13E↑p
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
                 movea.l #$FF02C8,a2
@@ -55914,7 +55914,7 @@ GEMSResumeAll:                          ; CODE XREF: RunMain+DE↑p
 
 
 GEMSStopAll:                            ; CODE XREF: GEMS_MuteAllSounds↑p
-                                        ; sub_F2554+CA↑p ...
+                                        ; IntroCutscene_SegaLogo+CA↑p ...
                 jsr     GEMS_stdstartup(pc)
                 moveq   #22,d0
                 jsr     GEMS_stdcmdwrite(pc)
@@ -68668,7 +68668,7 @@ loc_FED64:                              ; CODE XREF: sub_FED1C+5A↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FED7E:                              ; CODE XREF: sub_FEF2A+1E↓p
+sub_FED7E:                              ; CODE XREF: OptionsMenu_Run+1E↓p
                 movem.l d2-d4/a2-a5,-(sp)
                 movea.l #$FF035E,a5
                 jsr     GEMS_MuteAllSounds
@@ -68822,7 +68822,7 @@ loc_FEF0E:                              ; CODE XREF: sub_FED7E+180↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FEF2A:                              ; CODE XREF: RunMainMenu:loc_D47EA↑p
+OptionsMenu_Run:                              ; CODE XREF: FrontendLoop:loc_D47EA↑p
                 movem.l d2-d3/a2-a5,-(sp)
                 movea.l #$FF573C,a3
                 movea.l #$FF035E,a4
@@ -68834,7 +68834,7 @@ sub_FEF2A:                              ; CODE XREF: RunMainMenu:loc_D47EA↑p
                 bra.w   loc_FF0B2
 ; ---------------------------------------------------------------------------
 
-loc_FEF54:                              ; CODE XREF: sub_FEF2A+192↓j
+loc_FEF54:                              ; CODE XREF: OptionsMenu_Run+192↓j
                 move.w  (a3),($FF74DC).l
                 moveq   #0,d0
                 move.b  ($FF0005).l,d0
@@ -68854,12 +68854,12 @@ loc_FEF54:                              ; CODE XREF: sub_FEF2A+192↓j
                 movea.l ($FF035A).l,a0
                 addi.w  #$18,$A(a0)
 
-loc_FEF9C:                              ; CODE XREF: sub_FEF2A+62↑j
+loc_FEF9C:                              ; CODE XREF: OptionsMenu_Run+62↑j
                 pea     ($7A).w
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_FEFA8:                              ; CODE XREF: sub_FEF2A+5C↑j
+loc_FEFA8:                              ; CODE XREF: OptionsMenu_Run+5C↑j
                 move.w  (a3),d0
                 andi.w  #$100,d0
                 beq.s   loc_FEFCE
@@ -68869,12 +68869,12 @@ loc_FEFA8:                              ; CODE XREF: sub_FEF2A+5C↑j
                 movea.l ($FF035A).l,a0
                 subi.w  #$18,$A(a0)
 
-loc_FEFC2:                              ; CODE XREF: sub_FEF2A+88↑j
+loc_FEFC2:                              ; CODE XREF: OptionsMenu_Run+88↑j
                 pea     ($7A).w
                 jsr     PlaySong
                 addq.l  #4,sp
 
-loc_FEFCE:                              ; CODE XREF: sub_FEF2A+84↑j
+loc_FEFCE:                              ; CODE XREF: OptionsMenu_Run+84↑j
 ;PollForPlayMusicBtn:
 ;                move.w  (a3),d0 ; (a3)/d0 -> Joystick state
 ;                andi.w  #aJoystickButtonMask_C,d0
@@ -68905,7 +68905,7 @@ loc_FEFCE:                              ; CODE XREF: sub_FEF2A+84↑j
                 bra.s   loc_FF014
 ; ---------------------------------------------------------------------------
 
-loc_FEFFC:                              ; CODE XREF: sub_FEF2A+B2↑j
+loc_FEFFC:                              ; CODE XREF: OptionsMenu_Run+B2↑j
                 lea     (a4,d2.w),a0
 
 loc_FF000:                              ; DATA XREF: ROM:00010EAC↑o
@@ -68924,8 +68924,8 @@ loc_FF000:                              ; DATA XREF: ROM:00010EAC↑o
                 blt.s   loc_FF014
                 clr.b   (a2)
 
-loc_FF014:                              ; CODE XREF: sub_FEF2A+BA↑j
-                                        ; sub_FEF2A+D0↑j ...
+loc_FF014:                              ; CODE XREF: OptionsMenu_Run+BA↑j
+                                        ; OptionsMenu_Run+D0↑j ...
 ;                move.b  d4,$FF0A00
                 move.w  d2,d0
                 move.l  d0,-(sp)
@@ -68943,7 +68943,7 @@ loc_FF014:                              ; CODE XREF: sub_FEF2A+BA↑j
 ;                move.l  d4,-(sp)
 ;                jsr     GEMSStartSong
 ;                lea     ($4,sp),sp
-CheckCheatCode:                         ; CODE XREF: sub_FEF2A+AA↑j
+CheckCheatCode:                         ; CODE XREF: OptionsMenu_Run+AA↑j
                 move.w  (a3),d0
                 andi.w  #$FF00,d0
                 beq.w   loc_FF0B2
@@ -68967,11 +68967,11 @@ CheckCheatCode:                         ; CODE XREF: sub_FEF2A+AA↑j
                 bra.s   CreditsCheatCode
 ; ---------------------------------------------------------------------------
 
-ResetLevelSelectCheatCounter:           ; CODE XREF: sub_FEF2A+126↑j
+ResetLevelSelectCheatCounter:           ; CODE XREF: OptionsMenu_Run+126↑j
                 clr.b   ($FF5750).l
 
-CreditsCheatCode:                       ; CODE XREF: sub_FEF2A+136↑j
-                                        ; sub_FEF2A+14C↑j
+CreditsCheatCode:                       ; CODE XREF: OptionsMenu_Run+136↑j
+                                        ; OptionsMenu_Run+14C↑j
                 move.b  (a5),d0
                 ext.w   d0
                 add.w   d0,d0
@@ -68992,16 +68992,16 @@ CreditsCheatCode:                       ; CODE XREF: sub_FEF2A+136↑j
                 bra.s   loc_FF0C0
 ; ---------------------------------------------------------------------------
 
-loc_FF0B0:                              ; CODE XREF: sub_FEF2A+16C↑j
+loc_FF0B0:                              ; CODE XREF: OptionsMenu_Run+16C↑j
                 clr.b   (a5)
 
-loc_FF0B2:                              ; CODE XREF: sub_FEF2A+26↑j
-                                        ; sub_FEF2A+106↑j ...
+loc_FF0B2:                              ; CODE XREF: OptionsMenu_Run+26↑j
+                                        ; OptionsMenu_Run+106↑j ...
                 move.b  ($FF0005).l,d0
                 btst    #7,d0
                 beq.w   loc_FEF54
 
-loc_FF0C0:                              ; CODE XREF: sub_FEF2A+184↑j
+loc_FF0C0:                              ; CODE XREF: OptionsMenu_Run+184↑j
                 move.w  ($FF0362).l,d2
                 lsl.w   #7,d2
                 addi.w  #$A,d2
@@ -69046,10 +69046,10 @@ loc_FF0C0:                              ; CODE XREF: sub_FEF2A+184↑j
                 bra.s   loc_FF13C
 ; ---------------------------------------------------------------------------
 
-loc_FF13A:                              ; CODE XREF: sub_FEF2A+20A↑j
+loc_FF13A:                              ; CODE XREF: OptionsMenu_Run+20A↑j
                 moveq   #$E,d0
 
-loc_FF13C:                              ; CODE XREF: sub_FEF2A+20E↑j
+loc_FF13C:                              ; CODE XREF: OptionsMenu_Run+20E↑j
                 move.w  d0,($FFF8D8).l
                 move.b  2(a4),d0
                 ext.w   d0
@@ -69064,11 +69064,11 @@ loc_FF13C:                              ; CODE XREF: sub_FEF2A+20E↑j
                 jsr     sub_FF1F0(pc)
                 nop
 
-loc_FF168:                              ; CODE XREF: sub_FEF2A+236↑j
+loc_FF168:                              ; CODE XREF: OptionsMenu_Run+236↑j
                 clr.b   ($FF3F3A).l
                 movem.l (sp)+,d2-d3/a2-a5
                 rts
-; End of function sub_FEF2A
+; End of function OptionsMenu_Run
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -69111,7 +69111,7 @@ sub_FF174:                              ; CODE XREF: sub_FF1F0+12↓p
 
 
 sub_FF1F0:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+5DC↑p
-                                        ; sub_FEF2A+238↑p
+                                        ; OptionsMenu_Run+238↑p
                 movem.l d2-d4/a2,-(sp)
                 movea.l #$FF573C,a2
                 move.b  #1,($FF3F3A).l
@@ -69190,7 +69190,7 @@ loc_FF288:                              ; CODE XREF: sub_FF1F0+5E↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FF2A6:                              ; CODE XREF: RunMainMenu+44↑p
+ResetGlobals:                              ; CODE XREF: FrontendLoop+44↑p
                                         ; RunUpdate_TallyScoreAndEndLevel+5D2↑p
                 movem.l d2/a2-a3,-(sp)
                 movea.l #$FF573C,a3
@@ -69223,7 +69223,7 @@ sub_FF2A6:                              ; CODE XREF: RunMainMenu+44↑p
                 bra.s   loc_FF360
 ; ---------------------------------------------------------------------------
 
-loc_FF32C:                              ; CODE XREF: sub_FF2A6+C0↓j
+loc_FF32C:                              ; CODE XREF: ResetGlobals+C0↓j
                 move.w  (a3),($FF74DC).l
                 moveq   #0,d0
                 move.b  ($FF0005).l,d0
@@ -69238,12 +69238,12 @@ loc_FF32C:                              ; CODE XREF: sub_FF2A6+C0↓j
                 bne.s   loc_FF368
                 jsr     WaitForFF0000
 
-loc_FF360:                              ; CODE XREF: sub_FF2A6+84↑j
+loc_FF360:                              ; CODE XREF: ResetGlobals+84↑j
                 addq.w  #1,d2
                 cmpi.w  #$190,d2
                 ble.s   loc_FF32C
 
-loc_FF368:                              ; CODE XREF: sub_FF2A6+B2↑j
+loc_FF368:                              ; CODE XREF: ResetGlobals+B2↑j
                 pea     (1).w
                 jsr     sub_FF834(pc)
                 nop
@@ -69257,13 +69257,13 @@ loc_FF368:                              ; CODE XREF: sub_FF2A6+B2↑j
                 bra.s   loc_FF390
 ; ---------------------------------------------------------------------------
 
-loc_FF38E:                              ; CODE XREF: sub_FF2A6+E2↑j
+loc_FF38E:                              ; CODE XREF: ResetGlobals+E2↑j
                 moveq   #0,d0
 
-loc_FF390:                              ; CODE XREF: sub_FF2A6+E6↑j
+loc_FF390:                              ; CODE XREF: ResetGlobals+E6↑j
                 movem.l (sp)+,d2/a2-a3
                 rts
-; End of function sub_FF2A6
+; End of function ResetGlobals
 
 
 ; =============== S U B R O U T I N E =======================================
@@ -69388,7 +69388,7 @@ loc_FF464:                              ; CODE XREF: sub_FF446+3A↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_FF4B4:                              ; CODE XREF: sub_FEF2A+EE↑p
+sub_FF4B4:                              ; CODE XREF: OptionsMenu_Run+EE↑p
 
 arg_0           =  4
 
@@ -69622,7 +69622,7 @@ loc_FF69A:                              ; CODE XREF: sub_FF64A+34↑j
 
 ; Attributes: bp-based frame
 
-sub_FF6B4:                              ; CODE XREF: sub_FF2A6+7C↑p
+sub_FF6B4:                              ; CODE XREF: ResetGlobals+7C↑p
 
 var_28          = -$28
 var_20          = -$20
@@ -69779,7 +69779,7 @@ loc_FF7FE:                              ; CODE XREF: sub_FF7F0+18↓j
 
 
 sub_FF834:                              ; CODE XREF: sub_FED7E+19E↑p
-                                        ; sub_FEF2A+1E8↑p ...
+                                        ; OptionsMenu_Run+1E8↑p ...
 
 arg_0           =  4
 
@@ -70215,11 +70215,11 @@ sprintfDoInt:                           ; CODE XREF: sprintf+3A↑p
 ; End of function sprintfDoInt
 
 ; ---------------------------------------------------------------------------
-dword_FFAB4:    dc.l 0                  ; DATA XREF: sub_F2554+6↑r
+dword_FFAB4:    dc.l 0                  ; DATA XREF: IntroCutscene_SegaLogo+6↑r
 dword_FFAB8:    dc.l $50                ; DATA XREF: sub_F2652+C↑r
-dword_FFABC:    dc.l 0                  ; DATA XREF: sub_F2C82+6↑r
-dword_FFAC0:    dc.l 0                  ; DATA XREF: sub_F2E26+E↑r
-dword_FFAC4:    dc.l 0                  ; DATA XREF: sub_F2E26+16↑r
+dword_FFABC:    dc.l 0                  ; DATA XREF: IntroCutscene_Prologue+6↑r
+dword_FFAC0:    dc.l 0                  ; DATA XREF: MainMenu_Run+E↑r
+dword_FFAC4:    dc.l 0                  ; DATA XREF: MainMenu_Run+16↑r
 dword_FFAC8:    dc.l 0                  ; DATA XREF: sub_F5B9E+6↑r
 dword_FFACC:    dc.l 0                  ; DATA XREF: sub_F5B9E+E↑r
                 dcb.l $118,$FFFFFFFF
@@ -70398,7 +70398,7 @@ PrintSoundTest:
                 rts
 
 EndBonusMode:
-                jmp     RunMainMenu
+                jmp     FrontendLoop
 
 BeginBonusModeFromTitleScreen:
                 move.l  #1,($FFE000)
@@ -70434,7 +70434,7 @@ BeginBonus:
                 bne.b   GoNextBonus
                 bra.b   EndBonusMode
                 ;jsr     sub_FED7E
-                ;jmp     sub_FEF2A
+                ;jmp     OptionsMenu_Run
 
 bonus_stage_fade_up:
                 move.l  #$FF4180,($FF41A4).l

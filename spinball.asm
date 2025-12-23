@@ -2598,7 +2598,7 @@ loc_D4DB6:                              ; DATA XREF: RunUpdate_TallyScoreAndEndL
                 cmpi.w  #3,$30(a2)
                 bne.s   loc_D4DFC
                 pea     (1).w
-                jsr     sub_F2652
+                jsr     Cutscene_MountMobius
                 addq.l  #4,sp
 
 loc_D4DFC:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+50C↑j
@@ -2618,7 +2618,7 @@ loc_D4E14:                              ; CODE XREF: RunUpdate_TallyScoreAndEndL
 ; ---------------------------------------------------------------------------
 
 loc_D4E1C:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+4F8↑j
-                jsr     sub_F5B9E
+                jsr     Cutscene_EndingSequence
                 clr.b   $46(a2)
                 clr.b   $49(a2)
 
@@ -49334,8 +49334,8 @@ loc_F264C:                              ; CODE XREF: IntroCutscene_SegaLogo+F4�
 
 ; Attributes: bp-based frame
 
-sub_F2652:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+512↑p
-                                        ; sub_F5B9E+9E↓p
+Cutscene_MountMobius:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+512↑p
+                                        ; Cutscene_EndingSequence+9E↓p
 
 var_10          = -$10
 var_4           = -4
@@ -49422,7 +49422,7 @@ arg_3           =  $B
                 bra.s   loc_F27C2
 ; ---------------------------------------------------------------------------
 
-loc_F2794:                              ; CODE XREF: sub_F2652+138↑j
+loc_F2794:                              ; CODE XREF: Cutscene_MountMobius+138↑j
                 move.l  a3,-(sp)
                 move.l  a2,-(sp)
                 jsr     sub_F2808(pc)
@@ -49433,7 +49433,7 @@ loc_F2794:                              ; CODE XREF: sub_F2652+138↑j
                 bra.s   loc_F27BA
 ; ---------------------------------------------------------------------------
 
-loc_F27A8:                              ; CODE XREF: sub_F2652+13E↑j
+loc_F27A8:                              ; CODE XREF: Cutscene_MountMobius+13E↑j
                 move.l  a3,-(sp)
                 move.l  a2,-(sp)
                 jsr     sub_F2946(pc)
@@ -49442,11 +49442,11 @@ loc_F27A8:                              ; CODE XREF: sub_F2652+13E↑j
                 move.l  d0,d2
                 pea     (off_20).w
 
-loc_F27BA:                              ; CODE XREF: sub_F2652+154↑j
+loc_F27BA:                              ; CODE XREF: Cutscene_MountMobius+154↑j
                 jsr     sub_F3362
                 addq.l  #4,sp
 
-loc_F27C2:                              ; CODE XREF: sub_F2652+140↑j
+loc_F27C2:                              ; CODE XREF: Cutscene_MountMobius+140↑j
                 jsr     GEMSStopAll
                 jsr     TurnDisplayOff
                 pea     (word_F448E).l
@@ -49462,21 +49462,21 @@ loc_F27C2:                              ; CODE XREF: sub_F2652+140↑j
                 bra.s   loc_F27FE
 ; ---------------------------------------------------------------------------
 
-loc_F27FC:                              ; CODE XREF: sub_F2652+1A4↑j
+loc_F27FC:                              ; CODE XREF: Cutscene_MountMobius+1A4↑j
                 moveq   #0,d0
 
-loc_F27FE:                              ; CODE XREF: sub_F2652+1A8↑j
+loc_F27FE:                              ; CODE XREF: Cutscene_MountMobius+1A8↑j
                 movem.l var_10(a6),d2/a2-a3
                 unlk    a6
                 rts
-; End of function sub_F2652
+; End of function Cutscene_MountMobius
 
 
 ; =============== S U B R O U T I N E =======================================
 
 ; Attributes: bp-based frame
 
-sub_F2808:                              ; CODE XREF: sub_F2652+146↑p
+sub_F2808:                              ; CODE XREF: Cutscene_MountMobius+146↑p
 
 var_54          = -$54
 var_30          = -$30
@@ -49615,7 +49615,7 @@ loc_F2912:                              ; CODE XREF: sub_F2808+CC↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F2946:                              ; CODE XREF: sub_F2652+15A↑p
+sub_F2946:                              ; CODE XREF: Cutscene_MountMobius+15A↑p
 
 arg_0           =  4
 arg_4           =  8
@@ -50594,7 +50594,7 @@ loc_F333E:                              ; CODE XREF: sub_F3200+38↑j
 ; Attributes: bp-based frame
 
 sub_F3362:                              ; CODE XREF: IntroCutscene_SegaLogo+D4↑p
-                                        ; sub_F2652:loc_F27BA↑p ...
+                                        ; Cutscene_MountMobius:loc_F27BA↑p ...
 
 var_11C         = -$11C
 var_100         = -$100
@@ -51104,7 +51104,7 @@ dword_F3822:    dc.l $1020102           ; DATA XREF: sub_F3810+C↑r
 
 
 InitVDPForGame:                         ; CODE XREF: IntroCutscene_SegaLogo+1E↑p
-                                        ; sub_F2652+2A↑p ...
+                                        ; Cutscene_MountMobius+2A↑p ...
                 move    #$2700,sr
                 move.l  d1,-(sp)
                 lea     MainVDPRegs(pc),a0
@@ -51182,7 +51182,7 @@ byte_F38C4:     dc.b %00000001          ; DATA XREF: sub_F3C06+12↓r
 
 
 WaitForVBlank:                          ; CODE XREF: IntroCutscene_SegaLogo+18↑p
-                                        ; sub_F2652+24↑p ...
+                                        ; Cutscene_MountMobius+24↑p ...
                 tst.b   ($FFF2C9).l
                 bne.s   WaitForVBlank
                 not.b   ($FFF2C9).l
@@ -51194,7 +51194,7 @@ WaitForVBlank:                          ; CODE XREF: IntroCutscene_SegaLogo+18�
 
 
 TurnDisplayOn:                          ; CODE XREF: IntroCutscene_SegaLogo+8E↑p
-                                        ; sub_F2652+11C↑p ...
+                                        ; Cutscene_MountMobius+11C↑p ...
                 bsr.s   WaitForVBlank
                 move.b  MainVDPReg1Val(pc),d0
                 bset    #6,d0
@@ -51210,7 +51210,7 @@ TurnDisplayOn:                          ; CODE XREF: IntroCutscene_SegaLogo+8E�
 
 
 TurnDisplayOff:                         ; CODE XREF: IntroCutscene_SegaLogo+DA↑p
-                                        ; sub_F2652+176↑p ...
+                                        ; Cutscene_MountMobius+176↑p ...
                 bsr.s   WaitForVBlank
                 move.b  MainVDPReg1Val(pc),d0
                 bclr    #6,d0
@@ -51451,7 +51451,7 @@ arg_0           =  4
 ; Attributes: bp-based frame
 
 LoadPalette:                            ; CODE XREF: IntroCutscene_SegaLogo+74↑p
-                                        ; sub_F2652+C6↑p ...
+                                        ; Cutscene_MountMobius+C6↑p ...
 
 lp_Palette      =  8
 
@@ -51574,7 +51574,7 @@ arg_4           =  8
 ; =============== S U B R O U T I N E =======================================
 
 
-CRAMWriteOneTo:                         ; CODE XREF: sub_F2652+D6↑p
+CRAMWriteOneTo:                         ; CODE XREF: Cutscene_MountMobius+D6↑p
                                         ; IntroCutscene_Prologue+EC↑p ...
 
 arg_0           =  4
@@ -51665,7 +51665,7 @@ loc_F3BA4:                              ; CODE XREF: sub_F3B3E+2A↑j
 ; Attributes: bp-based frame
 
 LoadUncOrComp2Tiles:                    ; CODE XREF: IntroCutscene_SegaLogo+48↑p
-                                        ; sub_F2652+36↑p ...
+                                        ; Cutscene_MountMobius+36↑p ...
 
 arg_0           =  8
 
@@ -51709,7 +51709,7 @@ loc_F3BFA:                              ; CODE XREF: LoadUncOrComp2Tiles+3A↑j
 ; Attributes: bp-based frame
 
 sub_F3C06:                              ; CODE XREF: IntroCutscene_SegaLogo+68↑p
-                                        ; sub_F2652+96↑p ...
+                                        ; Cutscene_MountMobius+96↑p ...
 
 arg_0           =  8
 arg_4           =  $C
@@ -51768,8 +51768,8 @@ loc_F3C7A:                              ; CODE XREF: sub_F3C06+10↑j
 
 ; Attributes: bp-based frame
 
-sub_F3C82:                              ; CODE XREF: sub_F2652+56↑p
-                                        ; sub_F2652+76↑p ...
+sub_F3C82:                              ; CODE XREF: Cutscene_MountMobius+56↑p
+                                        ; Cutscene_MountMobius+76↑p ...
 
 arg_0           =  8
 arg_4           =  $C
@@ -52025,7 +52025,7 @@ loc_F3E96:                              ; CODE XREF: sub_F3E48+40↑j
 
 
 VDPIntControl:                          ; CODE XREF: IntroCutscene_SegaLogo+28↑p
-                                        ; sub_F2652+E0↑p ...
+                                        ; Cutscene_MountMobius+E0↑p ...
 
 arg_0           =  4
 arg_4           =  8
@@ -52045,7 +52045,7 @@ arg_4           =  8
 ; Attributes: bp-based frame
 
 sub_F3EB8:                              ; CODE XREF: IntroCutscene_SegaLogo+32↑p
-                                        ; sub_F2652+F2↑p ...
+                                        ; Cutscene_MountMobius+F2↑p ...
 
 arg_0           =  8
 
@@ -52090,7 +52090,7 @@ loc_F3EFC:                              ; CODE XREF: sub_F3EB8+3C↑j
 ; Attributes: bp-based frame
 
 sub_F3F1A:                              ; CODE XREF: IntroCutscene_SegaLogo+3C↑p
-                                        ; sub_F2652+FA↑p ...
+                                        ; Cutscene_MountMobius+FA↑p ...
 
 arg_0           =  8
 
@@ -52594,8 +52594,8 @@ loc_F4388:                              ; CODE XREF: sub_F4370+20↓j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F4396:                              ; CODE XREF: sub_F2652+106↑p
-                                        ; sub_F2652+112↑p ...
+sub_F4396:                              ; CODE XREF: Cutscene_MountMobius+106↑p
+                                        ; Cutscene_MountMobius+112↑p ...
 
 arg_0           =  4
 
@@ -52627,8 +52627,8 @@ loc_F43B6:                              ; CODE XREF: sub_F4396+12↑j
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F43BA:                              ; CODE XREF: sub_F2652+182↑p
-                                        ; sub_F2652+18E↑p ...
+sub_F43BA:                              ; CODE XREF: Cutscene_MountMobius+182↑p
+                                        ; Cutscene_MountMobius+18E↑p ...
 
 arg_0           =  4
 
@@ -52698,8 +52698,8 @@ loc_F43EE:                              ; CODE XREF: sub_F43E0+A↑j
 ; End of function sub_F43E0
 
 ; ---------------------------------------------------------------------------
-byte_F442C:     dc.b 0                  ; DATA XREF: sub_F2652+10C↑o
-                                        ; sub_F2652+188↑o ...
+byte_F442C:     dc.b 0                  ; DATA XREF: Cutscene_MountMobius+10C↑o
+                                        ; Cutscene_MountMobius+188↑o ...
                 dc.b $FF, $F8, $76
 
 ; =============== S U B R O U T I N E =======================================
@@ -52747,8 +52747,8 @@ loc_F4476:                              ; CODE XREF: sub_F4430+30↑j
 ; End of function sub_F4430
 
 ; ---------------------------------------------------------------------------
-word_F448E:     dc.w $FF                ; DATA XREF: sub_F2652+100↑o
-                                        ; sub_F2652+17C↑o ...
+word_F448E:     dc.w $FF                ; DATA XREF: Cutscene_MountMobius+100↑o
+                                        ; Cutscene_MountMobius+17C↑o ...
                 dc.b $F8, $7A
 
 ; =============== S U B R O U T I N E =======================================
@@ -55165,7 +55165,7 @@ loc_F5B7A:                              ; CODE XREF: DoLoadCompressed2Tiles+F8�
 
 ; Attributes: bp-based frame
 
-sub_F5B9E:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel:loc_D4E1C↑p
+Cutscene_EndingSequence:                              ; CODE XREF: RunUpdate_TallyScoreAndEndLevel:loc_D4E1C↑p
 
 var_C           = -$C
 var_8           = -8
@@ -55207,23 +55207,23 @@ var_4           = -4
                 tst.l   d2
                 bne.s   loc_F5C46
                 pea     (2).w
-                jsr     sub_F2652
+                jsr     Cutscene_MountMobius
                 addq.l  #4,sp
                 bra.s   loc_F5C52
 ; ---------------------------------------------------------------------------
 
-loc_F5C46:                              ; CODE XREF: sub_F5B9E+98↑j
+loc_F5C46:                              ; CODE XREF: Cutscene_EndingSequence+98↑j
                 btst    #7,d2
                 beq.s   loc_F5C50
                 moveq   #1,d0
                 bra.s   loc_F5C52
 ; ---------------------------------------------------------------------------
 
-loc_F5C50:                              ; CODE XREF: sub_F5B9E+AC↑j
+loc_F5C50:                              ; CODE XREF: Cutscene_EndingSequence+AC↑j
                 moveq   #0,d0
 
-loc_F5C52:                              ; CODE XREF: sub_F5B9E+A6↑j
-                                        ; sub_F5B9E+B0↑j
+loc_F5C52:                              ; CODE XREF: Cutscene_EndingSequence+A6↑j
+                                        ; Cutscene_EndingSequence+B0↑j
                 move.l  d0,d2
                 clr.l   -(sp)
                 jsr     sub_F31EA
@@ -55231,13 +55231,13 @@ loc_F5C52:                              ; CODE XREF: sub_F5B9E+A6↑j
                 move.l  var_C(a6),d2
                 unlk    a6
                 rts
-; End of function sub_F5B9E
+; End of function Cutscene_EndingSequence
 
 
 ; =============== S U B R O U T I N E =======================================
 
 
-sub_F5C66:                              ; CODE XREF: sub_F5B9E+88↑p
+sub_F5C66:                              ; CODE XREF: Cutscene_EndingSequence+88↑p
                 move.l  d2,-(sp)
                 jsr     WaitForVBlank
                 jsr     sub_F5C98(pc)
@@ -70128,12 +70128,12 @@ sprintfDoInt:                           ; CODE XREF: sprintf+3A↑p
 
 ; ---------------------------------------------------------------------------
 dword_FFAB4:    dc.l 0                  ; DATA XREF: IntroCutscene_SegaLogo+6↑r
-dword_FFAB8:    dc.l $50                ; DATA XREF: sub_F2652+C↑r
+dword_FFAB8:    dc.l $50                ; DATA XREF: Cutscene_MountMobius+C↑r
 dword_FFABC:    dc.l 0                  ; DATA XREF: IntroCutscene_Prologue+6↑r
 dword_FFAC0:    dc.l 0                  ; DATA XREF: MainMenu_Run+E↑r
 dword_FFAC4:    dc.l 0                  ; DATA XREF: MainMenu_Run+16↑r
-dword_FFAC8:    dc.l 0                  ; DATA XREF: sub_F5B9E+6↑r
-dword_FFACC:    dc.l 0                  ; DATA XREF: sub_F5B9E+E↑r
+dword_FFAC8:    dc.l 0                  ; DATA XREF: Cutscene_EndingSequence+6↑r
+dword_FFACC:    dc.l 0                  ; DATA XREF: Cutscene_EndingSequence+E↑r
                 dcb.l $118,$FFFFFFFF
                 dcb.b 3,$FF
 byte_FFF33:     dc.b $FF                ; DATA XREF: ROM:0003602C↑o

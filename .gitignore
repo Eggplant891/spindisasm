@@ -8,3 +8,6 @@ errors*\.txt
 /asm68k\.exe
 ghidra/*
 !ghidra/*.gar
+*.mdp
+*.profile
+*.orig

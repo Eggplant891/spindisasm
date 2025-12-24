@@ -55597,7 +55597,6 @@ loc_F5F18:                              ; CODE XREF: sub_F5E0E+12C↓j
 
 ; =============== S U B R O U T I N E =======================================
 
-
 sub_F5F82:                              ; CODE XREF: sub_F5C66+20↑p
                 movem.l d2/a2,-(sp)
                 moveq   #0,d2
@@ -55615,496 +55614,7 @@ loc_F5F8E:                              ; CODE XREF: sub_F5F82+1C↓j
                 rts
 ; End of function sub_F5F82
 
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F5FA6:
-                move    sr,-(sp)
-                ori     #$700,sr
-
-loc_F5FAC:                              ; CODE XREF: sub_F5FA6+38↓j
-                move.w  #$100,($A11100).l
-
-loc_F5FB4:                              ; CODE XREF: sub_F5FA6+16↓j
-                btst    #0,($A11100).l
-                bne.s   loc_F5FB4
-                move.b  #1,($A01B20).l
-                move.b  ($A01B21).l,d0
-                move.w  #0,($A11100).l
-                tst.b   d0
-                beq.s   loc_F5FE0
-                moveq   #$44,d0 ; 'D'
-
-loc_F5FDA:                              ; CODE XREF: sub_F5FA6:loc_F5FDA↓j
-                dbf     d0,loc_F5FDA
-                bra.s   loc_F5FAC
-; ---------------------------------------------------------------------------
-
-loc_F5FE0:                              ; CODE XREF: sub_F5FA6+30↑j
-                move    (sp)+,sr
-                rts
-; End of function sub_F5FA6
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F5FE4:
-                move    sr,-(sp)
-                ori     #$700,sr
-                jsr     StopZ80AndWait(pc)
-                move.b  #0,($A01B20).l
-                jsr     TurnOffZ80BusReq(pc)
-                move    (sp)+,sr
-                rts
-; End of function sub_F5FE4
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-StopZ80AndWait:                         ; CODE XREF: sub_F5FE4+6↑p
-                                        ; LoadGEMSSoundDriver+10↓p ...
-                move.w  #$100,($A11100).l
-
-loc_F6006:                              ; CODE XREF: StopZ80AndWait+10↓j
-                btst    #0,($A11100).l
-                bne.s   loc_F6006
-                rts
-; End of function StopZ80AndWait
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-TurnOffZ80BusReq:                       ; CODE XREF: sub_F5FE4+12↑p
-                                        ; sub_F6260+1A↓p
-                move.w  #0,($A11100).l
-                rts
-; End of function TurnOffZ80BusReq
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-LoadGEMSSoundDriver:                    ; CODE XREF: InitGEMS+4↓p
-                move.l  a1,-(sp)
-                move    sr,-(sp)
-                ori     #$700,sr
-                move.w  #$100,($A11200).l
-                jsr     StopZ80AndWait(pc)
-                lea     (GEMSSoundDrv).l,a0
-                lea     (GEMSPatches).l,a1
-                move.l  a1,d0
-                sub.l   a0,d0
-                subq.w  #1,d0
-                lea     ($A00000).l,a1
-
-loc_F6048:                              ; CODE XREF: LoadGEMSSoundDriver+2E↓j
-                move.b  (a0)+,(a1)+
-                dbf     d0,loc_F6048
-
-loc_F604E:                              ; CODE XREF: LoadGEMSSoundDriver+3C↓j
-                move.b  #0,(a1)+
-                cmpa.l  #$A02000,a1
-                bne.s   loc_F604E
-                move    (sp)+,sr
-                movea.l (sp)+,a1
-                rts
-; End of function LoadGEMSSoundDriver
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F6060:                              ; CODE XREF: InitGEMS+8↓p
-                move    sr,-(sp)
-                ori     #$700,sr
-                move.w  #0,($A11200).l
-                moveq   #$F,d0
-
-loc_F6070:                              ; CODE XREF: sub_F6060+12↓j
-                subq.l  #1,d0
-                bne.s   loc_F6070
-                move.w  #0,($A11100).l
-                move.w  #$100,($A11200).l
-                move    (sp)+,sr
-                rts
-; End of function sub_F6060
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMS_stdstartup:                        ; CODE XREF: GEMS_putcbyte↓p
-                                        ; GEMS_putptr↓p ...
-                movea.l (sp)+,a0
-                link    a6,#0
-                movem.l d1/a1,-(sp)
-                move    sr,-(sp)
-                move.l  a0,-(sp)
-                lea     ($A00036).l,a0
-                lea     ($A01B40).l,a1
-                ori     #$700,sr
-                move.w  #$100,($A11100).l
-
-loc_F60AE:                              ; CODE XREF: GEMS_stdstartup+2E↓j
-                btst    #0,($A11100).l
-                bne.s   loc_F60AE
-                move.b  (a0),d1
-                ext.w   d1
-                rts
-; End of function GEMS_stdstartup
-
-; ---------------------------------------------------------------------------
-; START OF FUNCTION CHUNK FOR GEMS_putcbyte
-
-GEMS_stdcleanup:                        ; CODE XREF: GEMS_putcbyte+C↓j
-                                        ; GEMS_putptr+18↓j ...
-                move.w  #0,($A11100).l
-                move    (sp)+,sr
-                movem.l (sp)+,d1/a1
-                unlk    a6
-                rts
-; END OF FUNCTION CHUNK FOR GEMS_putcbyte
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMS_stdcmdwrite:                       ; CODE XREF: GEMSStartSong:loc_F6164↓p
-                                        ; GEMSPauseAll+6↓p ...
-                move.b  #$FF,(a1,d1.w)
-                addq.b  #1,d1
-                andi.b  #$3F,d1 ; '?'   ; Fall through to GEMS_stdwrite
-; End of function GEMS_stdcmdwrite
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMS_stdwrite:                          ; CODE XREF: GEMS_putcbyte+8↓p
-                                        ; GEMS_putptr+8↓p ...
-                move.b  d0,(a1,d1.w)
-                addq.b  #1,d1
-                andi.b  #$3F,d1 ; '?'
-                move.b  d1,(a0)
-                rts
-; End of function GEMS_stdwrite
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMS_putcbyte:                          ; CODE XREF: InitGEMS+10↓p
-                                        ; InitGEMS+18↓p
-
-; FUNCTION CHUNK AT ROM:000F60BE SIZE 00000012 BYTES
-
-                jsr     GEMS_stdstartup(pc)
-                move.w  $A(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function GEMS_putcbyte
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMS_putptr:                            ; CODE XREF: InitGEMS+22↓p
-                                        ; InitGEMS+2C↓p ...
-                jsr     GEMS_stdstartup(pc)
-                move.l  8(a6),d0        ; Send lowest eight bits of address
-                jsr     GEMS_stdwrite(pc)
-                asr.w   #8,d0           ; Send middle eight bits
-                jsr     GEMS_stdwrite(pc)
-                swap    d0              ; Send high eight bits
-                jsr     GEMS_stdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function GEMS_putptr
-
-
-; =============== S U B R O U T I N E =======================================
-
-; void InitGEMS(void);
-; Initializes GEMS.
-; Attributes: bp-based frame
-
-InitGEMS:                               ; CODE XREF: ROM:loc_6EE↑p
-                link    a6,#0
-                jsr     LoadGEMSSoundDriver(pc)
-                jsr     sub_F6060(pc)
-                moveq   #$FFFFFFFF,d0
-                move.l  d0,-(sp)
-                jsr     GEMS_putcbyte(pc)
-                moveq   #$B,d0
-                move.l  d0,-(sp)
-                jsr     GEMS_putcbyte(pc)
-                move.l  #GEMSPatches,-(sp)
-                jsr     GEMS_putptr(pc)
-                move.l  #byte_AB4AB,-(sp)
-                jsr     GEMS_putptr(pc)
-                move.l  #GEMSSequences,-(sp)
-                jsr     GEMS_putptr(pc)
-                move.l  #byte_B39DD,-(sp)
-                jsr     GEMS_putptr(pc)
-                unlk    a6
-                rts
-; End of function InitGEMS
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMSStartSong:                          ; CODE XREF: PlaySong+12↑p
-                                        ; sub_D562C+20↑p ...
-                jsr     GEMS_stdstartup(pc)
-                moveq   #16,d0
-
-loc_F6164:                              ; CODE XREF: GEMSStopSong+6↓j
-                                        ; sub_F617C+6↓j ...
-                jsr     GEMS_stdcmdwrite(pc)
-                move.w  $A(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function GEMSStartSong
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMSStopSong:                           ; CODE XREF: RunUpdate_TallyScoreAndEndLevel+F8↑p
-                                        ; sub_D565E+10↑p ...
-                jsr     GEMS_stdstartup(pc)
-                moveq   #18,d0
-                bra.s   loc_F6164
-; End of function GEMSStopSong
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F617C:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #5,d0
-                bra.s   loc_F6164
-; End of function sub_F617C
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMSPauseAll:                           ; CODE XREF: RunMain+EC↑p
-                                        ; RunUpdate_BonusStage+20F0↓p
-                jsr     GEMS_stdstartup(pc)
-                moveq   #12,d0
-                jsr     GEMS_stdcmdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function GEMSPauseAll
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMSResumeAll:                          ; CODE XREF: RunMain+DE↑p
-                                        ; RunUpdate_BonusStage+21F2↓p
-                jsr     GEMS_stdstartup(pc)
-                moveq   #13,d0
-                jsr     GEMS_stdcmdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function GEMSResumeAll
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMSStopAll:                            ; CODE XREF: GEMS_MuteAllSounds↑p
-                                        ; IntroCutscene_SegaLogo+CA↑p ...
-                jsr     GEMS_stdstartup(pc)
-                moveq   #22,d0
-                jsr     GEMS_stdcmdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function GEMSStopAll
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F61AE:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #$1C,d0
-                bra.s   loc_F6164
-; End of function sub_F61AE
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F61B6:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #$1D,d0
-                bra.s   loc_F6164
-; End of function sub_F61B6
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F61BE:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #2,d0
-
-loc_F61C4:                              ; CODE XREF: sub_F61DC+6↓j
-                                        ; sub_F61E4+6↓j ...
-                jsr     GEMS_stdcmdwrite(pc)
-                move.w  $A(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                move.w  $E(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function sub_F61BE
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F61DC:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #0,d0
-                bra.s   loc_F61C4
-; End of function sub_F61DC
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F61E4:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #1,d0
-                bra.s   loc_F61C4
-; End of function sub_F61E4
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F61EC:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #$14,d0
-                bra.s   loc_F61C4
-; End of function sub_F61EC
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F61F4:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #5,d0
-                jsr     GEMS_stdcmdwrite(pc)
-                move.w  $A(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                move.w  $E(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                asr.w   #8,d0
-                jsr     GEMS_stdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function sub_F61F4
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F6218:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #6,d0
-                bra.s   loc_F61C4
-; End of function sub_F6218
-
-; ---------------------------------------------------------------------------
-                jsr     GEMS_stdstartup(pc) ; TODO these subroutines generate bad bra.s???
-                moveq   #7,d0
-                bra.s   loc_F61C4
-; ---------------------------------------------------------------------------
-                jsr     GEMS_stdstartup(pc)
-                moveq   #$E,d0
-                bra.s   loc_F61C4
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F6230:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #$17,d0
-                jsr     GEMS_stdcmdwrite(pc)
-                move.w  $A(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                move.w  $E(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                move.w  $12(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function sub_F6230
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F6256:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #$1B,d0
-                bra.w   loc_F61C4
-; End of function sub_F6256
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F6260:
-
-arg_5           =  9
-
-                move    sr,-(sp)
-                ori     #$700,sr
-                jsr     StopZ80AndWait(pc)
-                moveq   #0,d0
-                move.b  2+arg_5(sp),d0
-                lea     ($A01B22).l,a0
-                move.b  (a0,d0.w),d0
-                jsr     TurnOffZ80BusReq(pc)
-                move    (sp)+,sr
-                rts
-; End of function sub_F6260
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-sub_F6282:
-                jsr     GEMS_stdstartup(pc)
-                moveq   #26,d0
-                bra.w   loc_F61C4
-; End of function sub_F6282
-
-
-; =============== S U B R O U T I N E =======================================
-
-
-GEMS_ApplyPitchBend:                              ; CODE XREF: RunPlayerUpdate+47C↑p
-                jsr     GEMS_stdstartup(pc)
-                moveq   #$1E,d0
-                jsr     GEMS_stdcmdwrite(pc)
-                move.w  $A(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                move.w  $E(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                move.w  $12(a6),d0
-                jsr     GEMS_stdwrite(pc)
-                asr.w   #8,d0
-                jsr     GEMS_stdwrite(pc)
-                jmp     GEMS_stdcleanup(pc)
-; End of function GEMS_ApplyPitchBend
-
+                include "src/GEMS.asm"
 ; ---------------------------------------------------------------------------
 ; START OF FUNCTION CHUNK FOR VBlank
 
@@ -70966,14 +70476,14 @@ var_4           = -4
                 movem.l d2-d5/a2-a5,-(sp)
                 move.w  #$8F02,($C00004).l
                 subq.b  #1,($FF547E).l
-                bne.s   ROAU_loc_FE7BA
+                bne.s   @loc_FE7BA
                 move.b  #4,($FF547E).l
                 addq.b  #1,($FFF200).l
                 cmpi.b  #3,($FFF200).l
-                bls.s   ROAU_loc_FE7BA
+                bls.s   @loc_FE7BA
                 clr.b   ($FFF200).l
 
-ROAU_loc_FE7BA:
+@loc_FE7BA:
                 moveq   #0,d0
                 move.b  ($FFF200).l,d0
                 movea.l #off_D3B2A,a0
@@ -70989,12 +70499,12 @@ ROAU_loc_FE7BA:
                 move.w  (a0,d0.w),d3
                 movea.l #$FFEE80,a2
                 clr.b   d2
-                bra.w   ROAU_loc_FEA62
+                bra.w   @loc_FEA62
 ; ---------------------------------------------------------------------------
 
-ROAU_RunUpdate_Rings_Loop:
+@loop:
                 tst.b   6(a2)
-                bne.w   ROAU_loc_FE942
+                bne.w   @loc_FE942
                 moveq   #0,d0
                 move.b  (a2),d0
                 move.l  d0,d1
@@ -71013,25 +70523,25 @@ ROAU_RunUpdate_Rings_Loop:
 
                 ; Check y-pos bounds first
                 cmp.w   ($FF998A).l,d0
-                ble.w   ROAU_loc_FE926
+                ble.w   @loc_FE926
 
                 cmp.w   ($FF74E4).l,d0
-                bge.w   ROAU_loc_FE926
+                bge.w   @loc_FE926
 
                 swap    d0 ; swap x-pos word for y-pos word
 
                 cmp.w   ($FFEDA8).l,d0
-                bge.w   ROAU_loc_FE926
+                bge.w   @loc_FE926
 
                 cmp.w   ($FFEDB4).l,d0
-                ble.w   ROAU_loc_FE926
+                ble.w   @loc_FE926
 
                 cmpi.b  #$FF,(a5)
-                bne.s   ROAU_loc_FE86A
+                bne.s   @loc_FE86A
                 jsr     sub_D7B60
                 move.b  d0,(a5)
 
-ROAU_loc_FE86A:
+@loc_FE86A:
                 moveq   #0,d0
                 move.b  (a5),d0
                 lsl.w   #3,d0
@@ -71047,7 +70557,7 @@ ROAU_loc_FE86A:
                 movea.l var_4(a6),a0
                 move.b  #5,4(a0)
                 tst.w   ($FF9986).l
-                beq.s   ROAU_loc_FE8C8
+                beq.s   @loc_FE8C8
                 move.w  ($FF5888).l,d0
                 addq.w  #1,($FF5888).l
                 move.w  d0,d1
@@ -71056,10 +70566,10 @@ ROAU_loc_FE86A:
                 lsl.w   #3,d0
                 sub.w   d1,d0
                 movea.l #$FF0370,a0
-                bra.s   ROAU_loc_FE8E4
+                bra.s   @loc_FE8E4
 ; ---------------------------------------------------------------------------
 
-ROAU_loc_FE8C8:
+@loc_FE8C8:
                 move.w  ($FF588A).l,d0
                 addq.w  #1,($FF588A).l
                 move.w  d0,d1
@@ -71069,7 +70579,7 @@ ROAU_loc_FE8C8:
                 sub.w   d1,d0
                 movea.l #$FF998C,a0
 
-ROAU_loc_FE8E4:
+@loc_FE8E4:
                 lea     (a0,d0.w),a0
                 movea.l a0,a4
                 moveq   #1,d0
@@ -71089,23 +70599,23 @@ ROAU_loc_FE8E4:
                 move.w  d5,$12(a4)
                 movea.l var_4(a6),a0
                 move.w  4(a3),2(a0)
-                bra.w   ROAU_loc_FEA5E
+                bra.w   @loc_FEA5E
 ; ---------------------------------------------------------------------------
 
-ROAU_loc_FE926:
+@loc_FE926:
                 cmpi.b  #$FF,(a5)
-                beq.w   ROAU_loc_FEA5E
+                beq.w   @loc_FEA5E
                 move.b  (a5),d0
                 move.l  d0,-(sp)
                 jsr     VDPSpriteArray_InitialiseEntry
                 addq.l  #4,sp
                 move.b  #$FF,(a5)
-                bra.w   ROAU_loc_FEA5E
+                bra.w   @loc_FEA5E
 ; ---------------------------------------------------------------------------
 
-ROAU_loc_FE942:
+@loc_FE942:
                 tst.b   7(a2)
-                beq.w   ROAU_loc_FEA5E
+                beq.w   @loc_FEA5E
                 moveq   #0,d0
                 move.b  (a2),d0
                 move.l  d0,d1
@@ -71142,7 +70652,7 @@ ROAU_loc_FE942:
                 movea.l var_4(a6),a0
                 move.b  #5,4(a0)
                 tst.w   ($FF9986).l
-                beq.s   ROAU_loc_FE9E8
+                beq.s   @loc_FE9E8
                 move.w  ($FF5888).l,d0
                 addq.w  #1,($FF5888).l
                 move.w  d0,d1
@@ -71151,10 +70661,10 @@ ROAU_loc_FE942:
                 lsl.w   #3,d0
                 sub.w   d1,d0
                 movea.l #$FF0370,a0
-                bra.s   ROAU_loc_FEA04
+                bra.s   @loc_FEA04
 ; ---------------------------------------------------------------------------
 
-ROAU_loc_FE9E8:
+@loc_FE9E8:
                 move.w  ($FF588A).l,d0
                 addq.w  #1,($FF588A).l
                 move.w  d0,d1
@@ -71164,7 +70674,7 @@ ROAU_loc_FE9E8:
                 sub.w   d1,d0
                 movea.l #$FF998C,a0
 
-ROAU_loc_FEA04:
+@loc_FEA04:
                 lea     (a0,d0.w),a0
                 movea.l a0,a4
                 moveq   #1,d0
@@ -71185,7 +70695,7 @@ ROAU_loc_FEA04:
                 movea.l var_4(a6),a0
                 move.w  4(a3),2(a0)
                 subq.b  #1,7(a2)
-                bne.s   ROAU_loc_FEA5E
+                bne.s   @loc_FEA5E
                 clr.b   (a2)
                 move.b  (a5),d0
                 move.l  d0,-(sp)
@@ -71194,13 +70704,13 @@ ROAU_loc_FEA04:
                 clr.l   $A(a3)
                 clr.b   7(a2)
 
-ROAU_loc_FEA5E:
+@loc_FEA5E:
                 addq.l  #8,a2
                 addq.b  #1,d2
 
-ROAU_loc_FEA62:
+@loc_FEA62:
                 cmp.b   ($FF9984).l,d2
-                bcs.w   ROAU_RunUpdate_Rings_Loop
+                bcs.w   @loop
                 movem.l var_24(a6),d2-d5/a2-a5
                 unlk    a6
                 rts
@@ -71213,14 +70723,14 @@ GameSprite_UpdateVisible_Optimised:                              ; CODE XREF: Lo
                 movea.l $3A(a2),a4
                 movea.l $8(a4),a5
 
-GameSprite_UpdateVisible_Optimised_Loop:                         ; CODE XREF: GameSprite_UpdateVisible+4C↓j
+@loop:                         ; CODE XREF: GameSprite_UpdateVisible+4C↓j
                 move.w  (a3),d3
                 btst.l  #$F,d3
-                beq.s   GUVO_loc_D5724
+                beq.s   @loc_D5724
                 btst.l  #$D,d3
-                beq.s   GUVO_loc_D573A
+                beq.s   @loc_D573A
 
-GUVO_loc_D5724:                              ; CODE XREF: GameSprite_UpdateVisible+14↑j
+@loc_D5724:                              ; CODE XREF: GameSprite_UpdateVisible+14↑j
                 movea.l (a4),a0
                 move.w  (a5),d0
                 move.l  d0,-(sp)
@@ -71228,13 +70738,13 @@ GUVO_loc_D5724:                              ; CODE XREF: GameSprite_UpdateVisib
                 jsr     GameSprite_Update
                 addq.l  #8,sp
 
-GUVO_loc_D573A:                              ; CODE XREF: GameSprite_UpdateVisible+1E↑j
+@loc_D573A:                              ; CODE XREF: GameSprite_UpdateVisible+1E↑j
                                         ; GameSprite_UpdateVisible+28↑j
                 moveq   #$40,d0 ; '@'
                 adda.l  d0,a2
                 addq.l  #1,d2
                 cmpi.l  #$100,d2 ; Animated obj iteration of some kind
-                blt.s   GameSprite_UpdateVisible_Optimised_Loop
+                blt.s   @loop
                 movem.l (sp)+,d2-d5/a2-a5
                 jmp     GameSprite_UpdateVisible_Optimised_Return
 ; End of function GameSprite_Optimised_UpdateVisible
